@@ -1,0 +1,285 @@
+{
+  "kind": "PUBLIC_TESTNET_RUN",
+  "disclaimer": "Executed on Mezo testnet and Base Sepolia with Wormhole testnet guardian signatures.",
+  "runId": "testnet-2026-10-20T15-05-14-568Z",
+  "startedAt": "2026-10-20T15:06:14.032Z",
+  "deployment": {
+    "wrapper": "0x21C7e74B14A56941ECDc1a4002B96DB73DaC3484",
+    "sourceGateway": "0x4Fc8027Ad6d41dc2712e94A25f02E21003F78cdc",
+    "destinationGateway": "0xcdF17A639d5B0B6B6EE87731Ba653B74Ea5Cf973",
+    "receipt": "0xf66Ec10B6daDdbCA274c432c2DF3e76163400bF8",
+    "wrapperDeployBlock": "16263468",
+    "sourceDeployBlock": "16263611",
+    "destinationDeployBlock": "48368858",
+    "deployer": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+    "guardian": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6"
+  },
+  "amountMusd": "5",
+  "accounts": {
+    "primary": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+    "secondary": "0x3a71111bb6578Beb61E39af9C09223c02b41D701"
+  },
+  "reusedTransactions": {
+    "note": "These transactions were mined by an earlier attempt that aborted on a stale RPC read before writing evidence. They were adopted after verifying sender, target and function, and every effect recorded above is re-derived from chain state at their blocks.",
+    "approve": "0x7fe158ec5bb2a5b77ee84ed784a22531cd3c246385fdf777391b48bdd0ad9a84",
+    "lock": "0x680490b824bf9cc28c2ce11fac8389bb7a8916598767288a55f60ef6b1704c45",
+    "mint": "0xa56f1211570ebcf0cfc70ae5a63899fb57c719294a0632b1c862a87501211b75",
+    "transfer": "0x6639a8867d3dd8be86016e0c4d65b2957756448f031e0f735525b525b9e50e41",
+    "burn1": "0x279826d68d7c84dc3ee141d1c088f910dd94a8c2daf73b8d6f23297c081a02e1",
+    "burn2": "0x99c4934da3513866e7035beebd27ef7111907dd4d196816c815e4fcaf60d2f43",
+    "release1": "0x9c60dbbf9098832dc1faa6717978f8db371febe653e8c86ccf5c7778ef8d9214",
+    "release2": "0x462e210883cd984e7e4053aa1887a43a518cba209a724b4161d7f6ac11991f9e"
+  },
+  "finalBalances": {
+    "primaryMusdBeforeLock": "1800000000000000000000",
+    "primaryMusdEnd": "1797500000000000000000",
+    "secondaryWsmusd": "2500000000000000000"
+  },
+  "steps": [
+    {
+      "id": "00",
+      "title": "Preflight: chains, pinned vault implementation, peer binding, balances",
+      "chain": "offchain",
+      "status": "PASS",
+      "details": {
+        "mezoChainId": 31611,
+        "baseChainId": 84532,
+        "nativeVaultImplementation": "0x92D12f0a60906b39d81acD9bf8977b6c824cD98C",
+        "implementationMatchesRegistry": true,
+        "destinationBoundTo": "0x4Fc8027Ad6d41dc2712e94A25f02E21003F78cdc",
+        "primary": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+        "secondary": "0x3a71111bb6578Beb61E39af9C09223c02b41D701",
+        "musd": "1797500000000000000000",
+        "requiredMusd": "5000000000000000000",
+        "mezoGasWei": "9999997795506580",
+        "baseGasWei": "9577796399992043"
+      }
+    },
+    {
+      "id": "01",
+      "title": "Approve exact MUSD amount to source gateway (bounded, not unlimited)",
+      "chain": "mezo",
+      "status": "PASS",
+      "txHash": "0x7fe158ec5bb2a5b77ee84ed784a22531cd3c246385fdf777391b48bdd0ad9a84",
+      "blockNumber": "16263724",
+      "explorer": "https://explorer.test.mezo.org/tx/0x7fe158ec5bb2a5b77ee84ed784a22531cd3c246385fdf777391b48bdd0ad9a84",
+      "details": {
+        "allowance": "5000000000000000000"
+      }
+    },
+    {
+      "id": "02",
+      "title": "Real MUSD → native savings vault → wSMUSD minted → shares locked → ISSUE message published",
+      "chain": "mezo",
+      "status": "PASS",
+      "txHash": "0x680490b824bf9cc28c2ce11fac8389bb7a8916598767288a55f60ef6b1704c45",
+      "blockNumber": "16263726",
+      "explorer": "https://explorer.test.mezo.org/tx/0x680490b824bf9cc28c2ce11fac8389bb7a8916598767288a55f60ef6b1704c45",
+      "details": {
+        "musdSpent": "5000000000000000000",
+        "nativeSmusdIntoWrapper": "5000000000000000000",
+        "wrapperSharesMinted": "5000000000000000000",
+        "sharesLocked": "5000000000000000000",
+        "wrapperNavBefore": {
+          "totalAssets": "0",
+          "totalSupply": "0"
+        },
+        "wrapperNavAfter": {
+          "totalAssets": "5000000000000000000",
+          "totalSupply": "5000000000000000000",
+          "pendingYield": "0"
+        },
+        "transferId": "0x69691ea22cce36294b74bb9538fd2b62ec953f00029580846571fb55ad89aa32",
+        "wormholeSequence": "0",
+        "consistencyLevel": 202,
+        "messageNavSnapshot": {
+          "navAssets": "5000000000000000000",
+          "navSupply": "5000000000000000000",
+          "navBlock": "16263726"
+        }
+      }
+    },
+    {
+      "id": "03",
+      "title": "Guardian-signed ISSUE VAA obtained and parsed",
+      "chain": "offchain",
+      "status": "PASS",
+      "details": {
+        "source": "https://api.testnet.wormholescan.io (guardian-signed)",
+        "digest": "0x6405fdcfe5bba44d1657dbc737c6fe661cab15001041d0fc5be77041c5a3e4ac",
+        "guardianSetIndex": 0,
+        "signatures": 1,
+        "emitter": "0x0000000000000000000000004fc8027ad6d41dc2712e94a25f02e21003f78cdc",
+        "sequence": "0",
+        "vaa": "0x010000000001002ff817dde0894536af30967e8e394b657a7182734224cfdc442224a5d421db215e28a50b946626cbee41e9951e87c196ee54053b85e9d7a4ceb9060543c621c7016ad77ac70000000000320000000000000000000000004fc8027ad6d41dc2712e94a25f02e21003f78cdc0000000000000000ca51306ff766b2383f1762963c80bdb03fe69ba28eef1ef428eeb41a0168b0a8db000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000010000000000000000000000000000000000000000000000000000000000007b7b0000000000000000000000000000000000000000000000000000000000014a34000000000000000000000000000000000000000000000000000000000000003200000000000000000000000000000000000000000000000000000000000027140000000000000000000000004fc8027ad6d41dc2712e94a25f02e21003f78cdc000000000000000000000000cdf17a639d5b0b6b6ee87731ba653b74ea5cf97300000000000000000000000021c7e74b14a56941ecdc1a4002b96db73dac3484000000000000000000000000f66ec10b6daddbca274c432c2df3e76163400bf800000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004563918244f400000000000000000000000000000f579957d94d1d12fbb0de3a495180629098efe60000000000000000000000000f579957d94d1d12fbb0de3a495180629098efe6000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000004563918244f400000000000000000000000000000000000000000000000000004563918244f40000000000000000000000000000000000000000000000000000000000006ad77ac70000000000000000000000000000000000000000000000000000000000f82a2e"
+      }
+    },
+    {
+      "id": "04",
+      "title": "Negative: byte-altered ISSUE VAA rejected by destination (simulation)",
+      "chain": "base",
+      "status": "PASS",
+      "details": {
+        "error": "InvalidVaa"
+      }
+    },
+    {
+      "id": "05",
+      "title": "Destination verifies VAA, consumes transfer id, mints exact rwSMUSD",
+      "chain": "base",
+      "status": "PASS",
+      "txHash": "0xa56f1211570ebcf0cfc70ae5a63899fb57c719294a0632b1c862a87501211b75",
+      "blockNumber": "48369152",
+      "explorer": "https://sepolia.basescan.org/tx/0xa56f1211570ebcf0cfc70ae5a63899fb57c719294a0632b1c862a87501211b75",
+      "details": {
+        "minted": "5000000000000000000",
+        "remoteSupplyBefore": "0",
+        "remoteSupplyAfter": "5000000000000000000",
+        "transferConsumed": true
+      }
+    },
+    {
+      "id": "06",
+      "title": "Negative: replayed ISSUE VAA rejected (no second mint)",
+      "chain": "base",
+      "status": "PASS",
+      "details": {
+        "error": "AlreadyConsumed"
+      }
+    },
+    {
+      "id": "07",
+      "title": "rwSMUSD transferred to a second holder (standard ERC-20)",
+      "chain": "base",
+      "status": "PASS",
+      "txHash": "0x6639a8867d3dd8be86016e0c4d65b2957756448f031e0f735525b525b9e50e41",
+      "blockNumber": "48369364",
+      "explorer": "https://sepolia.basescan.org/tx/0x6639a8867d3dd8be86016e0c4d65b2957756448f031e0f735525b525b9e50e41",
+      "details": {
+        "amount": "2500000000000000000",
+        "secondaryBalanceBefore": "0",
+        "secondaryBalance": "2500000000000000000"
+      }
+    },
+    {
+      "id": "08",
+      "title": "Two holders burn exact rwSMUSD and publish REDEEM messages (shares mode, MUSD mode)",
+      "chain": "base",
+      "status": "PASS",
+      "txHash": "0x99c4934da3513866e7035beebd27ef7111907dd4d196816c815e4fcaf60d2f43",
+      "blockNumber": "48369373",
+      "explorer": "https://sepolia.basescan.org/tx/0x99c4934da3513866e7035beebd27ef7111907dd4d196816c815e4fcaf60d2f43",
+      "details": {
+        "burnSharesModeTx": "0x279826d68d7c84dc3ee141d1c088f910dd94a8c2daf73b8d6f23297c081a02e1",
+        "burnSharesModeExplorer": "https://sepolia.basescan.org/tx/0x279826d68d7c84dc3ee141d1c088f910dd94a8c2daf73b8d6f23297c081a02e1",
+        "burnMusdModeTx": "0x99c4934da3513866e7035beebd27ef7111907dd4d196816c815e4fcaf60d2f43",
+        "remoteSupplyBeforeBurns": "5000000000000000000",
+        "remoteSupplyAfterBurns": "0",
+        "redeemTransferIds": [
+          "0xa260ac36bab93e827bbf9c53c43b7495591d0a8c6e6bc606e3451798bff9e729",
+          "0xa1fbb1fa169d6b5561a0dc667e38ab1847d4453dd0271bd31251bbf02eb4e772"
+        ],
+        "minAssetsBound": "2500000000000000000"
+      }
+    },
+    {
+      "id": "09",
+      "title": "Guardian-signed REDEEM VAAs obtained (after Base finality)",
+      "chain": "offchain",
+      "status": "PASS",
+      "details": {
+        "source": "https://api.testnet.wormholescan.io (guardian-signed)",
+        "digests": [
+          "0x65491e289984cbc97827ca470d755ce4b6368e8a36d5656b8792edbc5108c695",
+          "0x7aff43e0d2bcd6f20ccf1847f4ed44294d8b6e8827bbc3491cfbb23f42d0cbbc"
+        ],
+        "vaas": [
+          "0x0100000000010018495834442fbd0ffc361f3aab4d02f9f4892a36381ea6dcb3a24d59c9072919341988092c63752ebd7000e419f08bc9ab3c320656f3d5c58dc8c367625880ec006ad77c92000000002714000000000000000000000000cdf17a639d5b0b6b6ee87731ba653b74ea5cf9730000000000000000ca51306ff766b2383f1762963c80bdb03fe69ba28eef1ef428eeb41a0168b0a8db000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000014a340000000000000000000000000000000000000000000000000000000000007b7b00000000000000000000000000000000000000000000000000000000000027140000000000000000000000000000000000000000000000000000000000000032000000000000000000000000cdf17a639d5b0b6b6ee87731ba653b74ea5cf9730000000000000000000000004fc8027ad6d41dc2712e94a25f02e21003f78cdc00000000000000000000000021c7e74b14a56941ecdc1a4002b96db73dac3484000000000000000000000000f66ec10b6daddbca274c432c2df3e76163400bf8000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000022b1c8c1227a00000000000000000000000000003a71111bb6578beb61e39af9c09223c02b41d7010000000000000000000000003a71111bb6578beb61e39af9c09223c02b41d701000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000",
+          "0x01000000000100421d602fd8131b9559d5ea74e59dcbd379741ce23c4b32ce4c7acd5bd4ee337c7fc4938e651629d833ee9ee21f3cca58ad61b071a7ff8158c8b3dae73fb40d40016ad77c9a000000002714000000000000000000000000cdf17a639d5b0b6b6ee87731ba653b74ea5cf9730000000000000001ca51306ff766b2383f1762963c80bdb03fe69ba28eef1ef428eeb41a0168b0a8db000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000014a340000000000000000000000000000000000000000000000000000000000007b7b00000000000000000000000000000000000000000000000000000000000027140000000000000000000000000000000000000000000000000000000000000032000000000000000000000000cdf17a639d5b0b6b6ee87731ba653b74ea5cf9730000000000000000000000004fc8027ad6d41dc2712e94a25f02e21003f78cdc00000000000000000000000021c7e74b14a56941ecdc1a4002b96db73dac3484000000000000000000000000f66ec10b6daddbca274c432c2df3e76163400bf8000000000000000000000000000000000000000000000000000000000000000100000000000000000000000000000000000000000000000022b1c8c1227a00000000000000000000000000000f579957d94d1d12fbb0de3a495180629098efe60000000000000000000000000f579957d94d1d12fbb0de3a495180629098efe6000000000000000000000000000000000000000000000000000000000000000200000000000000000000000000000000000000000000000022b1c8c1227a00000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000"
+        ]
+      }
+    },
+    {
+      "id": "10",
+      "title": "Negative: Mezo-emitted VAA submitted as a REDEEM is rejected (wrong emitter chain)",
+      "chain": "mezo",
+      "status": "PASS",
+      "details": {
+        "error": "UnknownEmitterChain"
+      }
+    },
+    {
+      "id": "11",
+      "title": "Authenticated release: exact wSMUSD to second holder; wrapper redemption to MUSD for primary",
+      "chain": "mezo",
+      "status": "PASS",
+      "txHash": "0x462e210883cd984e7e4053aa1887a43a518cba209a724b4161d7f6ac11991f9e",
+      "blockNumber": "16264093",
+      "explorer": "https://explorer.test.mezo.org/tx/0x462e210883cd984e7e4053aa1887a43a518cba209a724b4161d7f6ac11991f9e",
+      "details": {
+        "releaseSharesTx": "0x9c60dbbf9098832dc1faa6717978f8db371febe653e8c86ccf5c7778ef8d9214",
+        "releaseSharesExplorer": "https://explorer.test.mezo.org/tx/0x9c60dbbf9098832dc1faa6717978f8db371febe653e8c86ccf5c7778ef8d9214",
+        "redeemMusdTx": "0x462e210883cd984e7e4053aa1887a43a518cba209a724b4161d7f6ac11991f9e",
+        "wsmusdReleasedToSecondary": "2500000000000000000",
+        "musdReceivedByPrimary": "2500000000000000000",
+        "lockedBefore": "5000000000000000000",
+        "lockedAfter": "0"
+      }
+    },
+    {
+      "id": "12",
+      "title": "Negative: replayed REDEEM VAA rejected (no second release)",
+      "chain": "mezo",
+      "status": "PASS",
+      "details": {
+        "error": "AlreadyConsumed"
+      }
+    },
+    {
+      "id": "13",
+      "title": "Independent reconciliation from chain state",
+      "chain": "offchain",
+      "status": "PASS",
+      "details": {
+        "status": "BALANCED",
+        "mezoBlock": "16264182",
+        "baseFinalizedBlock": "48369727",
+        "totalLocked": "0",
+        "custodyBalance": "0",
+        "remoteSupply": "0",
+        "pendingIssues": 0,
+        "pendingIssueShares": "0",
+        "pendingRedemptions": 0,
+        "pendingRedemptionShares": "0",
+        "discrepancy": "0",
+        "checks": [
+          {
+            "name": "locked == remote supply + in-flight issues + in-flight redemptions",
+            "ok": true,
+            "detail": "discrepancy 0"
+          },
+          {
+            "name": "custody wSMUSD balance >= totalLocked",
+            "ok": true,
+            "detail": "0 >= 0"
+          },
+          {
+            "name": "totalLocked == totalIssued - totalReleased",
+            "ok": true,
+            "detail": "0 == 5000000000000000000 - 5000000000000000000"
+          },
+          {
+            "name": "remote supply == totalMinted - totalBurned",
+            "ok": true,
+            "detail": "0 == 5000000000000000000 - 5000000000000000000"
+          },
+          {
+            "name": "sum(lock events) == totalIssued",
+            "ok": true,
+            "detail": "1 lock events"
+          }
+        ]
+      }
+    }
+  ]
+}
