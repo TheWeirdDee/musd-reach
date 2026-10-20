@@ -1,0 +1,8 @@
+{
+  "name": "@musd-reach/protocol-registry",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "main": "registry.json",
+  "exports": { ".": "./registry.json", "./registry.json": "./registry.json" }
+}
