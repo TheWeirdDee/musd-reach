@@ -1,0 +1,167 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------------
+   MUSD Reach design tokens
+   Graphite ink + bone, one ember accent. State colours are reserved for
+   chain state only: sage = verified/settled, sand = pending, rust = failed.
+   ------------------------------------------------------------------------ */
+@theme {
+  --color-ink-950: #0b0b0a;
+  --color-ink-900: #111110;
+  --color-ink-850: #161614;
+  --color-ink-800: #1c1c19;
+  --color-ink-750: #232320;
+  --color-ink-700: #2c2b27;
+  --color-ink-600: #3b3a35;
+  --color-ink-500: #55534c;
+  --color-ink-400: #75726a;
+  --color-ink-300: #a19d92;
+  --color-ink-200: #c9c4b7;
+
+  --color-bone-50: #f6f3eb;
+  --color-bone-100: #efeadf;
+  --color-bone-200: #e3ddcf;
+  --color-bone-300: #d3ccbb;
+
+  --color-ember-300: #f4a57c;
+  --color-ember-400: #ef8a56;
+  --color-ember-500: #e8743b;
+  --color-ember-600: #c95e2a;
+  --color-ember-700: #9c4720;
+
+  --color-sage-300: #b2dfba;
+  --color-sage-400: #8ccb98;
+  --color-sage-500: #66b076;
+  --color-sand-300: #efd39f;
+  --color-sand-400: #e5c07b;
+  --color-sand-500: #c9a257;
+  --color-rust-300: #f6a19a;
+  --color-rust-400: #f06a5f;
+  --color-rust-500: #d24b40;
+
+  --font-sans: var(--font-inter-tight), ui-sans-serif, system-ui, sans-serif;
+  --font-serif: var(--font-instrument-serif), ui-serif, Georgia, serif;
+  --font-mono: var(--font-jetbrains-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --text-display: clamp(2.75rem, 1.6rem + 5.2vw, 6.25rem);
+  --text-display--line-height: 0.94;
+  --text-display--letter-spacing: -0.045em;
+  --text-headline: clamp(2rem, 1.35rem + 2.6vw, 3.75rem);
+  --text-headline--line-height: 1;
+  --text-headline--letter-spacing: -0.035em;
+  --text-title: clamp(1.375rem, 1.15rem + 0.8vw, 1.875rem);
+  --text-title--line-height: 1.12;
+  --text-title--letter-spacing: -0.02em;
+  --text-kicker: 0.6875rem;
+  --text-kicker--line-height: 1.2;
+  --text-kicker--letter-spacing: 0.14em;
+
+  --radius-xs: 4px;
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  --shadow-panel: 0 1px 0 0 rgb(255 255 255 / 0.03) inset, 0 24px 60px -32px rgb(0 0 0 / 0.7);
+  --shadow-card-light: 0 1px 0 rgb(11 11 10 / 0.04), 0 18px 40px -24px rgb(11 11 10 / 0.35);
+  --shadow-lift: 0 30px 80px -30px rgb(0 0 0 / 0.8);
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out-quart: cubic-bezier(0.76, 0, 0.24, 1);
+
+  --animate-pulse-dot: pulse-dot 1.6s var(--ease-in-out-quart) infinite;
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.35; transform: scale(0.8); }
+  }
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --gutter: clamp(1rem, 0.6rem + 1.8vw, 2.5rem);
+    --maxw: 1320px;
+  }
+
+  html {
+    background: var(--color-ink-950);
+    color: var(--color-bone-100);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    min-height: 100dvh;
+    font-family: var(--font-sans);
+    font-feature-settings: "ss01", "cv11";
+    overflow-x: clip;
+  }
+
+  ::selection {
+    background: var(--color-ember-500);
+    color: var(--color-ink-950);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-ember-400);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+@layer components {
+  .shell {
+    width: 100%;
+    max-width: var(--maxw);
+    margin-inline: auto;
+    padding-inline: var(--gutter);
+  }
+
+  .kicker {
+    font-family: var(--font-mono);
+    font-size: var(--text-kicker);
+    line-height: var(--text-kicker--line-height);
+    letter-spacing: var(--text-kicker--letter-spacing);
+    text-transform: uppercase;
+  }
+
+  .num {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.01em;
+  }
+
+  .hairline {
+    border-color: var(--color-ink-700);
+  }
+
+  .surface-light {
+    background: var(--color-bone-50);
+    color: var(--color-ink-950);
+    color-scheme: light;
+  }
+
+  /* Long hashes/addresses never overflow their container. */
+  .break-hash {
+    overflow-wrap: anywhere;
+    word-break: break-all;
+  }
+
+  .grain::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    opacity: 0.035;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+}
