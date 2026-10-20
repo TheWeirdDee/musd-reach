@@ -1,0 +1,42 @@
+[profile.default]
+src = "src"
+test = "test"
+script = "script"
+out = "out"
+libs = ["lib"]
+# solc versions are auto-detected: src pins 0.8.28, the vendored Mezo vault pins 0.8.33.
+# Mezo's deployed MUSDSavingsRate is compiled for london; target the same EVM
+# so no PUSH0/MCOPY/TSTORE opcodes reach a chain that may not support them.
+evm_version = "london"
+optimizer = true
+optimizer_runs = 200
+via_ir = false
+fs_permissions = [{ access = "read-write", path = "./" }, { access = "read-write", path = "../../evidence" }, { access = "read-write", path = "../../deployments" }, { access = "read-write", path = "C:/Users/DELL/AppData/Local/Temp/claude" }]
+remappings = [
+  "forge-std/=lib/forge-std/src/",
+  "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+  # The vendored, explorer-verified Mezo vault source carries its own OZ 4.x tree.
+  "test/vendor/mezo-savings/:@openzeppelin/=test/vendor/mezo-savings/@openzeppelin/",
+]
+
+[profile.default.fuzz]
+runs = 512
+
+[profile.default.invariant]
+runs = 128
+depth = 64
+fail_on_revert = false
+
+[profile.ci.fuzz]
+runs = 4096
+
+[profile.ci.invariant]
+runs = 512
+depth = 128
+
+[rpc_endpoints]
+mezo_testnet = "https://rpc.test.mezo.org"
+base_sepolia = "https://sepolia.base.org"
+
+[fmt]
+line_length = 100
