@@ -1,0 +1,14 @@
+packages:
+  - "packages/sdk"
+  - "packages/verifier"
+  - "packages/protocol-registry"
+  - "apps/*"
+  - "scripts"
+allowBuilds:
+  esbuild: true
+  # Optional native accelerators from wallet deps; JS fallbacks are used.
+  bufferutil: false
+  keccak: false
+  utf-8-validate: false
+  sharp: false
+  unrs-resolver: false
