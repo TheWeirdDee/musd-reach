@@ -1,0 +1,26 @@
+node_modules/
+.next/
+dist/
+out/
+coverage/
+*.log
+.env
+.env.*
+!.env.example
+*.key
+keystore/
+.DS_Store
+
+# Foundry
+packages/contracts/out/
+packages/contracts/cache/
+# Script broadcast logs are not evidence; evidence/ holds curated, verified records.
+packages/contracts/broadcast/
+
+# local databases
+*.pglite/
+apps/api/.data/
+
+# Next.js / TypeScript build artifacts
+next-env.d.ts
+*.tsbuildinfo
