@@ -1,0 +1,56 @@
+Detector: reentrancy-balance
+Reentrancy in ReachSavingsWrapper._deposit(address,address,uint256,uint256) (src/mezo/ReachSavingsWrapper.sol#219-236):
+Reentrancy in ReachSavingsWrapper._payOut(uint256) (src/mezo/ReachSavingsWrapper.sol#257-273):
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities
+Detector: incorrect-equality
+ReachSavingsWrapper._deposit(address,address,uint256,uint256) (src/mezo/ReachSavingsWrapper.sol#219-236) uses a dangerous strict equality:
+ReachSavingsWrapper._deposit(address,address,uint256,uint256) (src/mezo/ReachSavingsWrapper.sol#219-236) uses a dangerous strict equality:
+ReachSavingsWrapper._withdraw(address,address,address,uint256,uint256) (src/mezo/ReachSavingsWrapper.sol#238-252) uses a dangerous strict equality:
+ReachSavingsWrapper._withdraw(address,address,address,uint256,uint256) (src/mezo/ReachSavingsWrapper.sol#238-252) uses a dangerous strict equality:
+ReachSavingsWrapper.depositSavings(uint256,address,uint256) (src/mezo/ReachSavingsWrapper.sol#282-305) uses a dangerous strict equality:
+ReachSavingsWrapper.pendingYield() (src/mezo/ReachSavingsWrapper.sol#105-111) uses a dangerous strict equality:
+ReachSavingsWrapper.previewRedeemInKind(uint256) (src/mezo/ReachSavingsWrapper.sol#343-352) uses a dangerous strict equality:
+ReachSavingsWrapper.redeemInKind(uint256,address,address) (src/mezo/ReachSavingsWrapper.sol#315-341) uses a dangerous strict equality:
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dangerous-strict-equalities
+Detector: reentrancy-no-eth
+Reentrancy in ReachSavingsWrapper._payOut(uint256) (src/mezo/ReachSavingsWrapper.sol#257-273):
+Reentrancy in ReachSourceGateway._trySettle(bytes32,uint256) (src/mezo/ReachSourceGateway.sol#320-336):
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-2
+Detector: unused-return
+ReachNavOracle.navPrice() (src/base/ReachNavOracle.sol#53-62) ignores return value by (assets,supply,timestamp,None,None) = gateway.latestNav() (src/base/ReachNavOracle.sol#55)
+ReachSavingsWrapper._harvest() (src/mezo/ReachSavingsWrapper.sol#147-167) ignores return value by savingsVault.claimYield() (src/mezo/ReachSavingsWrapper.sol#161)
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#unused-return
+Detector: missing-zero-check
+RemoteWrapperReceipt.constructor(address).gateway_ (src/base/RemoteWrapperReceipt.sol#19) lacks a zero-check on :
+ReachSavingsWrapper.proposeGuardian(address).proposed (src/mezo/ReachSavingsWrapper.sol#370) lacks a zero-check on :
+ReachSourceGateway.proposeGuardian(address).proposed (src/mezo/ReachSourceGateway.sol#359) lacks a zero-check on :
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#missing-zero-address-validation
+Detector: reentrancy-benign
+Reentrancy in ReachSavingsWrapper._harvest() (src/mezo/ReachSavingsWrapper.sol#147-167):
+Reentrancy in ReachSourceGateway._lock(uint256,address) (src/mezo/ReachSourceGateway.sol#210-233):
+Reentrancy in ReachSourceGateway._trySettle(bytes32,uint256) (src/mezo/ReachSourceGateway.sol#320-336):
+Reentrancy in ReachDestinationGateway.burnAndRedeem(uint256,address,uint8,uint256) (src/base/ReachDestinationGateway.sol#135-166):
+Reentrancy in ReachDestinationGateway.burnAndRedeem(uint256,address,uint8,uint256) (src/base/ReachDestinationGateway.sol#135-166):
+Reentrancy in ReachSourceGateway.depositAndIssue(uint256,address,uint256) (src/mezo/ReachSourceGateway.sol#183-193):
+Reentrancy in ReachSourceGateway.depositSavingsAndIssue(uint256,address,uint256) (src/mezo/ReachSourceGateway.sol#198-208):
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-3
+Detector: reentrancy-events
+Reentrancy in ReachSavingsWrapper._harvest() (src/mezo/ReachSavingsWrapper.sol#147-167):
+Reentrancy in ReachGatewayBase._publish(ReachMessages.Message) (src/shared/ReachGatewayBase.sol#121-131):
+Reentrancy in ReachSavingsWrapper._withdraw(address,address,address,uint256,uint256) (src/mezo/ReachSavingsWrapper.sol#238-252):
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#reentrancy-vulnerabilities-4
+Detector: timestamp
+ReachNavOracle.navPrice() (src/base/ReachNavOracle.sol#53-62) uses timestamp for comparisons
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#block-timestamp
+Detector: assembly
+ReachSourceGateway._settleOrRevert(bytes32,uint256) (src/mezo/ReachSourceGateway.sol#304-314) uses assembly
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#assembly-usage
+Detector: cyclomatic-complexity
+ReachGatewayBase._consume(bytes,uint8) (src/shared/ReachGatewayBase.sol#135-168) has a high cyclomatic complexity (12).
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#cyclomatic-complexity
+Detector: dead-code
+ReachSavingsWrapper._deposit(address,address,uint256,uint256) (src/mezo/ReachSavingsWrapper.sol#219-236) is never used and should be removed
+ReachSavingsWrapper._payOut(uint256) (src/mezo/ReachSavingsWrapper.sol#257-273) is never used and should be removed
+ReachSavingsWrapper._withdraw(address,address,address,uint256,uint256) (src/mezo/ReachSavingsWrapper.sol#238-252) is never used and should be removed
+Reference: https://github.com/crytic/slither/wiki/Detector-Documentation#dead-code
+INFO:Slither:. analyzed (40 contracts with 102 detectors), 33 result(s) found
