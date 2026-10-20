@@ -1,0 +1,102 @@
+{
+  "$comment": "Versioned, pinned protocol configuration. Reach addresses are null until a real deployment is recorded in deployments/testnet.json and re-verified. Tools fail closed on mismatch.",
+  "version": 1,
+  "network": "testnet",
+  "lastVerified": {
+    "date": "2026-10-20",
+    "mezoBlock": 16261469,
+    "method": "eth_chainId, eth_getStorageAt(EIP-1967 slot), eth_call on live RPCs"
+  },
+  "chains": {
+    "mezo": {
+      "name": "Mezo Testnet",
+      "evmChainId": 31611,
+      "wormholeChainId": 50,
+      "rpc": [
+        "https://rpc.test.mezo.org"
+      ],
+      "explorer": "https://explorer.test.mezo.org",
+      "nativeCurrency": {
+        "name": "Bitcoin",
+        "symbol": "BTC",
+        "decimals": 18
+      },
+      "finality": "instant (CometBFT); latest == finalized observed 2026-10-20"
+    },
+    "base": {
+      "name": "Base Sepolia",
+      "evmChainId": 84532,
+      "wormholeChainId": 10004,
+      "rpc": [
+        "https://base-sepolia-rpc.publicnode.com",
+        "https://sepolia.base.org"
+      ],
+      "explorer": "https://sepolia.basescan.org",
+      "nativeCurrency": {
+        "name": "Ether",
+        "symbol": "ETH",
+        "decimals": 18
+      },
+      "finality": "Wormhole consistency level 202 (finalized) used by Reach and canonical MUSD NTT",
+      "rpcNotes": "sepolia.base.org rejects eth_getLogs ranges above ~200 blocks with HTTP 413; publicnode accepts 2,000-block ranges (checked 2026-10-20)."
+    }
+  },
+  "mezo": {
+    "musd": {
+      "address": "0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503",
+      "decimals": 18,
+      "symbol": "MUSD"
+    },
+    "savingsVault": {
+      "address": "0x6f461c68B2c5492C0F5CCEc5a264d692aA7A8e16",
+      "implementation": "0x92D12f0a60906b39d81acD9bf8977b6c824cD98C",
+      "owner": "0x6e80164ea60673D64d5d6228beb684a1274Bb017",
+      "proxyAdmin": "0x71e5e16E17D2ede8395439c8d5bc2c98654bA157",
+      "symbol": "sMUSD",
+      "decimals": 18,
+      "pcv": "0x0000000000000000000000000000000000000000",
+      "vaultGauge": "0x0000000000000000000000000000000000000000",
+      "semantics": "1:1 principal; account-indexed yield (yieldIndex/supplyYieldIndex/claimableYield); not ERC-4626"
+    },
+    "wormholeCore": "0x268557122Ffd64c85750d630b716471118F323c8"
+  },
+  "base": {
+    "wormholeCore": "0x79A1027a6A159502049F10906D333EC57E95F083"
+  },
+  "wormhole": {
+    "guardianSetIndex": 0,
+    "guardians": [
+      "0x13947Bd48b18E53fdAeEe77F3473391aC727C638"
+    ],
+    "consistencyLevel": 202,
+    "api": "https://api.testnet.wormholescan.io",
+    "messageFee": {
+      "mezo": "0",
+      "base": "0"
+    }
+  },
+  "canonicalMusdNtt": {
+    "$comment": "Separate canonical MUSD bridge. Not used by Reach and has no rwSMUSD mint authority.",
+    "mezoManager": "0x20888B20e2F5F405d44261dA96467a1b1acE15be",
+    "baseManager": "0x6590DFF6abEd7C077839E8227A4f12Ec90E6D85F"
+  },
+  "reach": {
+    "wrapper": null,
+    "sourceGateway": null,
+    "destinationGateway": null,
+    "receipt": null,
+    "deployBlocks": {
+      "wrapper": null,
+      "sourceGateway": null,
+      "destinationGateway": null
+    },
+    "status": "NOT_DEPLOYED"
+  },
+  "morpho": {
+    "$comment": "Base MAINNET facts used for labelled local-fork compatibility tests only. No Reach market exists.",
+    "morphoBlue": "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+    "adaptiveCurveIrm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
+    "usdc": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "status": "COMPATIBILITY_TESTED_ON_LOCAL_FORK_ONLY"
+  }
+}
