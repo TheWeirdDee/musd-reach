@@ -1,0 +1,21 @@
+{
+  "name": "musd-reach",
+  "private": true,
+  "version": "0.1.0",
+  "description": "Make real Mezo savings-backed positions portable to other chains with authenticated, backed receipts.",
+  "license": "MIT",
+  "packageManager": "pnpm@11.5.0",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "contracts:build": "cd packages/contracts && forge build",
+    "contracts:test": "cd packages/contracts && forge test",
+    "abis": "node scripts/export-abis.mjs",
+    "build": "pnpm -r --filter ./packages/** --filter ./apps/** run build",
+    "typecheck": "pnpm -r run typecheck",
+    "test": "pnpm -r run test",
+    "lint": "pnpm -r run lint",
+    "verify": "pnpm --filter @musd-reach/verifier exec tsx src/cli.ts"
+  }
+}
