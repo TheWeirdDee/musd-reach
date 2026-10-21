@@ -1,5 +1,7 @@
 # MUSD Reach — End-to-End Product Requirements Document
 
+> **Planning input, 20 October 2026, kept unchanged as written before the build.** It is not the current status. What was built, deployed and verified is in [`README.md`](../../README.md), [`docs/STATUS.md`](../STATUS.md) and [`docs/SECURITY_FINDINGS.md`](../SECURITY_FINDINGS.md); where this document differs from them, they are authoritative.
+
 **Version:** 2.0 · **Revised:** 20 October 2026  
 **Product:** MUSD Reach  
 **Tagline:** Your Mezo savings position. Available to the rest of DeFi.  
