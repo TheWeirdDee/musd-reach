@@ -53,7 +53,7 @@ export default function HistoryPage() {
                 <EmptyState title="No transfers for this address">Nothing has been locked or burned from this wallet on the current deployment.</EmptyState>
               </div>
             ) : (
-              <div className="overflow-x-auto">
+              <div className="relative overflow-x-auto">
                 <table className="w-full min-w-[40rem] text-left text-sm">
                   <thead>
                     <tr className="border-b border-ink-700">
