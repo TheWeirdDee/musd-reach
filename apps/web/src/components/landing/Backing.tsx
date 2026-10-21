@@ -38,7 +38,7 @@ export function Backing() {
           }
           lede={
             <p>
-              These figures are read live from both chains in your browser, not from our server. Base is read first, then Mezo; a burn can't be attested and released in the seconds between the two reads, so the equation must balance exactly. A mismatch is shown, never smoothed over.
+              These figures are read live from both chains in your browser, not from our server. Base is read first, then Mezo; a burn cannot be attested and released in the seconds between the two reads, so the equation must balance exactly. A mismatch is shown, never smoothed over.
             </p>
           }
         />
