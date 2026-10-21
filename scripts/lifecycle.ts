@@ -509,6 +509,8 @@ async function main() {
     runId,
     startedAt: new Date().toISOString(),
     deployment: d,
+    // Contract version exercised by this run (from the deployment record).
+    settlementModel: ((loadDeployments(mode) as Record<string, unknown> | null)?.settlementModel as string | undefined) ?? "fallback-v1",
     amountMusd: formatUnits(amount, 18),
     accounts: { primary: primary.address, secondary: secondary.address },
     reusedTransactions: Object.keys(reused).length
