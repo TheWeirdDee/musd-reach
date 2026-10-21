@@ -68,7 +68,7 @@ export function Backing() {
               <div className="flex flex-wrap items-center gap-3">
                 <Chip tone={r.status === "BALANCED" ? "verified" : "failed"}>{r.status === "BALANCED" ? "Balanced" : "Mismatch"}</Chip>
                 <span className="num text-xs text-ink-400">
-                  Mezo block {r.mezoBlock.toString()} · Base block {r.baseFinalizedBlock.toString()}
+                  Mezo block {r.mezoBlock.toString()} · Base block {r.baseBlock.toString()}
                 </span>
               </div>
               <div className="flex h-3 w-full overflow-hidden rounded-full bg-ink-800" role="img" aria-label="Composition of locked shares">
