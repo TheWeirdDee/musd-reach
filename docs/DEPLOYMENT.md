@@ -87,9 +87,14 @@ Run `node scripts/sync-web-data.mjs` before `next build`.
 | Target | File | Notes |
 |---|---|---|
 | Vercel (web) | `apps/web/vercel.json` | Set the project root directory to `apps/web`. Install and build run from the repo root, and the build syncs proof data first. Env: `NEXT_PUBLIC_API_URL`, optionally `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`. **Never** set `NEXT_PUBLIC_E2E_ACCOUNT` in production. |
-| Railway (API + indexer) | `railway.json`, `apps/api/Dockerfile` | Health check `/health`. Mount a volume at `/data` for PGlite, or set `DATABASE_URL` to a Railway Postgres. Set `CORS_ORIGINS` to the Vercel URL. Optionally `RELAYER_KEY_FILE` (a mounted secret) to auto-deliver signed messages. |
+| Railway (API + indexer) | `railway.json`, `apps/api/Dockerfile` | Health check `/health`. Mount a volume at `/data` for PGlite, or set `DATABASE_URL` to a Railway Postgres. Set `CORS_ORIGINS` to the Vercel URL. Set `TRUST_PROXY` to the address range Railway's edge connects from, confirmed from the `/health` request logs of the first deploy. Leave it empty if unsure: rate limiting then falls back to the socket address, which is safe but groups clients behind the proxy (F-18). Optionally `RELAYER_KEY_FILE` (a mounted secret) to auto-deliver signed messages. |
 
-The Docker image and Railway config have **not** been built or run here, because Docker isn't installed.
+The Docker image was built from `git archive HEAD` and smoke-tested under Docker 29.1 in WSL. It ran healthy as non-root, every job was OK, and reconciliation was BALANCED against the live chains. Railway itself has not been used.
+
+**Before public hosting:**
+- Add a Content-Security-Policy. `next.config.ts` sets nosniff, a referrer policy, `X-Frame-Options: DENY` and a permissions policy, but no CSP yet. A CSP needs testing against wagmi, WalletConnect and the RPC origins.
+- Keep `NEXT_PUBLIC_E2E_ACCOUNT` unset in production.
+- If the relayer is enabled, use a dedicated low-balance key.
 
 ## Rollback
 
@@ -97,13 +102,32 @@ Contracts are immutable. Rollback means deploying a new set and moving the front
 
 ---
 
-# v2 deployment and public verification plan (pending authorization)
+# v2 deployment and public verification (executed 21 October 2026)
 
 v2 changes `ReachSourceGateway` (pending settlements, out-of-gas guard) and `ReachSavingsWrapper` (out-of-gas guards on its best-effort calls). Peers are immutable and the v1 destination is bound one-time to the v1 source, so **all four contracts are redeployed**. The v1 contracts stay live and redeemable. The app switches to v2 by replacing `deployments/testnet.json`, with the v1 file archived as `deployments/testnet-v1.json`.
 
 The previous public run is historical evidence about v1 only. It is not evidence for v2.
 
-## Preconditions (read on 20 October 2026)
+## Result
+
+| Contract | Chain | Address | Deploy block |
+|---|---|---|---|
+| ReachSavingsWrapper (wSMUSD) | Mezo testnet | `0xf8cF6fCCC7bcF2860BfAD1Ea4A6018D446eb4306` | 16279234 |
+| ReachSourceGateway | Mezo testnet | `0xA5c70F8D6B329ED6c2d15D604B66FafC3A6C96d3` | 16279265 |
+| ReachDestinationGateway | Base Sepolia | `0x50436eB8F8213c7df773F2c331Bb41e1fecb5a23` | 48406337 |
+| RemoteWrapperReceipt (rwSMUSD) | Base Sepolia | `0x02777A938e69f848d4413b9033D225f0D1444e89` | 48406337 |
+
+- **Wiring and bytecode:**
+  - `pnpm verify deployment` passes.
+  - `pnpm verify bytecode` matches every runtime bytecode to the build, with immutables masked.
+- **Run:** `evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json`.
+  - All 18 steps pass, with no reused transactions.
+  - The run used 6 MUSD, which came back as 3 MUSD to the primary and 3 wSMUSD to the secondary.
+- **Verifier:** `reach-verify all` passes 62/62, rerun on 21 October. The transcript is in `evidence/real-chain/verify-testnet-2026-10-21T11-23-33-084Z.txt`.
+
+The plan below is kept as executed.
+
+## Preconditions (read on 20 October 2026, before the deploy)
 
 | Item | Current | Needed |
 |---|---|---|
