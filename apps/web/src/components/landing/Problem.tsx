@@ -51,7 +51,7 @@ export function Problem() {
             </p>
           }
         />
-        <div data-reveal tabIndex={0} role="region" aria-label="Comparison of options (scrolls horizontally)" className="mt-14 overflow-x-auto rounded-md border border-ink-950/10 bg-white/50">
+        <div data-reveal tabIndex={0} role="region" aria-label="Comparison of options (scrolls horizontally)" className="mt-14 relative overflow-x-auto rounded-md border border-ink-950/10 bg-white/50">
           <table className="w-full min-w-[46rem] border-collapse text-left text-[0.9375rem]">
             <caption className="sr-only">Ways to use MUSD savings outside Mezo</caption>
             <thead>
