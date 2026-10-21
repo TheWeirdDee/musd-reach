@@ -492,7 +492,7 @@ async function main() {
   }
 
   // ------------------------------------------------------------------ 13. reconciliation
-  const rec = await reconcile({ mezo, base }, cfg, { baseBlockTag: mode === "fork" ? "latest" : "finalized" });
+  const rec = await reconcile({ mezo, base }, cfg, { baseBlockTag: "latest" });
   record({
     id: "13", title: "Independent reconciliation from chain state", chain: "offchain",
     status: rec.status === "BALANCED" ? "PASS" : "FAIL",
