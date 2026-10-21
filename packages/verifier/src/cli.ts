@@ -40,13 +40,17 @@ const checks: Check[] = [];
 const add = (group: string, name: string, ok: boolean, detail = "") => checks.push({ group, name, ok, detail });
 const eqAddr = (a?: string | null, b?: string | null) => !!a && !!b && a.toLowerCase() === b.toLowerCase();
 
+/** User-supplied paths resolve from where the user ran the command; `pnpm verify` runs us in packages/verifier. */
+const userPath = (p: string) => resolve(process.env.INIT_CWD ?? process.cwd(), p);
+
 function opt(name: string) {
   const i = process.argv.indexOf(`--${name}`);
   return i > 0 ? process.argv[i + 1] : undefined;
 }
 
 function loadCfg(): ReachConfig {
-  const p = opt("deployments") ?? join(ROOT, "deployments", "testnet.json");
+  const o = opt("deployments");
+  const p = o ? userPath(o) : join(ROOT, "deployments", "testnet.json");
   const deployments = existsSync(p) ? JSON.parse(readFileSync(p, "utf8")) : null;
   return buildConfig({
     deployments,
@@ -225,7 +229,7 @@ type EvidenceStep = { id: string; title: string; chain: string; txHash?: Hex; bl
 
 async function verifyEvidence(cfg: ReachConfig, c: { mezo: PublicClient; base: PublicClient }, file: string) {
   const g = "evidence";
-  const ev = JSON.parse(readFileSync(resolve(file), "utf8")) as { kind: string; steps: EvidenceStep[] };
+  const ev = JSON.parse(readFileSync(userPath(file), "utf8")) as { kind: string; steps: EvidenceStep[] };
   add(g, "evidence kind", ev.kind === "PUBLIC_TESTNET_RUN", ev.kind === "PUBLIC_TESTNET_RUN" ? ev.kind : `${ev.kind} — not public-testnet evidence`);
   const txs: { chain: string; hash: Hex; block?: string; label: string }[] = [];
   for (const s of ev.steps) {
