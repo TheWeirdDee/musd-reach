@@ -1,5 +1,5 @@
 import { parseAbiItem, type AbiEvent, type Address, type PublicClient } from "viem";
-import { reachEvents, type ReachConfig } from "@musd-reach/sdk";
+import { fetchAdaptive, reachEvents, type ReachConfig } from "@musd-reach/sdk";
 import type { Db } from "./db.js";
 
 const messageConsumed = parseAbiItem("event MessageConsumed(bytes32 indexed transferId, bytes32 indexed vaaDigest, uint8 direction)");
@@ -123,7 +123,12 @@ export async function indexChainOnce(db: Db, spec: Spec): Promise<{ from: bigint
     return { from: next, to: head, stored: 0, reorgedFrom };
   }
   const to = next + spec.batch > head ? head : next + spec.batch;
-  const logs = await spec.client.getLogs({ address: spec.addresses, events: spec.events, fromBlock: next, toBlock: to, strict: true });
+  // Splits the window when an RPC rejects its size (e.g. HTTP 413), instead of failing the job.
+  const logs = await fetchAdaptive(
+    (fromBlock, toBlock) => spec.client.getLogs({ address: spec.addresses, events: spec.events, fromBlock, toBlock, strict: true }),
+    next,
+    to,
+  );
 
   for (const l of logs) {
     const args = (l as unknown as { args: Record<string, unknown> }).args;
