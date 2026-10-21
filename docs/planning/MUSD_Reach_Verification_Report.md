@@ -1,5 +1,7 @@
 # MUSD Reach — protocol and product verification
 
+> **Planning input, 20 October 2026, kept unchanged as written before the build.** It is not the current status. What was built, deployed and verified is in [`README.md`](../../README.md), [`docs/STATUS.md`](../STATUS.md) and [`docs/SECURITY_FINDINGS.md`](../SECURITY_FINDINGS.md); where this document differs from them, they are authoritative.
+
 Checked 20 October 2026. Read-only investigation; no deployments, signed transactions, token transfers, repository changes, or outreach were performed. The supplied PRD remains unchanged.
 
 ## Decision
