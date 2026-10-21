@@ -38,7 +38,7 @@ export function Backing() {
           }
           lede={
             <p>
-              These figures are read live from both chains in your browser, not from our server. Base is read at its finalized block first, then Mezo. Guardians only sign finalized burns, so the equation must balance exactly; a mismatch is shown, never smoothed over.
+              These figures are read live from both chains in your browser, not from our server. Base is read first, then Mezo; a burn can't be attested and released in the seconds between the two reads, so the equation must balance exactly. A mismatch is shown, never smoothed over.
             </p>
           }
         />
@@ -68,7 +68,7 @@ export function Backing() {
               <div className="flex flex-wrap items-center gap-3">
                 <Chip tone={r.status === "BALANCED" ? "verified" : "failed"}>{r.status === "BALANCED" ? "Balanced" : "Mismatch"}</Chip>
                 <span className="num text-xs text-ink-400">
-                  Mezo block {r.mezoBlock.toString()} · Base finalized block {r.baseFinalizedBlock.toString()}
+                  Mezo block {r.mezoBlock.toString()} · Base block {r.baseFinalizedBlock.toString()}
                 </span>
               </div>
               <div className="flex h-3 w-full overflow-hidden rounded-full bg-ink-800" role="img" aria-label="Composition of locked shares">
