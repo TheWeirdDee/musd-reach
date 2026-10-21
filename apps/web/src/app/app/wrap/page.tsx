@@ -171,8 +171,8 @@ export default function WrapPage() {
                 <label htmlFor="recipient" className="text-sm text-ink-300">
                   Recipient on Base Sepolia
                 </label>
-                <input id="recipient" value={recipient} onChange={(e) => setRecipient(e.target.value.trim())} spellCheck={false} placeholder="0x…" aria-invalid={!recipientOk} className={cn("num mt-2 h-11 w-full rounded-sm border bg-ink-950 px-3 text-sm text-bone-100 outline-none focus:border-ember-500", recipientOk ? "border-ink-600" : "border-rust-500")} />
-                {!recipientOk && <p className="mt-2 text-xs text-rust-300">Enter a valid address. Receipts sent to a wrong address cannot be recovered by anyone.</p>}
+                <input id="recipient" value={recipient} onChange={(e) => setRecipient(e.target.value.trim())} spellCheck={false} placeholder="0x…" aria-invalid={!recipientOk && recipient !== ""} aria-describedby={!recipientOk && recipient !== "" ? "recipient-error" : undefined} className={cn("num mt-2 h-11 w-full rounded-sm border bg-ink-950 px-3 text-sm text-bone-100 outline-none focus:border-ember-500", recipientOk || !recipient ? "border-ink-600" : "border-rust-500")} />
+                {!recipientOk && recipient !== "" && <p id="recipient-error" className="mt-2 text-xs text-rust-300">Enter a valid address. Receipts sent to a wrong address cannot be recovered by anyone.</p>}
               </div>
             )}
           </Panel>
