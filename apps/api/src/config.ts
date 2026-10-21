@@ -38,7 +38,8 @@ const schema = z.object({
 export type AppEnv = z.infer<typeof schema>;
 
 export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppEnv {
-  const parsed = schema.safeParse(source);
+  // Platforms such as Railway route to the PORT they inject; an explicit API_PORT still wins.
+  const parsed = schema.safeParse({ ...source, API_PORT: source.API_PORT ?? source.PORT });
   if (!parsed.success) {
     throw new Error(`Invalid environment: ${parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`);
   }
