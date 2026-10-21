@@ -106,7 +106,15 @@ export default function RunPage() {
         )}
         {isPublic && (
           <Notice tone="info" title="Contract version exercised">
-            This run used the first public deployment (settlement model <span className="num">{String(run.deployment.settlementModel ?? "fallback-v1")}</span>). Its MUSD-mode redemptions fall back to wSMUSD shares on any settlement failure; a fixed version is implemented and tested locally but has not been deployed or run publicly yet.
+            {(run.settlementModel ?? "fallback-v1") === "pending-v2" ? (
+              <>
+                This run exercised the <strong>v2</strong> contracts (settlement model <span className="num">pending-v2</span>): a MUSD redemption that cannot settle is parked as a pending settlement that only its recipient can relax or convert, and gas-starved deliveries revert.
+              </>
+            ) : (
+              <>
+                This run exercised the superseded <strong>v1</strong> contracts (settlement model <span className="num">fallback-v1</span>). Their MUSD-mode redemptions fall back to wSMUSD shares on any settlement failure, including relayer-induced out-of-gas (finding F-01). Kept as historical evidence.
+              </>
+            )}
           </Notice>
         )}
         {run.reusedTransactions && (
