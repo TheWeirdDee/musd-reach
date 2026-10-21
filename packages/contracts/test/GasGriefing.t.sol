@@ -287,3 +287,75 @@ contract BreakableStrategyLite {
 
     function onMigrated(uint256) external {}
 }
+
+/// @notice Liveness of pending settlements: indefinite delay, repeated failed retries, and a
+///         relayer that disappears. Recovery must stay permissionless and must not depend on the
+///         original relayer.
+contract PendingSettlementLivenessTest is ReachTestBase {
+    function _pendingDuringOutage(address relayer) internal returns (bytes32 id, BreakableStrategyLite bad) {
+        wrapMusd(alice, 100e18);
+        bad = new BreakableStrategyLite(address(musd), address(vault));
+        IPcvOwner(address(vault)).setStrategy(address(bad));
+        (bytes memory issueVaa,) = lockShares(alice, 100e18, alice);
+        onBase();
+        dest.receiveIssue(issueVaa);
+        bytes memory vaa;
+        (vaa, id) = burnReceipt(alice, 100e18, bob, 2, 0);
+        onMezo();
+        bad.setBroken(true);
+        vm.prank(relayer); // any EOA can deliver; there is no privileged relayer
+        source.receiveRedeem(vaa);
+    }
+
+    function test_indefiniteDelay_manyFailedRetries_thenAnyoneSettles() public {
+        (bytes32 id, BreakableStrategyLite bad) = _pendingDuringOutage(makeAddr("relayerThatDisappears"));
+        for (uint256 i = 0; i < 50; i++) {
+            vm.warp(block.timestamp + 73 days); // ~10 years in total
+            vm.prank(address(uint160(0xBEEF00 + i)));
+            vm.expectRevert();
+            source.retrySettlement(id);
+        }
+        (address r, uint256 sh, uint256 min) = source.pendingSettlements(id);
+        assertEq(r, bob);
+        assertEq(sh, 100e18, "entry intact after 10 years and 50 failed retries");
+        assertEq(min, 0);
+        assertEq(source.totalPendingSettlement(), 100e18);
+        assertEq(wrapper.balanceOf(address(source)), 100e18, "shares still in custody");
+
+        // Yield accrues to the wrapper during the delay; the pending entry keeps NAV exposure.
+        addNativeYield(10e18);
+        bad.setBroken(false);
+        vm.prank(makeAddr("strangerYearsLater")); // not the original relayer, not the recipient
+        uint256 out = source.retrySettlement(id);
+        assertGe(out, 100e18, "settles at NAV at settlement time");
+        assertEq(musd.balanceOf(bob), out, "paid to the recipient, never the caller");
+        assertEq(source.totalPendingSettlement(), 0);
+    }
+
+    function test_recipientCanExitInKindDuringIndefiniteOutage() public {
+        (bytes32 id,) = _pendingDuringOutage(makeAddr("relayer"));
+        vm.warp(block.timestamp + 3650 days);
+        // The vault never recovers: the recipient takes shares and exits in kind (no vault withdrawal needed).
+        vm.prank(bob);
+        source.claimSharesInstead(id);
+        vm.prank(bob);
+        (uint256 smusdOut,) = wrapper.redeemInKind(100e18, bob, bob);
+        assertEq(smusdOut, 100e18, "native principal recovered without the vault paying out");
+    }
+
+    function testFuzz_retriesNeverMutatePendingUntilSuccess(uint8 attempts, uint32 delay) public {
+        (bytes32 id, BreakableStrategyLite bad) = _pendingDuringOutage(makeAddr("relayer"));
+        uint256 n = bound(attempts, 1, 40);
+        for (uint256 i = 0; i < n; i++) {
+            vm.warp(block.timestamp + bound(delay, 1, 365 days));
+            (bool ok,) = address(source).call(abi.encodeCall(source.retrySettlement, (id)));
+            assertFalse(ok);
+            (, uint256 sh,) = source.pendingSettlements(id);
+            assertEq(sh, 100e18);
+        }
+        bad.setBroken(false);
+        source.retrySettlement(id);
+        (, uint256 after_,) = source.pendingSettlements(id);
+        assertEq(after_, 0);
+    }
+}
