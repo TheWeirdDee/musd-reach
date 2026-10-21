@@ -3,8 +3,8 @@ import { z } from "zod";
 import { createHttpServer, registerHttpPolicy } from "../src/http.js";
 
 // app.inject() connects from 127.0.0.1, which stands in for the reverse proxy.
-async function server(trustProxy: string) {
-  const env = { CORS_ORIGINS: "http://localhost:3000", RATE_LIMIT_PER_MINUTE: 2, TRUST_PROXY: trustProxy };
+async function server(trustProxy: string, clientIpHeader = "") {
+  const env = { CORS_ORIGINS: "http://localhost:3000", RATE_LIMIT_PER_MINUTE: 2, TRUST_PROXY: trustProxy, CLIENT_IP_HEADER: clientIpHeader };
   const app = createHttpServer(env);
   await registerHttpPolicy(app, env);
   app.get("/ok", async () => ({ ok: true }));
@@ -43,6 +43,32 @@ describe("rate limiting behind a proxy (F-18)", () => {
   });
 });
 
+describe("edge-written client IP header (Railway X-Real-IP)", () => {
+  it("is ignored unless configured, so rotating it cannot reset a bucket", async () => {
+    const app = await server("");
+    const codes: number[] = [];
+    for (let i = 0; i < 3; i++) codes.push((await app.inject({ url: "/ok", headers: { "x-real-ip": `10.0.0.${i}` } })).statusCode);
+    expect(codes).toEqual([200, 200, 429]);
+    await app.close();
+  });
+
+  it("keys clients by the edge-written value when configured", async () => {
+    const app = await server("", "x-real-ip");
+    for (let i = 0; i < 2; i++) await app.inject({ url: "/ok", headers: { "x-real-ip": "203.0.113.7" } });
+    expect((await app.inject({ url: "/ok", headers: { "x-real-ip": "203.0.113.7" } })).statusCode).toBe(429);
+    expect((await app.inject({ url: "/ok", headers: { "x-real-ip": "198.51.100.4" } })).statusCode).toBe(200);
+    await app.close();
+  });
+
+  it("falls back to the socket address for a malformed value", async () => {
+    const app = await server("", "x-real-ip");
+    const codes: number[] = [];
+    for (let i = 0; i < 3; i++) codes.push((await app.inject({ url: "/ok", headers: { "x-real-ip": `junk-${i}` } })).statusCode);
+    expect(codes).toEqual([200, 200, 429]);
+    await app.close();
+  });
+});
+
 describe("error mapping", () => {
   it("maps validation errors to 400", async () => {
     const app = await server("");
@@ -59,5 +85,14 @@ describe("error mapping", () => {
     expect(r.json().error).toBe("UPSTREAM_UNAVAILABLE");
     expect(r.body).not.toMatch(/secret_table|rpc\.example|abc123/);
     await app.close();
+  });
+});
+
+describe("proxy configuration", () => {
+  it("refuses TRUST_PROXY and CLIENT_IP_HEADER together, and header names that are not lowercase tokens", async () => {
+    const { loadEnv } = await import("../src/config.js");
+    expect(() => loadEnv({ TRUST_PROXY: "10.0.0.1", CLIENT_IP_HEADER: "x-real-ip" })).toThrow(/not both/);
+    expect(() => loadEnv({ CLIENT_IP_HEADER: "X-Real-IP" })).toThrow(/lowercase/);
+    expect(loadEnv({ CLIENT_IP_HEADER: "x-real-ip" }).CLIENT_IP_HEADER).toBe("x-real-ip");
   });
 });
