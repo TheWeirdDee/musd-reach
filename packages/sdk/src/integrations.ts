@@ -12,9 +12,10 @@ export const integrations = [
     id: "erc20-transfer",
     name: "Standard ERC-20 transfer of rwSMUSD",
     network: "Base Sepolia",
-    status: "PENDING_PUBLIC_RUN",
-    detail: "rwSMUSD is a plain ERC-20 with permit. Transfer to a second holder who then redeems is part of the canonical run.",
-    evidence: [],
+    status: "PUBLIC_TESTNET_VERIFIED",
+    detail:
+      "rwSMUSD is a plain ERC-20 with permit. In the v2 public run the primary transferred rwSMUSD to a second holder (Base Sepolia tx 0x52c1cdaa9a…), who burned it and received the exact locked wSMUSD on Mezo. Both wallets are Reach test wallets; no independent party has used rwSMUSD.",
+    evidence: ["evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json"],
   },
   {
     id: "morpho-blue",
