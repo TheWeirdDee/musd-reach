@@ -45,7 +45,12 @@ function cached<T>(ttlMs: number, fn: () => Promise<T>) {
 const notDeployed = (reply: FastifyReply) =>
   reply.code(503).send({ error: "NOT_DEPLOYED", message: "Reach contracts are not deployed on the configured networks yet." });
 
-const amountSchema = z.string().regex(/^\d{1,78}$/, "base-unit integer string");
+// 78 digits admit values above uint256; reject them as a client error rather than letting the ABI
+// encoder fail later, which surfaced as a misleading 502.
+const amountSchema = z
+  .string()
+  .regex(/^\d{1,78}$/, "base-unit integer string")
+  .refine((v) => BigInt(v) < 2n ** 256n, "exceeds uint256");
 
 export function registerRoutes(
   app: FastifyInstance,
