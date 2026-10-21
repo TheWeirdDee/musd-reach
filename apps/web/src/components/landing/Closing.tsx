@@ -128,9 +128,9 @@ export function DeveloperSection() {
         <div data-reveal className="overflow-hidden rounded-md border border-ink-700 bg-ink-900">
           <div className="flex items-center justify-between border-b border-ink-700 px-5 py-3">
             <span className="kicker text-ink-400">integrate.ts</span>
-            <span className="kicker text-ink-500">TypeScript · viem</span>
+            <span className="kicker text-ink-400">TypeScript · viem</span>
           </div>
-          <pre className="overflow-x-auto p-5 text-[0.8125rem] leading-relaxed text-bone-200">
+          <pre tabIndex={0} aria-label="Integration example code" className="overflow-x-auto p-5 text-[0.8125rem] leading-relaxed text-bone-200">
             <code className="num">{snippet}</code>
           </pre>
         </div>
