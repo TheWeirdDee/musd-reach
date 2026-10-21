@@ -21,7 +21,7 @@ const tested = [
   "Forged signatures, altered payloads, foreign emitters, wrong chains, wrong destinations and replays rejected",
   "First-depositor inflation, donation and harvest-timing attacks against the real vault logic",
   "Full lifecycle on forks of the live Mezo vault and real Wormhole Core contracts",
-  "Slither static analysis triaged; no high-severity findings",
+  "Slither static analysis: every result triaged, including two High-rated reentrancy flags on nonReentrant paths",
 ];
 
 export function Security() {
