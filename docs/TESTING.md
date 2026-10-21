@@ -9,6 +9,10 @@
 | Lifecycle, fork | Anvil forks on :8545/:8546; deploy with `REACH_DEPLOYMENTS=<scratch>.json`; then `npx tsx scripts/lifecycle.ts --mode fork` | Full round trip; v2 deployments add steps 12a–12d |
 | Browser E2E, fork | see below | Real UI signing flows with the wagmi mock connector |
 | Verifier | `pnpm verify all [evidence.json]` | Independent chain-only checks |
+| API | `pnpm --filter @musd-reach/api test` | HTTP policy: proxy trust, rate-limit spoofing, error mapping (F-18) |
+| Wallet rejection | `node apps/web/e2e/rejection.mjs [url]` | Scripted EIP-1193 wallet rejecting with 4001: rejected signature, rejected switch, wallet on an unsupported chain (F-17) |
+| Wallet UI | `node apps/web/e2e/wallet-ui.mjs [url]` | Recipient validation; an EIP-6963 wallet listed once (F-16) |
+| Accessibility | `node apps/web/e2e/axe.mjs [url]` and `e2e/keyboard.mjs` | axe-core WCAG 2.1 AA on every route; keyboard order and visible focus |
 
 ## Browser E2E against local forks
 
@@ -27,15 +31,29 @@
 
 `fork-deliver.ts` refuses to run unless both RPCs report Anvil.
 
-## Latest results (20 October 2026)
+## Latest results (21 October 2026)
 
-- **Contracts:** 72 local tests and 7 fork tests pass.
-- **SDK:** 6 tests pass.
-- **Build:** API, SDK and web typecheck clean. ESLint (React Compiler rules) clean. Production build passes, with 14 routes.
-- **v2 fork lifecycle:** 18/18 steps pass.
-- **Browser E2E on forks:** the wrap, minted, redeem, released and pending phases pass. No horizontal overflow at 390px and no uncaught page errors. E2E found and fixed two real bugs (F-06 and F-07 in `docs/SECURITY_FINDINGS.md`).
+- **Contracts:** 75 local tests and 7 fork tests pass. Slither rerun: same 33 triaged results, no high.
+- **SDK:** 10 tests pass. **API:** 5 tests pass.
+- **Build:** API, SDK, verifier, scripts and web typecheck clean. ESLint clean. Production build passes, with 14 routes.
+- **v2 public run:** 18/18 steps (`evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json`). `reach-verify all`: 62/62, transcript saved beside the evidence.
+- **Browser E2E on forks:** wrap, minted, redeem, released and pending phases pass, with no horizontal overflow at 390px and no uncaught page errors. A UI-signed Mezo transaction carried the 1.5M gas floor (F-20).
+- **Wallet rejection E2E:** 14/14. **Wallet UI E2E:** 10/10. The wallet-UI checks fail on the pre-fix code in the four expected places.
+- **Accessibility:** axe reports no violations on any route. The keyboard check passes 6/6.
+- **API Docker image** (WSL Ubuntu 24.04, Docker 29.1, built from `git archive HEAD`): about 117 MB, runs as non-root `reach`, healthy. Every indexer and relay job is OK, reconciliation is BALANCED against the live chains, and the logs show no warnings.
+- **Real MetaMask 13.53.0** (Chromium via Playwright, a throwaway wallet that was never funded). LavaMoat blocks script access to the extension, so it was driven only by mouse and keyboard input at screen coordinates.
+
+  | Check | Result |
+  |---|---|
+  | Install and onboarding | PASS |
+  | EIP-6963 discovery | PASS (listed once after the F-16 fix) |
+  | Connect approval | PASS |
+  | Connect rejection | PASS: "Connection request was rejected in the wallet. Nothing was changed." |
+  | Network detection | PASS after the F-17 fix: "Unsupported (1)" |
+  | Zero balance | PASS: the action is disabled with "Insufficient balance" |
+  | Signing and rejecting a transaction in MetaMask | NOT TESTED: needs a funded wallet, which is outside the authorized transactions |
+
 - **Not tested:**
-  - Real wallet extensions such as MetaMask or Rabby.
-  - The rejected-signature path, because the mock connector can't reject a transaction.
-  - An axe or screen-reader accessibility audit.
-  - The Docker and Railway image builds, because Docker isn't installed here.
+  - Rabby and other extensions.
+  - Screen readers.
+  - Hosted deployments: hosting is not approved.
