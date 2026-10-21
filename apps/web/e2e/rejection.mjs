@@ -98,6 +98,9 @@ await scenario("reject-switch", { startChain: 84532, rejectSwitch: true }, async
 await scenario("unsupported-chain", { startChain: 1, rejectSwitch: true }, async (page) => {
   await page.locator("header").getByRole("button", { name: /^0x0F57…Efe6$/i }).click();
   check("unsupported-chain: badge reports the wallet's real chain", (await page.getByText("Unsupported (1)").count()) > 0);
+  await page.getByRole("button", { name: "Switch to Base Sepolia" }).click();
+  await page.getByText("Network switch was rejected in the wallet. Nothing was changed.").waitFor({ timeout: 15_000 });
+  check("unsupported-chain: a rejected switch from the menu is reported and the badge is unchanged", (await page.getByText("Unsupported (1)").count()) > 0);
   await page.keyboard.press("Escape");
   await page.fill("#wrap-amount", "1");
   const btn = page.getByRole("button", { name: /Approve, then deposit|Deposit and make portable/ });
