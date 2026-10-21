@@ -3,15 +3,16 @@
 Self-audit only. This is **not** an independent professional audit. Severity uses impact × likelihood for a testnet product that targets mainnet later.
 
 Status vocabulary:
-- **Fixed (local)** means the code is changed and regression-tested locally and on forks, but **not deployed**.
+- **Fixed (deployed v2)** means the fix is in the v2 contracts deployed on 21 October 2026 and verified on the public testnets.
+- **Fixed** (off-chain components) means the code is changed, regression-tested and committed locally. The web app and API are **not publicly hosted**.
 - **Open** means the issue is not fixed.
 - **Disclosed** means it is accepted and documented.
 
 | ID | Severity | Component | Finding | Status |
 |---|---|---|---|---|
-| F-01 | Medium | `ReachSourceGateway.receiveRedeem` | Relayer gas manipulation can switch a MUSD-mode redemption to a wSMUSD payout | **Fixed (local, v2)**. Deployed v1 is still affected |
-| F-02 | Medium (mainnet) / inert on testnet | `ReachSavingsWrapper._harvest` | Gas-starving the PCV distribution lets a `depositSavings` caller price in before owed fees are distributed (dilution) | **Fixed (local, v2)** |
-| F-03 | Low | `ReachSavingsWrapper.redeemInKind` | A gas-starved harvest is silently skipped; the exiting holder forfeits unharvested yield | **Fixed (local, v2)** |
+| F-01 | Medium | `ReachSourceGateway.receiveRedeem` | Relayer gas manipulation can switch a MUSD-mode redemption to a wSMUSD payout | **Fixed (deployed v2)**. The archived v1 deployment is still affected |
+| F-02 | Medium (mainnet) / inert on testnet | `ReachSavingsWrapper._harvest` | Gas-starving the PCV distribution lets a `depositSavings` caller price in before owed fees are distributed (dilution) | **Fixed (deployed v2)** |
+| F-03 | Low | `ReachSavingsWrapper.redeemInKind` | A gas-starved harvest is silently skipped; the exiting holder forfeits unharvested yield | **Fixed (deployed v2)** |
 | F-04 | Low | v2 pending settlements | A contract recipient that cannot call `settleWithMinAssets` / `claimSharesInstead` relies on permissionless `retrySettlement`; if the vault never recovers, its shares stay parked | **Disclosed** |
 | F-05 | Info | Wrapper ERC-4626 | `previewDeposit` can overstate shares when the PCV holds undistributed fees | **Disclosed** (PCV is zero on testnet) |
 | F-06 | Medium | Web, `lib/wagmi.ts` | Chain definitions carried hard-coded public RPCs instead of the configured ones; connectors that forward requests (and `wallet_addEthereumChain`) used the wrong endpoint | **Fixed** |
@@ -19,8 +20,17 @@ Status vocabulary:
 | F-08 | Medium | Web, transfer tracker | A consumed REDEEM was shown as "released" even if its MUSD settlement was pending | **Fixed** |
 | F-09 | Low | Tooling (runner, SDK, verifier) | Mezo RPC returned near-intrinsic gas estimates against stale state; receipt lookups were flaky; Base public RPC caps `getLogs` at 200 blocks | **Fixed** |
 | F-10 | Low | Verifier | Crashed when the Base deployment block was not yet finalized | **Fixed** (`AWAITING_FINALITY`) |
-| F-11 | Info | Deployment | The live public deployment is v1 (`fallback-v1`) and remains affected by F-01 until a v2 deployment replaces it in the app | **Disclosed** in the UI (`/risks`, redeem page, FAQ, proof page) |
+| F-11 | Info | Deployment | v1 (`fallback-v1`) stays live and redeemable, and remains affected by F-01. The app now points at v2 | **Disclosed**: v1 is labelled historical on the proof page, with its known issue; `deployments/testnet-v1.json` |
 | F-12 | Low | Web/SDK reconciliation | `sepolia.base.org` rejects `eth_getLogs` ranges above ~200 blocks with HTTP 413; the browser fell back silently but logged errors and wasted requests | **Fixed**: publicnode preferred; 413 handled by adaptive range splitting. Reconciliation still scans from the deploy block, which is O(history) and acceptable at testnet scale |
+| F-13 | Medium | SDK/verifier/API reconciliation | Reconciling at Base `finalized` reported a false MISMATCH of −6 rwSMUSD during the v2 run: the RPC `finalized` head lagged blocks whose burns guardians had already attested and Mezo had released | **Fixed**: Base `latest` read first, then Mezo; regression test `reconcile.test.ts` |
+| F-14 | Low | Verifier | About two of three Mezo RPC backends returned `null` for older receipts, failing evidence checks at random | **Fixed**: receipt retries, then a Blockscout fallback labelled as such in the output |
+| F-15 | Low | API indexer | Inside the Docker smoke test the Base indexer failed every window with HTTP 413 from `sepolia.base.org` | **Fixed**: publicnode default, adaptive window splitting shared with the SDK |
+| F-16 | Low | Web UX and accessibility | axe: 386 contrast failures, scrollable regions not focusable, an empty table header; inputs had no visible keyboard focus; an empty recipient was shown as an error; MetaMask was listed twice ("Browser wallet" and "MetaMask") | **Fixed**: axe reports no violations; `e2e/axe.mjs`, `e2e/keyboard.mjs`, `e2e/wallet-ui.mjs` |
+| F-17 | Medium | Web, wallet network | With a wallet on an unconfigured chain (a fresh MetaMask on Ethereum mainnet), the badge said "Mezo testnet" and actions skipped the switch request, failing with a raw chain-mismatch error. Found with the real MetaMask extension | **Fixed**: the connector's real chain drives the badge and the switch; `e2e/rejection.mjs` "unsupported-chain" |
+| F-18 | Medium | API | `trustProxy: true` took the client-written leftmost `X-Forwarded-For` entry as the client IP, so rotating it bypassed the rate limit. 5xx responses also echoed internal error text | **Fixed**: only listed proxies are trusted (`TRUST_PROXY`); generic 502 body; `apps/api/test/http.test.ts` (fails on the old setting) |
+| F-19 | Low | API image | The container started through `pnpm start`, whose dependency check tried to reinstall into the read-only `/repo` and exited (exit 243), leaving the container unhealthy | **Fixed**: the image starts `node` directly; Docker smoke test healthy |
+| F-20 | Low | Relayer and web transactions | Both sent Mezo transactions with the RPC's gas estimate, which omits the EIP-7623 calldata floor. An under-gassed `receiveRedeem` reverts by design, so the relayer would retry and pay every 20 seconds | **Fixed**: shared `gasLimitFor` policy (the one the v2 public run used); relayer checks receipts; `gas.test.ts`, fork E2E shows a 1.5M limit on a UI-signed Mezo transaction |
+| D-01 | Info | Provenance | The repository's git history starts after the v1 contracts were changed into v2, so the v1 bytecode cannot be rebuilt from any commit. v1 evidence is verified against chain state, not against source | **Disclosed** |
 
 ## F-01: Relayer gas manipulation of the payout asset
 
@@ -54,6 +64,19 @@ With the current idle strategy, the sweep from 120k to 1.2M gas did not reproduc
 
 **Fork evidence.** `evidence/fork-rehearsal/fork-2026-10-20T19-19-24-698Z.json`, steps 12a–12d, plus the browser E2E "pending" phase.
 
+**Public evidence (v2).** `evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json`:
+- Step 12a parks an unreachable-minimum MUSD redemption as pending (tx `0xb89c…c29e`, Mezo block 16279633).
+- Step 12b: a permissionless retry keeps the burner's minimum and is refused.
+- Step 12c: a non-recipient can neither switch the payout to shares nor lower the minimum.
+- Step 12d: the recipient settles once at an acceptable minimum (tx `0x5165…62be9`, block 16279637).
+
+**Liveness (indefinite delay, absent relayer).** `PendingSettlementLivenessTest`:
+- `test_indefiniteDelay_manyFailedRetries_thenAnyoneSettles`: 10 years and 50 failed retries leave the pending record unchanged; then an unrelated address settles it at the burner's minimum.
+- `test_recipientCanExitInKindDuringIndefiniteOutage`: during a permanent vault outage the recipient takes the shares and exits in kind.
+- `testFuzz_retriesNeverMutatePendingUntilSuccess`.
+
+No relayer, operator or backend is needed for recovery. The VAA stays deliverable by anyone, and `retrySettlement` is callable by anyone.
+
 ## F-02: PCV distribution skip (dilution)
 
 **Reproduction.** `test_pcvDistribution_cannotBeSkipped_viaDepositSavings`. A PCV whose distribution consumes all forwarded gas, called with a 29M-gas `depositSavings`: the unguarded wrapper completes the deposit with the distribution skipped. The test **fails on v1 code and passes on v2**, which was verified by temporarily removing the guard.
@@ -66,9 +89,12 @@ The MUSD `deposit` path is not exploitable, because the native vault's own `depo
 
 **Fix.** The same out-of-gas guard on `try this.harvestForInKind()`. A genuine harvest failure is still tolerated, so the in-kind exit stays available during outages.
 
-## Retest
+## Retest (21 October 2026)
 
-- Contracts: 72 local tests and 7 fork tests pass.
-- Slither: 33 results, no high severity (`docs/security/slither-summary.txt`).
-- v2 fork lifecycle: 18/18 steps.
-- Browser E2E on forks: 5 phases pass (wrap, minted, redeem, released, pending).
+- Contracts: 75 local tests and 7 fork tests pass.
+- Slither rerun: the same 33 results under the same 11 detectors, with no high severity (`docs/security/slither-summary.txt`).
+- v2 public run: 18/18 steps. `reach-verify all`: 62/62 (`evidence/real-chain/verify-testnet-2026-10-21T11-23-33-084Z.txt`).
+- Browser E2E on forks: 5 phases pass (wrap, minted, redeem, released, pending), rerun after F-20.
+- Wallet E2E: `rejection.mjs` 14/14, `wallet-ui.mjs` 10/10. axe: no violations. Keyboard: 6/6.
+- Real MetaMask 13.53.0: see `docs/TESTING.md`. Connect, connect-reject and network detection were tested; signing a transaction was not.
+- API: 5 HTTP-policy tests. SDK: 10 tests.
