@@ -130,7 +130,7 @@ export function DeveloperSection() {
             <span className="kicker text-ink-400">integrate.ts</span>
             <span className="kicker text-ink-400">TypeScript · viem</span>
           </div>
-          <pre tabIndex={0} aria-label="Integration example code" className="overflow-x-auto p-5 text-[0.8125rem] leading-relaxed text-bone-200">
+          <pre tabIndex={0} aria-label="Integration example code" className="relative overflow-x-auto p-5 text-[0.8125rem] leading-relaxed text-bone-200">
             <code className="num">{snippet}</code>
           </pre>
         </div>
