@@ -25,9 +25,10 @@ COPY deployments deployments
 COPY evidence evidence
 RUN mkdir -p /data && chown reach /data
 USER reach
-ENV PGLITE_DIR=/data/pglite API_PORT=8787 ROLE=all
+# Listens on $PORT when the platform injects one (Railway), else 8787.
+ENV PGLITE_DIR=/data/pglite ROLE=all
 EXPOSE 8787
-HEALTHCHECK --interval=30s --timeout=5s --start-period=30s CMD node -e "fetch('http://127.0.0.1:'+(process.env.API_PORT||8787)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
+HEALTHCHECK --interval=30s --timeout=5s --start-period=30s CMD node -e "fetch('http://127.0.0.1:'+(process.env.API_PORT||process.env.PORT||8787)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
 # Start with node directly: `pnpm start` runs pnpm's dependency-status check, which tries to
 # reinstall into the read-only /repo when other workspace packages differ (F-19), and would
 # download pnpm through corepack on every start.
