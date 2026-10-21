@@ -6,7 +6,7 @@
 | Contracts, fork | `RUN_FORK=true forge test --match-path "test/fork/ReachLiveFork.t.sol"` | Live Mezo vault and real Wormhole cores (guardian set substituted in fork storage) |
 | Morpho, fork | `RUN_FORK_BASE_MAINNET=true forge test --match-contract MorphoCompatibilityForkTest` | Real Morpho Blue on a Base mainnet fork |
 | SDK | `pnpm --filter @musd-reach/sdk test` | TS↔Solidity encoding parity, VAA digest parity with Wormholescan, exact amount math |
-| Lifecycle, fork | Anvil forks on :8545/:8546; deploy with `REACH_DEPLOYMENTS=<scratch>.json`; then `npx tsx scripts/lifecycle.ts --mode fork` | Full round trip; v2 deployments add steps 12a–12d |
+| Lifecycle, fork | Anvil forks on :8545/:8546; deploy with `REACH_DEPLOYMENTS=cache/fork-deployments.json` (gitignored; Foundry may only write inside the package, `evidence/` and `deployments/`); then, from the repository root, `REACH_DEPLOYMENTS=packages/contracts/cache/fork-deployments.json npx tsx scripts/lifecycle.ts --mode fork` | Full round trip; v2 deployments add steps 12a–12d |
 | Browser E2E, fork | see below | Real UI signing flows with the wagmi mock connector |
 | Verifier | `pnpm verify all [evidence.json]` | Independent chain-only checks |
 | API | `pnpm --filter @musd-reach/api test` | HTTP policy: proxy trust, rate-limit spoofing, error mapping (F-18) |
@@ -17,7 +17,7 @@
 ## Browser E2E against local forks
 
 1. Start forks with impersonation: `anvil --fork-url https://rpc.test.mezo.org --port 8545 --chain-id 31611 --auto-impersonate`, and the same for Base Sepolia on port 8546.
-2. Deploy v2 to the forks with `DeployReach.s.sol`, with `REACH_DEPLOYMENTS` pointing to a scratch file.
+2. Deploy v2 to the forks with `DeployReach.s.sol`, with `REACH_DEPLOYMENTS=cache/fork-deployments.json` (relative to `packages/contracts`).
 3. Fund a test address **on the forks only**, using `anvil_setBalance` and MUSD from an impersonated holder.
 4. Start the app bound to the fork deployment. The mock connector exists only when `NEXT_PUBLIC_E2E_ACCOUNT` is set at build time:
 
