@@ -3,6 +3,7 @@ import { integrations } from "@musd-reach/sdk";
 import { ContentPage } from "@/components/site/Page";
 import { Chip, Notice } from "@/components/ui/primitives";
 import { statusLabel, statusTone } from "@/lib/status";
+import { repoFile } from "@/lib/links";
 
 export const metadata: Metadata = { title: "Integrations" };
 
@@ -43,7 +44,12 @@ export default function IntegrationsPage() {
               )}
               {i.evidence.length > 0 && (
                 <p className="mt-5 text-xs text-ink-400">
-                  Evidence: {i.evidence.map((e) => <code key={e} className="num break-hash mr-2 rounded-xs bg-ink-850 px-1.5 py-0.5 text-bone-200">{e}</code>)}
+                  Evidence:{" "}
+                  {i.evidence.map((e) => (
+                    <a key={e} href={repoFile(e)} target="_blank" rel="noreferrer" className="num break-hash mr-2 rounded-xs bg-ink-850 px-1.5 py-0.5 text-bone-200 underline decoration-ink-500 underline-offset-2 hover:text-bone-100">
+                      {e}
+                    </a>
+                  ))}
                 </p>
               )}
             </li>
