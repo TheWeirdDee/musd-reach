@@ -40,6 +40,9 @@ Each row is covered by an automated test, unless the Coverage column says otherw
 | 18 | Redemption slippage | `minAssets` bound. v2: pending, and the recipient decides | `test_musdMode_belowMinAssets_becomesPending_recipientDecides` |
 | 26 | Relayer gas manipulation of the payout asset | v2 out-of-gas guard plus pending settlements | `GasGriefingHeavyStrategyTest`, `testFuzz_relayerGas_neverSwitchesAsset` |
 | 27 | Gas-starved PCV distribution (dilution) | v2 out-of-gas guard | `test_pcvDistribution_cannotBeSkipped_viaDepositSavings` |
+| 28 | Relayer disappears, or a pending settlement waits indefinitely | VAAs stay deliverable by anyone; `retrySettlement` is permissionless and never mutates the record until it succeeds; the recipient can always take the shares and exit in kind | `test_indefiniteDelay_manyFailedRetries_thenAnyoneSettles` (10 years, 50 failed retries, then a stranger settles), `test_recipientCanExitInKindDuringIndefiniteOutage`, `testFuzz_retriesNeverMutatePendingUntilSuccess`; public steps 12a–12d |
+| 29 | Rate-limit evasion through spoofed `X-Forwarded-For` | Only listed proxies are trusted | `apps/api/test/http.test.ts` (F-18) |
+| 30 | Under-gassed deliveries from the relayer or the UI | Shared gas policy with a Mezo floor; reverted deliveries consume nothing | `gas.test.ts`, fork E2E (F-20) |
 | 19 | Guardian-role misuse | Can only pause entry | `test_guardianPause_blocksNewLocks_butRedemptionsStillRelease` |
 | 20 | Peer rebinding | One-time bind, binder only | `test_bindSourceGateway_isOneTimeAndBinderOnly` |
 | 21 | Reentrancy | `nonReentrant` on all entry points; trusted callees only | Slither triage below |
@@ -54,7 +57,7 @@ Each row is covered by an automated test, unless the Coverage column says otherw
 - Read-only reentrancy: during `vault.withdraw`, the wrapper's `totalAssets()` view is mid-update. Only the vault and its owner-set strategy run code at that point.
 - The wrapper cannot detect native impairment before a withdrawal fails, because the vault reports principal 1:1.
 - `ReachNavOracle` values MUSD at par, uses a static haircut and reverts when stale. It is a research harness, not a production oracle.
-- **Gas griefing of MUSD-mode redemptions (F-01).** In the deployed v1, a relayer can force a MUSD redemption to pay out wSMUSD by starving the inner settlement of gas, when native withdrawals are expensive. v2, implemented locally and not yet deployed, reverts gas-starved deliveries and parks genuine failures as pending settlements that the recipient controls. See `docs/SECURITY_FINDINGS.md`.
+- **Gas griefing of MUSD-mode redemptions (F-01).** In the archived v1 deployment, a relayer can force a MUSD redemption to pay out wSMUSD by starving the inner settlement of gas, when native withdrawals are expensive. v2, deployed on 21 October 2026, reverts gas-starved deliveries and parks genuine failures as pending settlements that the recipient controls. See `docs/SECURITY_FINDINGS.md`.
 - **PCV distribution skip (F-02).** Fixed in v2 with an out-of-gas guard. It is inert on testnet, where the PCV is zero.
 - Testnet guardian security is a single key.
 
