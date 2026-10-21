@@ -2,6 +2,8 @@ import { chromium } from "playwright";
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 const axeSrc = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
+// node e2e/axe.mjs [baseUrl]
+const BASE = process.argv[2] ?? "http://localhost:3000";
 const routes = ["/", "/app", "/app/wrap", "/app/portable/new", "/app/redeem", "/app/history", "/proof", "/proof/testnet-2026-10-20T15-05-14-568Z", "/proof/testnet-2026-10-21T11-23-33-084Z", "/status", "/integrations", "/developers", "/risks", "/app/transfers/0x69691ea22cce36294b74bb9538fd2b62ec953f00029580846571fb55ad89aa32?tx=0x680490b824bf9cc28c2ce11fac8389bb7a8916598767288a55f60ef6b1704c45&dir=ISSUE"];
 const b = await chromium.launch();
 const summary = {};
@@ -9,9 +11,11 @@ for (const w of [1280, 390]) {
   const ctx = await b.newContext({ viewport: { width: w, height: 900 }, reducedMotion: "reduce" });
   for (const r of routes) {
     const p = await ctx.newPage();
-    await p.goto("http://localhost:3000" + r, { waitUntil: "networkidle", timeout: 120000 });
+    await p.goto(BASE + r, { waitUntil: "networkidle", timeout: 120000 });
     await p.waitForTimeout(1500);
     await p.addScriptTag({ content: axeSrc });
+    // Never report "no violations" for a page axe did not actually scan.
+    if ((await p.evaluate(() => typeof window.axe?.run)) !== "function") throw new Error(`axe did not load on ${r}`);
     const res = await p.evaluate(async () => await window.axe.run(document, { runOnly: { type: "tag", values: ["wcag2a", "wcag2aa", "wcag21a", "wcag21aa", "best-practice"] } }));
     for (const v of res.violations) {
       const k = `${v.impact} ${v.id}`;
