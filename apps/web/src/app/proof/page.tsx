@@ -65,7 +65,7 @@ export default function ProofPage() {
               <div className="flex flex-wrap items-center gap-3">
                 <Chip tone={rec.data.status === "BALANCED" ? "verified" : "failed"}>{rec.data.status === "BALANCED" ? "Balanced" : "Mismatch"}</Chip>
                 <span className="num text-xs text-ink-400">
-                  Mezo {rec.data.mezoBlock.toString()} · Base {rec.data.baseFinalizedBlock.toString()}
+                  Mezo {rec.data.mezoBlock.toString()} · Base {rec.data.baseBlock.toString()}
                 </span>
               </div>
               <dl className="mt-4 grid gap-x-10 md:grid-cols-2">
