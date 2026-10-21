@@ -70,8 +70,18 @@ export function registerRoutes(
   app.get("/ready", async (_req, reply) => {
     const jobs = await db.query("SELECT job, last_ok_at, last_error_at, last_error, consecutive_errors FROM job_runs");
     const cursors = await db.query("SELECT chain, next_block, finalized_block, updated_at FROM chain_cursor");
-    const failing = jobs.rows.filter((j) => Number(j.consecutive_errors) >= 5);
-    return reply.code(failing.length ? 503 : 200).send(toJson({ ready: failing.length === 0, deployed: !!d, jobs: jobs.rows, cursors: cursors.rows }));
+    const failing = jobs.rows.filter((j) => Number(j.consecutive_errors) >= 5).map((j) => String(j.job));
+    // With a deployment, history is only as good as the indexers: both must have succeeded recently.
+    // A success recorded before a restart or outage does not count once it is older than this.
+    const freshMs = 10 * 60_000;
+    const stale = d
+      ? ["index:mezo", "index:base"].filter((name) => {
+          const j = jobs.rows.find((r) => r.job === name);
+          return !j?.last_ok_at || Date.now() - new Date(j.last_ok_at as string).getTime() > freshMs;
+        })
+      : [];
+    const ready = failing.length === 0 && stale.length === 0;
+    return reply.code(ready ? 200 : 503).send(toJson({ ready, deployed: !!d, failing, notIndexedRecently: stale, jobs: jobs.rows, cursors: cursors.rows }));
   });
 
   app.get("/v1/networks", async () =>
