@@ -43,6 +43,9 @@ Each row is covered by an automated test, unless the Coverage column says otherw
 | 28 | Relayer disappears, or a pending settlement waits indefinitely | VAAs stay deliverable by anyone; `retrySettlement` is permissionless and never mutates the record until it succeeds; the recipient can always take the shares and exit in kind | `test_indefiniteDelay_manyFailedRetries_thenAnyoneSettles` (10 years, 50 failed retries, then a stranger settles), `test_recipientCanExitInKindDuringIndefiniteOutage`, `testFuzz_retriesNeverMutatePendingUntilSuccess`; public steps 12a–12d |
 | 29 | Rate-limit evasion through spoofed `X-Forwarded-For` | Only listed proxies are trusted | `apps/api/test/http.test.ts` (F-18) |
 | 30 | Under-gassed deliveries from the relayer or the UI | Shared gas policy with a Mezo floor; reverted deliveries consume nothing | `gas.test.ts`, fork E2E (F-20) |
+| 31 | Script injection into the app (XSS) steering wallet requests | Per-request nonce CSP with `strict-dynamic`, no `unsafe-inline`/`unsafe-eval`; `connect-src` limited to configured endpoints; `frame-ancestors 'none'` | `e2e/csp.mjs` (F-21) |
+| 32 | Forged client-IP headers behind a platform edge with no published proxy range | `CLIENT_IP_HEADER` only for a header the edge overwrites; IP-format check; refused together with `TRUST_PROXY`; verified on the real host | `apps/api/test/http.test.ts`, `scripts/check-rate-limit.mjs` (F-26); hosted run pending |
+| 33 | Test-only switches (mock wallet, deployment override) in a hosted build | Build refuses them; production bundles ignore them | Verified build refusal (F-22) |
 | 19 | Guardian-role misuse | Can only pause entry | `test_guardianPause_blocksNewLocks_butRedemptionsStillRelease` |
 | 20 | Peer rebinding | One-time bind, binder only | `test_bindSourceGateway_isOneTimeAndBinderOnly` |
 | 21 | Reentrancy | `nonReentrant` on all entry points; trusted callees only | Slither triage below |
