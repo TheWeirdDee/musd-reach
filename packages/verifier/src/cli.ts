@@ -6,6 +6,7 @@
  *   reach-verify deployment               Reach contract wiring vs deployments/testnet.json
  *   reach-verify reconcile                backing equation from chain state only
  *   reach-verify evidence <file.json>     re-check every tx receipt and re-verify every VAA
+ *   reach-verify bytecode                 deployed runtime code == compiled artifacts (immutables masked)
  *   reach-verify all [evidence.json]      everything above
  *
  * Options: --deployments <path>  --mezo-rpc <url>[,<url>]  --base-rpc <url>[,<url>]  --json
@@ -138,6 +139,53 @@ async function verifyDeployment(cfg: ReachConfig, c: { mezo: PublicClient; base:
   add(g, "receipt's only minter is destination gateway", eqAddr(rGateway, d.destinationGateway), rGateway);
 }
 
+/**
+ * Compares deployed runtime bytecode with the local Foundry artifacts. Immutable values are
+ * written into the runtime code at deploy time, so exactly the byte ranges the compiler reports
+ * in `immutableReferences` are masked; every other byte must match. Requires `forge build`.
+ */
+async function verifyBytecode(cfg: ReachConfig, c: { mezo: PublicClient; base: PublicClient }) {
+  const g = "bytecode";
+  const d = cfg.deployment;
+  if (!d) return;
+  const out = join(ROOT, "packages", "contracts", "out");
+  const targets = [
+    ["ReachSavingsWrapper", c.mezo, d.wrapper],
+    ["ReachSourceGateway", c.mezo, d.sourceGateway],
+    ["ReachDestinationGateway", c.base, d.destinationGateway],
+    ["RemoteWrapperReceipt", c.base, d.receipt],
+  ] as const;
+  for (const [name, client, address] of targets) {
+    const file = join(out, `${name}.sol`, `${name}.json`);
+    if (!existsSync(file)) {
+      add(g, `${name} artifact`, false, "run `forge build` in packages/contracts first");
+      continue;
+    }
+    const art = JSON.parse(readFileSync(file, "utf8")) as {
+      deployedBytecode: { object: string; immutableReferences?: Record<string, { start: number; length: number }[]> };
+    };
+    const expected = art.deployedBytecode.object.replace(/^0x/, "").toLowerCase();
+    const onchain = ((await client.getCode({ address })) ?? "0x").replace(/^0x/, "").toLowerCase();
+    if (onchain.length !== expected.length) {
+      add(g, `${name} runtime code`, false, `length ${onchain.length / 2} bytes vs artifact ${expected.length / 2}`);
+      continue;
+    }
+    const masked = new Set<number>();
+    for (const refs of Object.values(art.deployedBytecode.immutableReferences ?? {})) {
+      for (const r of refs) for (let i = r.start; i < r.start + r.length; i++) masked.add(i);
+    }
+    let mismatch = -1;
+    for (let i = 0; i < expected.length / 2; i++) {
+      if (masked.has(i)) continue;
+      if (expected.slice(i * 2, i * 2 + 2) !== onchain.slice(i * 2, i * 2 + 2)) {
+        mismatch = i;
+        break;
+      }
+    }
+    add(g, `${name} runtime code matches artifact`, mismatch === -1, mismatch === -1 ? `${expected.length / 2} bytes, ${masked.size} immutable bytes masked` : `first mismatch at byte ${mismatch}`);
+  }
+}
+
 async function verifyReconcile(cfg: ReachConfig, c: { mezo: PublicClient; base: PublicClient }) {
   if (!cfg.deployment) return;
   // `latest` only for local forks, where `finalized` resolves to the fork origin block.
@@ -217,6 +265,7 @@ async function main() {
   const c = createReachClients(cfg);
   if (cmd === "registry" || cmd === "all") await verifyRegistry(cfg, c);
   if (cmd === "deployment" || cmd === "all") await verifyDeployment(cfg, c);
+  if (cmd === "bytecode" || cmd === "all") await verifyBytecode(cfg, c);
   if (cmd === "reconcile" || cmd === "all") await verifyReconcile(cfg, c);
   const evFile = cmd === "evidence" ? process.argv[3] : cmd === "all" ? process.argv[3] : undefined;
   if (evFile && !evFile.startsWith("--")) await verifyEvidence(cfg, c, evFile);
