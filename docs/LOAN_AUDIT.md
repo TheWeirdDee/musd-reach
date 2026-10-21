@@ -48,16 +48,32 @@ The required balance is about **1,801.81 MUSD plus interest up to the closing tr
 
 A partial repayment via `repayMUSD` cannot close the gap. Net debt must stay at or above `minNetDebt` = 1,800 MUSD, so only about 1.8 MUSD could be repaid, and the collateral stays locked.
 
+## Re-read on 21 October 2026 (after the v2 run)
+
+The v2 run left 3 MUSD of value with the secondary as v2 wSMUSD. All values are read-only `eth_call` reads.
+
+| | MUSD |
+|---|---|
+| Trove debt (`getTroveDebt`) | 2,001.853 (status 1, active) |
+| Required to close (debt − 200) | ≈ 1,801.85, plus ~0.055/day |
+| Primary wallet | 1,794.50 |
+| **Shortfall** | **≈ 7.35** |
+| Secondary: 2.5 v1 wSMUSD + 3 v2 wSMUSD (`previewRedeem` 1:1) | 5.50 |
+| **After recovering both** | **≈ 1.85 short** |
+
+The secondary holds 0 BTC, so step 1 is still needed first.
+
 ## Repayment plan (needs approval for each transaction)
 
 | # | Chain | From | Action | Notes |
 |---|---|---|---|---|
 | 1 | Mezo testnet | primary | Send ~0.0002 BTC to the secondary for gas | Native transfer |
-| 2 | Mezo testnet | secondary | `ReachSavingsWrapper(0x21C7…3484).redeem(2.5e18, primary, secondary)` | ~2.5 MUSD to primary at the current NAV of 1.0 |
-| 3 | — | you | **Obtain ≥ 2.0 MUSD on Mezo testnet** for the primary (for example from another testnet wallet you control) | External; I can't source it |
+| 2 | Mezo testnet | secondary | `ReachSavingsWrapper(0x21C7…3484).redeem(2.5e18, primary, secondary)` (v1) | ~2.5 MUSD to primary at the current NAV of 1.0 |
+| 2b | Mezo testnet | secondary | `ReachSavingsWrapper(0xf8cF…4306).redeem(3e18, primary, secondary)` (v2) | ~3 MUSD to primary |
+| 3 | — | you | **Obtain ≥ 2.0 MUSD on Mezo testnet** (re-check the shortfall first) for the primary (for example from another testnet wallet you control) | External; I can't source it |
 | 4 | Mezo testnet | primary | Preflight `eth_call` of `closeTrove()`; abort if it reverts (recovery mode, insufficient balance) | Read-only |
 | 5 | Mezo testnet | primary | `BorrowerOperations.closeTrove()` | Burns about 1,801.9 MUSD; returns 0.04 BTC |
 
 **Alternative: leave the loan open.** These are testnet funds. The position is at ~163% with no maintenance needed unless testnet BTC falls about 33%, in which case liquidation would take the 0.04 testnet BTC. Interest accrues at about 20 MUSD a year.
 
-**Recommendation.** Leave it open until about 2 MUSD is available. Then run steps 1–5 in one sitting, so interest and price can't move between the preflight check and the close.
+**Recommendation.** Leave it open until about 2 MUSD is available. Then run steps 1–5 (including 2b) in one sitting, so interest and price can't move between the preflight check and the close.
