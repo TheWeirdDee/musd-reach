@@ -1,0 +1,20 @@
+{
+  "baseChainId": 84532,
+  "deployer": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+  "guardian": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+  "mezoChainId": 31611,
+  "musd": "0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503",
+  "nativeVault": "0x6f461c68B2c5492C0F5CCEc5a264d692aA7A8e16",
+  "nativeVaultImplementation": "0x92D12f0a60906b39d81acD9bf8977b6c824cD98C",
+  "wrapper": "0x21C7e74B14A56941ECDc1a4002B96DB73DaC3484",
+  "wrapperDeployBlock": 16263468,
+  "destinationGateway": "0xcdF17A639d5B0B6B6EE87731Ba653B74Ea5Cf973",
+  "receipt": "0xf66Ec10B6daDdbCA274c432c2DF3e76163400bF8",
+  "destinationDeployBlock": 48368858,
+  "sourceGateway": "0x4Fc8027Ad6d41dc2712e94A25f02E21003F78cdc",
+  "sourceDeployBlock": 16263611,
+  "settlementModel": "fallback-v1",
+  "knownIssues": [
+    "MUSD-mode redemptions fall back to wSMUSD shares on any settlement failure, including a relayer-induced out-of-gas when native withdrawals are expensive. Fixed in pending-v2 (not yet deployed)."
+  ]
+}
