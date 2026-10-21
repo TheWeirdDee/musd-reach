@@ -63,7 +63,7 @@ export function registerRoutes(
 
   const nativeState = cached(15_000, () => readNativeVaultState(clients.mezo, cfg));
   const wrapperState = cached(10_000, () => readWrapperState(clients.mezo, cfg));
-  const reconciliation = cached(30_000, () => reconcile(clients, cfg, { baseBlockTag: deps.baseFinality }));
+  const reconciliation = cached(30_000, () => reconcile(clients, cfg, { baseBlockTag: "latest" })); // see F-13
 
   app.get("/health", async () => ({ ok: true, startedAt: deps.startedAt.toISOString() }));
 
@@ -196,7 +196,7 @@ export function registerRoutes(
   app.get("/v1/backing/reconciliation", async (_req, reply) => {
     if (!d) return notDeployed(reply);
     const { v, ageMs } = await reconciliation();
-    return toJson({ ...v, cacheAgeMs: ageMs, method: "Base read at finalized block, then Mezo latest (instant finality); events + transferConsumed for in-flight sets." });
+    return toJson({ ...v, cacheAgeMs: ageMs, method: "Base latest read first, then Mezo latest (instant finality); events + transferConsumed for in-flight sets. See F-13." });
   });
 
   app.get("/v1/messaging/health", async () => {
