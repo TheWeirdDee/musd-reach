@@ -1,14 +1,16 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useAccount, useConnect, useDisconnect, useChainId } from "wagmi";
+import { useAccount, useConnect, useDisconnect } from "wagmi";
 import { shortHex } from "@musd-reach/sdk";
 import { Button, Chip } from "@/components/ui/primitives";
 import { MEZO_ID, BASE_ID } from "@/lib/reach";
 import { cn } from "@/lib/cn";
 import { useIsClient } from "@/lib/useIsClient";
+import { useWalletChainId } from "@/lib/walletChain";
 
-function networkName(id: number) {
+function networkName(id: number | undefined) {
+  if (id === undefined) return "Checking network";
   if (id === MEZO_ID) return "Mezo testnet";
   if (id === BASE_ID) return "Base Sepolia";
   return `Unsupported (${id})`;
@@ -16,7 +18,7 @@ function networkName(id: number) {
 
 export function WalletButton({ compact }: { compact?: boolean }) {
   const { address, status, connector } = useAccount();
-  const chainId = useChainId();
+  const chainId = useWalletChainId();
   const { connectors, connect, isPending, error, reset } = useConnect();
   const { disconnect } = useDisconnect();
   const [open, setOpen] = useState(false);
@@ -47,12 +49,16 @@ export function WalletButton({ compact }: { compact?: boolean }) {
   }
 
   const supported = chainId === MEZO_ID || chainId === BASE_ID;
+  // EIP-6963 wallets announce themselves by name; the generic injected connector then points at
+  // one of them, so listing both shows the same wallet twice.
+  const announced = connectors.some((c) => c.type === "injected" && c.id !== "injected");
+  const shown = connectors.filter((c) => !(announced && c.id === "injected"));
 
   return (
     <div className="relative" ref={ref}>
       {status === "connected" && address ? (
         <Button intent="secondary" onClick={() => setOpen((o) => !o)} aria-expanded={open} aria-haspopup="dialog" className={cn(compact ? "h-10 px-3" : "")}>
-          <span className={cn("h-2 w-2 rounded-full", supported ? "bg-sage-400" : "bg-rust-400")} aria-hidden />
+          <span className={cn("h-2 w-2 rounded-full", chainId === undefined ? "bg-ink-400" : supported ? "bg-sage-400" : "bg-rust-400")} aria-hidden />
           <span className="num text-[0.8125rem]">{shortHex(address, 4, 4)}</span>
         </Button>
       ) : (
@@ -92,9 +98,9 @@ export function WalletButton({ compact }: { compact?: boolean }) {
           ) : (
             <div className="space-y-3">
               <p className="kicker text-ink-300">Choose a wallet</p>
-              {connectors.length === 0 && <p className="text-sm text-ink-300">No wallet connectors are available in this browser.</p>}
+              {shown.length === 0 && <p className="text-sm text-ink-300">No wallet connectors are available in this browser.</p>}
               <ul className="space-y-2">
-                {connectors.map((c) => (
+                {shown.map((c) => (
                   <li key={c.uid}>
                     <Button
                       intent="secondary"
