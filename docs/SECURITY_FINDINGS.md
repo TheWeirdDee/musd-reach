@@ -92,7 +92,7 @@ The MUSD `deposit` path is not exploitable, because the native vault's own `depo
 ## Retest (21 October 2026)
 
 - Contracts: 75 local tests and 7 fork tests pass.
-- Slither rerun: the same 33 results under the same 11 detectors, with no high severity (`docs/security/slither-summary.txt`).
+- Slither rerun: the same 33 results under the same 11 detectors, (`docs/security/slither-summary.txt`). Two are rated High by Slither (`reentrancy-balance` in `_deposit` and `_payOut`); both are triaged as accepted in `docs/THREAT_MODEL.md` because every entry point is `nonReentrant` and the callee is the native vault. No untriaged result remains.
 - v2 public run: 18/18 steps. `reach-verify all`: 62/62 (`evidence/real-chain/verify-testnet-2026-10-21T11-23-33-084Z.txt`).
 - Browser E2E on forks: 5 phases pass (wrap, minted, redeem, released, pending), rerun after F-20.
 - Wallet E2E: `rejection.mjs` 14/14, `wallet-ui.mjs` 10/10. axe: no violations. Keyboard: 6/6.
