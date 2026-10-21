@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 import { usePublicClient } from "wagmi";
 import type { Address, PublicClient } from "viem";
 import { readNativeVaultState, readPosition, readWrapperState, reconcile, type ReachClients } from "@musd-reach/sdk";
-import { reachConfig, MEZO_ID, BASE_ID, apiUrl, isForkMode } from "./reach";
+import { reachConfig, MEZO_ID, BASE_ID, apiUrl } from "./reach";
 
 export function useClients(): ReachClients | null {
   const mezo = usePublicClient({ chainId: MEZO_ID });
@@ -49,7 +49,7 @@ export function useReconciliation() {
     queryKey: ["reconciliation"],
     enabled: !!c && !!reachConfig.deployment,
     refetchInterval: 60_000,
-    queryFn: () => reconcile(c!, reachConfig, { baseBlockTag: isForkMode ? "latest" : "finalized" }),
+    queryFn: () => reconcile(c!, reachConfig, { baseBlockTag: "latest" }),
   });
 }
 
