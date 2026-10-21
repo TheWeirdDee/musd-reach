@@ -2,7 +2,7 @@
 
 **Your Mezo savings. Beyond Mezo.** Reach keeps MUSD principal inside Mezo's native savings vault and gives you a backed, transferable claim on it on Base. Both directions are authenticated by Wormhole guardian-signed messages, and the claim is redeemable by burning it.
 
-> **Status:** experimental testnet software, **not audited**. The **v1** contracts are deployed on Mezo testnet and Base Sepolia, and one canonical round trip was verified publicly ([`/proof`](apps/web), `evidence/real-chain/`). **v1 has a known Medium issue (F-01)**, fixed in **v2**; v2 is tested locally and on forks but **not deployed**. See [`docs/STATUS.md`](docs/STATUS.md), [`docs/SECURITY_FINDINGS.md`](docs/SECURITY_FINDINGS.md) and [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+> **Status:** experimental testnet software, **not audited**. The **v2** contracts are deployed on Mezo testnet and Base Sepolia. A full public round trip, including a deliberately pending settlement, passed 18/18 steps, and the independent verifier passes 62/62 ([`/proof`](apps/web), `evidence/real-chain/`). The earlier **v1** deployment stays live as history and is affected by a known Medium issue (F-01) that v2 fixes. The web app and API are **not publicly hosted**. See [`docs/STATUS.md`](docs/STATUS.md), [`docs/SECURITY_FINDINGS.md`](docs/SECURITY_FINDINGS.md) and [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
 
 ## How it works
 
@@ -34,7 +34,7 @@ rwSMUSD ─burn→ ReachDestinationGateway ─REDEEM VAA→ ReachSourceGateway �
 
 ```bash
 pnpm install
-cd packages/contracts && forge test                     # 72 tests: unit, fuzz, invariants, gas griefing
+cd packages/contracts && forge test                     # 75 tests: unit, fuzz, invariants, gas griefing, liveness
 RUN_FORK=true forge test --match-path "test/fork/*"     # live Mezo vault + real Wormhole cores (fork)
 cd ../.. && pnpm verify registry                        # live chain facts vs registry
 pnpm --filter @musd-reach/web dev                       # http://localhost:3000
