@@ -2,7 +2,7 @@ import { chromium } from "playwright";
 import { readFileSync } from "node:fs";
 import { createRequire } from "node:module";
 const axeSrc = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
-const routes = ["/", "/app", "/app/wrap", "/app/portable/new", "/app/redeem", "/app/history", "/proof", "/proof/testnet-2026-10-20T15-05-14-568Z", "/status", "/integrations", "/developers", "/risks", "/app/transfers/0x69691ea22cce36294b74bb9538fd2b62ec953f00029580846571fb55ad89aa32?tx=0x680490b824bf9cc28c2ce11fac8389bb7a8916598767288a55f60ef6b1704c45&dir=ISSUE"];
+const routes = ["/", "/app", "/app/wrap", "/app/portable/new", "/app/redeem", "/app/history", "/proof", "/proof/testnet-2026-10-20T15-05-14-568Z", "/proof/testnet-2026-10-21T11-23-33-084Z", "/status", "/integrations", "/developers", "/risks", "/app/transfers/0x69691ea22cce36294b74bb9538fd2b62ec953f00029580846571fb55ad89aa32?tx=0x680490b824bf9cc28c2ce11fac8389bb7a8916598767288a55f60ef6b1704c45&dir=ISSUE"];
 const b = await chromium.launch();
 const summary = {};
 for (const w of [1280, 390]) {
