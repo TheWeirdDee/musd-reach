@@ -37,7 +37,7 @@ Last updated 21 October 2026. Vocabulary: **PASS** means verified with the evide
 | Rejected signature / rejected switch / wallet on an unsupported chain | PASS (scripted EIP-1193 provider rejecting with 4001) |
 | Real MetaMask extension (13.53.0) | PARTIAL: connect, connect-reject and network detection PASS; signing and rejecting a transaction NOT TESTED (the throwaway wallet holds no MUSD, and funding it is outside the authorized transactions) |
 | Accessibility | PASS (axe-core 4.10: no violations on all routes; keyboard focus check). Screen reader NOT TESTED |
-| Slither | PASS: no high findings, same 33 triaged results on rerun |
+| Slither | PASS: same 33 results on rerun, all triaged; the 2 Slither-High `reentrancy-balance` results are accepted (all entry points `nonReentrant`, trusted callee) |
 | SDK tests / typecheck | PASS |
 | API tests (HTTP policy) / typecheck | PASS |
 | API Docker image | PASS (WSL Docker 29.1): 117 MB, non-root, healthy; all indexer/relay jobs OK; reconciliation BALANCED against live chains |
