@@ -22,6 +22,9 @@ const schema = z.object({
   INDEX_INTERVAL_MS: z.coerce.number().int().min(2000).default(12_000),
   RELAYER_KEY_FILE: z.string().optional(),
   RATE_LIMIT_PER_MINUTE: z.coerce.number().int().positive().default(120),
+  // Comma-separated addresses/CIDRs of the reverse proxies in front of the API whose
+  // X-Forwarded-For entry is trusted. Empty: the socket address is the client (F-18).
+  TRUST_PROXY: z.string().default(""),
 });
 
 export type AppEnv = z.infer<typeof schema>;
