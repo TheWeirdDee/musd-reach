@@ -29,21 +29,26 @@ Last updated 21 October 2026. Vocabulary: **PASS** means verified with the evide
 
 | Item | Status |
 |---|---|
-| Contracts: 75 local tests + 7 fork tests (v2 code) | PASS |
+| Contracts: 75 local tests + 7 fork tests (v2 code) | PASS (rerun in the release pass) |
 | v2 contracts on public testnet | PASS: Mezo wrapper `0xf8cF…4306`, source `0xA5c7…96d3`; Base Sepolia destination `0x5043…5a23`, receipt `0x0277…4e89` (`deployments/testnet.json`). Runtime bytecode matches the build with immutables masked |
 | v1 contracts | Live, archived (`deployments/testnet-v1.json`); affected by F-01; source not in git history (D-01) |
 | v2 public lifecycle (18 steps, including pending settlement) | PASS (public) |
-| Browser E2E of signing flows (mock connector, forks) | PASS (fork), rerun 21 Oct |
-| Rejected signature / rejected switch / wallet on an unsupported chain | PASS (scripted EIP-1193 provider rejecting with 4001) |
-| Real MetaMask extension (13.53.0) | PARTIAL: connect, connect-reject and network detection PASS; signing and rejecting a transaction NOT TESTED (the throwaway wallet holds no MUSD, and funding it is outside the authorized transactions) |
+| Browser E2E of signing flows (mock connector, forks) | PASS (fork), 21/21, rerun after the CSP and production-guard changes |
+| Transaction intent (keyless wallet, real balances): targets, chain ids, exact approvals, gas floor | PASS, 42/42 |
+| Content-Security-Policy (production build) | PASS, 25/25: nonce scripts, zero violations, injection refused |
+| Responsive: 15 routes × 4 widths × both motion settings | PASS, 120/120 (after the F-29 fix) |
+| Rejected signature / rejected switch / wallet on an unsupported chain | PASS, 15/15 (scripted EIP-1193 provider rejecting with 4001) |
+| Real MetaMask extension (13.53.0) | PARTIAL: connect, connect rejection, session persistence, network detection, network switch (approved and rejected), account switching and disconnect PASS under the production CSP. Signing and rejecting a transaction NOT TESTED (the throwaway wallet holds no MUSD; funding it is outside the authorized transactions) |
+| Rabby, WalletConnect | NOT TESTED |
 | Accessibility | PASS (axe-core 4.10: no violations on all routes; keyboard focus check). Screen reader NOT TESTED |
 | Slither | PASS: same 33 results on rerun, all triaged; the 2 Slither-High `reentrancy-balance` results are accepted (all entry points `nonReentrant`, trusted callee) |
 | SDK tests / typecheck | PASS |
-| API tests (HTTP policy) / typecheck | PASS |
-| API Docker image | PASS (WSL Docker 29.1): 117 MB, non-root, healthy; all indexer/relay jobs OK; reconciliation BALANCED against live chains |
+| API tests (14: HTTP policy, proxy and config guards, readiness, input bounds) / typecheck | PASS |
+| API Docker image | PASS (WSL Docker 29.1): 117 MB, non-root, healthy on an injected `PORT`; `/ready` 503 → 200 after indexing; cursors persist across a restart; reconciliation BALANCED against the live chains |
 | Web typecheck, ESLint, production build (14 routes) | PASS |
-| Public hosting: API, web | BLOCKED: needs approval and hosting accounts |
-| Independent audit | NOT DONE |
+| Source repository | PUBLISHED: https://github.com/TheWeirdDee/musd-reach (pushed without force) |
+| Public hosting: API, web | BLOCKED: needs approval and hosting accounts. Runbook and post-deploy checks in `docs/DEPLOYMENT.md` |
+| Independent audit (professional or external users) | NOT DONE |
 
 ## Canonical run notes
 
@@ -53,4 +58,4 @@ The v2 run needed no reused transactions.
 
 ## Security findings
 
-See `docs/SECURITY_FINDINGS.md`. F-01 (Medium: relayer gas manipulation of the payout asset) still affects the archived v1. It is fixed in the deployed v2. No open findings remain; F-04 and F-05 are disclosed.
+See `docs/SECURITY_FINDINGS.md`. F-01 (Medium: relayer gas manipulation of the payout asset) still affects the archived v1. It is fixed in the deployed v2. F-21 to F-29 came from the release hardening pass and are fixed; F-26 still needs its post-deploy probe on the real host. No open findings remain; F-04, F-05 and D-01 are disclosed.
