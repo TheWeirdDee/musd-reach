@@ -2,7 +2,8 @@ import { chromium } from "playwright";
 const b = await chromium.launch(); const p = await b.newPage({ viewport: { width: 1280, height: 900 } });
 const res = [];
 const ck = (n, ok, d = "") => { res.push(ok); console.log(`${ok ? "PASS" : "FAIL"} ${n}${d ? " — " + d : ""}`); };
-await p.goto("http://localhost:3000/app/wrap", { waitUntil: "networkidle" });
+// node e2e/keyboard.mjs [baseUrl]
+await p.goto((process.argv[2] ?? "http://localhost:3000") + "/app/wrap", { waitUntil: "networkidle" });
 await p.keyboard.press("Tab");
 const first = await p.evaluate(() => ({ text: document.activeElement?.textContent?.trim(), visible: getComputedStyle(document.activeElement).position }));
 ck("first Tab lands on skip link", first.text === "Skip to content", first.text);
