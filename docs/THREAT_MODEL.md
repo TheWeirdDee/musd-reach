@@ -63,7 +63,7 @@ Each row is covered by an automated test, unless the Coverage column says otherw
 
 ## Slither triage
 
-`docs/security/slither-summary.txt`: 30 results across 10 detectors. No high-severity findings.
+`docs/security/slither-summary.txt`: 33 results across 11 detectors (rerun 21 Oct 2026). Slither rates the two `reentrancy-balance` results High; they are triaged below as accepted. No untriaged result remains.
 
 | Detector | Assessment |
 |---|---|
