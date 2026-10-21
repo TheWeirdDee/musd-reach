@@ -51,14 +51,14 @@ export function Problem() {
             </p>
           }
         />
-        <div data-reveal className="mt-14 overflow-x-auto rounded-md border border-ink-950/10 bg-white/50">
+        <div data-reveal tabIndex={0} role="region" aria-label="Comparison of options (scrolls horizontally)" className="mt-14 overflow-x-auto rounded-md border border-ink-950/10 bg-white/50">
           <table className="w-full min-w-[46rem] border-collapse text-left text-[0.9375rem]">
             <caption className="sr-only">Ways to use MUSD savings outside Mezo</caption>
             <thead>
               <tr className="border-b border-ink-950/10">
-                {["Option", "Principal", "Savings yield", "On Base you hold", ""].map((h) => (
+                {["Option", "Principal", "Savings yield", "On Base you hold", "Verdict"].map((h) => (
                   <th key={h} scope="col" className="px-5 py-4 font-mono text-[0.625rem] font-normal uppercase tracking-[0.12em] text-ink-500">
-                    {h}
+                    {h === "Verdict" ? <span className="sr-only">{h}</span> : h}
                   </th>
                 ))}
               </tr>
