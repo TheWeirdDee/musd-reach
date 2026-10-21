@@ -139,7 +139,7 @@ export function HowItWorks() {
             {steps.map((st, i) => (
               <li key={st.n} data-step data-reveal className={cn("rounded-md border p-6 transition-colors duration-500 lg:border-transparent lg:p-0", "border-ink-700")}>
                 <div className="flex items-baseline gap-4">
-                  <span className={cn("num text-sm transition-colors duration-500", i === active ? "text-ember-400" : "text-ink-500")}>{st.n}</span>
+                  <span className={cn("num text-sm transition-colors duration-500", i === active ? "text-ember-400" : "text-ink-400")}>{st.n}</span>
                   <span className="kicker text-ink-400">{st.leg === "out" ? "Outbound" : "Return"}</span>
                 </div>
                 <h3 className={cn("mt-3 text-[length:var(--text-title)] font-semibold leading-[var(--text-title--line-height)] tracking-[var(--text-title--letter-spacing)] transition-colors duration-500", i === active ? "text-bone-50" : "lg:text-ink-400 text-bone-50")}>{st.title}</h3>
