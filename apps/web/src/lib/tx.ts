@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { useAccount, useConfig } from "wagmi";
 import { getPublicClient, getWalletClient, switchChain } from "wagmi/actions";
+import { gasLimitFor } from "@musd-reach/sdk";
 import { readWalletChainId } from "./walletChain";
 import { BaseError, ContractFunctionRevertedError, UserRejectedRequestError, type Abi, type Address, type Hex, type TransactionReceipt } from "viem";
 
@@ -63,9 +64,13 @@ export function useContractTx() {
         setState({ phase: "simulating" });
         const pc = getPublicClient(config, { chainId: req.chainId as never })!;
         const sim = await pc.simulateContract({ ...req, account: address } as never);
+        // Wallets estimate Mezo gas through the same RPC, which omits the EIP-7623 calldata floor;
+        // an under-gassed settlement reverts by design, so send an explicit limit (F-20).
+        const request = (sim as unknown as { request: Record<string, unknown> }).request;
+        const gas = gasLimitFor(req.chainId, await pc.estimateContractGas({ ...req, account: address } as never));
         setState({ phase: "signing" });
         const wallet = await getWalletClient(config, { chainId: req.chainId as never });
-        const hash = await wallet.writeContract((sim as unknown as { request: never }).request);
+        const hash = await wallet.writeContract({ ...request, gas } as never);
         setState({ phase: "pending", hash });
         const receipt = await pc.waitForTransactionReceipt({ hash, timeout: 10 * 60_000 });
         if (receipt.status !== "success") {
