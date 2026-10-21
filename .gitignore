@@ -24,3 +24,6 @@ apps/api/.data/
 # Next.js / TypeScript build artifacts
 next-env.d.ts
 *.tsbuildinfo
+
+# E2E failure screenshots
+apps/web/*-failure.png
