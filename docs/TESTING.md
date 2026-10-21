@@ -33,7 +33,7 @@
 
 ## Latest results (21 October 2026)
 
-- **Contracts:** 75 local tests and 7 fork tests pass. Slither rerun: same 33 triaged results, no high.
+- **Contracts:** 75 local tests and 7 fork tests pass. Slither rerun: same 33 triaged results; the 2 rated High (`reentrancy-balance`) are triaged as accepted.
 - **SDK:** 10 tests pass. **API:** 5 tests pass.
 - **Build:** API, SDK, verifier, scripts and web typecheck clean. ESLint clean. Production build passes, with 14 routes.
 - **v2 public run:** 18/18 steps (`evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json`). `reach-verify all`: 62/62, transcript saved beside the evidence.
