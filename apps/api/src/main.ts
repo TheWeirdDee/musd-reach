@@ -76,7 +76,7 @@ async function main() {
       );
       stops.push(
         loop(db, "reconcile", 120_000, async () => {
-          const r = await reconcile(clients, cfg, { baseBlockTag: baseFinality });
+          const r = await reconcile(clients, cfg, { baseBlockTag: "latest" }); // see F-13
           await db.query(
             `INSERT INTO reconciliation_snapshots (status, mezo_block, base_block, total_locked, remote_supply, pending_issue, pending_redeem, discrepancy)
              VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
