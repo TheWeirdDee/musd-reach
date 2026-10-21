@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { useAccount, useConnect, useDisconnect } from "wagmi";
+import { useAccount, useConnect, useDisconnect, useSwitchChain } from "wagmi";
 import { shortHex } from "@musd-reach/sdk";
 import { Button, Chip } from "@/components/ui/primitives";
 import { MEZO_ID, BASE_ID } from "@/lib/reach";
@@ -21,6 +21,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
   const chainId = useWalletChainId();
   const { connectors, connect, isPending, error, reset } = useConnect();
   const { disconnect } = useDisconnect();
+  const switcher = useSwitchChain();
   const [open, setOpen] = useState(false);
   const mounted = useIsClient();
   const ref = useRef<HTMLDivElement>(null);
@@ -78,7 +79,36 @@ export function WalletButton({ compact }: { compact?: boolean }) {
               <div className="flex flex-wrap items-center gap-2">
                 <Chip tone={supported ? "verified" : "failed"}>{networkName(chainId)}</Chip>
               </div>
-              {!supported && <p className="text-xs leading-relaxed text-ink-300">Reach runs on Mezo testnet and Base Sepolia. Each action will ask to switch to the network it needs.</p>}
+              {!supported && chainId !== undefined && (
+                // Without this, a wallet on another network with no balance has no way in: every action is disabled.
+                <div className="space-y-2">
+                  <p className="text-xs leading-relaxed text-ink-300">Reach runs on Mezo testnet and Base Sepolia. Each action also asks to switch to the network it needs.</p>
+                  <div className="grid gap-2">
+                    {[
+                      { id: MEZO_ID, label: "Switch to Mezo testnet" },
+                      { id: BASE_ID, label: "Switch to Base Sepolia" },
+                    ].map((n) => (
+                      <Button
+                        key={n.id}
+                        intent="secondary"
+                        className="w-full"
+                        busy={switcher.isPending && switcher.variables?.chainId === n.id}
+                        onClick={() => {
+                          switcher.reset();
+                          switcher.switchChain({ chainId: n.id as never });
+                        }}
+                      >
+                        {n.label}
+                      </Button>
+                    ))}
+                  </div>
+                  {switcher.error && (
+                    <p role="alert" className="text-xs leading-relaxed text-rust-300">
+                      {/rejected|denied/i.test(switcher.error.message) ? "Network switch was rejected in the wallet. Nothing was changed." : switcher.error.message.split("\n")[0]}
+                    </p>
+                  )}
+                </div>
+              )}
               <div className="flex gap-2">
                 <Button intent="secondary" className="flex-1" onClick={() => navigator.clipboard?.writeText(address)}>
                   Copy
