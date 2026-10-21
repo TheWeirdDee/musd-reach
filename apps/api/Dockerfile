@@ -28,4 +28,8 @@ USER reach
 ENV PGLITE_DIR=/data/pglite API_PORT=8787 ROLE=all
 EXPOSE 8787
 HEALTHCHECK --interval=30s --timeout=5s --start-period=30s CMD node -e "fetch('http://127.0.0.1:'+(process.env.API_PORT||8787)+'/health').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"
-CMD ["pnpm", "--filter", "@musd-reach/api", "start"]
+# Start with node directly: `pnpm start` runs pnpm's dependency-status check, which tries to
+# reinstall into the read-only /repo when other workspace packages differ (F-19), and would
+# download pnpm through corepack on every start.
+WORKDIR /repo/apps/api
+CMD ["node", "node_modules/tsx/dist/cli.mjs", "src/main.ts"]
