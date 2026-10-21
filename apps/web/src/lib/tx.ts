@@ -3,6 +3,7 @@
 import { useCallback, useState } from "react";
 import { useAccount, useConfig } from "wagmi";
 import { getPublicClient, getWalletClient, switchChain } from "wagmi/actions";
+import { readWalletChainId } from "./walletChain";
 import { BaseError, ContractFunctionRevertedError, UserRejectedRequestError, type Abi, type Address, type Hex, type TransactionReceipt } from "viem";
 
 export type TxPhase = "idle" | "switching" | "simulating" | "signing" | "pending" | "confirmed" | "rejected" | "failed";
@@ -54,7 +55,8 @@ export function useContractTx() {
         return null;
       }
       try {
-        if (config.state.chainId !== req.chainId) {
+        // Ask the connector, not wagmi's stored chain, which ignores unconfigured networks (F-17).
+        if ((await readWalletChainId(config)) !== req.chainId) {
           setState({ phase: "switching" });
           await switchChain(config, { chainId: req.chainId as never });
         }
