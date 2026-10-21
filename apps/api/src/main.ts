@@ -74,7 +74,7 @@ async function main() {
           await db.query(
             `INSERT INTO reconciliation_snapshots (status, mezo_block, base_block, total_locked, remote_supply, pending_issue, pending_redeem, discrepancy)
              VALUES ($1,$2,$3,$4,$5,$6,$7,$8)`,
-            [r.status, r.mezoBlock, r.baseFinalizedBlock, r.totalLocked, r.remoteSupply, r.pendingIssueShares, r.pendingRedemptionShares, r.discrepancy].map(String),
+            [r.status, r.mezoBlock, r.baseBlock, r.totalLocked, r.remoteSupply, r.pendingIssueShares, r.pendingRedemptionShares, r.discrepancy].map(String),
           );
           if (r.status !== "BALANCED") app.log.error({ reconciliation: r.checks }, "RECONCILIATION MISMATCH");
         }),
