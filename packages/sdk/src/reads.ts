@@ -319,10 +319,12 @@ export async function listBurns(base: PublicClient, d: ReachDeployment, toBlock:
 // ---------------------------------------------------------------------------
 
 export type Reconciliation = {
-  /** AWAITING_FINALITY: the Base deployment block is not finalized yet, so nothing can be reconciled. */
+  /** AWAITING_FINALITY: the Base deployment block is not yet at the requested tag, so nothing can be reconciled. */
   status: "BALANCED" | "MISMATCH" | "AWAITING_FINALITY";
   mezoBlock: bigint;
-  baseFinalizedBlock: bigint;
+  /** Base block the snapshot was read at, resolved from `baseBlockTag`. */
+  baseBlock: bigint;
+  baseBlockTag: "finalized" | "latest";
   totalLocked: bigint;
   custodyBalance: bigint;
   remoteSupply: bigint;
@@ -356,15 +358,16 @@ export async function reconcile(
   opts: { baseBlockTag?: "finalized" | "latest" } = { baseBlockTag: "latest" },
 ): Promise<Reconciliation> {
   const d = requireDeployment(cfg);
-  const baseFinal = await clients.base.getBlock({ blockTag: opts.baseBlockTag ?? "latest" });
-  const baseFinalizedBlock = baseFinal.number;
+  const baseBlockTag = opts.baseBlockTag ?? "latest";
+  const baseBlock = (await clients.base.getBlock({ blockTag: baseBlockTag })).number;
   const mezoBlock = await clients.mezo.getBlockNumber();
 
-  if (baseFinalizedBlock < d.destinationDeployBlock) {
+  if (baseBlock < d.destinationDeployBlock) {
     return {
       status: "AWAITING_FINALITY",
       mezoBlock,
-      baseFinalizedBlock,
+      baseBlock,
+      baseBlockTag,
       totalLocked: 0n,
       custodyBalance: 0n,
       remoteSupply: 0n,
@@ -376,16 +379,16 @@ export async function reconcile(
       discrepancy: 0n,
       checks: [
         {
-          name: "Base deployment finalized",
+          name: `Base deployment visible at ${baseBlockTag}`,
           ok: false,
-          detail: `finalized head ${baseFinalizedBlock} < destination deploy block ${d.destinationDeployBlock}; retry after Base finality`,
+          detail: `${baseBlockTag} head ${baseBlock} < destination deploy block ${d.destinationDeployBlock}; retry shortly`,
         },
       ],
     };
   }
 
   const src = { address: d.sourceGateway, abi: reachSourceGatewayAbi, blockNumber: mezoBlock } as const;
-  const dst = { address: d.destinationGateway, abi: reachDestinationGatewayAbi, blockNumber: baseFinalizedBlock } as const;
+  const dst = { address: d.destinationGateway, abi: reachDestinationGatewayAbi, blockNumber: baseBlock } as const;
 
   const [totalLocked, totalIssued, totalReleased, custodyBalance, remoteSupply, totalMinted, totalBurned, issues, burns, pendingSettlement] =
     await Promise.all([
@@ -393,11 +396,11 @@ export async function reconcile(
       clients.mezo.readContract({ ...src, functionName: "totalIssued" }),
       clients.mezo.readContract({ ...src, functionName: "totalReleased" }),
       clients.mezo.readContract({ address: d.wrapper, abi: erc20, functionName: "balanceOf", args: [d.sourceGateway], blockNumber: mezoBlock }),
-      clients.base.readContract({ address: d.receipt, abi: remoteWrapperReceiptAbi, functionName: "totalSupply", blockNumber: baseFinalizedBlock }),
+      clients.base.readContract({ address: d.receipt, abi: remoteWrapperReceiptAbi, functionName: "totalSupply", blockNumber: baseBlock }),
       clients.base.readContract({ ...dst, functionName: "totalMinted" }),
       clients.base.readContract({ ...dst, functionName: "totalBurned" }),
       listIssues(clients.mezo, d, mezoBlock),
-      listBurns(clients.base, d, baseFinalizedBlock),
+      listBurns(clients.base, d, baseBlock),
       // Older deployments (before pending settlements existed) do not expose this getter.
       clients.mezo
         .readContract({ ...src, functionName: "totalPendingSettlement" })
@@ -435,7 +438,8 @@ export async function reconcile(
   return {
     status: checks.every((c) => c.ok) ? "BALANCED" : "MISMATCH",
     mezoBlock,
-    baseFinalizedBlock,
+    baseBlock,
+    baseBlockTag,
     totalLocked,
     custodyBalance,
     remoteSupply,
