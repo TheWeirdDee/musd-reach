@@ -14,8 +14,9 @@ const schema = z.object({
   PGLITE_DIR: z.string().default(join(ROOT, "apps/api/.data/pglite")),
   MEZO_TESTNET_RPC: z.string().default("https://rpc.test.mezo.org"),
   MEZO_TESTNET_RPC_FALLBACK: z.string().optional(),
-  BASE_SEPOLIA_RPC: z.string().default("https://sepolia.base.org"),
-  BASE_SEPOLIA_RPC_FALLBACK: z.string().optional(),
+  // publicnode first: sepolia.base.org rejects eth_getLogs ranges above ~200 blocks (F-12/F-15).
+  BASE_SEPOLIA_RPC: z.string().default("https://base-sepolia-rpc.publicnode.com"),
+  BASE_SEPOLIA_RPC_FALLBACK: z.string().default("https://sepolia.base.org"),
   REACH_DEPLOYMENTS: z.string().default(join(ROOT, "deployments/testnet.json")),
   CORS_ORIGINS: z.string().default("http://localhost:3000"),
   INDEX_INTERVAL_MS: z.coerce.number().int().min(2000).default(12_000),
