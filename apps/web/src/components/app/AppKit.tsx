@@ -22,7 +22,7 @@ const tabs = [
 export function AppNav() {
   const path = usePathname();
   return (
-    <nav aria-label="App" className="-mx-[var(--gutter)] overflow-x-auto px-[var(--gutter)]">
+    <nav aria-label="App" className="-mx-[var(--gutter)] relative overflow-x-auto px-[var(--gutter)]">
       <ul className="flex min-w-max gap-1 border-b border-ink-700">
         {tabs.map((t) => {
           const active = t.href === "/app" ? path === "/app" : path?.startsWith(t.href);
