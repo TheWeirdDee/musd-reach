@@ -1,8 +1,111 @@
-# Deployment and the canonical public-testnet run
+# Deployment
 
-None of this has been executed on public networks yet. Each step below needs explicit authorization from the repository owner.
+**Status, 21 October 2026.**
+- **Contracts:** v2 is deployed on Mezo testnet and Base Sepolia and verified (below).
+- **Web app and API:** not hosted. Everything in "Hosting" is prepared and tested locally, not on Vercel or Railway. Hosting needs the owner's separate approval.
+- **Mainnet:** none, and none is planned.
 
-## Prerequisites (owner actions)
+## Hosting
+
+### Shape
+
+| Piece | Host | Why |
+|---|---|---|
+| `apps/web` | Vercel | Next.js 16. Every page is rendered per request, because the CSP nonce must be fresh (`src/proxy.ts`). |
+| `apps/api`, `ROLE=all` | Railway, **one service, one replica** | Long-running indexer, reconciler and relayer loops. Not suitable for serverless. A second replica would duplicate the loops. |
+| Database | Railway PostgreSQL (`DATABASE_URL`), or PGlite on a Railway volume mounted at `/data` | The indexer cursor, transfers and job health live here. Without persistence, every redeploy re-indexes from the deploy blocks. |
+
+The API is optional for the core flows. Balances, backing, wrapping, redeeming and recovery read the chains directly from the browser. The API adds indexed history, the transfer list and relaying.
+
+### Accounts and permissions the owner must provide
+
+| Account | Permission needed | Cost note |
+|---|---|---|
+| GitHub `TheWeirdDee/musd-reach` | Already pushed. Grant the Vercel and Railway GitHub apps read access to this repository only. | — |
+| Vercel | Create a project from the repository | Hobby is free but for non-commercial use under Vercel's terms; check them yourself |
+| Railway | Create a project with one service from the repository, plus Postgres or a volume | Railway bills by usage after any trial; no paid resource has been created |
+| WalletConnect (optional) | A project id | WalletConnect under the CSP is **not tested**; leave it unset for the first launch |
+| Relayer key (optional) | A new, dedicated key holding only small testnet balances | Never reuse the deployer, primary or secondary keys. Never use the exposed `0xE306…cab6` key |
+
+### Railway: API service
+
+Settings: builder is the Dockerfile `apps/api/Dockerfile`, from `railway.json`. The healthcheck is `/health` with a 60-second timeout, restarts on failure, and runs 1 replica.
+
+| Variable | Value | Notes |
+|---|---|---|
+| `ROLE` | `all` | Splitting into `api` + `worker` services needs a shared `DATABASE_URL`, and the worker has no HTTP healthcheck |
+| `PORT` | injected by Railway | The API listens on it; an explicit `API_PORT` would win |
+| `DATABASE_URL` | Railway Postgres reference variable | Or leave unset and mount a volume at `/data` (PGlite at `/data/pglite`) |
+| `CORS_ORIGINS` | the Vercel production URL, e.g. `https://<project>.vercel.app` | Exact origins, comma-separated. Preview URLs are not allowed unless listed |
+| `CLIENT_IP_HEADER` | `x-real-ip` | Railway documents that its edge sets `X-Real-IP` to the client address. Keep it only if `scripts/check-rate-limit.mjs` passes against the hosted URL (below) |
+| `TRUST_PROXY` | empty | Railway publishes no stable proxy address range to list. Never set it together with `CLIENT_IP_HEADER` (the API refuses) |
+| `RATE_LIMIT_PER_MINUTE` | `120` | Per client IP |
+| `RELAYER_KEY_FILE` | unset for launch | Without it the relayer only tracks, and users deliver from the transfer tracker. To enable it later, mount a volume containing the dedicated key file |
+| `MEZO_TESTNET_RPC`, `BASE_SEPOLIA_RPC` (+ `_FALLBACK`) | defaults | Public RPCs. `sepolia.base.org` caps `eth_getLogs` at 200 blocks, so publicnode is the default (F-15) |
+| `LOG_LEVEL` | `info` | JSON logs to stdout. Upstream failures return a generic 502 and are logged in detail (F-18) |
+
+Restart and recovery: migrations are tracked and re-applied only if they are new. The indexer resumes from its stored cursor, and every loop backs off on errors (up to 5 minutes). `/ready` returns 503 until both indexers have succeeded within the last 10 minutes. It reports `notIndexedRecently` and the cursors; "ready" means "indexing", not "caught up". All of this was checked locally in Docker (below), not on Railway.
+
+### Vercel: web project
+
+Settings: Root Directory is `apps/web`. `apps/web/vercel.json` installs and builds from the repository root and syncs the deployment and evidence into the build first.
+
+| Variable | Value | Notes |
+|---|---|---|
+| `ENABLE_EXPERIMENTAL_COREPACK` | `1` | Lets Vercel use the pnpm version in `package.json` (`pnpm@11.5.0`). Vercel documents Corepack as experimental; confirm the first build log says pnpm 11 |
+| `NEXT_PUBLIC_API_URL` | the Railway public URL (`https://…`) | Added to the CSP `connect-src` automatically. With every endpoint on https, the CSP adds `upgrade-insecure-requests` |
+| `NEXT_PUBLIC_SITE_URL` | the production URL | Server-side fallback for WalletConnect metadata; browsers use the real origin |
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | unset for launch | When set, the CSP adds WalletConnect relay, verify and explorer origins. Not tested |
+| `NEXT_PUBLIC_MEZO_RPC`, `NEXT_PUBLIC_BASE_RPC` | unset | Optional dedicated RPCs. They are added to the CSP automatically |
+| `NEXT_PUBLIC_E2E_ACCOUNT`, `NEXT_PUBLIC_REACH_DEPLOYMENT`, `NEXT_PUBLIC_NETWORK_MODE` | **never** | Test-only. `next build` refuses to run with any of them set, and production bundles ignore them |
+
+Security headers come from `next.config.ts` and `src/proxy.ts`:
+- A per-request nonce CSP: `script-src 'self' 'nonce-…' 'strict-dynamic'`, with no `unsafe-inline` or `unsafe-eval`.
+- `style-src` limited to `'self'` and the nonce.
+- `connect-src` limited to the configured RPCs and API.
+- `frame-ancestors 'none'` and `object-src 'none'`.
+- Also: `X-Frame-Options: DENY`, `nosniff`, a referrer policy and a permissions policy.
+
+### Order of operations
+
+1. Railway: create Postgres, then the API service with the variables above. Wait until `/ready` returns 200.
+2. Vercel: create the project with `NEXT_PUBLIC_API_URL` set to the Railway URL, then deploy.
+3. Railway: set `CORS_ORIGINS` to the final Vercel URL and redeploy.
+4. Run every check below against the **hosted** URLs. Do not announce the site until they all pass.
+
+### Post-deploy checks (all read-only)
+
+```bash
+API=https://<railway-host>  WEB=https://<vercel-host>
+curl -s $API/health && curl -s $API/ready                 # 200 and ready:true once indexed
+node scripts/check-rate-limit.mjs $API 120                # PASS: forged X-Forwarded-For / X-Real-IP cannot bypass
+                                                          # FAIL: unset CLIENT_IP_HEADER, redeploy, rerun
+curl -sI -H "Origin: https://evil.invalid" $API/health | grep -i access-control   # must print nothing
+node apps/web/e2e/csp.mjs $WEB                            # nonce CSP, zero violations on every route, injection refused
+node apps/web/e2e/axe.mjs $WEB                            # NO VIOLATIONS
+node apps/web/e2e/tx-intent.mjs $WEB                      # exact approvals, targets and chain ids (keyless; nothing is signed)
+node apps/web/e2e/rejection.mjs $WEB && node apps/web/e2e/wallet-ui.mjs $WEB
+pnpm verify all evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json    # independent of both hosts
+```
+
+Then do one manual pass on a phone and a desktop with a real wallet: connect, switch network, and reject one signature. Real transaction signing stays unverified until a funded test wallet is authorized.
+
+### Validated locally on 21 October 2026
+
+- **Clean checkout:** `git archive HEAD` with the Vercel install and build commands. The frozen-lockfile install used pnpm 11.5.0, and the build succeeded with the proxy.
+- **API image** (WSL Docker 29.1, from `git archive HEAD`):
+  - 117 MB, non-root, healthy on an injected `PORT=9000`.
+  - `/ready` returned 503 before indexing and 200 after.
+  - CORS admitted only the configured origin.
+  - After `docker restart`, the cursors were unchanged and no migration was re-applied. There were no warnings or errors.
+- **Rate-limit probe:**
+  - Passed against the default local configuration (429 at request 121).
+  - **Failed**, as intended, against a deliberately misconfigured API (`CLIENT_IP_HEADER` with no edge in front).
+- **Production web build behind the CSP:** CSP 25/25, transaction intent 42/42, rejection 15/15, wallet UI 10/10, keyboard 6/6, and axe reported no violations on any route at 1280 and 390 px. Checked both without the API and with a local API.
+
+## Contract deployment procedure (as executed for v1 and v2)
+
+### Prerequisites (owner actions)
 
 1. **Deployer key, never committed and never printed.** Import it into Foundry's encrypted keystore:
    `cast wallet import reach-deployer --interactive`
@@ -11,7 +114,7 @@ None of this has been executed on public networks yet. Each step below needs exp
 4. **Test MUSD for the canonical run.** About 5 MUSD in the primary wallet on Mezo testnet, for example by opening a testnet MUSD borrowing position against testnet BTC. How to obtain it was not verified in this repository.
 5. **A second key (secondary holder)** with a little Base Sepolia ETH, used for the receipt-transfer step. The runner can top it up from the primary key.
 
-## Deploy (4 transactions across 2 chains)
+### Deploy (4 transactions across 2 chains)
 
 ```bash
 cd packages/contracts
@@ -25,7 +128,7 @@ The script fails closed if the native vault implementation is not the pinned `0x
 
 Optionally set `REACH_GUARDIAN=<address>` to give pause rights to an address other than the deployer.
 
-## Verify the deployment
+### Verify the deployment
 
 ```bash
 pnpm verify deployment     # wiring: peers, receipt minter, wrapper binding, chain ids
@@ -34,7 +137,7 @@ pnpm verify reconcile      # all zero, BALANCED
 
 Contract source verification on Blockscout (Mezo) and Basescan or Blockscout (Base Sepolia) uses `forge verify-contract`.
 
-## Canonical run
+### Canonical run
 
 ```bash
 export REACH_PRIVATE_KEY_FILE=/secure/path/primary.key
@@ -42,7 +145,7 @@ export REACH_SECONDARY_KEY_FILE=/secure/path/secondary.key
 pnpm --filter @musd-reach/scripts lifecycle -- --mode testnet --amount 5
 ```
 
-The runner executes 14 checked steps and writes `evidence/real-chain/<run>.json`:
+The runner executes the checked steps below (v2 adds 12a to 12d, 18 in total) and writes `evidence/real-chain/<run>.json`:
 
 | Step | Action |
 |---|---|
@@ -68,35 +171,7 @@ pnpm verify all evidence/real-chain/<run>.json
 node scripts/sync-web-data.mjs     # publish the run to the website's proof explorer
 ```
 
-## Backend (optional for the UI)
-
-`apps/api` needs persistent hosting, such as Railway, Fly.io, Render or a VM, plus PostgreSQL (`DATABASE_URL`). Without `DATABASE_URL` it uses embedded PGlite on disk. `ROLE=api|worker|all`. Health checks are at `/health` and `/ready`. Do not host the indexer on serverless functions.
-
-## Frontend
-
-`apps/web` is a static-first Next.js 16 app. Its environment:
-
-- `NEXT_PUBLIC_API_URL` (optional)
-- `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` (optional)
-- `NEXT_PUBLIC_MEZO_RPC` / `NEXT_PUBLIC_BASE_RPC` (optional overrides)
-
-Run `node scripts/sync-web-data.mjs` before `next build`.
-
-## Hosting configuration (prepared, not deployed)
-
-| Target | File | Notes |
-|---|---|---|
-| Vercel (web) | `apps/web/vercel.json` | Set the project root directory to `apps/web`. Install and build run from the repo root, and the build syncs proof data first. Env: `NEXT_PUBLIC_API_URL`, optionally `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`. **Never** set `NEXT_PUBLIC_E2E_ACCOUNT` in production. |
-| Railway (API + indexer) | `railway.json`, `apps/api/Dockerfile` | Health check `/health`. Mount a volume at `/data` for PGlite, or set `DATABASE_URL` to a Railway Postgres. Set `CORS_ORIGINS` to the Vercel URL. Set `TRUST_PROXY` to the address range Railway's edge connects from, confirmed from the `/health` request logs of the first deploy. Leave it empty if unsure: rate limiting then falls back to the socket address, which is safe but groups clients behind the proxy (F-18). Optionally `RELAYER_KEY_FILE` (a mounted secret) to auto-deliver signed messages. |
-
-The Docker image was built from `git archive HEAD` and smoke-tested under Docker 29.1 in WSL. It ran healthy as non-root, every job was OK, and reconciliation was BALANCED against the live chains. Railway itself has not been used.
-
-**Before public hosting:**
-- Add a Content-Security-Policy. `next.config.ts` sets nosniff, a referrer policy, `X-Frame-Options: DENY` and a permissions policy, but no CSP yet. A CSP needs testing against wagmi, WalletConnect and the RPC origins.
-- Keep `NEXT_PUBLIC_E2E_ACCOUNT` unset in production.
-- If the relayer is enabled, use a dedicated low-balance key.
-
-## Rollback
+### Rollback
 
 Contracts are immutable. Rollback means deploying a new set and moving the frontend to it. Existing receipts remain redeemable on the old set forever, since exits cannot be paused.
 
