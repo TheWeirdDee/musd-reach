@@ -3,6 +3,7 @@ import { createWalletClient, http, type Hex, type PublicClient } from "viem";
 import { privateKeyToAccount } from "viem/accounts";
 import {
   fetchSignedVaa,
+  gasLimitFor,
   parseVaa,
   reachDestinationGatewayAbi,
   reachSourceGatewayAbi,
@@ -62,8 +63,16 @@ export async function trackAndRelay(
       const sim = issue
         ? await client.simulateContract({ account, address, abi: reachDestinationGatewayAbi, functionName: "receiveIssue", args: [res.vaa] })
         : await client.simulateContract({ account, address, abi: reachSourceGatewayAbi, functionName: "receiveRedeem", args: [res.vaa] });
+      // An under-gassed delivery reverts on purpose (InsufficientGasForSettlement) and the transfer
+      // would be retried every tick, paying for each failure (F-20).
+      const gas = gasLimitFor(chain.id, await client.estimateContractGas(sim.request as never));
       const wallet = createWalletClient({ account, chain, transport: http(issue ? cfg.base.rpcUrls[0] : cfg.mezo.rpcUrls[0]) });
-      const hash = await wallet.writeContract(sim.request as never);
+      const hash = await wallet.writeContract({ ...(sim.request as object), gas } as never);
+      const receipt = await client.waitForTransactionReceipt({ hash, timeout: 120_000 });
+      if (receipt.status !== "success") {
+        log("relay reverted", { transferId: t.transfer_id, hash, gas: gas.toString() });
+        continue;
+      }
       log("relayed", { transferId: t.transfer_id, hash });
       relayed++;
     } catch (e) {
