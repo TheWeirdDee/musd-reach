@@ -261,7 +261,7 @@ export async function getLogsChunked<T>(
 }
 
 /** Public RPCs cap getLogs ranges differently (Base Sepolia: 200 blocks). Split on rejection. */
-async function fetchAdaptive<T>(fetchRange: (a: bigint, b: bigint) => Promise<T[]>, from: bigint, to: bigint): Promise<T[]> {
+export async function fetchAdaptive<T>(fetchRange: (a: bigint, b: bigint) => Promise<T[]>, from: bigint, to: bigint): Promise<T[]> {
   try {
     return await fetchRange(from, to);
   } catch (e) {
@@ -338,19 +338,25 @@ export type Reconciliation = {
 };
 
 /**
- * Independent backing check from chain state only. Base is read at its *finalized* block
- * first, then Mezo at latest (instant finality). Guardians sign only finalized Base burns,
- * so a burn after the Base snapshot cannot already be released on Mezo, and every Base mint
- * at the snapshot corresponds to a lock already visible on Mezo. Equality must then be exact.
+ * Independent backing check from chain state only.
+ *
+ * Ordering argument: Base is snapshotted at its *latest* block B first, then Mezo at its latest
+ * block M (Mezo has instant finality). Every mint visible at B consumed an ISSUE that was locked
+ * on Mezo before B was read, so it is visible at M. A burn after B cannot already be released
+ * at M: release needs a guardian attestation of the burn, which takes minutes on Base Sepolia,
+ * while M is read seconds after B. Equality must therefore be exact at (B, M).
+ *
+ * The `finalized` tag is deliberately not the default: on 2026-10-21 the RPC `finalized` head
+ * lagged behind blocks whose burns the guardians had already attested and Mezo had released,
+ * which produced a false MISMATCH (finding F-13). `finalized` remains available as an option.
  */
 export async function reconcile(
   clients: ReachClients,
   cfg: ReachConfig,
-  opts: { baseBlockTag?: "finalized" | "latest" } = {},
+  opts: { baseBlockTag?: "finalized" | "latest" } = { baseBlockTag: "latest" },
 ): Promise<Reconciliation> {
   const d = requireDeployment(cfg);
-  // "latest" exists only for local forks, where "finalized" resolves to the fork origin.
-  const baseFinal = await clients.base.getBlock({ blockTag: opts.baseBlockTag ?? "finalized" });
+  const baseFinal = await clients.base.getBlock({ blockTag: opts.baseBlockTag ?? "latest" });
   const baseFinalizedBlock = baseFinal.number;
   const mezoBlock = await clients.mezo.getBlockNumber();
 
