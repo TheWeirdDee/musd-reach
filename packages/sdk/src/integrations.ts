@@ -46,6 +46,6 @@ export const integrations = [
     status: "SEPARATE_PROTOCOL",
     detail:
       "The canonical MUSD bridge is independent of Reach and has no authority over rwSMUSD. Users holding MUSD on Base can bridge it to Mezo themselves before using Reach.",
-    evidence: ["MUSD_Reach_Verification_Report.md"],
+    evidence: ["docs/planning/MUSD_Reach_Verification_Report.md"],
   },
 ] as const;
