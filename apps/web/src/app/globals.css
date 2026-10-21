@@ -97,6 +97,12 @@
     overflow-x: clip;
   }
 
+  /* Long contract identifiers and hashes in running text must wrap on narrow screens; code
+     blocks (pre) keep their own horizontal scroll. */
+  :not(pre) > code {
+    overflow-wrap: anywhere;
+  }
+
   ::selection {
     background: var(--color-ember-500);
     color: var(--color-ink-950);
