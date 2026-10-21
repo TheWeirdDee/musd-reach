@@ -93,4 +93,18 @@ await scenario("reject-switch", { startChain: 84532, rejectSwitch: true }, async
   check("reject-switch: wrong network + rejected switch is reported, nothing signed", (await page.evaluate(() => window.__signRequests)) === 0);
 });
 
+// A fresh MetaMask sits on Ethereum mainnet, which is not in the wagmi config. The badge must
+// report the wallet's real chain, and the action must still ask to switch (F-17).
+await scenario("unsupported-chain", { startChain: 1, rejectSwitch: true }, async (page) => {
+  await page.locator("header").getByRole("button", { name: /^0x0F57…Efe6$/i }).click();
+  check("unsupported-chain: badge reports the wallet's real chain", (await page.getByText("Unsupported (1)").count()) > 0);
+  await page.keyboard.press("Escape");
+  await page.fill("#wrap-amount", "1");
+  const btn = page.getByRole("button", { name: /Approve, then deposit|Deposit and make portable/ });
+  await btn.waitFor({ timeout: 60000 });
+  await btn.click();
+  await page.getByText("You rejected the request in your wallet. Nothing was sent.").first().waitFor({ timeout: 60000 });
+  check("unsupported-chain: action asks to switch and reports the rejected switch, nothing signed", (await page.evaluate(() => window.__signRequests)) === 0);
+});
+
 process.exitCode = results.every(Boolean) ? 0 : 1;
