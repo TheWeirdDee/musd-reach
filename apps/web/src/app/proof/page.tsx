@@ -65,12 +65,12 @@ export default function ProofPage() {
               <div className="flex flex-wrap items-center gap-3">
                 <Chip tone={rec.data.status === "BALANCED" ? "verified" : "failed"}>{rec.data.status === "BALANCED" ? "Balanced" : "Mismatch"}</Chip>
                 <span className="num text-xs text-ink-400">
-                  Mezo {rec.data.mezoBlock.toString()} · Base finalized {rec.data.baseFinalizedBlock.toString()}
+                  Mezo {rec.data.mezoBlock.toString()} · Base {rec.data.baseFinalizedBlock.toString()}
                 </span>
               </div>
               <dl className="mt-4 grid gap-x-10 md:grid-cols-2">
                 <Row label="Locked wSMUSD">{formatAmount(rec.data.totalLocked, 18, 6)}</Row>
-                <Row label="rwSMUSD supply (finalized)">{formatAmount(rec.data.remoteSupply, 18, 6)}</Row>
+                <Row label="rwSMUSD supply">{formatAmount(rec.data.remoteSupply, 18, 6)}</Row>
                 <Row label="In-flight issues">{formatAmount(rec.data.pendingIssueShares, 18, 6)}</Row>
                 <Row label="In-flight redemptions">{formatAmount(rec.data.pendingRedemptionShares, 18, 6)}</Row>
               </dl>
