@@ -30,7 +30,7 @@ export function Code({ children, label }: { children: string; label?: string }) 
   return (
     <div className="overflow-hidden rounded-md border border-ink-700 bg-ink-900">
       {label && <div className="border-b border-ink-700 px-4 py-2.5 font-mono text-[0.6875rem] uppercase tracking-[0.12em] text-ink-400">{label}</div>}
-      <pre className="overflow-x-auto p-4 text-[0.8125rem] leading-relaxed text-bone-200">
+      <pre tabIndex={0} aria-label={label ? `${label} code` : "Code example"} className="overflow-x-auto p-4 text-[0.8125rem] leading-relaxed text-bone-200">
         <code className="num">{children}</code>
       </pre>
     </div>
