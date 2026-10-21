@@ -10,7 +10,7 @@
  *   reach-verify all [evidence.json]      everything above
  *
  * Options: --deployments <path>  --mezo-rpc <url>[,<url>]  --base-rpc <url>[,<url>]  --json
- *          --base-block-tag latest   (local forks only)
+ *          --base-block-tag finalized   (stricter Base snapshot; can false-alarm, see F-13)
  * Exit code is non-zero if any check fails. No transaction is ever sent.
  */
 import { readFileSync, existsSync } from "node:fs";
@@ -191,7 +191,7 @@ async function verifyReconcile(cfg: ReachConfig, c: { mezo: PublicClient; base: 
   // `latest` only for local forks, where `finalized` resolves to the fork origin block.
   let r;
   try {
-    r = await reconcile(c, cfg, { baseBlockTag: opt("base-block-tag") === "latest" ? "latest" : "finalized" });
+    r = await reconcile(c, cfg, { baseBlockTag: opt("base-block-tag") === "finalized" ? "finalized" : "latest" });
   } catch (e) {
     add("reconcile", "reconciliation readable", false, (e as { shortMessage?: string }).shortMessage ?? String(e).split("\n")[0]);
     return;
@@ -201,8 +201,24 @@ async function verifyReconcile(cfg: ReachConfig, c: { mezo: PublicClient; base: 
     "reconcile",
     "snapshot",
     true,
-    `mezo block ${r.mezoBlock}, base finalized block ${r.baseFinalizedBlock}, locked ${r.totalLocked}, remote ${r.remoteSupply}, in-flight issue ${r.pendingIssueShares}, in-flight redeem ${r.pendingRedemptionShares}`,
+    `mezo block ${r.mezoBlock}, base block ${r.baseFinalizedBlock}, locked ${r.totalLocked}, remote ${r.remoteSupply}, in-flight issue ${r.pendingIssueShares}, in-flight redeem ${r.pendingRedemptionShares}`,
   );
+}
+
+const EXPLORER_API = { mezo: "https://api.explorer.test.mezo.org", base: "https://base-sepolia.blockscout.com" } as const;
+
+/** Receipt status from the chain's Blockscout explorer: an independent fallback source. */
+async function explorerReceipt(chain: "mezo" | "base", hash: string): Promise<{ ok: boolean; status: string; block: bigint } | null> {
+  try {
+    const res = await fetch(`${EXPLORER_API[chain]}/api/v2/transactions/${hash}`, { signal: AbortSignal.timeout(20_000) });
+    if (!res.ok) return null;
+    const j = (await res.json()) as { status?: string; result?: string; block_number?: number; block?: number };
+    const block = j.block_number ?? j.block;
+    if (block === undefined || block === null) return null;
+    return { ok: j.status === "ok" && (j.result === undefined || j.result === "success"), status: `${j.status}/${j.result ?? "-"}`, block: BigInt(block) };
+  } catch {
+    return null;
+  }
 }
 
 type EvidenceStep = { id: string; title: string; chain: string; txHash?: Hex; blockNumber?: string; details?: Record<string, unknown> };
@@ -221,21 +237,29 @@ async function verifyEvidence(cfg: ReachConfig, c: { mezo: PublicClient; base: P
   for (const t of txs) {
     const client = t.chain === "base" ? c.base : c.mezo;
     try {
-      // Public RPCs behind load balancers sometimes miss older receipts; retry before failing.
+      // The Mezo testnet RPC is load-balanced and ~2/3 of its backends returned null for older
+      // receipts on 2026-10-21 (finding F-14); retry enough that a real absence is still caught.
       let r: Awaited<ReturnType<typeof client.getTransactionReceipt>> | undefined;
       let lastErr: unknown;
-      for (let i = 0; i < 8 && !r; i++) {
+      for (let i = 0; i < 30 && !r; i++) {
         try {
           r = await client.getTransactionReceipt({ hash: t.hash });
         } catch (e) {
           lastErr = e;
-          await new Promise((res) => setTimeout(res, 3000));
+          await new Promise((res) => setTimeout(res, 1500));
         }
       }
       if (!r) throw lastErr;
-      add(g, `receipt ${t.label}`, r.status === "success" && (!t.block || r.blockNumber === BigInt(t.block)), `${t.hash} status ${r.status} block ${r.blockNumber}`);
+      add(g, `receipt ${t.label}`, r.status === "success" && (!t.block || r.blockNumber === BigInt(t.block)), `${t.hash} status ${r.status} block ${r.blockNumber} (rpc)`);
     } catch (e) {
-      add(g, `receipt ${t.label}`, false, `${t.hash}: ${(e as Error).message.split("\n")[0]}`);
+      // Second independent source: the chain's Blockscout explorer API. Used only when the RPC
+      // could not return the receipt, and labelled as such in the result.
+      const ex = await explorerReceipt(t.chain === "base" ? "base" : "mezo", t.hash);
+      if (ex) {
+        add(g, `receipt ${t.label}`, ex.ok && (!t.block || ex.block === BigInt(t.block)), `${t.hash} status ${ex.status} block ${ex.block} (explorer; rpc returned no receipt)`);
+      } else {
+        add(g, `receipt ${t.label}`, false, `${t.hash}: ${(e as Error).message.split("\n")[0]}`);
+      }
     }
   }
   // Re-verify each recorded VAA with the real Core on the chain that consumed it.
