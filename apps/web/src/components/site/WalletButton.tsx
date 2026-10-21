@@ -73,7 +73,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
           {status === "connected" && address ? (
             <div className="space-y-4">
               <div>
-                <p className="kicker text-ink-300">Connected · {connector?.name}</p>
+                <p className="kicker text-ink-300">Connected · {connector?.name === "Injected" ? "Browser wallet" : connector?.name}</p>
                 <p className="num mt-2 break-hash text-sm text-bone-100">{address}</p>
               </div>
               <div className="flex flex-wrap items-center gap-2">
