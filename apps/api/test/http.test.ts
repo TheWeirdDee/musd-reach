@@ -95,4 +95,11 @@ describe("proxy configuration", () => {
     expect(() => loadEnv({ CLIENT_IP_HEADER: "X-Real-IP" })).toThrow(/lowercase/);
     expect(loadEnv({ CLIENT_IP_HEADER: "x-real-ip" }).CLIENT_IP_HEADER).toBe("x-real-ip");
   });
+
+  it("listens on the platform PORT unless API_PORT is set", async () => {
+    const { loadEnv } = await import("../src/config.js");
+    expect(loadEnv({ PORT: "4321" }).API_PORT).toBe(4321);
+    expect(loadEnv({ PORT: "4321", API_PORT: "8787" }).API_PORT).toBe(8787);
+    expect(loadEnv({}).API_PORT).toBe(8787);
+  });
 });
