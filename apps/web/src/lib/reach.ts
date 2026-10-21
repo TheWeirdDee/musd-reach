@@ -61,9 +61,13 @@ export type EvidenceRun = {
   deployment: Record<string, string>;
   steps: EvidenceStep[];
   reusedTransactions?: Record<string, string>;
+  /** Contract version the run exercised; absent on runs recorded before versions were tracked (v1). */
+  settlementModel?: string;
 };
 
 export const publicRuns = siteData.publicRuns as unknown as EvidenceRun[];
+/** Superseded deployments, kept for history and known-issue disclosure. */
+export const previousDeployments = ((siteData as { previousDeployments?: Record<string, unknown>[] }).previousDeployments ?? []) as Record<string, unknown>[];
 export const rehearsals = siteData.rehearsals as unknown as EvidenceRun[];
 export const canonicalRun: EvidenceRun | null = publicRuns[publicRuns.length - 1] ?? null;
 
