@@ -1,0 +1,77 @@
+# reach-verify all evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json
+# pre-push rerun 2026-10-21T13:49:17Z at commit bb0ebfb; read-only; live public RPCs
+
+
+== REGISTRY
+  PASS  Mezo EVM chain id  — 31611
+  PASS  Base Sepolia EVM chain id  — 84532
+  PASS  native vault implementation == pinned  — 0x92D12f0a60906b39d81acD9bf8977b6c824cD98C @ block 16281217
+  PASS  vault underlying == pinned MUSD  — 0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503
+  PASS  vault pcv observed  — 0x0000000000000000000000000000000000000000 (zero means no PCV fee stream configured)
+  PASS  Mezo Wormhole Core chain ids  — wormhole 50, evm 31611
+  PASS  Mezo Wormhole message fee  — 0 wei
+  PASS  Mezo guardian set index  — 0
+  PASS  Base Wormhole Core chain ids  — wormhole 10004, evm 84532
+  PASS  Base Wormhole message fee  — 0 wei
+  PASS  Base guardian set index  — 0
+
+== DEPLOYMENT
+  PASS  wrapper code  — 0xf8cF6fCCC7bcF2860BfAD1Ea4A6018D446eb4306
+  PASS  source gateway code  — 0xA5c70F8D6B329ED6c2d15D604B66FafC3A6C96d3
+  PASS  destination gateway code  — 0x50436eB8F8213c7df773F2c331Bb41e1fecb5a23
+  PASS  receipt code  — 0x02777A938e69f848d4413b9033D225f0D1444e89
+  PASS  wrapper → pinned native vault  — 0x6f461c68B2c5492C0F5CCEc5a264d692aA7A8e16
+  PASS  wrapper asset == MUSD  — 0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503
+  PASS  source → wrapper  — 0xf8cF6fCCC7bcF2860BfAD1Ea4A6018D446eb4306
+  PASS  source → destination gateway  — 0x50436eB8F8213c7df773F2c331Bb41e1fecb5a23
+  PASS  source → receipt  — 0x02777A938e69f848d4413b9033D225f0D1444e89
+  PASS  source → Mezo Wormhole Core  — 0x268557122Ffd64c85750d630b716471118F323c8
+  PASS  source peer chain ids  — 10004/84532
+  PASS  source consistency level  — 202
+  PASS  destination bound to source gateway (one-time)  — 0xA5c70F8D6B329ED6c2d15D604B66FafC3A6C96d3
+  PASS  destination → receipt  — 0x02777A938e69f848d4413b9033D225f0D1444e89
+  PASS  destination → Mezo wrapper binding  — 0xf8cF6fCCC7bcF2860BfAD1Ea4A6018D446eb4306
+  PASS  destination → Base Wormhole Core  — 0x79A1027a6A159502049F10906D333EC57E95F083
+  PASS  destination peer chain ids  — 50/31611
+  PASS  receipt's only minter is destination gateway  — 0x50436eB8F8213c7df773F2c331Bb41e1fecb5a23
+
+== BYTECODE
+  PASS  ReachSavingsWrapper runtime code matches artifact  — 12537 bytes, 1120 immutable bytes masked
+  PASS  ReachSourceGateway runtime code matches artifact  — 12569 bytes, 1376 immutable bytes masked
+  PASS  ReachDestinationGateway runtime code matches artifact  — 8803 bytes, 864 immutable bytes masked
+  PASS  RemoteWrapperReceipt runtime code matches artifact  — 4263 bytes, 320 immutable bytes masked
+
+== RECONCILE
+  PASS  locked == remote supply + in-flight issues + in-flight redemptions  — discrepancy 0
+  PASS  custody wSMUSD balance >= totalLocked + pending MUSD settlements  — 0 >= 0 + 0
+  PASS  totalLocked == totalIssued - totalReleased  — 0 == 6000000000000000000 - 6000000000000000000
+  PASS  remote supply == totalMinted - totalBurned  — 0 == 6000000000000000000 - 6000000000000000000
+  PASS  sum(lock events) == totalIssued  — 1 lock events
+  PASS  snapshot  — mezo block 16281218, base block 48411063, locked 0, remote 0, in-flight issue 0, in-flight redeem 0
+
+== EVIDENCE
+  PASS  evidence kind  — PUBLIC_TESTNET_RUN
+  PASS  receipt 01 Approve exact MUSD amount to source gateway (bounded, not unlimited)  — 0x7d80835117a02bca97f17dc68a69a2c09ce99adb129ff32ca98e21827e174d80 status success block 16279427 (rpc)
+  PASS  receipt 02 Real MUSD → native savings vault → wSMUSD minted → shares locked → ISSUE message published  — 0x1fdfc665716297805f5af60961df8808ddfbe9466a8d8b6d2ea10809266099d7 status success block 16279430 (rpc)
+  PASS  receipt 05 Destination verifies VAA, consumes transfer id, mints exact rwSMUSD  — 0x77f19efa4666a4f0e1f2962ed62c4fbb3f398c16116351d10e83792053a81455 status success block 48406788 (rpc)
+  PASS  receipt 07 rwSMUSD transferred to a second holder (standard ERC-20)  — 0x52c1cdaa9ace5d1b73fdfd5d0b01f1035b52b019525d925c1b8bcb0fda2f7760 status success block 48406796 (rpc)
+  PASS  receipt 08 Two holders burn exact rwSMUSD and publish REDEEM messages (shares mode, MUSD mode)  — 0x480b9adf783eb270b3d7877633a2b1823a7d6175d936f430983751c6f2808b97 status success block 48406807 (rpc)
+  PASS  receipt 08 burnSharesModeTx  — 0x5e6bc5d38a293abc07fafd92e6f723f08668bb3aee4ece21b8166b3aed2b5337 status success block 48406802 (rpc)
+  PASS  receipt 08 burnMusdModeTx  — 0x480b9adf783eb270b3d7877633a2b1823a7d6175d936f430983751c6f2808b97 status success block 48406807 (rpc)
+  PASS  receipt 08 burnUnreachableMinTx  — 0xda2d5d75328b4a78f7bde4c0a08ce120fa6fc55e83619b600b0b97755cc7cd6c status success block 48406812 (rpc)
+  PASS  receipt 11 Authenticated release: exact wSMUSD to second holder; wrapper redemption to MUSD for primary  — 0x3fadf55034dfe4a21d5015fa6cfeec92c426e96be401cb6c144677db47e86ae0 status success block 16279632 (rpc)
+  PASS  receipt 11 releaseSharesTx  — 0xb65a46b289882719fbc9729075dbf1b88098d6c0e4b81eadfab64207ba06af11 status success block 16279630 (rpc)
+  PASS  receipt 11 redeemMusdTx  — 0x3fadf55034dfe4a21d5015fa6cfeec92c426e96be401cb6c144677db47e86ae0 status success block 16279632 (rpc)
+  PASS  receipt 11 deliverUnreachableMinTx  — 0xb89ca393e22a8a13f4c653c3f43902bdf6d26078b5ded52ed21fd34e4c49c29e status success block 16279633 (rpc)
+  PASS  receipt 12a v2: unreachable-minimum MUSD redemption is parked as a pending settlement (nothing paid, asset unchanged)  — 0xb89ca393e22a8a13f4c653c3f43902bdf6d26078b5ded52ed21fd34e4c49c29e status success block 16279633 (rpc)
+  PASS  receipt 12d v2: recipient settles at an acceptable minimum; MUSD paid once, pending cleared  — 0x5165900940b2fc9de436c1802e504f93c768bafaefb0041d3cdc050255562be9 status success block 16279637 (rpc)
+  PASS  VAA 50/0 guardian signatures (live Core)  — digest 0x8e4a6b6dcdb84e818496122d5d3de3df1e007f56a107ff3e4bcd6bc807657750
+  PASS  VAA 50/0 consumed exactly once on target  — transferId 0x9fbde66ef230e7f12a6a4a3f86accf95ec3aca19e974b68f0ac9ae11246fc404
+  PASS  VAA 10004/0 guardian signatures (live Core)  — digest 0xc6ed5c28a01504cd2575ca5d8ef0e464c1a3626fd07df23a95994f3b8b91b11a
+  PASS  VAA 10004/0 consumed exactly once on target  — transferId 0xa7f58ebb60ca49610b0bf1eb12de5880d3056ea08a60e0a64207d4af43aae447
+  PASS  VAA 10004/1 guardian signatures (live Core)  — digest 0x2b839fe5832d0168b1cc01345301b9b79475f3e025f0f86dcf8c8f473bebed8a
+  PASS  VAA 10004/1 consumed exactly once on target  — transferId 0x2ef401e8c2d328719f18444baba6175300cb7e62730cc2b9d6d376b7e7d45909
+  PASS  VAA 10004/2 guardian signatures (live Core)  — digest 0xa964b2580974d02a34e18aef034af6877d3e1133ca1769dda5d26a01f591e2f4
+  PASS  VAA 10004/2 consumed exactly once on target  — transferId 0xb54c56b6c01c13da52f26779a9601113acda5346e039c6f2ab41ca71da84b5fb
+
+62 passed, 0 failed
