@@ -29,7 +29,7 @@ export default function DevelopersPage() {
         <section className="space-y-5">
           <H2 id="contracts">Contracts</H2>
           {!deployment && <Notice tone="pending">Reach contracts are not deployed on public testnets yet; addresses appear here from deployments/testnet.json once they are.</Notice>}
-          <div className="overflow-x-auto rounded-md border border-ink-700">
+          <div className="relative overflow-x-auto rounded-md border border-ink-700">
             <table className="w-full min-w-[44rem] text-left text-sm">
               <thead className="bg-ink-900">
                 <tr>
