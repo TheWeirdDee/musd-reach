@@ -14,7 +14,7 @@
   --color-ink-700: #2c2b27;
   --color-ink-600: #3b3a35;
   --color-ink-500: #55534c;
-  --color-ink-400: #75726a;
+  --color-ink-400: #8e8a80; /* >= 4.5:1 on every dark surface (WCAG AA) */
   --color-ink-300: #a19d92;
   --color-ink-200: #c9c4b7;
 
@@ -26,7 +26,7 @@
   --color-ember-300: #f4a57c;
   --color-ember-400: #ef8a56;
   --color-ember-500: #e8743b;
-  --color-ember-600: #c95e2a;
+  --color-ember-600: #a64d1f; /* >= 4.5:1 on bone-50 for small labels */
   --color-ember-700: #9c4720;
 
   --color-sage-300: #b2dfba;
@@ -106,6 +106,14 @@
     outline: 2px solid var(--color-ember-400);
     outline-offset: 3px;
     border-radius: 4px;
+  }
+
+  /* Text inputs style their own border; still give them the same unmistakable focus outline. */
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline: 2px solid var(--color-ember-400) !important;
+    outline-offset: 2px;
   }
 
   @media (prefers-reduced-motion: reduce) {
