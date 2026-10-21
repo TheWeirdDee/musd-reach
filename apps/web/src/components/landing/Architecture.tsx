@@ -56,7 +56,7 @@ export function Architecture() {
           <div data-reveal className="rounded-md border border-ink-700 bg-ink-900 p-5">
             <div className="mb-4 flex items-center justify-between">
               <p className="kicker text-ink-300">Mezo testnet · {reachConfig.mezo.evmChainId}</p>
-              <span className="kicker text-ink-500">Wormhole {reachConfig.mezo.wormholeChainId}</span>
+              <span className="kicker text-ink-400">Wormhole {reachConfig.mezo.wormholeChainId}</span>
             </div>
             <Node name="MUSDSavingsRate" role="Native vault. 1:1 principal, per-address yield index." addr={reachConfig.mezo.savingsVault} href={explorer.mezoAddress(reachConfig.mezo.savingsVault)} external />
             <Link label="deposit / claimYield / withdraw" />
@@ -76,7 +76,7 @@ export function Architecture() {
           <div data-reveal className="rounded-md border border-ink-700 bg-ink-900 p-5">
             <div className="mb-4 flex items-center justify-between">
               <p className="kicker text-ink-300">Base Sepolia · {reachConfig.base.evmChainId}</p>
-              <span className="kicker text-ink-500">Wormhole {reachConfig.base.wormholeChainId}</span>
+              <span className="kicker text-ink-400">Wormhole {reachConfig.base.wormholeChainId}</span>
             </div>
             <Node name="Wormhole Core" role="parseAndVerifyVM checks guardian signatures." addr={reachConfig.base.wormholeCore} href={explorer.baseAddress(reachConfig.base.wormholeCore)} external />
             <Link label="verify · emitter · fields · replay" />
