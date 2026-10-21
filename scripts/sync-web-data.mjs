@@ -19,6 +19,11 @@ const deploymentPath = join(root, "deployments", "testnet.json");
 const data = {
   generatedAt: new Date().toISOString(),
   deployment: existsSync(deploymentPath) ? read(deploymentPath) : null,
+  // Superseded deployments stay listed for historical evidence and known-issue disclosure.
+  previousDeployments: ["testnet-v1.json"]
+    .map((f) => join(root, "deployments", f))
+    .filter((p) => existsSync(p))
+    .map((p) => read(p)),
   publicRuns: runs("evidence/real-chain").filter((r) => r.kind === "PUBLIC_TESTNET_RUN"),
   rehearsals: runs("evidence/fork-rehearsal").filter((r) => r.kind === "LOCAL_FORK_REHEARSAL"),
 };
