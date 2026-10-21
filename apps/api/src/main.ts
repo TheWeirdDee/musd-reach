@@ -1,23 +1,17 @@
-import Fastify from "fastify";
-import cors from "@fastify/cors";
-import rateLimit from "@fastify/rate-limit";
-import { ZodError } from "zod";
 import { createReachClients, readWrapperState, reconcile } from "@musd-reach/sdk";
 import { loadEnv, loadReachConfig } from "./config.js";
 import { openDb, migrate, recordJob, type Db } from "./db.js";
 import { indexChainOnce, indexerSpecs, deriveTransfers } from "./indexer.js";
 import { trackAndRelay } from "./relay.js";
 import { registerRoutes } from "./routes.js";
+import { createHttpServer, registerHttpPolicy } from "./http.js";
 
 const env = loadEnv();
 const cfg = loadReachConfig(env);
 const clients = createReachClients(cfg);
 const startedAt = new Date();
 
-const app = Fastify({
-  logger: { level: process.env.LOG_LEVEL ?? "info", redact: ["req.headers.authorization"] },
-  trustProxy: true,
-});
+const app = createHttpServer(env);
 
 /** Runs `fn` forever with exponential backoff on failure; records health in job_runs. */
 function loop(db: Db, name: string, intervalMs: number, fn: () => Promise<unknown>) {
@@ -90,18 +84,7 @@ async function main() {
   }
 
   if (env.ROLE !== "worker") {
-    await app.register(cors, { origin: env.CORS_ORIGINS.split(",").map((s) => s.trim()) });
-    await app.register(rateLimit, { max: env.RATE_LIMIT_PER_MINUTE, timeWindow: "1 minute" });
-    app.setErrorHandler((err, _req, reply) => {
-      if (err instanceof ZodError) return reply.code(400).send({ error: "INVALID_REQUEST", issues: err.issues });
-      const status = (err as { statusCode?: number }).statusCode ?? 500;
-      // Upstream RPC failures surface as 502 with an honest message, never stale fabricated data.
-      const e = err as Error & { shortMessage?: string };
-      if (status >= 500) app.log.error({ err: e.shortMessage ?? String(e.message).split("\n")[0] }, "request failed");
-      return reply
-        .code(status === 500 ? 502 : status)
-        .send({ error: status === 500 ? "UPSTREAM_UNAVAILABLE" : e.name, message: String(e.message).split("\n")[0] });
-    });
+    await registerHttpPolicy(app, env);
     registerRoutes(app, { db, cfg, clients, startedAt, baseFinality: process.env.INDEXER_BASE_FINALITY === "latest" ? "latest" : "finalized" });
     await app.listen({ port: env.API_PORT, host: env.API_HOST });
   }
