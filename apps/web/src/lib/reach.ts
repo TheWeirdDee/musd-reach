@@ -2,12 +2,19 @@ import { buildConfig, type ReachConfig } from "@musd-reach/sdk";
 import siteData from "@/generated/site-data.json";
 
 /**
+ * Test-only switches (local fork rehearsals and E2E): a deployment override, fork mode and the
+ * mock connector. Production bundles compile them out, and next.config.ts refuses to build with
+ * them set, so a hosted app always uses the recorded public deployment and real wallets.
+ */
+export const testHooksEnabled = process.env.NODE_ENV !== "production";
+
+/**
  * Runtime configuration. The deployment comes from deployments/testnet.json (synced at build).
  * NEXT_PUBLIC_REACH_DEPLOYMENT may override it for local fork rehearsals only; production builds
  * must use the recorded public deployment.
  */
 function deploymentSource(): Record<string, unknown> | null {
-  const override = process.env.NEXT_PUBLIC_REACH_DEPLOYMENT;
+  const override = testHooksEnabled ? process.env.NEXT_PUBLIC_REACH_DEPLOYMENT : undefined;
   if (override) {
     try {
       return JSON.parse(override);
@@ -34,7 +41,7 @@ export const settlementModel: "fallback-v1" | "pending-v2" =
   ((deploymentSource()?.settlementModel as string | undefined) ?? "fallback-v1") === "pending-v2" ? "pending-v2" : "fallback-v1";
 export const knownIssues: string[] = (deploymentSource()?.knownIssues as unknown as string[] | undefined) ?? [];
 
-export const isForkMode = process.env.NEXT_PUBLIC_NETWORK_MODE === "fork";
+export const isForkMode = testHooksEnabled && process.env.NEXT_PUBLIC_NETWORK_MODE === "fork";
 export const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
 export const deployment = reachConfig.deployment;
 export const MEZO_ID = reachConfig.mezo.evmChainId;
