@@ -4,6 +4,7 @@ import type { PublicClient } from "viem";
 import { loadEnv, loadReachConfig } from "../src/config.js";
 import { migrate, openDb, recordJob } from "../src/db.js";
 import { registerRoutes } from "../src/routes.js";
+import { registerHttpPolicy } from "../src/http.js";
 
 // /ready must not report a deployed indexer as ready before it has indexed, or on a success
 // recorded long ago (e.g. before a restart or an RPC outage).
@@ -12,6 +13,7 @@ async function setup() {
   await migrate(db);
   const cfg = loadReachConfig(loadEnv({}));
   const app = Fastify();
+  await registerHttpPolicy(app, { CORS_ORIGINS: "http://localhost:3000", RATE_LIMIT_PER_MINUTE: 1000 });
   registerRoutes(app, { db, cfg, clients: { mezo: {} as PublicClient, base: {} as PublicClient }, startedAt: new Date(), baseFinality: "finalized" });
   return { app, db, deployed: !!cfg.deployment };
 }
@@ -41,6 +43,17 @@ describe("/ready", { timeout: 60_000 }, () => {
     const r = await app.inject({ url: "/ready" });
     expect(r.statusCode).toBe(503);
     expect(r.json().notIndexedRecently).toEqual(["index:base"]);
+    await app.close();
+    await db.close();
+  });
+});
+
+describe("amount validation", { timeout: 60_000 }, () => {
+  it("rejects amounts above uint256 as 400 before any chain read", async () => {
+    const { app, db } = await setup();
+    const r = await app.inject({ url: `/v1/quotes/wrap?assets=${2n ** 256n}` });
+    expect(r.statusCode).toBe(400);
+    expect(r.json().error).toBe("INVALID_REQUEST");
     await app.close();
     await db.close();
   });
