@@ -102,8 +102,8 @@ The runtime bytecode of all four contracts matches this repository's build, with
 You do **not** trust relayers, the Reach API or indexer, this website, or the deployer after the one-time `bindSourceGateway`. Every value the UI shows for balances and backing is read from chain.
 
 Further reading:
-- [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md): 30-row attack matrix, each row mapped to a test, plus the Slither triage.
-- [`docs/SECURITY_FINDINGS.md`](docs/SECURITY_FINDINGS.md): findings register F-01 to F-20 and D-01. None are open; F-04 (Low) and F-05 (Info) are disclosed.
+- [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md): 33-row attack matrix, each row mapped to a test, plus the Slither triage.
+- [`docs/SECURITY_FINDINGS.md`](docs/SECURITY_FINDINGS.md): findings register F-01 to F-29 and D-01. None are open; F-04 (Low) and F-05 (Info) are disclosed.
 
 There has been no external professional audit.
 
@@ -143,12 +143,12 @@ forge test                                                                      
 RUN_FORK=true forge test --match-path "test/fork/ReachLiveFork.t.sol"            # live Mezo vault + real Wormhole Cores (fork)
 RUN_FORK_BASE_MAINNET=true forge test --match-contract MorphoCompatibilityForkTest  # real Morpho Blue on a Base mainnet fork
 cd ../..
-pnpm test          # SDK (10) and API (5)
+pnpm test          # SDK (10) and API (14)
 pnpm typecheck && pnpm lint
 pnpm --filter @musd-reach/web build
 ```
 
-Browser suites (fork signing flows, wallet rejection, accessibility, keyboard) are in `apps/web/e2e` and described in [`docs/TESTING.md`](docs/TESTING.md).
+Browser suites are in `apps/web/e2e` and described in [`docs/TESTING.md`](docs/TESTING.md). They cover fork signing flows, transaction intent (exact approvals, targets and chain ids), wallet rejection, the CSP, responsive layout, accessibility and keyboard use.
 
 ## Verify the public evidence yourself
 
@@ -176,7 +176,8 @@ pnpm verify all evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json   # ev
 | **Public testnet (v2)** | Wrap, lock, ISSUE, mint, ERC-20 transfer to a second holder, burn, REDEEM, release in shares and in MUSD, pending settlement and recipient settlement; forged, replayed and wrong-chain messages rejected by the live contracts |
 | **Fork only** | Full lifecycle against the live Mezo vault and the real Wormhole Cores; Morpho Blue market acceptance, borrow and liquidation on a Base mainnet fork |
 | **Local only** | Fuzz and invariant tests, yield-bearing scenarios, vault impairment, 10-year liveness |
-| **Not verified** | Any independent integrator; Morpho on a public network; signing a transaction in a real MetaMask (connection and network detection are verified); Rabby; screen readers; hosted deployment |
+| **Real wallet (MetaMask 13.53.0)** | Connect and reject, session persistence, unsupported-network detection, network switch (approved and rejected), account switching, behind the production CSP |
+| **Not verified** | Any independent integrator; Morpho on a public network; signing or rejecting a transaction inside a real wallet (what the app asks to sign is checked by a keyless test wallet); Rabby; WalletConnect; screen readers; hosted deployment |
 
 ## Current limitations
 
@@ -205,7 +206,7 @@ Pre-build planning documents are kept in [`docs/planning`](docs/planning); the d
 ## Deployment status
 
 - **Contracts:** v2 is deployed on Mezo testnet and Base Sepolia.
-- **Web app and API:** not hosted. Configuration for Vercel (web) and Railway (API and workers) is prepared but untested on those hosts; see [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md).
+- **Web app and API:** not hosted. Configuration for Vercel (web) and Railway (API and workers) is prepared and tested locally (clean-checkout build, nonce CSP, Railway-like container run), but not on those hosts. [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) has the runbook and the post-deploy checks.
 - **Testnet loan:** the deployment was funded with a Mezo testnet loan that is still open. It is documented in [`docs/LOAN_AUDIT.md`](docs/LOAN_AUDIT.md) and is not protocol funds.
 
 ## Hackathon
