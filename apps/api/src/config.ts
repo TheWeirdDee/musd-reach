@@ -25,7 +25,15 @@ const schema = z.object({
   // Comma-separated addresses/CIDRs of the reverse proxies in front of the API whose
   // X-Forwarded-For entry is trusted. Empty: the socket address is the client (F-18).
   TRUST_PROXY: z.string().default(""),
-});
+  // A header that the platform's edge *overwrites* with the connecting client's IP (Railway:
+  // "x-real-ip"). Used only as the rate-limit key. Leave empty unless the host documents that its
+  // edge sets it and the API is reachable only through that edge; verify with
+  // scripts/check-rate-limit.mjs against the hosted URL (docs/DEPLOYMENT.md).
+  CLIENT_IP_HEADER: z
+    .string()
+    .regex(/^[a-z0-9-]*$/, "lowercase header name")
+    .default(""),
+}).refine((e) => !(e.TRUST_PROXY && e.CLIENT_IP_HEADER), { message: "Set TRUST_PROXY or CLIENT_IP_HEADER, not both", path: ["CLIENT_IP_HEADER"] });
 
 export type AppEnv = z.infer<typeof schema>;
 
