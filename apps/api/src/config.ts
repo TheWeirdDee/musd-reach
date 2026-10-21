@@ -38,8 +38,10 @@ const schema = z.object({
 export type AppEnv = z.infer<typeof schema>;
 
 export function loadEnv(source: NodeJS.ProcessEnv = process.env): AppEnv {
+  // An empty variable (e.g. copied from .env.example) means "unset", so defaults apply.
+  const set = Object.fromEntries(Object.entries(source).filter(([, v]) => v !== undefined && v !== ""));
   // Platforms such as Railway route to the PORT they inject; an explicit API_PORT still wins.
-  const parsed = schema.safeParse({ ...source, API_PORT: source.API_PORT ?? source.PORT });
+  const parsed = schema.safeParse({ ...set, API_PORT: set.API_PORT ?? set.PORT });
   if (!parsed.success) {
     throw new Error(`Invalid environment: ${parsed.error.issues.map((i) => `${i.path.join(".")}: ${i.message}`).join("; ")}`);
   }
