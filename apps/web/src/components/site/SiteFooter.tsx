@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./SiteHeader";
+import { REPO_URL } from "@/lib/links";
 
 const cols = [
   {
@@ -27,6 +28,7 @@ const cols = [
       { href: "/developers", label: "Developers" },
       { href: "/developers#contracts", label: "Contracts" },
       { href: "/developers#verify", label: "Verifier CLI" },
+      { href: REPO_URL, label: "Source code" },
     ],
   },
 ];
@@ -47,9 +49,15 @@ export function SiteFooter() {
             <ul className="space-y-2.5">
               {c.links.map((l) => (
                 <li key={l.href}>
-                  <Link href={l.href} className="text-sm text-ink-200 transition-colors hover:text-bone-100">
-                    {l.label}
-                  </Link>
+                  {l.href.startsWith("http") ? (
+                    <a href={l.href} target="_blank" rel="noreferrer" className="text-sm text-ink-200 transition-colors hover:text-bone-100">
+                      {l.label}
+                    </a>
+                  ) : (
+                    <Link href={l.href} className="text-sm text-ink-200 transition-colors hover:text-bone-100">
+                      {l.label}
+                    </Link>
+                  )}
                 </li>
               ))}
             </ul>
