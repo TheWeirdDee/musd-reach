@@ -201,7 +201,7 @@ async function verifyReconcile(cfg: ReachConfig, c: { mezo: PublicClient; base: 
     "reconcile",
     "snapshot",
     true,
-    `mezo block ${r.mezoBlock}, base block ${r.baseFinalizedBlock}, locked ${r.totalLocked}, remote ${r.remoteSupply}, in-flight issue ${r.pendingIssueShares}, in-flight redeem ${r.pendingRedemptionShares}`,
+    `mezo block ${r.mezoBlock}, base block ${r.baseBlock}, locked ${r.totalLocked}, remote ${r.remoteSupply}, in-flight issue ${r.pendingIssueShares}, in-flight redeem ${r.pendingRedemptionShares}`,
   );
 }
 
