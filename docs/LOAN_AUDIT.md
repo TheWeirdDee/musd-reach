@@ -63,6 +63,13 @@ The v2 run left 3 MUSD of value with the secondary as v2 wSMUSD. All values are 
 
 The secondary holds 0 BTC, so step 1 is still needed first.
 
+**Re-read at Mezo block 16282689 (21 October, release pass), read-only:**
+- **Trove:** status 1 (active), debt 2,001.858 MUSD, collateral 0.04 BTC.
+- **Primary:** 1,794.50 MUSD and 0.0099999 BTC.
+- **Secondary:** 3 v2 wSMUSD, 2.5 v1 wSMUSD and 0 BTC.
+
+Nothing was repaid, withdrawn, borrowed, transferred or redeemed. The only change is accrued interest of about 0.005 MUSD. The shortfall after recovering both share balances is still about 1.86 MUSD. This loan is an open testnet liability of the deployer wallet. It is not treasury or protocol funds.
+
 ## Repayment plan (needs approval for each transaction)
 
 | # | Chain | From | Action | Notes |
