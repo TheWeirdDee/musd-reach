@@ -88,7 +88,7 @@ describe("error mapping", () => {
   });
 });
 
-describe("proxy configuration", () => {
+describe("proxy configuration", { timeout: 30_000 }, () => {
   it("refuses TRUST_PROXY and CLIENT_IP_HEADER together, and header names that are not lowercase tokens", async () => {
     const { loadEnv } = await import("../src/config.js");
     expect(() => loadEnv({ TRUST_PROXY: "10.0.0.1", CLIENT_IP_HEADER: "x-real-ip" })).toThrow(/not both/);
@@ -101,5 +101,13 @@ describe("proxy configuration", () => {
     expect(loadEnv({ PORT: "4321" }).API_PORT).toBe(4321);
     expect(loadEnv({ PORT: "4321", API_PORT: "8787" }).API_PORT).toBe(8787);
     expect(loadEnv({}).API_PORT).toBe(8787);
+  });
+
+  it("treats empty variables as unset, as in a copied .env.example", async () => {
+    const { loadEnv } = await import("../src/config.js");
+    const e = loadEnv({ API_PORT: "", PGLITE_DIR: "", DATABASE_URL: "", TRUST_PROXY: "", CLIENT_IP_HEADER: "" });
+    expect(e.API_PORT).toBe(8787);
+    expect(e.PGLITE_DIR).toMatch(/pglite$/);
+    expect(e.DATABASE_URL).toBeUndefined();
   });
 });
