@@ -69,6 +69,20 @@ describe("edge-written client IP header (Railway X-Real-IP)", () => {
   });
 });
 
+describe("CORS origins", () => {
+  it("matches a configured origin pasted with a trailing slash, and nothing else", async () => {
+    const env = { CORS_ORIGINS: " https://musd-reach.vercel.app/ ", RATE_LIMIT_PER_MINUTE: 100, TRUST_PROXY: "" };
+    const app = createHttpServer(env);
+    await registerHttpPolicy(app, env);
+    app.get("/ok", async () => ({ ok: true }));
+    const allowed = await app.inject({ url: "/ok", headers: { origin: "https://musd-reach.vercel.app" } });
+    expect(allowed.headers["access-control-allow-origin"]).toBe("https://musd-reach.vercel.app");
+    const other = await app.inject({ url: "/ok", headers: { origin: "https://evil.invalid" } });
+    expect(other.headers["access-control-allow-origin"]).toBeUndefined();
+    await app.close();
+  });
+});
+
 describe("error mapping", () => {
   it("maps validation errors to 400", async () => {
     const app = await server("");
