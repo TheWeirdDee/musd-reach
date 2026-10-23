@@ -36,7 +36,9 @@ export function clientKey(req: FastifyRequest, header: string): string {
 
 export async function registerHttpPolicy(app: FastifyInstance, env: Pick<AppEnv, "CORS_ORIGINS" | "RATE_LIMIT_PER_MINUTE"> & Partial<Pick<AppEnv, "CLIENT_IP_HEADER">>) {
   const header = env.CLIENT_IP_HEADER ?? "";
-  await app.register(cors, { origin: env.CORS_ORIGINS.split(",").map((s) => s.trim()) });
+  // Browsers send an Origin without a trailing slash; a pasted "https://site/" must still match.
+  const origins = env.CORS_ORIGINS.split(",").map((s) => s.trim().replace(/\/+$/, "")).filter(Boolean);
+  await app.register(cors, { origin: origins });
   await app.register(rateLimit, { max: env.RATE_LIMIT_PER_MINUTE, timeWindow: "1 minute", keyGenerator: (req) => clientKey(req, header) });
   app.setErrorHandler((err, _req, reply) => {
     if (err instanceof ZodError) return reply.code(400).send({ error: "INVALID_REQUEST", issues: err.issues });
