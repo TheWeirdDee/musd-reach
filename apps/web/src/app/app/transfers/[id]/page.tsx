@@ -8,7 +8,8 @@ import type { Hex } from "viem";
 import { fetchSignedVaa, parseVaa, reachDestinationGatewayAbi, reachSourceGatewayAbi, shortHex } from "@musd-reach/sdk";
 import { Amount, Arrow, Button, Chip, Hash, Notice, Panel, Row, Skeleton, type Tone } from "@/components/ui/primitives";
 import { PageTitle, NotDeployedNotice, useGate } from "@/components/app/AppKit";
-import { useApi, useClients } from "@/lib/hooks";
+import { useApi, useClients, useSlowLoad } from "@/lib/hooks";
+import { ApiWakingNotice } from "@/components/app/ApiWaking";
 import { useContractTx, phaseLabel } from "@/lib/tx";
 import { parseBurn, parseLock } from "@/lib/events";
 import { findLocalTransfer } from "@/lib/pending";
@@ -114,6 +115,7 @@ function Tracker() {
 
   const local = useMemo(() => (valid ? findLocalTransfer(id) : undefined), [id, valid]);
   const api = useApi<{ transfer: { direction: string; origin_tx: string; wormhole_sequence: string } | null }>(valid && !sp.get("tx") && !local ? `/v1/transfers/${id}` : null);
+  const apiWaking = useSlowLoad(api.isPending && api.fetchStatus === "fetching");
   const originTx = (sp.get("tx") ?? local?.originTx ?? api.data?.transfer?.origin_tx) as Hex | undefined;
   const dir = (sp.get("dir") ?? local?.direction ?? api.data?.transfer?.direction) as "ISSUE" | "REDEEM" | undefined;
   const issue = dir === "ISSUE";
@@ -162,12 +164,15 @@ function Tracker() {
 
   if (!valid) return <Notice tone="failed" title="Not a transfer id">Transfer ids are 32-byte hex values (0x + 64 characters).</Notice>;
   if (!d) return <NotDeployedNotice />;
-  if (!originTx || !dir)
+  if (!originTx || !dir) {
+    // Still asking the history service: don't claim it has no record before it has answered.
+    if (api.isPending && api.fetchStatus === "fetching") return apiWaking ? <ApiWakingNotice /> : <p className="text-sm text-ink-300" aria-live="polite">Looking up this transfer…</p>;
     return (
       <Notice tone="pending" title="Origin transaction unknown">
         This browser has no record of transfer <span className="num break-hash">{id}</span>, and the history service {api.isError ? "is unreachable" : "has not indexed it"}. Open the tracker link from the original transaction, or add <span className="num">?tx=&lt;hash&gt;&amp;dir=ISSUE|REDEEM</span>.
       </Notice>
     );
+  }
 
   const o = origin.data;
   const delivered = consumed.data === true;
