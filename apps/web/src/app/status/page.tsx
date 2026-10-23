@@ -4,7 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { formatAmount } from "@musd-reach/sdk";
 import { ContentPage, H2 } from "@/components/site/Page";
 import { Chip, Hash, Notice, Panel, Row, Skeleton, type Tone } from "@/components/ui/primitives";
-import { useApi, useClients, useNativeVault, useReconciliation, useWrapper, apiConfigured } from "@/lib/hooks";
+import { useApi, useClients, useNativeVault, useReconciliation, useWrapper, apiConfigured, useSlowLoad } from "@/lib/hooks";
+import { ApiWakingNotice } from "@/components/app/ApiWaking";
 import { reachConfig, deployment, explorer } from "@/lib/reach";
 import { useNow } from "@/lib/useIsClient";
 
@@ -25,6 +26,7 @@ export default function StatusPage() {
   const wrapper = useWrapper();
   const rec = useReconciliation();
   const health = useApi<{ wormholescan: { ok: boolean }; pending: { status: string; n: number }[] }>("/v1/messaging/health", { refetchInterval: 30_000 });
+  const healthWaking = useSlowLoad(apiConfigured && health.isPending);
   const heads = useQuery({
     queryKey: ["heads"],
     enabled: !!clients,
@@ -73,7 +75,9 @@ export default function StatusPage() {
           {!apiConfigured ? (
             <Notice tone="info" className="mt-4">No indexer API configured for this build. Messaging health is visible per transfer on its tracker.</Notice>
           ) : health.isError ? (
-            <Notice tone="pending" className="mt-4">Indexer API unreachable: {(health.error as Error).message}</Notice>
+            <Notice tone="pending" className="mt-4">Indexer API did not respond: {(health.error as Error).message}. It retries automatically.</Notice>
+          ) : healthWaking ? (
+            <ApiWakingNotice className="mt-4" />
           ) : (
             <dl className="mt-4">
               <Line label="Wormholescan API" tone={health.data ? (health.data.wormholescan.ok ? "verified" : "failed") : "info"} value={health.data ? (health.data.wormholescan.ok ? "reachable" : "unreachable") : <Skeleton className="h-4 w-16" />} />
