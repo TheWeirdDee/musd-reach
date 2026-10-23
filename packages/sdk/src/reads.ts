@@ -273,14 +273,50 @@ export async function fetchAdaptive<T>(fetchRange: (a: bigint, b: bigint) => Pro
   }
 }
 
+/**
+ * Incremental log scan. Reconciliation runs every minute in the browser and every two minutes in
+ * the API, and scanning from the deploy block each time grows with chain history (Base Sepolia
+ * adds ~380k blocks a day). Logs are cached per key, but only up to `toBlock - reorgMargin`, so a
+ * reorg near the head can never leave a stale entry; the tail is always re-read. A request for an
+ * earlier head than the cache covers, or a different start block, rescans from scratch.
+ */
+type ScanCache = { from: bigint; scannedTo: bigint; logs: { blockNumber: bigint | null }[] };
+const scanCaches = new Map<string, ScanCache>();
+
+export function clearScanCache() {
+  scanCaches.clear();
+}
+
+export async function scanIncremental<T extends { blockNumber: bigint | null }>(
+  key: string,
+  fetchRange: (fromBlock: bigint, toBlock: bigint) => Promise<T[]>,
+  fromBlock: bigint,
+  toBlock: bigint,
+  opts: { step: bigint; reorgMargin: bigint },
+): Promise<T[]> {
+  const cached = scanCaches.get(key);
+  const usable = cached && cached.from === fromBlock && cached.scannedTo <= toBlock ? cached : undefined;
+  const start = usable ? usable.scannedTo + 1n : fromBlock;
+  const fresh = start <= toBlock ? await getLogsChunked(fetchRange, start, toBlock, opts.step) : [];
+  const all = [...((usable?.logs ?? []) as T[]), ...fresh];
+  const safeTo = toBlock - opts.reorgMargin;
+  if (safeTo >= fromBlock) {
+    scanCaches.set(key, { from: fromBlock, scannedTo: safeTo, logs: all.filter((l) => l.blockNumber !== null && l.blockNumber <= safeTo) });
+  }
+  return all;
+}
+
 export type IssueRecord = { transferId: Hex; sender: Address; recipient: Address; shares: bigint; sequence: bigint; nonce: bigint; txHash: Hex; blockNumber: bigint };
 export type BurnRecord = { transferId: Hex; holder: Address; recipient: Address; shares: bigint; mode: number; sequence: bigint; nonce: bigint; txHash: Hex; blockNumber: bigint };
 
 export async function listIssues(mezo: PublicClient, d: ReachDeployment, toBlock: bigint): Promise<IssueRecord[]> {
-  const logs = await getLogsChunked(
+  // Mezo RPC caps getLogs at 10,000 blocks; Mezo blocks are final on inclusion, so a small margin suffices.
+  const logs = await scanIncremental(
+    `issues:${d.sourceGateway}`,
     (fromBlock, to) => mezo.getLogs({ address: d.sourceGateway, event: reachEvents.sharesLocked, fromBlock, toBlock: to }),
     d.sourceDeployBlock,
     toBlock,
+    { step: 9_000n, reorgMargin: 64n },
   );
   return logs.map((l) => ({
     transferId: l.args.transferId!,
@@ -295,11 +331,14 @@ export async function listIssues(mezo: PublicClient, d: ReachDeployment, toBlock
 }
 
 export async function listBurns(base: PublicClient, d: ReachDeployment, toBlock: bigint): Promise<BurnRecord[]> {
-  const logs = await getLogsChunked(
+  // publicnode caps Base Sepolia getLogs at 50,000 blocks; sepolia.base.org's 200-block cap is
+  // handled by adaptive splitting. Re-read the last 2,000 blocks every time (reorg margin).
+  const logs = await scanIncremental(
+    `burns:${d.destinationGateway}`,
     (fromBlock, to) => base.getLogs({ address: d.destinationGateway, event: reachEvents.receiptBurned, fromBlock, toBlock: to }),
     d.destinationDeployBlock,
     toBlock,
-    1_999n,
+    { step: 49_999n, reorgMargin: 2_000n },
   );
   return logs.map((l) => ({
     transferId: l.args.transferId!,
