@@ -29,9 +29,14 @@ const schema = z.object({
   // "x-real-ip"). Used only as the rate-limit key. Leave empty unless the host documents that its
   // edge sets it and the API is reachable only through that edge; verify with
   // scripts/check-rate-limit.mjs against the hosted URL (docs/DEPLOYMENT.md).
+  // Header names are case-insensitive: "CF-Connecting-IP" and " cf-connecting-ip " both mean
+  // cf-connecting-ip. Anything that cannot be a header name (quotes, spaces inside) is refused.
   CLIENT_IP_HEADER: z
     .string()
-    .regex(/^[a-z0-9-]*$/, "lowercase header name")
+    .transform((v) => v.trim().toLowerCase())
+    .superRefine((v, ctx) => {
+      if (!/^[a-z0-9-]*$/.test(v)) ctx.addIssue({ code: "custom", message: `not a header name: ${JSON.stringify(v)} (expected e.g. cf-connecting-ip, no quotes)` });
+    })
     .default(""),
 }).refine((e) => !(e.TRUST_PROXY && e.CLIENT_IP_HEADER), { message: "Set TRUST_PROXY or CLIENT_IP_HEADER, not both", path: ["CLIENT_IP_HEADER"] });
 
