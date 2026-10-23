@@ -89,10 +89,12 @@ describe("error mapping", () => {
 });
 
 describe("proxy configuration", { timeout: 30_000 }, () => {
-  it("refuses TRUST_PROXY and CLIENT_IP_HEADER together, and header names that are not lowercase tokens", async () => {
+  it("refuses TRUST_PROXY and CLIENT_IP_HEADER together and non-header values; normalises header case", async () => {
     const { loadEnv } = await import("../src/config.js");
     expect(() => loadEnv({ TRUST_PROXY: "10.0.0.1", CLIENT_IP_HEADER: "x-real-ip" })).toThrow(/not both/);
-    expect(() => loadEnv({ CLIENT_IP_HEADER: "X-Real-IP" })).toThrow(/lowercase/);
+    expect(() => loadEnv({ CLIENT_IP_HEADER: '"cf-connecting-ip"' })).toThrow(/not a header name/);
+    expect(() => loadEnv({ CLIENT_IP_HEADER: "cf connecting ip" })).toThrow(/not a header name/);
+    expect(loadEnv({ CLIENT_IP_HEADER: " CF-Connecting-IP " }).CLIENT_IP_HEADER).toBe("cf-connecting-ip");
     expect(loadEnv({ CLIENT_IP_HEADER: "x-real-ip" }).CLIENT_IP_HEADER).toBe("x-real-ip");
   });
 
