@@ -3,7 +3,8 @@
 import Link from "next/link";
 import { Amount, Arrow, Chip, EmptyState, Notice, Panel, Hash, type Tone } from "@/components/ui/primitives";
 import { PageTitle, NotDeployedNotice, ConnectPrompt, useGate } from "@/components/app/AppKit";
-import { apiConfigured, useApi } from "@/lib/hooks";
+import { apiConfigured, useApi, useSlowLoad } from "@/lib/hooks";
+import { ApiWakingNotice } from "@/components/app/ApiWaking";
 import { useLocalTransfers } from "@/lib/pending";
 import { explorer } from "@/lib/reach";
 
@@ -27,6 +28,8 @@ export default function HistoryPage() {
   const { address, connected, deployed } = useGate();
   const local = useLocalTransfers(address);
   const remote = useApi<{ transfers: Row[] }>(deployed && address ? `/v1/transfers?address=${address}&limit=50` : null, { refetchInterval: 20_000 });
+  const remoteLoading = !!address && apiConfigured && remote.isPending;
+  const waking = useSlowLoad(remoteLoading);
   const remoteIds = new Set((remote.data?.transfers ?? []).map((t) => t.transfer_id.toLowerCase()));
   const onlyLocal = local.filter((t) => !remoteIds.has(t.transferId.toLowerCase()));
 
@@ -45,10 +48,14 @@ export default function HistoryPage() {
               <Notice tone="info" className="m-2">The history service is not configured for this build. Showing transfers started in this browser only.</Notice>
             ) : remote.isError ? (
               <Notice tone="pending" className="m-2">
-                The history service is unreachable ({(remote.error as Error).message}). On-chain actions still work; showing transfers started in this browser.
+                The history service did not respond ({(remote.error as Error).message}). On-chain actions still work; showing transfers started in this browser. It retries automatically.
               </Notice>
+            ) : waking ? (
+              <ApiWakingNotice className="m-2" />
             ) : null}
-            {(remote.data?.transfers.length ?? 0) + onlyLocal.length === 0 ? (
+            {remoteLoading && onlyLocal.length === 0 ? (
+              <p className="p-4 text-sm text-ink-300" aria-live="polite">Loading indexed transfers…</p>
+            ) : (remote.data?.transfers.length ?? 0) + onlyLocal.length === 0 ? (
               <div className="p-2">
                 <EmptyState title="No transfers for this address">Nothing has been locked or burned from this wallet on the current deployment.</EmptyState>
               </div>
