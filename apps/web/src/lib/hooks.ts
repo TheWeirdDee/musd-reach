@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { usePublicClient } from "wagmi";
 import type { Address, PublicClient } from "viem";
@@ -53,7 +54,11 @@ export function useReconciliation() {
   });
 }
 
-/** Optional indexer API. The app works without it; history views say so when it's unreachable. */
+/**
+ * Optional indexer API. The app works without it; history views say so when it's unreachable.
+ * Free hosting sleeps the API when idle and holds the first request while it wakes (about a
+ * minute), so a request may take up to 90 s before it counts as failed.
+ */
 export function useApi<T>(path: string | null, opts: { refetchInterval?: number } = {}) {
   return useQuery({
     queryKey: ["api", path],
@@ -61,7 +66,7 @@ export function useApi<T>(path: string | null, opts: { refetchInterval?: number 
     refetchInterval: opts.refetchInterval,
     retry: 1,
     queryFn: async (): Promise<T> => {
-      const res = await fetch(`${apiUrl}${path}`, { signal: AbortSignal.timeout(10_000) });
+      const res = await fetch(`${apiUrl}${path}`, { signal: AbortSignal.timeout(90_000) });
       if (!res.ok) throw new Error(`History service responded ${res.status}`);
       return (await res.json()) as T;
     },
@@ -69,3 +74,14 @@ export function useApi<T>(path: string | null, opts: { refetchInterval?: number 
 }
 
 export const apiConfigured = !!apiUrl;
+
+/** True once a first API load has been pending for a few seconds, i.e. the API is probably waking. */
+export function useSlowLoad(pending: boolean, afterMs = 4_000) {
+  const [slow, setSlow] = useState(false);
+  useEffect(() => {
+    if (!pending) return;
+    const t = setTimeout(() => setSlow(true), afterMs);
+    return () => clearTimeout(t);
+  }, [pending, afterMs]);
+  return pending && slow;
+}
