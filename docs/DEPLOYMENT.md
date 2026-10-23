@@ -2,7 +2,7 @@
 
 **Status, 21 October 2026.**
 - **Contracts:** v2 is deployed on Mezo testnet and Base Sepolia and verified (below).
-- **Web app and API:** not hosted. Everything in "Hosting" is prepared and tested locally, not on Vercel or Railway. Hosting needs the owner's separate approval.
+- **Web app and API:** hosted by the owner on 23 October 2026. The web app is at `https://musd-reach.vercel.app` (Vercel, Hobby) and the API at `https://musd-reach-api.onrender.com` (Render, Free). The Railway section below remains as an alternative.
 - **Mainnet:** none, and none is planned.
 
 ## Hosting
@@ -45,6 +45,23 @@ Settings: builder is the Dockerfile `apps/api/Dockerfile`, from `railway.json`. 
 | `LOG_LEVEL` | `info` | JSON logs to stdout. Upstream failures return a generic 502 and are logged in detail (F-18) |
 
 Restart and recovery: migrations are tracked and re-applied only if they are new. The indexer resumes from its stored cursor, and every loop backs off on errors (up to 5 minutes). `/ready` returns 503 until both indexers have succeeded within the last 10 minutes. It reports `notIndexedRecently` and the cursors; "ready" means "indexing", not "caught up". All of this was checked locally in Docker (below), not on Railway.
+
+### Render: API service (what is actually hosted)
+
+The API runs on Render: `https://musd-reach-api.onrender.com`, created by the owner on 23 October 2026.
+
+- **Service:** Web Service, Docker runtime, Dockerfile Path `./apps/api/Dockerfile`, build context `.`, health check `/health`, Free instance.
+- **Variables:**
+  - `ROLE=all`, `LOG_LEVEL=info`.
+  - `CORS_ORIGINS` set to the exact Vercel URL.
+  - `CLIENT_IP_HEADER=cf-connecting-ip`, then `RATE_LIMIT_PER_MINUTE=120`.
+  - Leave `API_PORT`, `TRUST_PROXY`, `DATABASE_URL` and `RELAYER_KEY_FILE` unset. Render injects `PORT`, and an explicit `API_PORT` would override it.
+- **Client IP on Render.** Render's edge is Cloudflare (`Server: cloudflare`, `CF-RAY`). Measured on the live service on 23 October:
+  - Client-set `X-Forwarded-For`, `X-Real-IP` and `True-Client-IP` pass through unchanged, so the API must never trust them.
+  - A client-set `CF-Connecting-IP` is refused at the edge with 403. The `CF-Connecting-IP` the container receives therefore comes from Cloudflare, which makes it safe as `CLIENT_IP_HEADER`.
+  - Without it, the API keys on the socket address, which is the edge's. That is safe, but all visitors share one bucket.
+  - `scripts/check-rate-limit.mjs` checks the 403, then sends twice the limit with rotating forged headers. It passes only if about one limit's worth is served.
+- **Free tier:** the service sleeps after 15 minutes without traffic and wakes in about a minute, and its filesystem is ephemeral. The embedded database is therefore rebuilt from the chain after each wake; `/ready` reports 503 until both indexers have run. Free Render Postgres expires after 30 days (around 22 November for a database created now, the day before the demo), so it is not used. The web app's balances, backing, actions, recovery and proof pages do not depend on the API.
 
 ### Vercel: web project
 
