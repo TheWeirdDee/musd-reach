@@ -47,7 +47,7 @@ Last updated 21 October 2026. Vocabulary: **PASS** means verified with the evide
 | API Docker image | PASS (WSL Docker 29.1): 117 MB, non-root, healthy on an injected `PORT`; `/ready` 503 → 200 after indexing; cursors persist across a restart; reconciliation BALANCED against the live chains |
 | Web typecheck, ESLint, production build (14 routes) | PASS |
 | Source repository | PUBLISHED: https://github.com/TheWeirdDee/musd-reach (pushed without force) |
-| Public hosting: API, web | BLOCKED: needs approval and hosting accounts. Runbook and post-deploy checks in `docs/DEPLOYMENT.md` |
+| Public hosting: API, web | LIVE (testnet), deployed by the owner on 23 Oct 2026: web https://musd-reach.vercel.app (Vercel), API https://musd-reach-api.onrender.com (Render Free, sleeps when idle). Commit `1fa705a`. Checked on the hosted URLs: CSP 25/25, transaction intent 42/42, rejection 15/15, wallet UI 10/10, keyboard 6/6, responsive 120/120, axe no violations; API ready, CORS limited to the site, backing BALANCED, rate limit held per client (115 of 250 with forged headers) behind Cloudflare's `CF-Connecting-IP`; verifier 62/62 |
 | Independent audit (professional or external users) | NOT DONE |
 
 ## Canonical run notes
