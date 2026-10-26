@@ -1,124 +1,37 @@
-import type { Metadata } from "next";
-import { ContentPage, H2, Prose, Code } from "@/components/site/Page";
-import { Notice } from "@/components/ui/primitives";
-import { reachConfig, deployment, explorer } from "@/lib/reach";
-
-export const metadata: Metadata = { title: "Developers" };
-
-const contracts = [
-  ["ReachSavingsWrapper", "Mezo", "wSMUSD. ERC-4626 interface over MUSD; claim-and-hold wrapper of native sMUSD. depositSavings, redeemInKind, harvest.", deployment?.wrapper, "mezo"],
-  ["ReachSourceGateway", "Mezo", "Custody + messenger. lockAndIssue, depositAndIssue, depositSavingsAndIssue, receiveRedeem, publishNav.", deployment?.sourceGateway, "mezo"],
-  ["ReachDestinationGateway", "Base Sepolia", "receiveIssue, burnAndRedeem, receiveNav, latestNav. No admin after one-time bind.", deployment?.destinationGateway, "base"],
-  ["RemoteWrapperReceipt", "Base Sepolia", "rwSMUSD. ERC-20 + permit, 18 decimals. Only the destination gateway mints/burns.", deployment?.receipt, "base"],
-  ["MUSDSavingsRate (native)", "Mezo", "Mezo's vault. Not ERC-4626: 1:1 principal, account-indexed yield.", reachConfig.mezo.savingsVault, "mezo"],
-] as const;
-
-export default function DevelopersPage() {
-  return (
-    <ContentPage kicker="Developers" title="Integrate, verify, or audit Reach" lede={<p>Everything needed to accept rwSMUSD safely, check its backing independently, or reproduce the proof from a clean checkout.</p>}>
-      <div className="space-y-16">
-        <section className="space-y-5">
-          <H2 id="model">The model in one paragraph</H2>
-          <Prose>
-            <p>
-              <strong>wSMUSD</strong> is a share of the ReachSavingsWrapper, which owns native sMUSD principal on Mezo plus the native yield that principal earns while the wrapper holds it. <strong>rwSMUSD</strong> on Base is a claim on exactly one wSMUSD unit locked in the ReachSourceGateway, minted only after a guardian-signed ISSUE message from that gateway is verified on Base, and burned before a REDEEM message is published. Indicative value: <code>rwSMUSD units × wrapper.convertToAssets(1e18) / 1e18</code> MUSD, read on Mezo at a stated block. It is not native sMUSD and not a dollar.
-            </p>
-          </Prose>
-        </section>
-
-        <section className="space-y-5">
-          <H2 id="contracts">Contracts</H2>
-          {!deployment && <Notice tone="pending">Reach contracts are not deployed on public testnets yet; addresses appear here from deployments/testnet.json once they are.</Notice>}
-          <div className="relative overflow-x-auto rounded-md border border-ink-700">
-            <table className="w-full min-w-[44rem] text-left text-sm">
-              <thead className="bg-ink-900">
-                <tr>
-                  {["Contract", "Chain", "Role", "Address"].map((h) => (
-                    <th key={h} className="px-4 py-3 font-mono text-[0.625rem] font-normal uppercase tracking-[0.12em] text-ink-400">
-                      {h}
-                    </th>
-                  ))}
-                </tr>
-              </thead>
-              <tbody className="divide-y divide-ink-750">
-                {contracts.map(([n, c, r, a, chain]) => (
-                  <tr key={n}>
-                    <td className="px-4 py-3 font-medium text-bone-100">{n}</td>
-                    <td className="px-4 py-3 text-ink-300">{c}</td>
-                    <td className="px-4 py-3 text-ink-300">{r}</td>
-                    <td className="num px-4 py-3 text-xs">
-                      {a ? (
-                        <a className="break-hash text-bone-200 underline decoration-ink-600 underline-offset-4 hover:text-ember-400" href={chain === "mezo" ? explorer.mezoAddress(a) : explorer.baseAddress(a)} target="_blank" rel="noreferrer">
-                          {a}
-                        </a>
-                      ) : (
-                        <span className="text-sand-300">not deployed</span>
-                      )}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <Prose>
-            <p>
-              ABIs: <code>packages/sdk/src/abis.ts</code> (generated from Foundry artifacts). Source: <code>packages/contracts/src</code>. Pinned chain facts: <code>packages/protocol-registry/registry.json</code>.
-            </p>
-          </Prose>
-        </section>
-
-        <section className="space-y-5">
-          <H2 id="accept">Accepting rwSMUSD as collateral or payment</H2>
-          <Prose>
-            <p>Before treating rwSMUSD as worth anything, an integration should check, at minimum:</p>
-            <ul className="list-disc space-y-2 pl-5">
-              <li>The token is the receipt deployed by the enrolled destination gateway (<code>receipt.gateway()</code>), and that gateway&apos;s <code>sourceGateway()</code> and <code>wrapper()</code> match the registry.</li>
-              <li>The backing equation balances (<code>reconcile()</code> in the SDK).</li>
-              <li>A fresh NAV: on Base, <code>ReachDestinationGateway.latestNav()</code> holds the most recent guardian-attested snapshot (assets, supply, Mezo timestamp and block). Anyone can refresh it with <code>publishNav()</code> on Mezo.</li>
-              <li>Exit latency: a holder needs Base finality plus guardian signing before shares are released on Mezo. Price that in.</li>
-            </ul>
-          </Prose>
-          <Code label="read-backing.ts">{`import { buildConfig, createReachClients, readWrapperState, reconcile } from "@musd-reach/sdk";
-import deployments from "./deployments/testnet.json";
-
-const cfg = buildConfig({ deployments });
-const clients = createReachClients(cfg);
-
-const nav = await readWrapperState(clients.mezo, cfg);
-// nav.assetsPerShare: MUSD base units per 1e18 wSMUSD, at nav.blockNumber
-const backing = await reconcile(clients, cfg);
-// backing.status === "BALANCED" when locked == supply + in-flight issues + in-flight redemptions`}</Code>
-          <Code label="Solidity: read the attested NAV on Base">{`(uint256 assets, uint256 supply, uint64 ts, uint64 mezoBlock, ) = IReachDestinationGateway(gw).latestNav();
-require(block.timestamp - ts <= MAX_AGE, "stale NAV");
-uint256 musdPerShare = (assets + 1) * 1e18 / (supply + 1); // same virtual offset as the wrapper`}</Code>
-        </section>
-
-        <section className="space-y-5">
-          <H2 id="message">Message format</H2>
-          <Prose>
-            <p>
-              Payloads are <code>abi.encode(ReachMessages.Message)</code>: protocol id <code>keccak256(&quot;MUSD_REACH&quot;)</code>, version 1, direction (1 ISSUE, 2 REDEEM, 3 NAV), origin/target EVM chain ids, origin/target Wormhole chain ids, origin/target gateways, wrapper, receipt, nonce, shares, sender, recipient, redeem mode, minimum assets and a NAV snapshot. Transfer id: <code>keccak256(abi.encode(protocolId, version, direction, originEvmChainId, originWormholeChainId, originGateway, nonce))</code>. Both the transfer id and the VAA digest are consumed on delivery.
-            </p>
-          </Prose>
-        </section>
-
-        <section className="space-y-5">
-          <H2 id="verify">Verify independently</H2>
-          <Prose>
-            <p>The verifier reads chains directly, never our API, and exits non-zero on any failed check.</p>
-          </Prose>
-          <Code label="terminal">{`git clone <repo> && cd musd-reach && pnpm install
-pnpm verify registry                 # pinned vault implementation, Wormhole cores, chain ids
-pnpm verify deployment               # Reach wiring: peers, receipt minter, wrapper binding
-pnpm verify reconcile                # backing equation from chain state
-pnpm verify evidence evidence/real-chain/<run>.json   # every receipt + every VAA via live Core
-# alternative RPCs:  --mezo-rpc <url> --base-rpc <url>`}</Code>
-          <Code label="contracts">{`cd packages/contracts
-forge test                               # unit, fuzz, invariant
-RUN_FORK=true forge test --match-path "test/fork/ReachLiveFork.t.sol"            # live vault + real cores (fork)
-RUN_FORK_BASE_MAINNET=true forge test --match-contract MorphoCompatibilityForkTest  # Morpho (fork)`}</Code>
-        </section>
-      </div>
-    </ContentPage>
-  );
-}
+import Link from "next/link";
+import { ContentPage, H2, Prose } from "@/components/site/Page";
+import { CodeBlock } from "@/components/site/CodeBlock";
+import { Notice, Panel, Chip } from "@/components/ui/primitives";
+import example from "@/generated/developer-example.json";
+import { repoFile } from "@/lib/links";
+import { pageMetadata } from "@/lib/metadata";
+export const metadata = pageMetadata("Developer portal", "Integrate rwSMUSD with real SDK examples, contract identities, NAV and backing reads, messaging, recovery and operational guidance.", "/developers");
+const guides = [
+  ["sdk", "SDK & client setup", "Install the workspace package, configure clients and read real balances."],
+  ["transaction-intents", "Transaction intents", "Bind target, chain, amount and recipient before asking for a signature."],
+  ["messaging", "Cross-chain messaging", "Understand ISSUE, REDEEM, VAAs and permissionless delivery."],
+  ["recovery", "Settlement recovery", "Read pending state; retry or use recipient-authorized alternatives."],
+  ["events", "Events & errors", "Derive a lifecycle without confusing delivery with payout."],
+  ["integration-example", "Integration checklist", "Define acceptance, freshness and liquidity policies for your application."],
+];
+export default function DevelopersPage() { return <ContentPage kicker="Developers / Build with evidence" title="A receipt you can inspect." lede={<p>Integrate a claim on Mezo savings with explicit identities, real chain reads and a recovery model you can explain. Technical compatibility is a starting point, not a risk endorsement.</p>}>
+  <div className="space-y-10">
+    <Notice tone="pending" title="Testnets only / No independent audit">The SDK is a private monorepo workspace package. No public borrowing market is available. The reported wallet classification is unresolved; the site pauses wallet actions.</Notice>
+    <nav aria-label="Developer sections" className="flex flex-wrap gap-x-6 gap-y-3 border-y border-ink-700 py-5 text-sm text-ink-200">{[["quickstart", "Quickstart"], ["contracts", "Contracts"], ["example", "SDK example"], ["messages", "Messaging & recovery"], ["verify", "Verifier"], ["operations", "Operations"]].map(([id, title]) => <a key={id} href={`#${id}`} className="underline underline-offset-4">{title}</a>)}</nav>
+    <section id="quickstart" className="scroll-mt-24 space-y-5"><H2>Start from the source</H2><Prose><p>Use Node 20 or newer, pnpm 11 and the pinned lockfile. The SDK exports TypeScript directly within the workspace; it is not advertised as an npm-published package. Foundry is required for contract artifacts and fork tests, not for browser balance reads.</p></Prose><CodeBlock label="Repository quickstart">{`git clone https://github.com/TheWeirdDee/musd-reach.git
+cd musd-reach
+pnpm install --frozen-lockfile
+pnpm typecheck
+pnpm --filter @musd-reach/web dev`}</CodeBlock></section>
+    <section id="contracts" className="scroll-mt-24 space-y-5"><H2>Pin the deployment, then the token</H2><div className="grid gap-4 md:grid-cols-2"><Panel className="p-6"><Chip tone="neutral">Mezo testnet / 31611</Chip><h3 className="mt-4 font-semibold">Savings, wrapper and custody</h3><p className="mt-3 text-sm leading-7 text-ink-200">MUSD and native sMUSD live here. ReachSavingsWrapper issues wSMUSD. ReachSourceGateway holds the backing and settles return messages.</p></Panel><Panel className="p-6"><Chip tone="neutral">Base Sepolia / 84532</Chip><h3 className="mt-4 font-semibold">Remote receipt and gateway</h3><p className="mt-3 text-sm leading-7 text-ink-200">RemoteWrapperReceipt is rwSMUSD. Its gateway verifies ISSUE and publishes REDEEM after a burn. A matching symbol alone is insufficient.</p></Panel></div><div className="flex flex-wrap gap-5 text-sm underline underline-offset-4"><Link href="/contracts">Addresses, deploy blocks and source</Link><a href={repoFile("packages/sdk/src/abis.ts")}>Generated ABIs</a><Link href="/docs/permissions">Permissions and one-time binding</Link></div></section>
+    <section id="example" className="scroll-mt-24 space-y-5"><H2>Read holdings, NAV, backing and return state</H2><Prose><p>This example is generated directly from a TypeScript source file included in the workspace typecheck. It does not sign or send a transaction. Keep returned amounts as bigint and display each observation&apos;s chain block.</p></Prose><CodeBlock label="read-only-integration.ts">{example.code}</CodeBlock><a href={repoFile(example.path)} className="text-xs text-ink-300 underline underline-offset-4">Typechecked source</a></section>
+    <section id="messages" className="scroll-mt-24 space-y-5"><H2>Design for an asynchronous receipt</H2><div className="grid gap-4 md:grid-cols-2"><Panel className="p-6"><h3 className="font-semibold">Issue and acceptance</h3><p className="mt-3 text-sm leading-7 text-ink-200">A source lock is not yet a destination receipt. Verify the origin event, finality, guardian-signed VAA and destination consumption. Only accept the exact v2 token and verify gateway wiring and backing.</p></Panel><Panel className="p-6"><h3 className="font-semibold">Return and recovery</h3><p className="mt-3 text-sm leading-7 text-ink-200">A consumed REDEEM can still be pending. Read pendingSettlements. Anyone can retry original terms; only the recipient can lower the minimum or take shares. Contract recipients must be able to initiate these calls.</p></Panel></div><Prose><p>Handle RPC failure as unknown, wallet rejection as unsent, a mined revert as failure, and a pending transaction as unresolved. Do not silently replace a requested MUSD payout with another asset.</p></Prose></section>
+    <section id="verify" className="scroll-mt-24 space-y-5"><H2>Verify without trusting the Reach API</H2><CodeBlock label="Read-only verifier">{`pnpm verify registry
+pnpm verify deployment
+pnpm verify bytecode
+pnpm verify reconcile
+pnpm verify all evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json`}</CodeBlock><Prose><p>Bytecode checks require locally built Foundry artifacts. The verifier checks recorded effects and signatures against live contracts, with observation blocks. Passing checks do not prove future liquidity or the absence of bugs and do not replace a professional audit.</p></Prose></section>
+    <section id="operations" className="scroll-mt-24 space-y-5"><H2>Operations are part of the integration</H2><Prose><p>The API is optional and can sleep. Use /health for availability and /ready plus cursors for history coverage. The revised transfer endpoint uses nextCursor for pagination. A failing history service is separate from a failing RPC or an inconsistent backing observation.</p><p>Keep secrets out of NEXT_PUBLIC variables. Review CSP origins for each RPC. Relayers have no payout authority; protect their operational keys anyway. Do not execute the local fork lifecycle scripts when a task prohibits transactions.</p></Prose><div className="portal-grid">{[["api", "Read API"], ["rpc", "RPC & CSP"], ["indexing", "Indexer behavior"]].map(([slug, title]) => <Link href={`/docs/${slug}`} className="portal-card" key={slug}><h3>{title}</h3><p>Configuration, availability and failure boundaries.</p></Link>)}</div></section>
+    <section className="space-y-5"><H2>Go deeper</H2><div className="portal-grid">{guides.map(([slug, title, text]) => <Link className="portal-card" key={slug} href={`/docs/${slug}`}><h3>{title}</h3><p>{text}</p></Link>)}</div></section>
+  </div>
+</ContentPage>; }
