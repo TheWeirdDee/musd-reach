@@ -31,6 +31,10 @@ try {
       try {
         const response = await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
         await page.waitForTimeout(900);
+        // Full-page captures paint sticky headers at the current scroll position.
+        // Reset after navigation/hydration so the image starts at the real page top.
+        await page.evaluate(() => window.scrollTo(0, 0));
+        await page.waitForTimeout(100);
         const details = await page.evaluate(() => ({
           title: document.title, description: document.querySelector('meta[name="description"]')?.content,
           canonical: document.querySelector('link[rel="canonical"]')?.href,
