@@ -1,6 +1,6 @@
 # Requirement status
 
-Last updated 21 October 2026. Vocabulary: **PASS** means verified with the evidence cited. **FAIL** means attempted and not met. **BLOCKED** means it needs an owner action or an external party. **NOT TESTED** means not yet attempted. A local or fork test is never reported as a public-testnet PASS.
+Last updated 26 October 2026. Vocabulary: **PASS** means verified with the evidence cited. **FAIL** means attempted and not met. **BLOCKED** means it needs an owner action or an external party. **NOT TESTED** means not yet attempted. A local or fork test is never reported as a public-testnet PASS.
 
 | ID | Requirement | Status | Evidence / blocker |
 |---|---|---|---|
@@ -21,11 +21,24 @@ Last updated 21 October 2026. Vocabulary: **PASS** means verified with the evide
 | R-015 | Morpho compatibility | **PASS (labelled local Base-mainnet fork only)** | `MorphoCompatibilityFork.t.sol`: 3 tests |
 | R-016 | Borrowing readiness | **BLOCKED** | No market, liquidity, curator, oracle review or liquidator; borrowing is not offered |
 | R-017 | Base canonical MUSD entry | **NOT TESTED** | Documented as a separate user action via the canonical NTT bridge |
-| R-018 | Public judge proof | **PASS (data) / BLOCKED (hosting)** | v2 run and v1 history published to `/proof`; hosting not approved |
+| R-018 | Public judge proof | **PASS (hosted)** | v2 run and v1 history are available at https://musd-reach.vercel.app/proof |
 | R-019 | Additional remote chain | NOT TESTED | Out of scope |
 | R-020 | Strategy reinvestment | NOT TESTED | Out of scope (claim-and-hold) |
 
-## Platform
+## Current release checks
+
+The detailed hackathon schedule has been replaced with "Built for the Mezo hackathon" in the README, protocol notes, planning documents and footer. The README now leads with the problem and solution. The landing CTA identifies the read-only app; the wallet notice is contextual to app routes. The FAQ uses a narrower sticky introduction on desktop and stacks without sticky positioning on mobile.
+
+- Local regressions: contracts 75/75 (no fork tests), SDK 13/13, API 23/23; all five typechecks, lint and production build pass.
+- Browser regressions: acceptance 113/113, wallet fixtures 34/34, live-read intents 35/35, rejection 15/15, settlement/history 7/7, keyboard 8/8 and CSP 29/29.
+- Before this follow-up, hosted web and API both reported `e67559f`. API readiness returned 200 after cold start, backing was BALANCED, and cursor pagination returned all four recorded transfers without duplicates or missing origin timestamps. See `evidence/product-review/security/public-observations.json`.
+- Migration 002's public effects are observable: transfer queries use the origin-time schema and return populated timestamps; indexing catches up. The private `schema_migrations` table was not inspected directly.
+- The six review fixes and migration 002 are preserved. No contract, registry, loan or historical public transaction evidence was changed. No new blockchain transactions were sent, including on forks.
+- Provider issue [305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) is OPEN with no provider decision. Read-only presentation is available; normal wallet interaction remains blocked. Historical MetaMask connection tests are not current clearance. Three dependency advisories remain (one high, two moderate); see F-34.
+
+This is an engineering self-review and a separate read-only chain verifier, not an independent professional or human usability audit. Current hosted follow-up results are recorded here after deployment; earlier platform rows below are historical observations.
+
+## Platform - historical checks from 21-23 October
 
 | Item | Status |
 |---|---|
@@ -58,4 +71,4 @@ The v2 run needed no reused transactions.
 
 ## Security findings
 
-See `docs/SECURITY_FINDINGS.md`. F-01 still affects archived v1 and is fixed in deployed v2. F-33 is an open release blocker: a MetaMask malicious-site warning was reported during connection; [provider review #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) is open, not cleared. F-34 tracks partially remediated dependency advisories. The local rebuild holds wallet connections and writes; its deployment requires separate verification. F-04, F-05 and D-01 remain disclosed.
+See `docs/SECURITY_FINDINGS.md`. F-01 still affects archived v1 and is fixed in deployed v2. F-33 is an open release blocker: a MetaMask malicious-site warning was reported during connection; [provider review #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) is open, not cleared. F-34 tracks partially remediated dependency advisories. The hosted build at `e67559f` holds wallet connections and writes; the product-copy/FAQ follow-up is checked separately before publication. F-04, F-05 and D-01 remain disclosed.
