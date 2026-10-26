@@ -10,6 +10,8 @@ import { WalletButton } from "@/components/site/WalletButton";
 import { deployment, explorer, MEZO_ID } from "@/lib/reach";
 import { phaseLabel, type TxState } from "@/lib/tx";
 import { cn } from "@/lib/cn";
+import { walletSafetyHold } from "@/lib/walletSafety";
+import { useWalletChainId } from "@/lib/walletChain";
 
 const tabs = [
   { href: "/app", label: "Portfolio" },
@@ -22,8 +24,8 @@ const tabs = [
 export function AppNav() {
   const path = usePathname();
   return (
-    <nav aria-label="App" className="-mx-[var(--gutter)] relative overflow-x-auto px-[var(--gutter)]">
-      <ul className="flex min-w-max gap-1 border-b border-ink-700">
+    <nav aria-label="App" className="relative">
+      <ul className="flex flex-wrap gap-1 border-b border-ink-700">
         {tabs.map((t) => {
           const active = t.href === "/app" ? path === "/app" : path?.startsWith(t.href);
           return (
@@ -42,10 +44,10 @@ export function AppNav() {
 
 export function PageTitle({ kicker, title, children }: { kicker: string; title: ReactNode; children?: ReactNode }) {
   return (
-    <header className="pb-8 pt-10 sm:pt-14">
+    <header className="app-page-title">
       <p className="kicker text-ink-300">{kicker}</p>
-      <h1 className="mt-3 text-[length:var(--text-headline)] font-semibold leading-[var(--text-headline--line-height)] tracking-[var(--text-headline--letter-spacing)] text-bone-50">{title}</h1>
-      {children && <div className="mt-4 max-w-2xl text-[1.0625rem] leading-relaxed text-ink-300">{children}</div>}
+      <h1 className="app-heading mt-3 font-semibold tracking-tight text-bone-50">{title}</h1>
+      {children && <div className="mt-4 max-w-2xl text-base leading-7 text-ink-300">{children}</div>}
     </header>
   );
 }
@@ -62,7 +64,7 @@ export function NotDeployedNotice() {
 export function ConnectPrompt({ what }: { what: string }) {
   return (
     <div className="flex flex-col items-start gap-4 rounded-md border border-dashed border-ink-600 p-6 sm:flex-row sm:items-center sm:justify-between">
-      <p className="text-sm leading-relaxed text-ink-300">Connect a wallet to {what}. Nothing is requested until you confirm a specific action.</p>
+      <p className="text-sm leading-relaxed text-ink-300">{walletSafetyHold ? "Wallet connections are paused while a reported MetaMask warning is investigated. Explore the public documentation and evidence without connecting." : `Connect a wallet to ${what}. Connecting requests your account address, not a token approval or signature.`}</p>
       <WalletButton />
     </div>
   );
@@ -70,7 +72,8 @@ export function ConnectPrompt({ what }: { what: string }) {
 
 export function useGate() {
   const { address, status } = useAccount();
-  return { address, connected: status === "connected" && !!address, deployed: !!deployment };
+  const chainId = useWalletChainId();
+  return { address, chainId, connected: status === "connected" && !!address, deployed: !!deployment };
 }
 
 // ---------------------------------------------------------------------------
@@ -109,7 +112,7 @@ export function AmountField({ label, unit, value, onChange, max, disabled, id }:
           placeholder="0.0"
           value={value}
           disabled={disabled}
-          onChange={(e) => onChange(e.target.value.replace(/[^\d.]/g, ""))}
+          onChange={(e) => onChange(e.target.value)}
           aria-invalid={!!error}
           aria-describedby={error ? `${id}-err` : undefined}
           className="num h-14 min-w-0 flex-1 bg-transparent px-4 text-xl text-bone-50 outline-none placeholder:text-ink-500 disabled:text-ink-400"
