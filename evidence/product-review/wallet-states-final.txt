@@ -1,0 +1,35 @@
+PASS Disconnected forms show onboarding instead of a live transaction
+PASS Disconnected page makes no signing requests
+PASS disconnected: no uncaught page errors
+PASS Sufficient token and gas balances enable the exact next action
+PASS Zero recipient is rejected
+PASS Rejected signature is recoverable and never navigates to a tracker
+PASS No permit, typed-data or personal signature was requested
+PASS sufficient-and-rejected: no uncaught page errors
+PASS Wrong network keeps the financial action disabled
+PASS Explicit network switch restores eligibility without signing
+PASS wrong-network: no uncaught page errors
+PASS Rejected switch leaves no signing request
+PASS rejected-switch: no uncaught page errors
+PASS Zero token balance is shown and blocks the action
+PASS zero-token: no uncaught page errors
+PASS Gas shortage is displayed and blocks the action
+PASS zero-gas: no uncaught page errors
+PASS RPC failure cannot enable a write with assumed balances
+PASS rpc-unavailable: no uncaught page errors
+PASS Pending wallet request freezes input and action
+PASS Pending action cannot submit twice
+PASS pending-request: no uncaught page errors
+PASS Account switching refreshes account-specific eligibility
+PASS account-switch: no uncaught page errors
+PASS Lock intent binds v2 source gateway, Mezo chain and exact share amount
+PASS direct-lock-intent: no uncaught page errors
+PASS Burn intent binds v2 destination gateway, Base chain and exact receipt amount
+PASS Burn requires no token approval or typed signature
+PASS burn-intent: no uncaught page errors
+PASS Malformed amount is preserved and cannot enable a write
+PASS Connected mobile workspace has no page overflow
+PASS mobile-input: no uncaught page errors
+PASS EIP-6963 wallet is listed once without generic duplicate
+PASS chooser: no uncaught page errors
+34/34 passed

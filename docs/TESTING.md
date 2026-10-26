@@ -35,7 +35,13 @@
 
 `fork-deliver.ts` refuses to run unless both RPCs report Anvil.
 
-## Latest results (21 October 2026, release pass, on the pushed revision's code)
+## Review results (25 October 2026)
+
+See [the submission review](REVIEW_2026-10-25.md) for the fixes, current hosted checks, local
+browser transaction rerun, live verifier results, and retained transcripts. The fixes are local;
+the hosted checks do not imply that the patched code has been deployed.
+
+## Historical results (21 October 2026, release pass, on the pushed revision's code)
 
 - **Contracts:** 75 local, 4 live-fork and 3 Morpho-fork tests pass. Slither: the same 33 results, all triaged. The 2 that Slither rates High (`reentrancy-balance`) are accepted: every entry point is `nonReentrant` and the callee is the native vault.
 - **SDK:** 10 tests pass. **API:** 14 tests pass.
@@ -86,3 +92,38 @@
   - Screen readers.
   - Burn-transaction preparation on the public deployment: no address holds v2 rwSMUSD. It is covered on forks.
   - Hosted deployments: hosting is not approved.
+
+
+## Wallet-classification hold review (26 October 2026)
+
+See [the product review](PRODUCT_REVIEW_2026-10-26.md). Do not run transaction or fork
+lifecycle scripts when the task prohibits transactions. The following new checks never
+broadcast: production acceptance, product audit, responsive, axe, keyboard and CSP.
+Run them from `apps/web` against a locally built production server on port 3002:
+
+```powershell
+node e2e/product-acceptance.mjs http://localhost:3002
+node e2e/responsive.mjs http://localhost:3002
+node e2e/axe.mjs http://localhost:3002
+node e2e/keyboard.mjs http://localhost:3002
+node e2e/csp.mjs http://localhost:3002
+$env:AUDIT_ALL_DOCS='1'
+node e2e/product-audit.mjs http://localhost:3002
+```
+
+For scripted wallet states only, use a separate **development** server on port 3003 with
+`NEXT_PUBLIC_E2E_WALLET_TESTS=keyless`. Leave all fork/account/deployment overrides unset.
+`wallet-states.mjs` uses explicit RPC fixtures and rejects every write in its provider;
+it does not use an extension, private key or public signing account. Production builds
+refuse the keyless switch. Do not interpret these tests as MetaMask clearance.
+
+```powershell
+node e2e/wallet-states.mjs http://localhost:3003
+node e2e/settlement-history.mjs http://localhost:3003
+```
+
+The older `wallet-ui.mjs` assumes disconnected transaction forms and is superseded for
+this rebuild by the production safety-hold and wallet-state suites. The older live-read
+transaction-intent suite may now correctly block accounts without enough native gas;
+its previous result must not be promoted to a passing current run. The corrected live-read suite now asserts a no-signing gas block when the observed account cannot afford its next transaction. Exact lock and burn
+arguments are checked by the new rejecting-wallet fixture suite.

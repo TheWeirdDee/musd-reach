@@ -71,6 +71,7 @@ export function registerRoutes(
   const reconciliation = cached(30_000, () => reconcile(clients, cfg, { baseBlockTag: "latest" })); // see F-13
 
   app.get("/health", async () => ({ ok: true, startedAt: deps.startedAt.toISOString() }));
+  app.get("/v1/version", async () => ({ revision: process.env.RENDER_GIT_COMMIT ?? process.env.RAILWAY_GIT_COMMIT_SHA ?? process.env.REACH_REVISION ?? null, version: "0.1.0" }));
 
   app.get("/ready", async (_req, reply) => {
     const jobs = await db.query("SELECT job, last_ok_at, last_error_at, last_error, consecutive_errors FROM job_runs");
@@ -172,7 +173,10 @@ export function registerRoutes(
       .object({
         address: z.string().refine(isAddress, "invalid address").optional(),
         limit: z.coerce.number().int().min(1).max(100).default(25),
-        before: z.coerce.number().int().positive().optional(),
+        direction: z.enum(["ISSUE", "REDEEM"]).optional(),
+        status: z.enum(["SOURCE_LOCKED", "VAA_SIGNED", "REMOTE_MINT_PENDING_FINALITY", "BACKED_REMOTE", "REMOTE_BURN_PENDING", "REMOTE_BURN_FINALIZED", "SETTLEMENT_PENDING", "SHARES_RELEASED", "NATIVE_REDEEMED", "SHARES_CLAIMED_BY_RECIPIENT"]).optional(),
+        // Opaque keyset cursor from the previous page's `nextCursor`: "<origin time ms>:<transfer id>".
+        cursor: z.string().regex(/^\d{1,16}:0x[0-9a-f]{64}$/, "invalid cursor").optional(),
       })
       .parse(req.query);
     const params: unknown[] = [q.limit];
@@ -181,13 +185,24 @@ export function registerRoutes(
       params.push(q.address.toLowerCase());
       where += ` AND (lower(sender) = $${params.length} OR lower(recipient) = $${params.length})`;
     }
-    if (q.before) {
-      params.push(q.before);
-      where += ` AND origin_block < $${params.length}`;
+    // Newest first by the origin block's real time (Mezo and Base block numbers are not comparable),
+    // with the transfer id as a unique tie-breaker so a page boundary inside one block skips nothing.
+    const key = "COALESCE(origin_time, 'epoch'::timestamptz)";
+    if (q.direction) { params.push(q.direction); where += ` AND direction = $${params.length}`; }
+    if (q.status) { params.push(q.status); where += ` AND status = $${params.length}`; }
+    if (q.cursor) {
+      const [ms, id] = q.cursor.split(":");
+      params.push(Number(ms) / 1000, id);
+      where += ` AND (${key}, transfer_id) < (to_timestamp($${params.length - 1}), $${params.length})`;
     }
-    const r = await db.query(`SELECT * FROM transfers WHERE ${where} ORDER BY origin_block DESC LIMIT $1`, params);
+    const r = await db.query(
+      `SELECT *, (EXTRACT(EPOCH FROM ${key}) * 1000)::bigint AS cursor_ms FROM transfers WHERE ${where}
+       ORDER BY ${key} DESC, transfer_id DESC LIMIT $1`,
+      params,
+    );
     const last = r.rows[r.rows.length - 1];
-    return toJson({ transfers: r.rows, nextBefore: r.rows.length === q.limit && last ? last.origin_block : null });
+    const transfers = r.rows.map(({ cursor_ms: _c, ...t }) => t);
+    return toJson({ transfers, nextCursor: r.rows.length === q.limit && last ? `${last.cursor_ms}:${last.transfer_id}` : null });
   });
 
   app.get<{ Params: { id: string } }>("/v1/transfers/:id", async (req, reply) => {

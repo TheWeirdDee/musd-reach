@@ -2,9 +2,11 @@
 
 MUSD Reach lets a Mezo saver keep MUSD earning in Mezo's native savings vault while holding a transferable, backed claim on that position on another chain (Base Sepolia today). Messages in both directions are Wormhole guardian-signed and are checked on-chain. The claim is redeemed by burning it.
 
-> **Status: experimental testnet software. Not audited by an independent firm.** The v2 contracts are live on Mezo testnet and Base Sepolia. A public round trip passed all 18 steps, including a deliberately parked settlement, and the independent verifier passes 62/62 against the live chains. The web app and API are **not publicly hosted**. Testnet assets have no value. There is no promised yield, no dollar peg and no borrowing product. Full requirement status: [`docs/STATUS.md`](docs/STATUS.md).
+> **Status: experimental testnet software. Not audited by an independent firm.** The v2 contracts are live on Mezo testnet and Base Sepolia. A public round trip passed all 18 steps, including a deliberately parked settlement, and the independent verifier passes 62/62 against the live chains. The [web app](https://musd-reach.vercel.app) and [read API](https://musd-reach-api.onrender.com/health) are publicly hosted; the free API may take about a minute to wake. Testnet assets have no value. There is no promised yield, no dollar peg and no borrowing product. Full requirement status: [`docs/STATUS.md`](docs/STATUS.md).
 
 ## The problem
+
+> **Wallet safety hold:** a MetaMask malicious-site warning was reported during connection. [Provider review #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) is open; it has not been cleared. Do not connect or bypass a warning. The local remediation build pauses wallet connections and financial writes; it has not yet been published to the hosted app.
 
 MUSD deposited in Mezo's savings vault (sMUSD) earns the native savings rate, but the position only exists on Mezo. To use that value elsewhere, for example as collateral, in a treasury, or to pay someone on Base, a saver today has to withdraw, bridge plain MUSD, and give up the savings position.
 
@@ -103,7 +105,7 @@ You do **not** trust relayers, the Reach API or indexer, this website, or the de
 
 Further reading:
 - [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md): 33-row attack matrix, each row mapped to a test, plus the Slither triage.
-- [`docs/SECURITY_FINDINGS.md`](docs/SECURITY_FINDINGS.md): findings register F-01 to F-29 and D-01. None are open; F-04 (Low) and F-05 (Info) are disclosed.
+- [`docs/SECURITY_FINDINGS.md`](docs/SECURITY_FINDINGS.md): contract findings, disclosures and current investigations. F-33 (MetaMask classification) is an open release blocker; F-34 records dependency remediation. F-04 (Low) and F-05 (Info) remain disclosed.
 
 There has been no external professional audit.
 
@@ -143,7 +145,7 @@ forge test                                                                      
 RUN_FORK=true forge test --match-path "test/fork/ReachLiveFork.t.sol"            # live Mezo vault + real Wormhole Cores (fork)
 RUN_FORK_BASE_MAINNET=true forge test --match-contract MorphoCompatibilityForkTest  # real Morpho Blue on a Base mainnet fork
 cd ../..
-pnpm test          # SDK (10) and API (14)
+pnpm test          # SDK (13) and API (22)
 pnpm typecheck && pnpm lint
 pnpm --filter @musd-reach/web build
 ```
@@ -206,7 +208,7 @@ Pre-build planning documents are kept in [`docs/planning`](docs/planning); the d
 ## Deployment status
 
 - **Contracts:** v2 is deployed on Mezo testnet and Base Sepolia.
-- **Web app and API:** not hosted. Configuration for Vercel (web) and Railway (API and workers) is prepared and tested locally (clean-checkout build, nonce CSP, Railway-like container run), but not on those hosts. [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) has the runbook and the post-deploy checks.
+- **Web app and API:** hosted on Vercel ([web app](https://musd-reach.vercel.app)) and Render ([API health](https://musd-reach-api.onrender.com/health)) since 23 October 2026. The free API may take about a minute to wake. [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) has the runbook and the post-deploy checks.
 - **Testnet loan:** the deployment was funded with a Mezo testnet loan that is still open. It is documented in [`docs/LOAN_AUDIT.md`](docs/LOAN_AUDIT.md) and is not protocol funds.
 
 ## Hackathon

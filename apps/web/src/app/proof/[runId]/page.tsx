@@ -66,6 +66,7 @@ export default function RunPage() {
   const isPublic = run?.kind === "PUBLIC_TESTNET_RUN";
   const clients = useClients();
   const [checking, setChecking] = useState(false);
+  const [filter, setFilter] = useState("");
 
   const live = useQuery({
     queryKey: ["run-live", runId],
@@ -145,13 +146,15 @@ export default function RunPage() {
             </span>
           </div>
           {isPublic && (
-            <Button intent="secondary" onClick={() => setChecking(true)} busy={live.isFetching}>
+            <Button intent="secondary" onClick={() => { setChecking(true); if (checking) live.refetch(); }} busy={live.isFetching}>
               Re-verify every transaction live
             </Button>
           )}
         </Panel>
-        <ol className={cn("space-y-3")}>
-          {run.steps.map((s) => (
+        <div className="flex flex-wrap items-center justify-between gap-4"><label className="text-sm text-ink-300" htmlFor="proof-step-filter">Find a lifecycle step</label><input id="proof-step-filter" value={filter} onChange={(e) => setFilter(e.target.value)} placeholder="Mint, burn, settlement, negative…" className="h-11 w-full rounded-sm border border-ink-600 bg-ink-950 px-3 text-sm sm:max-w-sm" /></div>
+        {live.dataUpdatedAt > 0 && <p className="text-xs text-ink-400">Last receipt recheck: {new Date(live.dataUpdatedAt).toUTCString()}. This button checks receipts and block numbers; the CLI additionally checks VAA signatures, wiring and bytecode.</p>}
+        <ol className={cn("space-y-3 border-l border-ink-600 pl-3 sm:pl-5")}>
+          {run.steps.filter((s) => `${s.id} ${s.title} ${s.chain} ${JSON.stringify(s.details)}`.toLowerCase().includes(filter.toLowerCase())).map((s) => (
             <StepCard key={s.id} s={s} live={live.data?.[s.id]} isPublic={isPublic} />
           ))}
         </ol>

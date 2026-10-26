@@ -8,6 +8,8 @@ import { PageTitle, NotDeployedNotice, ConnectPrompt, useGate } from "@/componen
 import { usePosition, useWrapper } from "@/lib/hooks";
 import { useLocalTransfers } from "@/lib/pending";
 import { explorer, reachConfig } from "@/lib/reach";
+import { FlowIntro } from "@/components/app/Workspace";
+import { PositionActivity } from "@/components/app/PositionActivity";
 
 export default function PortfolioPage() {
   const { address, connected, deployed } = useGate();
@@ -18,6 +20,11 @@ export default function PortfolioPage() {
   const local = useLocalTransfers(viewed);
   const p = pos.data;
 
+  if (!viewed) return <>
+    <FlowIntro title="Your savings, with a clear view." description="Keep the savings on Mezo. Inspect the claim on Base. This workspace brings balances, transfer progress and recovery into one place, without counting the same backing twice." requirements={["MUSD or sMUSD to begin on Mezo testnet", "wSMUSD to hold the wrapper position; rwSMUSD to carry its claim on Base", "Testnet BTC on Mezo and Sepolia ETH on Base for their respective actions"]} steps={["Wrap savings into shares of the Reach wrapper.", "Keep your shares or make their claim portable to Base.", "Track delivery, then redeem and recover on your own terms."]} docs="/docs/getting-started" />
+    <Panel className="mt-6 p-6"><h2 className="text-lg font-semibold">Inspect an address without connecting</h2><p className="mt-2 text-sm leading-7 text-ink-300">Public balances can be read with an address alone. No wallet permission is needed.</p><form onSubmit={(e) => e.preventDefault()} className="mt-4"><label className="sr-only" htmlFor="lookup">Read-only wallet address</label><input id="lookup" value={lookup} onChange={(e) => setLookup(e.target.value.trim())} placeholder="0x…" spellCheck={false} className="num h-12 w-full rounded-sm border border-ink-600 bg-ink-950 px-4 text-sm" />{lookup && !isAddress(lookup) && <p role="alert" className="mt-2 text-xs text-rust-300">Enter a valid Ethereum-style address.</p>}</form><div className="mt-5 flex flex-wrap gap-5 text-sm text-ink-200"><Link className="underline underline-offset-4" href="/proof">Inspect public evidence</Link><Link className="underline underline-offset-4" href="/contracts">Verify contract identities</Link></div></Panel>
+  </>;
+
   return (
     <>
       <PageTitle kicker="Portfolio" title="Your savings exposure">
@@ -25,6 +32,7 @@ export default function PortfolioPage() {
       </PageTitle>
 
       <div className="space-y-6">
+        <Notice tone="info" title={connected && viewed === address ? "Connected wallet" : "Read-only address inspection"}><Hash value={viewed} />. {connected && viewed === address ? "Balances below belong to the current authorized account." : "You are viewing public holdings, not an active signing session."} {pos.dataUpdatedAt > 0 && <span> Last observed {new Date(pos.dataUpdatedAt).toUTCString()}.</span>} {pos.isFetching && " Refreshing…"}</Notice>
         {!deployed && <NotDeployedNotice />}
 
         <form
@@ -86,7 +94,7 @@ export default function PortfolioPage() {
           </div>
         )}
 
-        {deployed && wrapper.data && (
+        {deployed && wrapper.isSuccess && (
           <Panel className="p-6">
             <div className="flex flex-wrap items-center justify-between gap-3">
               <h2 className="text-lg font-semibold tracking-[-0.02em] text-bone-50">Wrapper</h2>
@@ -113,7 +121,8 @@ export default function PortfolioPage() {
           </Panel>
         )}
 
-        <Panel className="p-6">
+        {viewed && <PositionActivity account={viewed} />}
+        {connected && <Panel className="p-6">
           <div className="flex items-center justify-between gap-3">
             <h2 className="text-lg font-semibold tracking-[-0.02em] text-bone-50">Transfers started in this browser</h2>
             <Link href="/app/history" className="inline-flex items-center gap-1.5 text-sm text-ink-300 hover:text-bone-100">
@@ -141,7 +150,7 @@ export default function PortfolioPage() {
               </ul>
             )}
           </div>
-        </Panel>
+        </Panel>}
       </div>
     </>
   );

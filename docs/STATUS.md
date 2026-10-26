@@ -58,4 +58,4 @@ The v2 run needed no reused transactions.
 
 ## Security findings
 
-See `docs/SECURITY_FINDINGS.md`. F-01 (Medium: relayer gas manipulation of the payout asset) still affects the archived v1. It is fixed in the deployed v2. F-21 to F-29 came from the release hardening pass and are fixed; F-26 still needs its post-deploy probe on the real host. No open findings remain; F-04, F-05 and D-01 are disclosed.
+See `docs/SECURITY_FINDINGS.md`. F-01 still affects archived v1 and is fixed in deployed v2. F-33 is an open release blocker: a MetaMask malicious-site warning was reported during connection; [provider review #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) is open, not cleared. F-34 tracks partially remediated dependency advisories. The local rebuild holds wallet connections and writes; its deployment requires separate verification. F-04, F-05 and D-01 remain disclosed.

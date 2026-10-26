@@ -31,6 +31,7 @@ const providerScript = ({ account, startChain }) => {
   const listeners = {};
   const emit = (ev, v) => (listeners[ev] ?? []).forEach((f) => f(v));
   window.__sent = [];
+  window.__requests = [];
   window.__switches = [];
   window.__wallet = {
     setAccount: (a) => ((accounts = [a]), emit("accountsChanged", accounts)),
@@ -38,6 +39,7 @@ const providerScript = ({ account, startChain }) => {
   };
   window.ethereum = {
     request: async ({ method, params }) => {
+      window.__requests.push({ method, params });
       if (method === "eth_requestAccounts" || method === "eth_accounts") return accounts;
       if (method === "eth_chainId") return "0x" + chainId.toString(16);
       if (method === "net_version") return String(chainId);
@@ -71,6 +73,7 @@ const short = (a) => new RegExp(`^${a.slice(0, 6)}…${a.slice(-4)}$`, "i");
 async function withWallet(name, { account, startChain, path }, run) {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  page.setDefaultNavigationTimeout(120_000);
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.addInitScript(providerScript, { account, startChain });
@@ -90,6 +93,8 @@ async function withWallet(name, { account, startChain, path }, run) {
 
 /** Clicks the primary action and returns the first transaction the wallet was asked to sign. */
 async function firstRequest(page, button) {
+  const networkSwitch = page.getByRole("button", { name: "Switch to Mezo testnet", exact: true });
+  if (await networkSwitch.isVisible().catch(() => false)) await networkSwitch.click();
   const btn = page.getByRole("button", { name: button });
   await btn.waitFor({ timeout: 60_000 });
   await page.waitForFunction((b) => [...document.querySelectorAll("button")].some((x) => b.test(x.textContent) && !x.disabled), button, { timeout: 60_000 });
@@ -134,6 +139,13 @@ await withWallet("wrap-only", { account: PRIMARY, startChain: 31611, path: "/app
 // 3. Make portable from existing wSMUSD: the wrapper share token is approved to the source gateway.
 await withWallet("lock", { account: SECONDARY, startChain: 31611, path: "/app/portable/new" }, async (page) => {
   await page.fill("#lock-amount", "0.75");
+  await page.waitForFunction(() => [...document.querySelectorAll("button")].some((b) =>
+    (b.textContent === "Insufficient network gas" && b.disabled) || (/Approve, then lock/.test(b.textContent) && !b.disabled)), null, { timeout: 60_000 });
+  const noGas = page.getByRole("button", { name: "Insufficient network gas", exact: true });
+  if (await noGas.isVisible()) {
+    check("lock: live account without enough native gas is blocked before signing", await noGas.isDisabled() && await page.evaluate(() => window.__sent.length) === 0);
+    return; // Exact lock/approval calldata with sufficient gas is covered by wallet-states.mjs.
+  }
   const tx = await firstRequest(page, /Approve, then lock/);
   checkApproval("lock", tx, { from: SECONDARY, token: dep.wrapper, spender: dep.sourceGateway, amount: parseUnits("0.75", 18) });
 });

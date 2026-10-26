@@ -8,6 +8,7 @@ import { chromium } from "playwright";
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const ROUTES = [
+  "/docs", "/docs/sdk", "/contracts", "/security",
   "/",
   "/app",
   "/app/wrap",
@@ -48,7 +49,7 @@ const nonceOf = (h) => /'nonce-([^']+)'/.exec(h ?? "")?.[1];
 check("nonce differs per request", nonceOf(csp) && nonceOf(csp) !== nonceOf(second.headers.get("content-security-policy")));
 
 const browser = await chromium.launch();
-const ctx = await browser.newContext();
+const ctx = await browser.newContext({ viewport: { width: 390, height: 844 } });
 await ctx.addInitScript(() => {
   window.__cspViolations = [];
   document.addEventListener("securitypolicyviolation", (e) =>
@@ -65,8 +66,10 @@ for (const r of ROUTES) {
   const nonce = nonceOf(header);
   const scripts = await page.$$eval("script", (s) => s.map((x) => ({ src: x.src, nonce: x.nonce })));
   const unnonced = scripts.filter((s) => s.nonce !== nonce);
-  // Hydration: the wallet button is a client component; it renders only after React hydrates.
-  const hydrated = await page.locator("header button").first().isVisible().catch(() => false);
+  // Hydration: exercise the mobile menu state through its real click handler.
+  await page.getByRole("button", { name: "Open menu", exact: true }).click();
+  const hydrated = await page.getByRole("button", { name: "Close menu", exact: true }).isVisible() && await page.getByRole("navigation", { name: "Mobile", exact: true }).isVisible();
+  await page.getByRole("button", { name: "Close menu", exact: true }).click();
   const violations = await page.evaluate(() => window.__cspViolations);
   check(
     `${r}: ${res.status()}, ${scripts.length} scripts nonce'd, hydrated, 0 violations`,

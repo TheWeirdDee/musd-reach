@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import { z } from "zod";
 import { createHttpServer, registerHttpPolicy } from "../src/http.js";
+import { loadEnv } from "../src/config.js";
 
 // app.inject() connects from 127.0.0.1, which stands in for the reverse proxy.
 async function server(trustProxy: string, clientIpHeader = "") {
@@ -104,7 +105,6 @@ describe("error mapping", () => {
 
 describe("proxy configuration", { timeout: 30_000 }, () => {
   it("refuses TRUST_PROXY and CLIENT_IP_HEADER together and non-header values; normalises header case", async () => {
-    const { loadEnv } = await import("../src/config.js");
     expect(() => loadEnv({ TRUST_PROXY: "10.0.0.1", CLIENT_IP_HEADER: "x-real-ip" })).toThrow(/not both/);
     expect(() => loadEnv({ CLIENT_IP_HEADER: '"cf-connecting-ip"' })).toThrow(/not a header name/);
     expect(() => loadEnv({ CLIENT_IP_HEADER: "cf connecting ip" })).toThrow(/not a header name/);
@@ -113,14 +113,12 @@ describe("proxy configuration", { timeout: 30_000 }, () => {
   });
 
   it("listens on the platform PORT unless API_PORT is set", async () => {
-    const { loadEnv } = await import("../src/config.js");
     expect(loadEnv({ PORT: "4321" }).API_PORT).toBe(4321);
     expect(loadEnv({ PORT: "4321", API_PORT: "8787" }).API_PORT).toBe(8787);
     expect(loadEnv({}).API_PORT).toBe(8787);
   });
 
   it("treats empty variables as unset, as in a copied .env.example", async () => {
-    const { loadEnv } = await import("../src/config.js");
     const e = loadEnv({ API_PORT: "", PGLITE_DIR: "", DATABASE_URL: "", TRUST_PROXY: "", CLIENT_IP_HEADER: "" });
     expect(e.API_PORT).toBe(8787);
     expect(e.PGLITE_DIR).toMatch(/pglite$/);

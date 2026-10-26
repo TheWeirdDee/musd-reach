@@ -12,6 +12,7 @@ const nav = [
   { href: "/proof", label: "Proof" },
   { href: "/integrations", label: "Integrations" },
   { href: "/developers", label: "Developers" },
+  { href: "/docs", label: "Docs" },
   { href: "/status", label: "Status" },
 ];
 
@@ -52,8 +53,8 @@ export function SiteHeader() {
   }, [open]);
 
   return (
-    <header className={cn("sticky top-0 z-40 border-b transition-colors duration-300", scrolled || open ? "border-ink-700 bg-ink-950/90 backdrop-blur-md" : "border-transparent bg-transparent")}>
-      <div className="shell flex h-16 items-center justify-between gap-4">
+    <header className={cn("sticky top-0 z-40 border-b transition-colors duration-300", open ? "border-ink-700 bg-ink-950" : scrolled ? "border-ink-700 bg-ink-950/90 backdrop-blur-md" : "border-transparent bg-transparent")}>
+      <div className="shell flex h-16 items-center justify-between gap-3">
         <div className="flex items-center gap-6">
           <Logo />
           <span className="hidden rounded-full border border-ink-600 px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ink-300 sm:inline">

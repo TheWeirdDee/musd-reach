@@ -122,8 +122,8 @@ export function Chip({ tone = "neutral", children, pulse, className }: { tone?: 
 // Layout primitives
 // ---------------------------------------------------------------------------
 
-export function Panel({ className, children, as: As = "section" }: { className?: string; children: ReactNode; as?: "section" | "div" | "article" }) {
-  return <As className={cn("rounded-md border border-ink-700 bg-ink-900 shadow-panel", className)}>{children}</As>;
+export function Panel({ className, children, as: As = "section", plain = false }: { className?: string; children: ReactNode; as?: "section" | "div" | "article"; plain?: boolean }) {
+  return <As className={cn(!plain && "rounded-md border border-ink-700 bg-ink-900 shadow-panel", className)}>{children}</As>;
 }
 
 export function Kicker({ children, className }: { children: ReactNode; className?: string }) {

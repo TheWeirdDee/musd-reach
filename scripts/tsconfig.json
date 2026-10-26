@@ -1,1 +1,1 @@
-{ "extends": "../tsconfig.base.json", "compilerOptions": { "noEmit": true, "types": ["node"] }, "include": ["*.ts", "lib/**/*.ts"] }
+{ "extends": "../tsconfig.base.json", "compilerOptions": { "noEmit": true, "types": ["node"] }, "include": ["*.ts", "lib/**/*.ts", "examples/**/*.ts"] }

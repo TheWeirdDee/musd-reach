@@ -8,7 +8,7 @@ const policyFor = (nonce: string) =>
     dev: process.env.NODE_ENV === "development",
     rpcUrls: [...reachConfig.mezo.rpcUrls, ...reachConfig.base.rpcUrls],
     apiUrl,
-    walletConnect: !!process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+    walletConnect: false,
   });
 
 /**

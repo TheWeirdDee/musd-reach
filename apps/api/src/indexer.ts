@@ -27,6 +27,15 @@ type Spec = {
   finalityTag: "finalized" | "latest";
 };
 
+/**
+ * getLogs window per chain, sized to the public RPC limits (Mezo 10,000 blocks; publicnode Base
+ * Sepolia 50,000; sepolia.base.org's 200-block cap is handled by adaptive splitting). A tick
+ * scans up to MAX_WINDOWS windows, so a fresh database (every wake on free hosting) catches up
+ * in minutes instead of hours.
+ */
+export const INDEX_WINDOW = { mezo: 9_000n, base: 49_999n } as const;
+const MAX_WINDOWS = 20;
+
 export function indexerSpecs(
   cfg: ReachConfig,
   clients: { mezo: PublicClient; base: PublicClient },
@@ -54,7 +63,7 @@ export function indexerSpecs(
         harvested,
       ] as AbiEvent[],
       startBlock: d.wrapperDeployBlock,
-      batch: 5_000n,
+      batch: INDEX_WINDOW.mezo,
       finalityTag: "latest",
     },
     {
@@ -63,7 +72,7 @@ export function indexerSpecs(
       addresses: [d.destinationGateway],
       events: [reachEvents.receiptMinted, reachEvents.receiptBurned, navUpdated, messageConsumed] as AbiEvent[],
       startBlock: d.destinationDeployBlock,
-      batch: 1_500n,
+      batch: INDEX_WINDOW.base,
       finalityTag: baseFinalityTag,
     },
   ];
@@ -104,7 +113,13 @@ export async function indexChainOnce(db: Db, spec: Spec): Promise<{ from: bigint
     const blk = await spec.client.getBlock({ blockNumber: bn }).catch(() => null);
     if (!blk || blk.hash !== r.block_hash) {
       reorgedFrom = bn;
-      await db.query("DELETE FROM chain_events WHERE chain = $1 AND block_number >= $2", [spec.chain, bn.toString()]);
+      // Persist the rewind atomically with deletion. If fetching replacement logs fails or
+      // the worker restarts next, the orphaned rows can no longer identify where to rewind.
+      await db.query(
+        `WITH removed AS (DELETE FROM chain_events WHERE chain = $1 AND block_number >= $2 RETURNING transfer_id)
+         UPDATE chain_cursor SET next_block = LEAST(next_block, $2) WHERE chain = $1`,
+        [spec.chain, bn.toString()],
+      );
       if (bn < next) next = bn;
       break;
     }
@@ -122,22 +137,44 @@ export async function indexChainOnce(db: Db, spec: Spec): Promise<{ from: bigint
     ]);
     return { from: next, to: head, stored: 0, reorgedFrom };
   }
-  const to = next + spec.batch > head ? head : next + spec.batch;
+  const from = next;
+  let to = from - 1n;
+  let stored = 0;
+  for (let w = 0; w < MAX_WINDOWS && to < head; w++) {
+    const start = to + 1n;
+    to = start + spec.batch > head ? head : start + spec.batch;
+    stored += await indexWindow(db, spec, start, to, finalized);
+    await db.query("UPDATE chain_cursor SET next_block = $2, finalized_block = $3, updated_at = now() WHERE chain = $1", [
+      spec.chain,
+      (to + 1n).toString(),
+      finalized.toString(),
+    ]);
+  }
+  return { from, to, stored, reorgedFrom };
+}
+
+async function indexWindow(db: Db, spec: Spec, start: bigint, to: bigint, finalized: bigint): Promise<number> {
   // Splits the window when an RPC rejects its size (e.g. HTTP 413), instead of failing the job.
   const logs = await fetchAdaptive(
     (fromBlock, toBlock) => spec.client.getLogs({ address: spec.addresses, events: spec.events, fromBlock, toBlock, strict: true }),
-    next,
+    start,
     to,
   );
+  // Block timestamps for the (few) blocks holding Reach events: transfers are ordered by time.
+  const times = new Map<bigint, bigint>();
+  for (const bn of new Set(logs.map((l) => l.blockNumber!))) {
+    const blk = await spec.client.getBlock({ blockNumber: bn });
+    times.set(bn, blk.timestamp);
+  }
 
   for (const l of logs) {
     const args = (l as unknown as { args: Record<string, unknown> }).args;
     const transferId = typeof args.transferId === "string" ? args.transferId : null;
     await db.query(
-      `INSERT INTO chain_events (chain, block_number, block_hash, tx_hash, log_index, contract, event, transfer_id, args, finalized)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10)
+      `INSERT INTO chain_events (chain, block_number, block_hash, tx_hash, log_index, contract, event, transfer_id, args, finalized, block_time)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10, to_timestamp($11))
        ON CONFLICT (chain, tx_hash, log_index) DO UPDATE SET block_hash = EXCLUDED.block_hash, block_number = EXCLUDED.block_number,
-         finalized = EXCLUDED.finalized`,
+         finalized = EXCLUDED.finalized, block_time = EXCLUDED.block_time`,
       [
         spec.chain,
         l.blockNumber!.toString(),
@@ -149,18 +186,14 @@ export async function indexChainOnce(db: Db, spec: Spec): Promise<{ from: bigint
         transferId,
         json(args),
         l.blockNumber! <= finalized,
+        Number(times.get(l.blockNumber!)),
       ],
     );
   }
-  await db.query("UPDATE chain_cursor SET next_block = $2, finalized_block = $3, updated_at = now() WHERE chain = $1", [
-    spec.chain,
-    (to + 1n).toString(),
-    finalized.toString(),
-  ]);
-  return { from: next, to, stored: logs.length, reorgedFrom };
+  return logs.length;
 }
 
-type EventRow = { chain: ChainName; event: string; tx_hash: string; block_number: string; finalized: boolean; args: Record<string, string> };
+type EventRow = { chain: ChainName; event: string; tx_hash: string; block_number: string; finalized: boolean; block_time: string | null; args: Record<string, string> };
 
 /**
  * Rebuilds transfer status rows from indexed events. Idempotent; derives everything from logs.
@@ -169,7 +202,7 @@ type EventRow = { chain: ChainName; event: string; tx_hash: string; block_number
  */
 export async function deriveTransfers(db: Db): Promise<number> {
   const rows = await db.query<EventRow & { transfer_id: string }>(
-    "SELECT chain, event, tx_hash, block_number, finalized, args, transfer_id FROM chain_events WHERE transfer_id IS NOT NULL ORDER BY block_number, log_index",
+    "SELECT chain, event, tx_hash, block_number, finalized, block_time, args, transfer_id FROM chain_events WHERE transfer_id IS NOT NULL ORDER BY block_number, log_index",
   );
   const by = new Map<string, EventRow[]>();
   for (const r of rows.rows) {
@@ -211,15 +244,25 @@ export async function deriveTransfers(db: Db): Promise<number> {
     }
 
     await db.query(
+      // Every origin field is refreshed: after a reorg a different transaction can take the same
+      // nonce and therefore the same transfer id. A VAA digest recorded for the old origin
+      // transaction (by the relayer) is dropped, never carried over.
       `INSERT INTO transfers (transfer_id, direction, status, shares, sender, recipient, redeem_mode, wormhole_sequence,
-         origin_tx, origin_block, origin_finalized, target_tx, target_block, target_finalized, vaa_digest, musd_out, fell_back, updated_at)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17, now())
+         origin_tx, origin_block, origin_finalized, target_tx, target_block, target_finalized, vaa_digest, musd_out, fell_back, origin_time, updated_at)
+       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15,$16,$17,$18, now())
        ON CONFLICT (transfer_id) DO UPDATE SET
          status = CASE WHEN EXCLUDED.status IN ('SOURCE_LOCKED', 'REMOTE_BURN_FINALIZED') AND transfers.vaa_digest IS NOT NULL
+                            AND transfers.origin_tx = EXCLUDED.origin_tx
                        THEN 'VAA_SIGNED' ELSE EXCLUDED.status END,
+         direction = EXCLUDED.direction, shares = EXCLUDED.shares, sender = EXCLUDED.sender, recipient = EXCLUDED.recipient,
+         redeem_mode = EXCLUDED.redeem_mode, wormhole_sequence = EXCLUDED.wormhole_sequence,
+         origin_tx = EXCLUDED.origin_tx, origin_block = EXCLUDED.origin_block, origin_time = EXCLUDED.origin_time,
          origin_finalized = EXCLUDED.origin_finalized,
          target_tx = EXCLUDED.target_tx, target_block = EXCLUDED.target_block, target_finalized = EXCLUDED.target_finalized,
-         vaa_digest = COALESCE(EXCLUDED.vaa_digest, transfers.vaa_digest), musd_out = EXCLUDED.musd_out, fell_back = EXCLUDED.fell_back,
+         vaa_digest = CASE WHEN transfers.origin_tx = EXCLUDED.origin_tx THEN COALESCE(EXCLUDED.vaa_digest, transfers.vaa_digest)
+                           ELSE EXCLUDED.vaa_digest END,
+         vaa_checked_at = CASE WHEN transfers.origin_tx = EXCLUDED.origin_tx THEN transfers.vaa_checked_at ELSE NULL END,
+         musd_out = EXCLUDED.musd_out, fell_back = EXCLUDED.fell_back,
          updated_at = now()`,
       [
         id,
@@ -239,9 +282,15 @@ export async function deriveTransfers(db: Db): Promise<number> {
         consumed?.args.vaaDigest ?? null,
         redeemed?.args.assets ?? null,
         pending,
+        origin.block_time,
       ],
     );
     n++;
   }
+  // A transfer whose origin event was reorged away never happened on the canonical chain.
+  await db.query(
+    `DELETE FROM transfers t WHERE NOT EXISTS (
+       SELECT 1 FROM chain_events e WHERE e.transfer_id = t.transfer_id AND e.event IN ('SharesLocked', 'ReceiptBurned'))`,
+  );
   return n;
 }

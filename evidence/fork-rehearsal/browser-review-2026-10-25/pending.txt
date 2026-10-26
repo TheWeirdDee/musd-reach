@@ -1,0 +1,8 @@
+PASS mock wallet connected and restored
+PASS tracker shows delivered but settlement pending (not released)
+PASS recipient sees recipient-only actions
+PASS after taking shares, tracker shows released
+ORIGIN_TX=0x15f0fdbe5708366e8c4ab1e0fac8038e72145bde7d6f5b0b0d73df54b9030803
+TRACKER=/app/transfers/0x5bf6b9d920ad50710a254031713b818f33d367c8d7d45e30ce373868eef07d55?tx=0x15f0fdbe5708366e8c4ab1e0fac8038e72145bde7d6f5b0b0d73df54b9030803&dir=REDEEM
+PASS no horizontal overflow at 390px — overflow 0px
+PASS no uncaught page errors

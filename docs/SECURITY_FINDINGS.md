@@ -4,12 +4,14 @@ Self-audit only. This is **not** an independent professional audit. Severity use
 
 Status vocabulary:
 - **Fixed (deployed v2)** means the fix is in the v2 contracts deployed on 21 October 2026 and verified on the public testnets.
-- **Fixed** (off-chain components) means the code is changed, regression-tested and committed locally. The web app and API are **not publicly hosted**.
+- **Fixed** (off-chain components) means the code is changed and regression-tested. Deployment status is separate: the web app and API are hosted, but a local fix is not deployed until the hosted revision is verified.
 - **Open** means the issue is not fixed.
 - **Disclosed** means it is accepted and documented.
 
 | ID | Severity | Component | Finding | Status |
 |---|---|---|---|---|
+| F-33 | High / release blocker | Wallet safety classification | MetaMask reportedly shows “Malicious — flagged as unsafe” during connection. The cause and provider classification are not independently established | **Open**. Connections and writes are held in the local rebuild. Official review: [MetaMask #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589). No clearance claimed |
+| F-34 | Medium | Frontend/API dependencies | Production audit found high/moderate/low advisories in direct and transitive dependencies | **Partially remediated (local)**. Compatible patches applied; residual `zod` 3.x, `uuid` and `decode-uri-component` wallet dependency advisories remain. No causal link to F-33 established |
 | F-01 | Medium | `ReachSourceGateway.receiveRedeem` | Relayer gas manipulation can switch a MUSD-mode redemption to a wSMUSD payout | **Fixed (deployed v2)**. The archived v1 deployment is still affected |
 | F-02 | Medium (mainnet) / inert on testnet | `ReachSavingsWrapper._harvest` | Gas-starving the PCV distribution lets a `depositSavings` caller price in before owed fees are distributed (dilution) | **Fixed (deployed v2)** |
 | F-03 | Low | `ReachSavingsWrapper.redeemInKind` | A gas-starved harvest is silently skipped; the exiting holder forfeits unharvested yield | **Fixed (deployed v2)** |

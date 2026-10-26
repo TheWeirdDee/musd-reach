@@ -53,6 +53,7 @@ const providerScript = ({ account, startChain, rejectSwitch }) => {
 async function scenario(name, opts, run) {
   const browser = await chromium.launch();
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  page.setDefaultNavigationTimeout(120_000);
   const errors = [];
   page.on("pageerror", (e) => errors.push(e.message));
   await page.addInitScript(providerScript, { account: ACCOUNT, ...opts });
@@ -86,10 +87,10 @@ await scenario("reject-signature", { startChain: 31611, rejectSwitch: false }, a
 
 await scenario("reject-switch", { startChain: 84532, rejectSwitch: true }, async (page) => {
   await page.fill("#wrap-amount", "1");
-  const btn = page.getByRole("button", { name: /Approve, then deposit|Deposit and make portable/ });
+  const btn = page.getByRole("button", { name: "Switch to Mezo testnet", exact: true });
   await btn.waitFor({ timeout: 60000 });
   await btn.click();
-  await page.getByText("You rejected the request in your wallet. Nothing was sent.").first().waitFor({ timeout: 60000 });
+  await page.getByText("Network switch rejected. Nothing was sent.").first().waitFor({ timeout: 60000 });
   check("reject-switch: wrong network + rejected switch is reported, nothing signed", (await page.evaluate(() => window.__signRequests)) === 0);
 });
 
@@ -103,10 +104,10 @@ await scenario("unsupported-chain", { startChain: 1, rejectSwitch: true }, async
   check("unsupported-chain: a rejected switch from the menu is reported and the badge is unchanged", (await page.getByText("Unsupported (1)").count()) > 0);
   await page.keyboard.press("Escape");
   await page.fill("#wrap-amount", "1");
-  const btn = page.getByRole("button", { name: /Approve, then deposit|Deposit and make portable/ });
+  const btn = page.getByRole("button", { name: "Switch to Mezo testnet", exact: true });
   await btn.waitFor({ timeout: 60000 });
   await btn.click();
-  await page.getByText("You rejected the request in your wallet. Nothing was sent.").first().waitFor({ timeout: 60000 });
+  await page.getByText("Network switch rejected. Nothing was sent.").first().waitFor({ timeout: 60000 });
   check("unsupported-chain: action asks to switch and reports the rejected switch, nothing signed", (await page.evaluate(() => window.__signRequests)) === 0);
 });
 

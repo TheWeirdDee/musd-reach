@@ -85,7 +85,7 @@ function PendingSettlementPanel({ id }: { id: Hex }) {
         <div className="space-y-3 border-t border-ink-700 pt-4">
           <p className="text-xs text-ink-300">You are the recipient. You may accept a lower minimum, or take the wSMUSD shares instead.</p>
           <div className="flex gap-2">
-            <input aria-label="New minimum MUSD" value={minInput} onChange={(e) => setMinInput(e.target.value.replace(/[^\d.]/g, ""))} placeholder={formatAmount(p.minAssets, 18, 6)} className="num h-11 min-w-0 flex-1 rounded-sm border border-ink-600 bg-ink-950 px-3 text-sm text-bone-100 outline-none focus:border-ember-500" />
+            <input aria-label="New minimum MUSD" value={minInput} onChange={(e) => setMinInput(e.target.value)} placeholder={formatAmount(p.minAssets, 18, 6)} className="num h-11 min-w-0 flex-1 rounded-sm border border-ink-600 bg-ink-950 px-3 text-sm text-bone-100 outline-none focus:border-ember-500" />
             <Button intent="secondary" disabled={lowerMin === null} busy={busy(lower.state)} onClick={async () => lowerMin !== null && (await lower.run({ chainId: MEZO_ID, address: d.sourceGateway, abi: reachSourceGatewayAbi, functionName: "settleWithMinAssets", args: [id, lowerMin] })) && refresh()}>
               Settle
             </Button>
@@ -160,6 +160,7 @@ function Tracker() {
 
   // v2: a consumed MUSD redemption may still be a pending settlement (not yet paid).
   const pendingQ = usePendingSettlement(id as Hex, valid && dir === "REDEEM" && settlementModel === "pending-v2" && consumed.data === true);
+  const settlementUnknown = dir === "REDEEM" && settlementModel === "pending-v2" && !pendingQ.isSuccess;
   const settlementPending = (pendingQ.data?.shares ?? 0n) > 0n;
 
   if (!valid) return <Notice tone="failed" title="Not a transfer id">Transfer ids are 32-byte hex values (0x + 64 characters).</Notice>;
@@ -218,12 +219,14 @@ function Tracker() {
                 : "Starts after origin finality.",
     },
     {
-      title: issue ? "Verified and minted on Base" : settlementPending ? "Verified on Mezo · MUSD settlement pending" : "Verified and released on Mezo",
-      tone: delivered ? (settlementPending ? "pending" : "verified") : "neutral",
-      pulse: settlementPending,
+      title: issue ? "Verified and minted on Base" : settlementUnknown ? "Verified on Mezo · checking settlement" : settlementPending ? "Verified on Mezo · MUSD settlement pending" : "Verified and released on Mezo",
+      tone: delivered ? (settlementUnknown || settlementPending ? "pending" : "verified") : "neutral",
+      pulse: delivered && (settlementUnknown || settlementPending),
       detail: delivered
         ? issue
           ? "transferConsumed is true on the destination gateway: exactly this amount of rwSMUSD was minted to the recipient, once."
+          : settlementUnknown
+            ? "The return message was consumed. A successful pending-settlement read is still needed to confirm whether the payout completed."
           : settlementPending
             ? "The return message was verified and consumed, but the MUSD payout has not settled. The shares are held in custody for the recipient; see the panel on the right."
             : "transferConsumed is true on the source gateway and no settlement is pending: exactly this amount was paid out once, as wSMUSD or MUSD per the burner's choice."
@@ -247,8 +250,8 @@ function Tracker() {
       <Panel className="p-6">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <h2 className="text-lg font-semibold tracking-[-0.02em] text-bone-50">{issue ? "Mezo → Base" : "Base → Mezo"}</h2>
-          <Chip tone={delivered && !settlementPending ? "verified" : "pending"} pulse={!delivered || settlementPending}>
-            {delivered ? (issue ? "Backed on Base" : settlementPending ? "Delivered · settlement pending" : "Released on Mezo") : issue ? "Locked · not minted yet" : "Burned · awaiting release"}
+          <Chip tone={delivered && !settlementUnknown && !settlementPending ? "verified" : "pending"} pulse={!delivered || settlementUnknown || settlementPending}>
+            {delivered ? (issue ? "Backed on Base" : settlementUnknown ? "Delivered · checking settlement" : settlementPending ? "Delivered · settlement pending" : "Released on Mezo") : issue ? "Locked · not minted yet" : "Burned · awaiting release"}
           </Chip>
         </div>
         <ol className="relative mt-6 space-y-6 before:absolute before:bottom-2 before:left-[11px] before:top-2 before:w-px before:bg-ink-700" aria-label="Transfer stages">
@@ -303,7 +306,12 @@ function Tracker() {
           </Panel>
         )}
         {delivered && !issue && settlementModel === "pending-v2" && <PendingSettlementPanel id={id as Hex} />}
-        {delivered && !settlementPending && (
+        {delivered && settlementUnknown && (
+          <Notice tone="pending" title={pendingQ.isError ? "Settlement status unavailable" : "Checking settlement status"}>
+            {pendingQ.isError ? "The chain read failed. Delivery is confirmed, but the payout is not yet confirmed. Retrying automatically." : "Delivery is confirmed. Reading Mezo to check whether the payout settled or remains pending."}
+          </Notice>
+        )}
+        {delivered && !settlementUnknown && !settlementPending && (
           <Notice tone="verified" title="Settled on the target chain">
             Confirm the resulting balance in your{" "}
             <Link href="/app" className="underline underline-offset-4">

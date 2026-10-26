@@ -1,0 +1,19 @@
+node.exe : $ vitest run
+At C:\Users\DELL\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ vitest run:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+
+ RUN  v3.2.7 C:/Users/DELL/Desktop/musd-reach/packages/sdk
+
+ ✓ test/messages.test.ts (6 tests) 26ms
+ ✓ test/gas.test.ts (3 tests) 8ms
+ ✓ test/scan.test.ts (3 tests) 13ms
+ ✓ test/reconcile.test.ts (1 test) 16ms
+
+ Test Files  4 passed (4)
+      Tests  13 passed (13)
+   Start at  06:30:13
+   Duration  5.03s (transform 1.14s, setup 0ms, collect 12.58s, tests 63ms, environment 2ms, prepare 2.14s)

@@ -1,0 +1,4516 @@
+{
+  "checkedAt": "2026-10-25T21:44:20.357Z",
+  "base": "https://musd-reach.vercel.app",
+  "results": [
+    {
+      "path": "/",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-9fjnlV/3wvKjWnllYGw3Nw==' 'strict-dynamic'; style-src 'self' 'nonce-9fjnlV/3wvKjWnllYGw3Nw=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Your Mezo savings.Beyond Mezo."
+      ],
+      "headings": [
+        "Savings that can't leave the building.",
+        "One claim, never two.",
+        "Three tokens, three different promises.",
+        "Four small contracts, no keys that move money.",
+        "Check the backing yourself.",
+        "What you trust, and what you don't.",
+        "No borrow button until it's real.",
+        "Every claim links to a transaction.",
+        "Accept rwSMUSD on your terms.",
+        "Straight answers.",
+        "Keep saving on Mezo. Take the claim with you."
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Is rwSMUSD a stablecoin?",
+          "disabled": false
+        },
+        {
+          "text": "Where is my money while I hold rwSMUSD?",
+          "disabled": false
+        },
+        {
+          "text": "Who earns the savings yield?",
+          "disabled": false
+        },
+        {
+          "text": "Can a message get stuck?",
+          "disabled": false
+        },
+        {
+          "text": "What if Mezo's vault can't pay out MUSD?",
+          "disabled": false
+        },
+        {
+          "text": "Can I borrow against rwSMUSD?",
+          "disabled": false
+        },
+        {
+          "text": "Is it audited?",
+          "disabled": false
+        },
+        {
+          "text": "Does it charge fees?",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/10978w_7nxlia.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/17mwm6o95b95j.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-nRPQ0QBNIhrTJZjpY9lRnQ==' 'strict-dynamic'; style-src 'self' 'nonce-nRPQ0QBNIhrTJZjpY9lRnQ=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Your savings exposure"
+      ],
+      "headings": [
+        "Wrapper",
+        "Transfers started in this browser"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2n-41uahlhxbv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/wrap",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-QAJ64POpNwnGkeiE8+fQaQ==' 'strict-dynamic'; style-src 'self' 'nonce-QAJ64POpNwnGkeiE8+fQaQ=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Put savings to work, then take the claim anywhere"
+      ],
+      "headings": [
+        "Review before signing"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "MUSDDeposited into the native vault for you",
+          "disabled": false
+        },
+        {
+          "text": "Existing sMUSDWrap principal you already hold",
+          "disabled": false
+        },
+        {
+          "text": "Make portable to BaseLock shares, receive rwSMUSD on Base",
+          "disabled": false
+        },
+        {
+          "text": "Keep wSMUSD on MezoShares stay in your wallet",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect a wallet",
+          "disabled": true
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2a5940s49wlsj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/portable/new",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-vpLpqqfQEOOvswyCl1KtyA==' 'strict-dynamic'; style-src 'self' 'nonce-vpLpqqfQEOOvswyCl1KtyA=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Lock wSMUSD, receive rwSMUSD on Base"
+      ],
+      "headings": [
+        "Review before signing"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect a wallet",
+          "disabled": true
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1027srqim7y09.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/redeem",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-QP2i2uBRl3BNedSJkWaIlw==' 'strict-dynamic'; style-src 'self' 'nonce-QP2i2uBRl3BNedSJkWaIlw=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Burn the receipt, bring the shares home"
+      ],
+      "headings": [
+        "Review before signing"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "wSMUSD sharesSimplest exit. Exact shares, no dependency on vault liquidity.",
+          "disabled": false
+        },
+        {
+          "text": "MUSDWrapper redeems at NAV. If the vault can't pay your minimum, it waits as a pending settlement; only you can lower the minimum or take shares.",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect a wallet",
+          "disabled": true
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1wnx8v_bf3ba8.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/history",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-dWEzRniuauw9Dv54XcPqYA==' 'strict-dynamic'; style-src 'self' 'nonce-dWEzRniuauw9Dv54XcPqYA=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Every transfer, traceable to a transaction"
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dypn9pub5j9k.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/transfers/0x9fbde66ef230e7f12a6a4a3f86accf95ec3aca19e974b68f0ac9ae11246fc404",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-vn6OASUabV4KH+RX40z8SQ==' 'strict-dynamic'; style-src 'self' 'nonce-vn6OASUabV4KH+RX40z8SQ=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Where is this claim right now?"
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1-0ixq4h5_hyk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/proof",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-oKb3m/X93o+S2xeUNrHllg==' 'strict-dynamic'; style-src 'self' 'nonce-oKb3m/X93o+S2xeUNrHllg=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Recorded lifecycles and live backing"
+      ],
+      "headings": [
+        "Live backing",
+        "Public-testnet runs",
+        "Local fork rehearsals"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/19bz9vxhx62_w.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/proof/testnet-2026-10-21T11-23-33-084Z",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-Qt+uMoKJwfZKnCDzyvQZGQ==' 'strict-dynamic'; style-src 'self' 'nonce-Qt+uMoKJwfZKnCDzyvQZGQ=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "testnet-2026-10-21T11-23-33-084Z"
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Re-verify every transaction live",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3184926fcvk7j.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/integrations",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-5GDiZW63x5eW2DFL3/PhZA==' 'strict-dynamic'; style-src 'self' 'nonce-5GDiZW63x5eW2DFL3/PhZA=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "Integrations · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "What actually accepts rwSMUSD today"
+      ],
+      "headings": [
+        "Standard ERC-20 transfer of rwSMUSD",
+        "Morpho Blue (collateral market)",
+        "Safe multisig custody of rwSMUSD",
+        "Canonical MUSD bridge (Wormhole NTT)"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/developers",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-9dEZP/PluabeE6HVbzny3g==' 'strict-dynamic'; style-src 'self' 'nonce-9dEZP/PluabeE6HVbzny3g=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "Developers · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Integrate, verify, or audit Reach"
+      ],
+      "headings": [
+        "The model in one paragraph",
+        "Contracts",
+        "Accepting rwSMUSD as collateral or payment",
+        "Message format",
+        "Verify independently"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/status",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-lSLyHK2n+lj9+qHXq15W8A==' 'strict-dynamic'; style-src 'self' 'nonce-lSLyHK2n+lj9+qHXq15W8A=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Live health, read in your browser"
+      ],
+      "headings": [
+        "Chains",
+        "Native savings vault",
+        "Reach contracts",
+        "Messaging and indexer"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2kbaj67p0p5n7.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/contracts",
+      "width": 1280,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-AXt10CMpQNOU2bluj9LUow==' 'strict-dynamic'; style-src 'self' 'nonce-AXt10CMpQNOU2bluj9LUow=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/risks",
+      "width": 1280,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-sF6c5Bbzw1Lkx7nbmSdwnA==' 'strict-dynamic'; style-src 'self' 'nonce-sF6c5Bbzw1Lkx7nbmSdwnA=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "Risks · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Read this before you sign anything"
+      ],
+      "headings": [
+        "Status vocabulary"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/docs",
+      "width": 1280,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-JubOwChWK0A17J1UjS09xg==' 'strict-dynamic'; style-src 'self' 'nonce-JubOwChWK0A17J1UjS09xg=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/docs/getting-started",
+      "width": 1280,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-s5jf5BWqJ6x6cH0LMqYUqA==' 'strict-dynamic'; style-src 'self' 'nonce-s5jf5BWqJ6x6cH0LMqYUqA=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/docs/recovery",
+      "width": 1280,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-3MoboAtsKdu84K5Wat4J0A==' 'strict-dynamic'; style-src 'self' 'nonce-3MoboAtsKdu84K5Wat4J0A=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/security",
+      "width": 1280,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-S7YNI4Qz69F9M7hLPPxVBA==' 'strict-dynamic'; style-src 'self' 'nonce-S7YNI4Qz69F9M7hLPPxVBA=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-s1ujZ+a+cbC4w6enI5DcRA==' 'strict-dynamic'; style-src 'self' 'nonce-s1ujZ+a+cbC4w6enI5DcRA=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Your Mezo savings.Beyond Mezo."
+      ],
+      "headings": [
+        "Savings that can't leave the building.",
+        "One claim, never two.",
+        "Three tokens, three different promises.",
+        "Four small contracts, no keys that move money.",
+        "Check the backing yourself.",
+        "What you trust, and what you don't.",
+        "No borrow button until it's real.",
+        "Every claim links to a transaction.",
+        "Accept rwSMUSD on your terms.",
+        "Straight answers.",
+        "Keep saving on Mezo. Take the claim with you."
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Is rwSMUSD a stablecoin?",
+          "disabled": false
+        },
+        {
+          "text": "Where is my money while I hold rwSMUSD?",
+          "disabled": false
+        },
+        {
+          "text": "Who earns the savings yield?",
+          "disabled": false
+        },
+        {
+          "text": "Can a message get stuck?",
+          "disabled": false
+        },
+        {
+          "text": "What if Mezo's vault can't pay out MUSD?",
+          "disabled": false
+        },
+        {
+          "text": "Can I borrow against rwSMUSD?",
+          "disabled": false
+        },
+        {
+          "text": "Is it audited?",
+          "disabled": false
+        },
+        {
+          "text": "Does it charge fees?",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/10978w_7nxlia.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/17mwm6o95b95j.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-7NZiTLNVpy8gR0IYaju4gQ==' 'strict-dynamic'; style-src 'self' 'nonce-7NZiTLNVpy8gR0IYaju4gQ=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Your savings exposure"
+      ],
+      "headings": [
+        "Transfers started in this browser"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2n-41uahlhxbv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/wrap",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-I6IMEKGLGUx2T7H2FTP7rQ==' 'strict-dynamic'; style-src 'self' 'nonce-I6IMEKGLGUx2T7H2FTP7rQ=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Put savings to work, then take the claim anywhere"
+      ],
+      "headings": [
+        "Review before signing"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "MUSDDeposited into the native vault for you",
+          "disabled": false
+        },
+        {
+          "text": "Existing sMUSDWrap principal you already hold",
+          "disabled": false
+        },
+        {
+          "text": "Make portable to BaseLock shares, receive rwSMUSD on Base",
+          "disabled": false
+        },
+        {
+          "text": "Keep wSMUSD on MezoShares stay in your wallet",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect a wallet",
+          "disabled": true
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2a5940s49wlsj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/portable/new",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-QdaojDCegKvZ1JsHkaRcuw==' 'strict-dynamic'; style-src 'self' 'nonce-QdaojDCegKvZ1JsHkaRcuw=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Lock wSMUSD, receive rwSMUSD on Base"
+      ],
+      "headings": [
+        "Review before signing"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect a wallet",
+          "disabled": true
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1027srqim7y09.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/redeem",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-p1gbb8F7hN+Qiz/kSJ0ZTw==' 'strict-dynamic'; style-src 'self' 'nonce-p1gbb8F7hN+Qiz/kSJ0ZTw=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Burn the receipt, bring the shares home"
+      ],
+      "headings": [
+        "Review before signing"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "wSMUSD sharesSimplest exit. Exact shares, no dependency on vault liquidity.",
+          "disabled": false
+        },
+        {
+          "text": "MUSDWrapper redeems at NAV. If the vault can't pay your minimum, it waits as a pending settlement; only you can lower the minimum or take shares.",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect a wallet",
+          "disabled": true
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1wnx8v_bf3ba8.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/history",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-wAMcgMEk6Ugv2LCaMQGXQg==' 'strict-dynamic'; style-src 'self' 'nonce-wAMcgMEk6Ugv2LCaMQGXQg=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Every transfer, traceable to a transaction"
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dypn9pub5j9k.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/app/transfers/0x9fbde66ef230e7f12a6a4a3f86accf95ec3aca19e974b68f0ac9ae11246fc404",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-rfFCTGi9KrxXavARKHO+7A==' 'strict-dynamic'; style-src 'self' 'nonce-rfFCTGi9KrxXavARKHO+7A=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "App · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Where is this claim right now?"
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1-0ixq4h5_hyk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/proof",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-eK1Y9aa7+wylGWPNPAOVUw==' 'strict-dynamic'; style-src 'self' 'nonce-eK1Y9aa7+wylGWPNPAOVUw=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Recorded lifecycles and live backing"
+      ],
+      "headings": [
+        "Live backing",
+        "Public-testnet runs",
+        "Local fork rehearsals"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/19bz9vxhx62_w.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/proof/testnet-2026-10-21T11-23-33-084Z",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-kR9kzJQhpjh1ALciA85Jcg==' 'strict-dynamic'; style-src 'self' 'nonce-kR9kzJQhpjh1ALciA85Jcg=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "testnet-2026-10-21T11-23-33-084Z"
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Re-verify every transaction live",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        },
+        {
+          "text": "Show recorded details",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/3184926fcvk7j.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/integrations",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-xdnT90W+C1rp/yc3XZDj0g==' 'strict-dynamic'; style-src 'self' 'nonce-xdnT90W+C1rp/yc3XZDj0g=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "Integrations · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "What actually accepts rwSMUSD today"
+      ],
+      "headings": [
+        "Standard ERC-20 transfer of rwSMUSD",
+        "Morpho Blue (collateral market)",
+        "Safe multisig custody of rwSMUSD",
+        "Canonical MUSD bridge (Wormhole NTT)"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/developers",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-ofKipCSIiL54zBXDsZVb1w==' 'strict-dynamic'; style-src 'self' 'nonce-ofKipCSIiL54zBXDsZVb1w=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "Developers · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Integrate, verify, or audit Reach"
+      ],
+      "headings": [
+        "The model in one paragraph",
+        "Contracts",
+        "Accepting rwSMUSD as collateral or payment",
+        "Message format",
+        "Verify independently"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/status",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-P4vSFR+yTl5ruaD0ZCJk1g==' 'strict-dynamic'; style-src 'self' 'nonce-P4vSFR+yTl5ruaD0ZCJk1g=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Live health, read in your browser"
+      ],
+      "headings": [
+        "Chains",
+        "Native savings vault",
+        "Reach contracts",
+        "Messaging and indexer"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2kbaj67p0p5n7.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/contracts",
+      "width": 390,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-Nm1PkXxacrg6fAkjUfE9fg==' 'strict-dynamic'; style-src 'self' 'nonce-Nm1PkXxacrg6fAkjUfE9fg=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/risks",
+      "width": 390,
+      "status": 200,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-7Zx1wgR2KWQbzNKQs/Hang==' 'strict-dynamic'; style-src 'self' 'nonce-7Zx1wgR2KWQbzNKQs/Hang=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "Risks · MUSD Reach",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Read this before you sign anything"
+      ],
+      "headings": [
+        "Status vocabulary"
+      ],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/docs",
+      "width": 390,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-B+XMA8HHFuwNBzKa0mwGQA==' 'strict-dynamic'; style-src 'self' 'nonce-B+XMA8HHFuwNBzKa0mwGQA=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/docs/getting-started",
+      "width": 390,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-Q/4+/jK4mcCD+4cxvr8uVQ==' 'strict-dynamic'; style-src 'self' 'nonce-Q/4+/jK4mcCD+4cxvr8uVQ=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/docs/recovery",
+      "width": 390,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-4ysSDgqhdiY6UXy+XyqF3w==' 'strict-dynamic'; style-src 'self' 'nonce-4ysSDgqhdiY6UXy+XyqF3w=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    },
+    {
+      "path": "/security",
+      "width": 390,
+      "status": 404,
+      "csp": "default-src 'self'; script-src 'self' 'nonce-kDvB3fk6kjDHTXTz2aBXTQ==' 'strict-dynamic'; style-src 'self' 'nonce-kDvB3fk6kjDHTXTz2aBXTQ=='; img-src 'self' data: blob:; font-src 'self'; connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com; frame-src 'none'; worker-src 'self' blob:; manifest-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests",
+      "title": "MUSD Reach — Your Mezo savings, beyond Mezo",
+      "description": "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+      "icon": "https://musd-reach.vercel.app/favicon.ico?favicon.38folom4sz_yx.ico",
+      "h1": [
+        "Nothing is recorded at this address."
+      ],
+      "headings": [],
+      "marketingFooter": true,
+      "overflow": 0,
+      "buttons": [
+        {
+          "text": "Connect wallet",
+          "disabled": false
+        },
+        {
+          "text": "",
+          "disabled": false
+        }
+      ],
+      "scripts": [
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c0hxoamwjsbw.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        },
+        {
+          "src": "",
+          "nonce": true
+        }
+      ],
+      "errors": []
+    }
+  ],
+  "network": [
+    "https://musd-reach.vercel.app",
+    "https://rpc.test.mezo.org",
+    "https://base-sepolia-rpc.publicnode.com",
+    "https://sepolia.base.org",
+    "https://musd-reach-api.onrender.com"
+  ],
+  "assets": {
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/31s969dhlyn7s.js": {
+      "bytes": 5359,
+      "sha256": "48d83306a98fbc4f03980c782e90087f6271b0f077448f99a4008c47d2aa4ea0"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dh-cbemftfh3.js": {
+      "bytes": 28842,
+      "sha256": "6cec958896c80761f8f20a3e1a6f32d2473d043dd1ed673e7a87194b5579e203"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/0i9idix74s-7a.js": {
+      "bytes": 713,
+      "sha256": "5ad6fd3bd26ab5547dd2edc1a2bf5182138956ed3fafc7f68eb579518b4c2827"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/04-o32p3xf221.js": {
+      "bytes": 168345,
+      "sha256": "834685d98bbe0b0acc8f0bd81fce29b6f0d65d610b9464818523e0d8759245bb"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/10978w_7nxlia.js": {
+      "bytes": 12045,
+      "sha256": "009ec98374493194a6399925c169d9c13593a9ef4734d25e83f941e927abb3fe"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/0c251op4d9rsg.js": {
+      "bytes": 39657,
+      "sha256": "c79757276a4ca37b36c0cf6c1416589ab501ae75de7ce718718e03b349d7df1e"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/2r0j5ycop0d_f.js": {
+      "bytes": 41068,
+      "sha256": "8cbbed4f6f064b581ffe2ba2eee9a33bd136a19b64c3ba3bd4b6c4ab59386d09"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/turbopack-1cvbnb3nlabgn.js": {
+      "bytes": 10030,
+      "sha256": "8bbb58cbfd4633c1d828c6bc37bc32abc768a149c01b1dfc4f5131fd81274551"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/0q-0uk5jv0-2n.js": {
+      "bytes": 29122,
+      "sha256": "0123610ab6660c9fe2cce096d21f32fc74451748a78c1bff8e93fb8b3460558b"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/28r731ddy_jqb.js": {
+      "bytes": 88798,
+      "sha256": "491be7f3bf7f2b826ad818a3d8014098e203d06b27e627d420422018cbed6a82"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/38w-q7qspthzk.js": {
+      "bytes": 30766,
+      "sha256": "17e5256f0106695748bd8aee98bb08b3c983f9fa177e2285867bb5196da129bd"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/0ys3nl_a3i3gj.js": {
+      "bytes": 20508,
+      "sha256": "2539349fcee084354439c6080b6094ce0fdf125dac72786aa6a9d34876a92997"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/15buranurytm2.js": {
+      "bytes": 89837,
+      "sha256": "817e3fb1851004bee2e8f79767e7ceadd909343e141d5ab5252bfc7c2b274c6c"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/1hk7n0adei8wj.js": {
+      "bytes": 66901,
+      "sha256": "1385d68f158e4c971d775bd7a0d89e562dd288b542f72d9f3c3dcd9af330201d"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/17mwm6o95b95j.js": {
+      "bytes": 150761,
+      "sha256": "a52687e2dc145fada64107afaf8acef32a536f13e13e2dfb1381e6c206c710c6"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/43e0h5dq6_znd.js": {
+      "bytes": 230268,
+      "sha256": "8c5a46f1a05575b85f7cef39c5c796f57647cfd96c3e2d6283c864a6b92cf4b1"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/439ilhvknmi_c.js": {
+      "bytes": 105268,
+      "sha256": "d1eb863b21ac64d59ef4be20e512796159ca7081b416e9cbee0289b8d70dd6e5"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/0h6d4q-_ihbel.js": {
+      "bytes": 22689,
+      "sha256": "4fb5b0cc0c5a1e420ce313b90addc5f0e1c5dc03dd980fbe2abb5851f535616b"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/1ku7n2rmc4ghv.js": {
+      "bytes": 337,
+      "sha256": "940bf3248f76d51324938119961efc414a7bff6cf3132fe74a18c303d53332d9"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/2n-41uahlhxbv.js": {
+      "bytes": 17972,
+      "sha256": "1622a41e3251a78e87d4134487ef54a9aee60e175d66654b082f7d25f9f1912a"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/3inhv0k7r7rm_.js": {
+      "bytes": 29145,
+      "sha256": "325ebcc659ee9dca9e24136364ffb1fecc11354df265d31dbfd7443451a55e73"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/2a5940s49wlsj.js": {
+      "bytes": 21737,
+      "sha256": "e95d2ca9f1c7d780e4b6d781c0448eb49978cdeed42e8eb76450808387f91443"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/1027srqim7y09.js": {
+      "bytes": 15885,
+      "sha256": "ea2f62a81d628d2d1d2504e2e97695eaaf26600d08191141c87ff62c7c5466ef"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/1wnx8v_bf3ba8.js": {
+      "bytes": 19003,
+      "sha256": "5ce988955b1555213d9068b7ea64ad661e778b80d75509dd0d1081aefbaac696"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/2dypn9pub5j9k.js": {
+      "bytes": 15456,
+      "sha256": "74c8d0e274da1f136e605ddb83fc6c81a4776c6575aabeaccb2f268ac6bb1740"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/1-0ixq4h5_hyk.js": {
+      "bytes": 26893,
+      "sha256": "914e8262d7eab71c830a98647bbb8fe94f05706dc30405ebe258142beb26721b"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/19bz9vxhx62_w.js": {
+      "bytes": 15046,
+      "sha256": "bbac58420a4c23af1fbe26b4a91c659ebad1d94afd717dac8555a0ad731284a9"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/3184926fcvk7j.js": {
+      "bytes": 16945,
+      "sha256": "795f9a9a0ca862efb26113278a902522120653da014ad9c42deee281a83f8462"
+    },
+    "https://musd-reach.vercel.app/_next/static/immutable/chunks/2kbaj67p0p5n7.js": {
+      "bytes": 16028,
+      "sha256": "de6d2b530eefc5b86e919a99021bcf578d8624ed7c6d8e9438a0e24892a807f3"
+    }
+  }
+}

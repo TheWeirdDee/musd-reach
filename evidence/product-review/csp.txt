@@ -1,0 +1,31 @@
+PASS CSP header present
+PASS script-src uses a nonce and strict-dynamic — script-src 'self' 'nonce-…' 'strict-dynamic'
+PASS script-src has no unsafe-inline / unsafe-eval
+PASS style-src has no unsafe-inline
+PASS object-src 'none', frame-ancestors 'none', base-uri 'self'
+PASS connect-src is an explicit list (no wildcard, no bare scheme) — connect-src 'self' https://rpc.test.mezo.org https://base-sepolia-rpc.publicnode.com https://sepolia.base.org https://musd-reach-api.onrender.com
+PASS nonce differs per request
+PASS /docs: 200, 19 scripts nonce'd, hydrated, 0 violations
+PASS /docs/sdk: 200, 20 scripts nonce'd, hydrated, 0 violations
+PASS /contracts: 200, 18 scripts nonce'd, hydrated, 0 violations
+PASS /security: 200, 18 scripts nonce'd, hydrated, 0 violations
+PASS /: 200, 23 scripts nonce'd, hydrated, 0 violations
+PASS /app: 200, 24 scripts nonce'd, hydrated, 0 violations
+PASS /app/wrap: 200, 24 scripts nonce'd, hydrated, 0 violations
+PASS /app/portable/new: 200, 24 scripts nonce'd, hydrated, 0 violations
+PASS /app/redeem: 200, 24 scripts nonce'd, hydrated, 0 violations
+PASS /app/history: 200, 24 scripts nonce'd, hydrated, 0 violations
+PASS /app/transfers/0x9fbde66ef230e7f12a6a4a3f86accf95ec3aca19e974b68f0ac9ae11246fc404: 200, 24 scripts nonce'd, hydrated, 0 violations
+PASS /proof: 200, 22 scripts nonce'd, hydrated, 0 violations
+PASS /proof/testnet-2026-10-21T11-23-33-084Z: 200, 22 scripts nonce'd, hydrated, 0 violations
+PASS /proof/testnet-2026-10-20T15-05-14-568Z: 200, 22 scripts nonce'd, hydrated, 0 violations
+PASS /status: 200, 23 scripts nonce'd, hydrated, 0 violations
+PASS /integrations: 200, 18 scripts nonce'd, hydrated, 0 violations
+PASS /developers: 200, 19 scripts nonce'd, hydrated, 0 violations
+PASS /risks: 200, 18 scripts nonce'd, hydrated, 0 violations
+PASS /no-such-page: 404, 18 scripts nonce'd, hydrated, 0 violations
+PASS injected inline script is refused
+PASS injected inline event handler is refused
+PASS eval from page script is refused — refused: EvalError
+
+29/29 passed

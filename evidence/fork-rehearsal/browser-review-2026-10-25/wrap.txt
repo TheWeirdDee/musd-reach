@@ -1,0 +1,9 @@
+PASS mock wallet connected and restored
+PASS portfolio reads balances for the connected account
+PASS review shows expected shares
+PASS tracker shows locked, not minted
+PASS tracker survives refresh
+ORIGIN_TX=0x88e7fe29435ddf6193f115f358540df8ddbf47892ba86ab4bfe935eed66a8395
+TRACKER=/app/transfers/0x728c3fffb57a0fb61174e6b060fc93dfe4d0c50eaf8f8e3c218832c46bb56ed4?tx=0x88e7fe29435ddf6193f115f358540df8ddbf47892ba86ab4bfe935eed66a8395&dir=ISSUE&seq=1
+PASS no horizontal overflow at 390px — overflow 0px
+PASS no uncaught page errors

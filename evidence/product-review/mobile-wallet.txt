@@ -1,0 +1,4 @@
+PASS Malformed amount is preserved and cannot enable a write
+PASS Connected mobile workspace has no page overflow
+PASS mobile-input: no uncaught page errors
+3/3 passed

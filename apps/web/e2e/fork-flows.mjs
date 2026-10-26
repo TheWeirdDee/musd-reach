@@ -21,6 +21,8 @@ const check = (name, ok, detail = "") => {
 const browser = await chromium.launch();
 const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
 const page = await context.newPage();
+// A cold Next dev build plus the first fork RPC reads can exceed Playwright's 30 s default.
+page.setDefaultNavigationTimeout(120_000);
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
 
@@ -109,6 +111,7 @@ try {
   await page.screenshot({ path: `${outDir}/e2e-${phase}.png`, fullPage: false });
   const mobile = await browser.newContext({ viewport: { width: 390, height: 844 } });
   const mp = await mobile.newPage();
+  mp.setDefaultNavigationTimeout(120_000);
   await mp.goto(`${BASE}${url ?? "/app"}`, { waitUntil: "networkidle" });
   const ov = await mp.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth);
   check("no horizontal overflow at 390px", ov <= 1, `overflow ${ov}px`);
