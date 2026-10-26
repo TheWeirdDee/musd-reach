@@ -70,11 +70,14 @@ Settings: Root Directory is `apps/web`. `apps/web/vercel.json` installs and buil
 | Variable | Value | Notes |
 |---|---|---|
 | `ENABLE_EXPERIMENTAL_COREPACK` | `1` | Lets Vercel use the pnpm version in `package.json` (`pnpm@11.5.0`). Vercel documents Corepack as experimental; confirm the first build log says pnpm 11 |
-| `NEXT_PUBLIC_API_URL` | the Railway public URL (`https://…`) | Added to the CSP `connect-src` automatically. With every endpoint on https, the CSP adds `upgrade-insecure-requests` |
-| `NEXT_PUBLIC_SITE_URL` | the production URL | Server-side fallback for WalletConnect metadata; browsers use the real origin |
-| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | unset for launch | When set, the CSP adds WalletConnect relay, verify and explorer origins. Not tested |
+| `NEXT_PUBLIC_API_URL` | `https://musd-reach-api.onrender.com` | Public Render API; added to CSP automatically. Use your own API URL if hosted elsewhere |
+| `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | unset | Not used by the current build; WalletConnect is not offered |
 | `NEXT_PUBLIC_MEZO_RPC`, `NEXT_PUBLIC_BASE_RPC` | unset | Optional dedicated RPCs. They are added to the CSP automatically |
-| `NEXT_PUBLIC_E2E_ACCOUNT`, `NEXT_PUBLIC_REACH_DEPLOYMENT`, `NEXT_PUBLIC_NETWORK_MODE` | **never** | Test-only. `next build` refuses to run with any of them set, and production bundles ignore them |
+| `NEXT_PUBLIC_E2E_ACCOUNT`, `NEXT_PUBLIC_REACH_DEPLOYMENT`, `NEXT_PUBLIC_NETWORK_MODE`, `NEXT_PUBLIC_E2E_WALLET_TESTS` | **never** | Test-only. `next build` refuses to run with any of them set, and production bundles ignore them |
+
+The root `.env.example` covers all services; `apps/web/.env.example` covers only the frontend.
+For local Next.js development, copy the latter to `apps/web/.env.local`. Actual env files are
+git-ignored. Configure hosted values in Vercel, then rebuild to apply public variables.
 
 Security headers come from `next.config.ts` and `src/proxy.ts`:
 - A per-request nonce CSP: `script-src 'self' 'nonce-…' 'strict-dynamic'`, with no `unsafe-inline` or `unsafe-eval`.
