@@ -9,7 +9,7 @@ const b = await chromium.launch();
 const summary = {};
 for (const w of [1280, 390]) {
   const ctx = await b.newContext({ viewport: { width: w, height: 900 }, reducedMotion: "reduce" });
-  for (const r of routes) {
+  for (const r of routes.filter((r) => !process.env.AXE_ROUTES || process.env.AXE_ROUTES.split(",").includes(r))) {
     const p = await ctx.newPage();
     await p.goto(BASE + r, { waitUntil: "networkidle", timeout: 120000 });
     await p.waitForTimeout(1500);
