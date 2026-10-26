@@ -1,0 +1,6 @@
+PASS mock wallet connected and restored
+PASS tracker shows "Released on Mezo" from chain
+ORIGIN_TX=0x32bb5009b9d47f9ee5ae3730301f101afd0517602120745d877c0e69964ab37b
+TRACKER=/app/transfers/0xb2f583cbaff1d7fe9af70699da079176f8a2c14bf4d0c02d73d2972adc42b9d3?tx=0x32bb5009b9d47f9ee5ae3730301f101afd0517602120745d877c0e69964ab37b&dir=REDEEM&seq=3
+PASS no horizontal overflow at 390px — overflow 0px
+PASS no uncaught page errors

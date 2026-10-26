@@ -1,0 +1,461 @@
+{
+  "checkedAt": "2026-10-26T05:36:24.717Z",
+  "base": "http://localhost:3002",
+  "results": [
+    {
+      "name": "/: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app: private state excluded from indexing",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/wrap: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/wrap: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/wrap: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/wrap: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/wrap: private state excluded from indexing",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/portable/new: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/portable/new: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/portable/new: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/portable/new: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/portable/new: private state excluded from indexing",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/redeem: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/redeem: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/redeem: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/redeem: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/redeem: private state excluded from indexing",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/history: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/history: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/history: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/history: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/history: private state excluded from indexing",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/proof: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/proof: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/proof: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/proof: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/contracts: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/contracts: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/contracts: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/contracts: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/developers: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/developers: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/developers: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/developers: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/integrations: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/integrations: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/integrations: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/integrations: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/status: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/status: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/status: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/status: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/risks: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/risks: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/risks: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/risks: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/security: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/security: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/security: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/security: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/getting-started: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/getting-started: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/getting-started: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/getting-started: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/recovery: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/recovery: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/recovery: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/recovery: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/sdk: real page with one main heading",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/sdk: title, description, canonical and social image",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/sdk: footer matches its shell",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/sdk: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Docs filtering finds the recovery guide",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Docs next navigation has a stable article URL",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Docs copy uses the typechecked example verbatim",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Sitemap includes docs and excludes wallet-state pages",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Robots excludes private app routes",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Manifest uses Reach branding and PNG icons",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/favicon.ico: served branded asset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/icon.svg: served branded asset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/apple-icon.png: served branded asset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/icons/reach-192.png: served branded asset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/icons/reach-512.png: served branded asset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/opengraph-image: served branded asset",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Version response reports unresolved safety status honestly",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/not-a-guide: actual 404",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/proof/not-a-run: actual 404",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "RPC failure shows unknown for each chain independently",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Service failure does not claim protocol custody failed",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "No uncaught page errors",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}

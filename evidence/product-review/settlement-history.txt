@@ -1,0 +1,8 @@
+PASS loading settlement never reports settled
+PASS failed settlement read never reports settled
+PASS pending shares are shown as pending
+PASS successful zero-pending read confirms settlement
+PASS history displays the first 50 transfers
+PASS history loads transfer 51 with the server cursor
+PASS history hides load-more at the end
+7/7 passed

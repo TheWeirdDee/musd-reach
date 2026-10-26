@@ -1,0 +1,18 @@
+node.exe : $ pnpm -r run typecheck
+At C:\Users\DELL\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ pnpm -r run typecheck:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+ 
+Scope: 6 of 7 workspace projects
+packages/sdk typecheck$ tsc --noEmit
+packages/sdk typecheck: Done
+apps/api typecheck$ tsc --noEmit
+packages/verifier typecheck$ tsc --noEmit
+scripts typecheck$ tsc --noEmit
+apps/web typecheck$ tsc --noEmit
+scripts typecheck: Done
+packages/verifier typecheck: Done
+apps/api typecheck: Done
+apps/web typecheck: Done

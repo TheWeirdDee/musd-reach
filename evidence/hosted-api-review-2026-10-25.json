@@ -1,0 +1,180 @@
+﻿[
+    {
+        "path":  "/health",
+        "status":  200,
+        "body":  {
+                     "ok":  true,
+                     "startedAt":  "2026-10-25T21:27:00.212Z"
+                 }
+    },
+    {
+        "path":  "/ready",
+        "status":  200,
+        "body":  {
+                     "ready":  true,
+                     "deployed":  true,
+                     "failing":  [
+
+                                 ],
+                     "notIndexedRecently":  [
+
+                                            ],
+                     "jobs":  [
+                                  {
+                                      "job":  "relay",
+                                      "last_ok_at":  "2026-10-25T21:36:43.508Z",
+                                      "last_error_at":  null,
+                                      "last_error":  null,
+                                      "consecutive_errors":  0
+                                  },
+                                  {
+                                      "job":  "index:mezo",
+                                      "last_ok_at":  "2026-10-25T21:36:51.698Z",
+                                      "last_error_at":  null,
+                                      "last_error":  null,
+                                      "consecutive_errors":  0
+                                  },
+                                  {
+                                      "job":  "observe:wrapper",
+                                      "last_ok_at":  "2026-10-25T21:36:52.783Z",
+                                      "last_error_at":  null,
+                                      "last_error":  null,
+                                      "consecutive_errors":  0
+                                  },
+                                  {
+                                      "job":  "index:base",
+                                      "last_ok_at":  "2026-10-25T21:36:53.885Z",
+                                      "last_error_at":  null,
+                                      "last_error":  null,
+                                      "consecutive_errors":  0
+                                  },
+                                  {
+                                      "job":  "reconcile",
+                                      "last_ok_at":  "2026-10-25T21:35:58.097Z",
+                                      "last_error_at":  null,
+                                      "last_error":  null,
+                                      "consecutive_errors":  0
+                                  }
+                              ],
+                     "cursors":  [
+                                     {
+                                         "chain":  "mezo",
+                                         "next_block":  16368103,
+                                         "finalized_block":  16368102,
+                                         "updated_at":  "2026-10-25T21:36:51.691Z"
+                                     },
+                                     {
+                                         "chain":  "base",
+                                         "next_block":  48473882,
+                                         "finalized_block":  50206993,
+                                         "updated_at":  "2026-10-25T21:36:53.880Z"
+                                     }
+                                 ]
+                 }
+    },
+    {
+        "path":  "/v1/backing/reconciliation",
+        "status":  200,
+        "body":  {
+                     "status":  "BALANCED",
+                     "mezoBlock":  "16368105",
+                     "baseBlock":  "50211769",
+                     "baseBlockTag":  "latest",
+                     "totalLocked":  "0",
+                     "custodyBalance":  "0",
+                     "remoteSupply":  "0",
+                     "pendingIssues":  [
+
+                                       ],
+                     "pendingIssueShares":  "0",
+                     "pendingRedemptions":  [
+
+                                            ],
+                     "pendingRedemptionShares":  "0",
+                     "pendingSettlement":  "0",
+                     "discrepancy":  "0",
+                     "checks":  [
+                                    {
+                                        "name":  "locked == remote supply + in-flight issues + in-flight redemptions",
+                                        "ok":  true,
+                                        "detail":  "discrepancy 0"
+                                    },
+                                    {
+                                        "name":  "custody wSMUSD balance \u003e= totalLocked + pending MUSD settlements",
+                                        "ok":  true,
+                                        "detail":  "0 \u003e= 0 + 0"
+                                    },
+                                    {
+                                        "name":  "totalLocked == totalIssued - totalReleased",
+                                        "ok":  true,
+                                        "detail":  "0 == 6000000000000000000 - 6000000000000000000"
+                                    },
+                                    {
+                                        "name":  "remote supply == totalMinted - totalBurned",
+                                        "ok":  true,
+                                        "detail":  "0 == 6000000000000000000 - 6000000000000000000"
+                                    },
+                                    {
+                                        "name":  "sum(lock events) == totalIssued",
+                                        "ok":  true,
+                                        "detail":  "1 lock events"
+                                    }
+                                ],
+                     "cacheAgeMs":  0,
+                     "method":  "Base latest read first, then Mezo latest (instant finality); events + transferConsumed for in-flight sets. See F-13."
+                 }
+    },
+    {
+        "path":  "/v1/transfers?limit=2",
+        "status":  200,
+        "body":  {
+                     "transfers":  [
+                                       {
+                                           "transfer_id":  "0xb54c56b6c01c13da52f26779a9601113acda5346e039c6f2ab41ca71da84b5fb",
+                                           "direction":  "REDEEM",
+                                           "status":  "NATIVE_REDEEMED",
+                                           "shares":  "1500000000000000000",
+                                           "sender":  "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+                                           "recipient":  "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+                                           "redeem_mode":  2,
+                                           "wormhole_sequence":  "2",
+                                           "origin_tx":  "0xda2d5d75328b4a78f7bde4c0a08ce120fa6fc55e83619b600b0b97755cc7cd6c",
+                                           "origin_block":  48406812,
+                                           "origin_finalized":  true,
+                                           "target_tx":  "0x5165900940b2fc9de436c1802e504f93c768bafaefb0041d3cdc050255562be9",
+                                           "target_block":  16279637,
+                                           "target_finalized":  true,
+                                           "vaa_digest":  "0xa964b2580974d02a34e18aef034af6877d3e1133ca1769dda5d26a01f591e2f4",
+                                           "vaa_checked_at":  null,
+                                           "musd_out":  "1500000000000000000",
+                                           "fell_back":  true,
+                                           "created_at":  "2026-10-25T21:27:47.102Z",
+                                           "updated_at":  "2026-10-25T21:36:53.884Z"
+                                       },
+                                       {
+                                           "transfer_id":  "0x2ef401e8c2d328719f18444baba6175300cb7e62730cc2b9d6d376b7e7d45909",
+                                           "direction":  "REDEEM",
+                                           "status":  "NATIVE_REDEEMED",
+                                           "shares":  "1500000000000000000",
+                                           "sender":  "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+                                           "recipient":  "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+                                           "redeem_mode":  2,
+                                           "wormhole_sequence":  "1",
+                                           "origin_tx":  "0x480b9adf783eb270b3d7877633a2b1823a7d6175d936f430983751c6f2808b97",
+                                           "origin_block":  48406807,
+                                           "origin_finalized":  true,
+                                           "target_tx":  "0x3fadf55034dfe4a21d5015fa6cfeec92c426e96be401cb6c144677db47e86ae0",
+                                           "target_block":  16279632,
+                                           "target_finalized":  true,
+                                           "vaa_digest":  "0x2b839fe5832d0168b1cc01345301b9b79475f3e025f0f86dcf8c8f473bebed8a",
+                                           "vaa_checked_at":  null,
+                                           "musd_out":  "1500000000000000000",
+                                           "fell_back":  false,
+                                           "created_at":  "2026-10-25T21:27:47.101Z",
+                                           "updated_at":  "2026-10-25T21:36:53.883Z"
+                                       }
+                                   ],
+                     "nextBefore":  48406807
+                 }
+    }
+]

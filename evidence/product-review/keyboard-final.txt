@@ -1,0 +1,8 @@
+PASS first Tab lands on skip link — Skip to content
+PASS skip link moves focus target to main
+PASS Tab reaches the wallet safety review
+PASS Tab reaches disconnected guidance
+PASS Safety hold presents no live amount input
+PASS every focused element shows a focus outline — []
+PASS mobile capability matrix accepts keyboard focus
+PASS arrow keys scroll the capability matrix
