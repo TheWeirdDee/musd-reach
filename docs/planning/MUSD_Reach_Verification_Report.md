@@ -17,15 +17,9 @@ Two important dependencies are now substantially clearer:
 
 However, the PRD's fundamental savings accounting description contradicts the deployed vault implementation. Fix that design before implementing Reach's own receipt lifecycle.
 
-## 1. Buildathon announcement recovered
+## 1. Hackathon
 
-The exact announcement was successfully retrieved directly from:
-
-https://mezo.org/blog/mezo-buildathon-is-underway/
-
-Its HTML title is “Mezo Buildathon: Build with MUSD & MEZO | $7,000 in Prizes”; the article heading matches the user's supplied text. The earlier retrieval failure was a limitation of that retrieval route, not evidence the article was absent.
-
-The announcement says: Wave 1 ends October 26, Wave 2 runs November 2–15, and winners/demo session is November 23. It accepts working MUSD and/or MEZO integrations on Mezo, Ethereum, Base or BSC, including Mezo testnet submissions. It does not say that every native Mezo product is deployed on testnet, nor does it specify the deadline's exact timezone in the retrieved text.
+Built for the Mezo hackathon.
 
 ## 2. Real vault deployments
 
