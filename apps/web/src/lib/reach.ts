@@ -8,6 +8,17 @@ import { PUBLIC_API_URL } from "./publicEndpoints";
  * them set, so a hosted app always uses the recorded public deployment and real wallets.
  */
 export const testHooksEnabled = process.env.NODE_ENV !== "production";
+export const isForkMode = testHooksEnabled && process.env.NEXT_PUBLIC_NETWORK_MODE === "fork";
+
+function rpcUrls(configured: string | undefined, defaults: string[]): string[] {
+  if (!isForkMode) return [configured ?? "", ...defaults];
+  if (!configured) throw new Error("Fork mode requires explicit localhost RPCs.");
+  const url = new URL(configured);
+  if (!["localhost", "127.0.0.1", "[::1]"].includes(url.hostname)) {
+    throw new Error("Fork mode refuses non-localhost RPCs.");
+  }
+  return [configured]; // Never mix fork state with a public-chain fallback.
+}
 
 /**
  * Runtime configuration. The deployment comes from deployments/testnet.json (synced at build).
@@ -28,9 +39,9 @@ function deploymentSource(): Record<string, unknown> | null {
 
 export const reachConfig: ReachConfig = buildConfig({
   deployments: deploymentSource() as Record<string, string | number> | null,
-  mezoRpcUrls: [process.env.NEXT_PUBLIC_MEZO_RPC ?? "", "https://rpc.test.mezo.org"],
+  mezoRpcUrls: rpcUrls(process.env.NEXT_PUBLIC_MEZO_RPC, ["https://rpc.test.mezo.org"]),
   // publicnode first: sepolia.base.org rejects eth_getLogs ranges above ~200 blocks (HTTP 413).
-  baseRpcUrls: [process.env.NEXT_PUBLIC_BASE_RPC ?? "", "https://base-sepolia-rpc.publicnode.com", "https://sepolia.base.org"],
+  baseRpcUrls: rpcUrls(process.env.NEXT_PUBLIC_BASE_RPC, ["https://base-sepolia-rpc.publicnode.com", "https://sepolia.base.org"]),
 });
 
 /**
@@ -42,8 +53,7 @@ export const settlementModel: "fallback-v1" | "pending-v2" =
   ((deploymentSource()?.settlementModel as string | undefined) ?? "fallback-v1") === "pending-v2" ? "pending-v2" : "fallback-v1";
 export const knownIssues: string[] = (deploymentSource()?.knownIssues as unknown as string[] | undefined) ?? [];
 
-export const isForkMode = testHooksEnabled && process.env.NEXT_PUBLIC_NETWORK_MODE === "fork";
-export const apiUrl = PUBLIC_API_URL;
+export const apiUrl = isForkMode ? "" : PUBLIC_API_URL;
 export const deployment = reachConfig.deployment;
 export const MEZO_ID = reachConfig.mezo.evmChainId;
 export const BASE_ID = reachConfig.base.evmChainId;

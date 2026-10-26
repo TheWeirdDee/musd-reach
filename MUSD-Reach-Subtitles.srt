@@ -1,0 +1,79 @@
+1
+00:00:00,500 --> 00:00:05,800
+What if your savings could stay on Mezo, while you used a claim on them on another blockchain?
+
+2
+00:00:05,900 --> 00:00:11,900
+Today, moving savings value elsewhere means withdrawing first, forfeiting your position, and bridging raw stablecoins.
+
+3
+00:00:12,200 --> 00:00:17,500
+MUSD Reach changes that. Your savings position stays right on Mezo.
+
+4
+00:00:17,600 --> 00:00:23,900
+We wrap and lock the corresponding savings shares, then issue a backed, transferable receipt on Base Sepolia.
+
+5
+00:00:24,200 --> 00:00:30,000
+Here is the live application. I connect my wallet on Mezo testnet, enter six MUSD, and initiate the lock.
+
+6
+00:00:30,100 --> 00:00:38,500
+In a single atomic transaction, the MUSD enters the native savings vault, shares are wrapped, and locked in the source gateway.
+
+7
+00:00:38,600 --> 00:00:45,300
+Here is the confirmed transaction on Mezo testnet at block 16279430.
+
+8
+00:00:45,600 --> 00:00:51,500
+Wormhole carries the authenticated message to Base Sepolia. Once Wormhole guardians sign the proof,
+
+9
+00:00:51,600 --> 00:00:58,000
+the destination gateway verifies every parameter, consumes the transfer ID, and mints exactly six rwSMUSD receipts.
+
+10
+00:00:58,100 --> 00:01:03,000
+The underlying savings shares remain locked and safe on Mezo.
+
+11
+00:01:03,300 --> 00:01:09,000
+That receipt is a standard ERC-20. It can be held, traded, or transferred to another wallet—
+
+12
+00:01:09,100 --> 00:01:13,800
+which we verified on BaseScan with a three rwSMUSD transfer.
+
+13
+00:01:13,900 --> 00:01:18,500
+And when the holder wants their value back, they burn the receipt on Base.
+
+14
+00:01:18,600 --> 00:01:23,700
+The authenticated return message releases the corresponding shares or unwrapped MUSD directly on Mezo.
+
+15
+00:01:24,000 --> 00:01:29,500
+This is not just bridging tokens. It is making savings positions portable while keeping liquidity on Mezo.
+
+16
+00:01:29,600 --> 00:01:35,000
+And you do not have to take our word for it: our public proof engine reconciles every locked share
+
+17
+00:01:35,100 --> 00:01:40,200
+against issued receipts in real time, with sixty-two independent verification checks passing.
+
+18
+00:01:40,500 --> 00:01:46,500
+MUSD Reach allows Mezo to keep its core savings liquidity, while empowering savers to explore the broader crypto economy.
+
+19
+00:01:46,600 --> 00:01:51,500
+Fully functional, verified on public testnets, with transparent backing.
+
+20
+00:01:51,600 --> 00:01:56,500
+Your savings stay on Mezo. Their reach doesn't have to.

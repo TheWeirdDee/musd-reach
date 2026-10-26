@@ -2,8 +2,8 @@ import { createConfig, fallback, http } from "wagmi";
 import { baseSepolia } from "wagmi/chains";
 import { injected, mock, walletConnect } from "wagmi/connectors";
 import { defineChain, type Address } from "viem";
-import { reachConfig, testHooksEnabled } from "./reach";
-import { walletConnectEnabled, walletConnectMetadata, walletConnectProjectId } from "./wallets";
+import { reachConfig, testHooksEnabled, isForkMode } from "./reach";
+import { legacyProvider, WALLETS, walletConnectEnabled, walletConnectMetadata, walletConnectProjectId } from "./wallets";
 
 // Chain definitions carry the configured RPCs: wallets use them for wallet_addEthereumChain, and
 // connectors that forward requests themselves (e.g. the E2E mock) must hit the same endpoint.
@@ -18,9 +18,15 @@ const connectors = [
   // uses it for the wallet the user actually picked, so `window.ethereum` is never treated as
   // "MetaMask" by assumption.
   injected({ shimDisconnect: true }),
+  ...WALLETS.filter((wallet) => wallet.key !== "walletconnect").map((wallet) =>
+    injected({ shimDisconnect: true, target: {
+      id: `reach.${wallet.key}`, name: wallet.name,
+      provider: () => legacyProvider(wallet),
+    } }),
+  ),
   // Offered only when the build carries a project id, so the chooser never lists a dead entry.
-  ...(walletConnectEnabled
-    ? [walletConnect({ projectId: walletConnectProjectId, metadata: walletConnectMetadata, showQrModal: true })]
+  ...(walletConnectEnabled && typeof window !== "undefined"
+    ? [walletConnect({ projectId: walletConnectProjectId, metadata: walletConnectMetadata, showQrModal: false })]
     : []),
   ...(e2eAccount ? [mock({ accounts: [e2eAccount], features: { reconnect: true } })] : []),
 ];
@@ -32,8 +38,8 @@ export const wagmiConfig = createConfig({
   multiInjectedProviderDiscovery: true,
   connectors,
   transports: {
-    [mezo.id]: fallback(reachConfig.mezo.rpcUrls.map((u) => http(u))),
-    [base.id]: fallback(reachConfig.base.rpcUrls.map((u) => http(u))),
+    [mezo.id]: fallback(reachConfig.mezo.rpcUrls.map((u) => http(u, { timeout: isForkMode ? 60_000 : 20_000 }))),
+    [base.id]: fallback(reachConfig.base.rpcUrls.map((u) => http(u, { timeout: isForkMode ? 60_000 : 20_000 }))),
   },
   ssr: true,
 });
@@ -42,4 +48,4 @@ declare module "wagmi" {
   interface Register {
     config: typeof wagmiConfig;
   }
-}
+}

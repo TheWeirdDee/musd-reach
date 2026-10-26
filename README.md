@@ -48,7 +48,7 @@ Full model: [`docs/ECONOMIC_MODEL.md`](docs/ECONOMIC_MODEL.md).
 - **Wrapper assets:** `principal + idle + pending`. Principal and claimed yield are tracked internally, not read from `balanceOf`, so donations sent to the wrapper cannot move the share price.
 - **Harvest first:** every deposit and exit harvests native yield before pricing. A newcomer cannot buy into yield that belongs to existing holders.
 - **Claim-and-hold:** harvested yield stays as MUSD and is not reinvested. There are no fees and no admin mint.
-- **Testnet yield:** the testnet vault currently pays no yield to the wrapper. The UI shows no APY or yield history. Positive-yield behaviour is tested locally and on forks only.
+- **Yield evidence:** the recorded public round trip does not demonstrate positive savings yield. Yield-bearing scenarios are tested locally and on forks. Quotes read the actual wrapper NAV; the app promises no APY.
 
 Cross-chain conservation, checked by anyone with `pnpm verify reconcile`:
 
@@ -67,7 +67,7 @@ The v2 public run passed 18 steps, including transfer to a second holder, return
 | **Fork only** | Full lifecycle against the live Mezo vault and the real Wormhole Cores; Morpho Blue market acceptance, borrow and liquidation on a Base mainnet fork |
 | **Local only** | Fuzz and invariant tests, yield-bearing scenarios, vault impairment, 10-year liveness |
 | **Historical real-wallet checks (MetaMask 13.53.0)** | Connect and reject, session persistence, unsupported-network detection, network switch (approved and rejected), account switching, behind the production CSP |
-| **Scripted wallet coverage** | EIP-1193/EIP-6963 fixtures exercise the Rabby and MetaMask chooser paths, connection rejection and switching; these are keyless simulations, not tests of the actual wallet extensions |
+| **Scripted wallet coverage** | EIP-1193/EIP-6963 fixtures exercise the Rabby, MetaMask and Coinbase chooser paths, connection rejection and switching; these are keyless simulations, not tests of the actual wallet extensions |
 | **Not verified** | Any independent integrator; Morpho on a public network; signing or rejecting a transaction inside a real wallet (what the app asks to sign is checked by a keyless test wallet); real Rabby or Coinbase Wallet sessions; an end-to-end WalletConnect session; screen readers |
 
 ## Architecture
@@ -262,12 +262,12 @@ There has been no external professional audit.
 
 ### Wallet functionality
 
-The hosted wallet chooser is deployed (revision `2228f9d`, checked 26 October 2026). The global wallet hold has been removed: source code enables connections and the simulate/sign/submit path. This is availability of the code path, **not verification of successful signing in a real extension**.
+The global wallet hold has been removed: source code enables connections and the simulate/sign/submit path. The chooser identifies EIP-6963 wallets separately and resolves named legacy wallets to their own providers. Refresh restores only the selected wallet; removing it does not silently connect another extension. This is availability of the code path, **not verification of successful signing in a real extension**.
 
 | Wallet path | Implemented | Verification boundary |
 |---|---|---|
-| Rabby, MetaMask and Coinbase Wallet | Named injected-provider discovery, with vendor install links when absent; other announced EIP-6963 wallets can also appear | Scripted Rabby/MetaMask chooser fixtures exist. Historical real MetaMask 13.53.0 connection/network tests predate this chooser. Real Rabby/Coinbase sessions and real-extension transaction signing are unverified |
-| WalletConnect | Connector and chooser entry are enabled by the configured public project ID | Entry observed on the hosted site; authenticated pairing and transaction signing are unverified |
+| Rabby, MetaMask and Coinbase Wallet | Named injected-provider discovery, explicit legacy-provider selection, and vendor install links when absent; other announced EIP-6963 wallets can also appear | Keyless EIP-6963 and legacy fixtures cover Rabby, MetaMask and Coinbase selection, rejection, switching and reconnection. Historical real MetaMask 13.53.0 connection/network tests predate this chooser. Real Rabby/Coinbase sessions and real-extension transaction signing are unverified |
+| WalletConnect | Offered only with an explicitly configured `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID`; no shared fallback ID. The app provides its own QR, copy-link and mobile-link view under the strict CSP | Omitted when unconfigured. Authenticated pairing, mobile deep links and transaction signing remain unverified; configure an origin-authorized Reown project and test a compatible wallet before advertising this path |
 
 A malicious-site warning was reported during MetaMask connection. [Provider review #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) remains unresolved; the chooser carries a MetaMask-specific advisory. Re-enabling other wallet paths does not establish the cause of the warning or provider clearance. Do not bypass a wallet warning. See the [security status page](https://musd-reach.vercel.app/security).
 

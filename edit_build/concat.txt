@@ -1,0 +1,7 @@
+file 'C:/Users/DELL/Desktop/musd-reach/edit_build/seg_01.mp4'
+file 'C:/Users/DELL/Desktop/musd-reach/edit_build/seg_02.mp4'
+file 'C:/Users/DELL/Desktop/musd-reach/edit_build/seg_03.mp4'
+file 'C:/Users/DELL/Desktop/musd-reach/edit_build/seg_04.mp4'
+file 'C:/Users/DELL/Desktop/musd-reach/edit_build/seg_05.mp4'
+file 'C:/Users/DELL/Desktop/musd-reach/edit_build/seg_06.mp4'
+file 'C:/Users/DELL/Desktop/musd-reach/edit_build/seg_07.mp4'

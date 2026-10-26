@@ -25,6 +25,15 @@ const page = await context.newPage();
 page.setDefaultNavigationTimeout(120_000);
 const errors = [];
 page.on("pageerror", (e) => errors.push(e.message));
+page.on("response", async (response) => {
+  if (response.request().method() !== "POST" || !/8545|8546/.test(response.url())) return;
+  try {
+    const body = await response.json();
+    for (const result of Array.isArray(body) ? body : [body]) {
+      if (result.error) console.log(`FORK_RPC_ERROR ${JSON.stringify({ request: response.request().postDataJSON(), error: result.error })}`);
+    }
+  } catch { /* non-JSON responses are reported by the transaction UI */ }
+});
 
 async function connect(path = "/app") {
   if (path) await page.goto(`${BASE}${path}`, { waitUntil: "networkidle" });
@@ -57,7 +66,7 @@ try {
   check("mock wallet connected and restored", true);
 
   if (phase === "wrap") {
-    await page.getByText("On Mezo").waitFor({ timeout: 30000 });
+    await page.getByRole("heading", { name: "On Mezo", exact: true }).waitFor({ timeout: 30000 });
     check("portfolio reads balances for the connected account", (await page.getByText("Native sMUSD principal").count()) > 0);
     await nav("Wrap");
     await page.fill("#wrap-amount", "2");

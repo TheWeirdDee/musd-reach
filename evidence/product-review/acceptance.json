@@ -1,6 +1,6 @@
 {
-  "checkedAt": "2026-10-26T08:40:24.149Z",
-  "base": "https://musd-reach.vercel.app",
+  "checkedAt": "2026-10-26T14:07:36.178Z",
+  "base": "http://localhost:3004",
   "results": [
     {
       "name": "/: real page with one main heading",
@@ -18,9 +18,9 @@
       "detail": ""
     },
     {
-      "name": "/: safety hold makes no wallet requests or connection invitation",
+      "name": "/: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/: wallet notice is contextual",
@@ -43,9 +43,9 @@
       "detail": ""
     },
     {
-      "name": "/app: safety hold makes no wallet requests or connection invitation",
+      "name": "/app: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "2 connect buttons"
     },
     {
       "name": "/app: wallet notice is contextual",
@@ -73,9 +73,9 @@
       "detail": ""
     },
     {
-      "name": "/app/wrap: safety hold makes no wallet requests or connection invitation",
+      "name": "/app/wrap: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "2 connect buttons"
     },
     {
       "name": "/app/wrap: wallet notice is contextual",
@@ -103,9 +103,9 @@
       "detail": ""
     },
     {
-      "name": "/app/portable/new: safety hold makes no wallet requests or connection invitation",
+      "name": "/app/portable/new: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "2 connect buttons"
     },
     {
       "name": "/app/portable/new: wallet notice is contextual",
@@ -133,9 +133,9 @@
       "detail": ""
     },
     {
-      "name": "/app/redeem: safety hold makes no wallet requests or connection invitation",
+      "name": "/app/redeem: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "2 connect buttons"
     },
     {
       "name": "/app/redeem: wallet notice is contextual",
@@ -163,9 +163,9 @@
       "detail": ""
     },
     {
-      "name": "/app/history: safety hold makes no wallet requests or connection invitation",
+      "name": "/app/history: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "2 connect buttons"
     },
     {
       "name": "/app/history: wallet notice is contextual",
@@ -193,9 +193,9 @@
       "detail": ""
     },
     {
-      "name": "/proof: safety hold makes no wallet requests or connection invitation",
+      "name": "/proof: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/proof: wallet notice is contextual",
@@ -218,9 +218,9 @@
       "detail": ""
     },
     {
-      "name": "/contracts: safety hold makes no wallet requests or connection invitation",
+      "name": "/contracts: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/contracts: wallet notice is contextual",
@@ -243,9 +243,9 @@
       "detail": ""
     },
     {
-      "name": "/developers: safety hold makes no wallet requests or connection invitation",
+      "name": "/developers: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/developers: wallet notice is contextual",
@@ -268,9 +268,9 @@
       "detail": ""
     },
     {
-      "name": "/integrations: safety hold makes no wallet requests or connection invitation",
+      "name": "/integrations: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/integrations: wallet notice is contextual",
@@ -293,9 +293,9 @@
       "detail": ""
     },
     {
-      "name": "/status: safety hold makes no wallet requests or connection invitation",
+      "name": "/status: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/status: wallet notice is contextual",
@@ -318,9 +318,9 @@
       "detail": ""
     },
     {
-      "name": "/risks: safety hold makes no wallet requests or connection invitation",
+      "name": "/risks: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/risks: wallet notice is contextual",
@@ -343,9 +343,9 @@
       "detail": ""
     },
     {
-      "name": "/security: safety hold makes no wallet requests or connection invitation",
+      "name": "/security: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/security: wallet notice is contextual",
@@ -368,9 +368,9 @@
       "detail": ""
     },
     {
-      "name": "/docs: safety hold makes no wallet requests or connection invitation",
+      "name": "/docs: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/docs: wallet notice is contextual",
@@ -393,9 +393,9 @@
       "detail": ""
     },
     {
-      "name": "/docs/getting-started: safety hold makes no wallet requests or connection invitation",
+      "name": "/docs/getting-started: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/docs/getting-started: wallet notice is contextual",
@@ -418,9 +418,9 @@
       "detail": ""
     },
     {
-      "name": "/docs/recovery: safety hold makes no wallet requests or connection invitation",
+      "name": "/docs/recovery: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/docs/recovery: wallet notice is contextual",
@@ -443,9 +443,9 @@
       "detail": ""
     },
     {
-      "name": "/docs/sdk: safety hold makes no wallet requests or connection invitation",
+      "name": "/docs/sdk: browsing alone makes no wallet request and always offers a way to connect",
       "ok": true,
-      "detail": ""
+      "detail": "1 connect buttons"
     },
     {
       "name": "/docs/sdk: wallet notice is contextual",
@@ -458,7 +458,7 @@
       "detail": ""
     },
     {
-      "name": "Primary CTA clearly identifies the read-only app",
+      "name": "Primary CTA clearly opens the app",
       "ok": true,
       "detail": ""
     },

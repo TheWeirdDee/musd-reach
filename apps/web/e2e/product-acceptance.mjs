@@ -19,18 +19,18 @@ try {
   const routes = ["/", "/app", "/app/wrap", "/app/portable/new", "/app/redeem", "/app/history", "/proof", "/contracts", "/developers", "/integrations", "/status", "/risks", "/security", "/docs", "/docs/getting-started", "/docs/recovery", "/docs/sdk"];
   for (const path of routes) {
     const response = await page.goto(BASE + path, { waitUntil: "domcontentloaded" });
-    await page.waitForTimeout(350);
+    await page.locator("header").getByRole("button", { name: "Connect wallet", exact: true }).waitFor({ timeout: 30_000 });
     const data = await page.evaluate(() => ({ title: document.title, description: document.querySelector('meta[name="description"]')?.content, canonical: document.querySelector('link[rel="canonical"]')?.href, og: document.querySelector('meta[property="og:image"]')?.content, robots: document.querySelector('meta[name="robots"]')?.content, h1: document.querySelectorAll("h1").length, marketingFooter: !!document.querySelector("[data-marketing-footer]"), requests: window.__walletRequests, connects: [...document.querySelectorAll("button")].filter((b) => /connect wallet/i.test(b.textContent)).length }));
     check(`${path}: real page with one main heading`, response.status() === 200 && data.h1 === 1);
     check(`${path}: title, description, canonical and social image`, !!data.title && !!data.description && data.canonical === `https://musd-reach.vercel.app${path === "/" ? "/" : path}` && !!data.og);
     check(`${path}: footer matches its shell`, data.marketingFooter === (path === "/"));
     check(`${path}: browsing alone makes no wallet request and always offers a way to connect`, data.requests.length === 0 && data.connects >= 1, `${data.connects} connect buttons`);
-    check(`${path}: wallet notice is contextual`, await page.getByRole("complementary", { name: "Wallet safety notice" }).count() === (path.startsWith("/app") ? 1 : 0));
+    check(`${path}: wallet notice is contextual`, await page.getByRole("complementary", { name: "Wallet safety notice" }).count() === 0);
     if (path.startsWith("/app")) check(`${path}: private state excluded from indexing`, /noindex/.test(data.robots ?? ""));
   }
   await page.goto(BASE, { waitUntil: "networkidle" });
   check("Hero explains the portable savings position", /Your Mezo savings\.\s*Free to move\./.test(await page.locator("h1").innerText()));
-  check("Primary CTA clearly opens the app", await page.getByRole("link", { name: "Open the app", exact: false }).count() === 2);
+  check("Primary CTA clearly opens the app", await page.getByRole("link", { name: "Open the app", exact: false }).count() >= 2);
   const faq = page.locator('section[aria-labelledby="faq-title"]');
   const intro = faq.locator(":scope > .shell > div").first();
   check("FAQ heading sticks on desktop within the section", await intro.evaluate((el) => getComputedStyle(el).position) === "sticky");

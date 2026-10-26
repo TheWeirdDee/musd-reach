@@ -41,10 +41,6 @@
     "chainId": 31611
   },
   {
-    "method": "eth_chainId",
-    "chainId": 31611
-  },
-  {
     "method": "eth_sendTransaction",
     "params": [
       {

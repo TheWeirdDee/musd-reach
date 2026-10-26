@@ -8,7 +8,7 @@ import { walletConnectEnabled, WALLETS } from "@/lib/wallets";
 
 export const metadata = pageMetadata(
   "Wallet safety investigation",
-  "A reported MetaMask warning remains under investigation. Other verified wallets connect normally; the MetaMask notice is shown where it applies.",
+  "A reported MetaMask warning remains under investigation. Wallet access is enabled; the MetaMask notice is shown in the chooser. Real-wallet signing coverage remains limited.",
   "/security",
 );
 
@@ -29,10 +29,11 @@ export default function SecurityStatus() {
         }
       >
         <div className="space-y-8">
-          <Notice tone="pending" title="MetaMask still reports a warning; other wallets connect normally">
-            The report names one wallet provider&apos;s classification of this domain. It is not a finding against the
-            application, so it does not pause wallets that do not flag the site: the chooser offers {offered}, and
-            transactions sign again. MetaMask stays in the list with its availability stated honestly, and its notice
+          <Notice tone="pending" title="MetaMask classification remains under review">
+            The report names MetaMask&apos;s classification of this domain. Application checks have not established
+            a cause or provider clearance. Wallet access is enabled: the chooser includes {offered}, with install
+            guidance when an extension is absent. Connection availability does not establish successful signing
+            in a real wallet. MetaMask stays in the list with its availability stated honestly, and its notice
             appears in the chooser next to the row. Do not bypass a warning your wallet shows, and do not disable its
             protection.
           </Notice>
@@ -125,4 +126,4 @@ export default function SecurityStatus() {
       <CompactFooter />
     </>
   );
-}
+}

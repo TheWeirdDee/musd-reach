@@ -139,3 +139,26 @@ read regressions against a hosted production build without attempting a wallet c
 the connected-history fixture remains a separate keyless development test. Actual hosted
 API history is checked using its public timestamp/ID cursor. Reorg injection and restart
 regressions are local API tests, not live-chain manipulations.
+
+
+## Multi-wallet restoration checks
+
+`node e2e/wallet-chooser.mjs <url>` from `apps/web` uses keyless EIP-6963 and legacy
+provider fixtures for Rabby, MetaMask and Coinbase. It checks explicit provider selection,
+connection/switch rejection, adding Mezo, switching Base, account events, selected-wallet
+refresh, disconnect/reconnect, a missing selected extension, nine viewport widths and modal
+keyboard/axe checks. Every signing method rejects. Set `WALLET_REVIEW_OUT` to keep local and
+hosted evidence separate. These checks do not certify actual extensions or WalletConnect pairing.
+
+`REACH_BUILD_DIR` can isolate a `next build` / `next start` pair from an existing local server;
+use the same value for both commands. Leave all public fork/account/deployment overrides unset
+for a production build. WalletConnect needs an explicit public project ID; missing configuration
+omits its row. The built-in third-party QR modal is disabled because it violated the strict CSP.
+Pairing with a real mobile wallet and deep-link behavior remain manual verification items.
+
+The MetaMask notice is now inside the chooser; the app layout has no blanket wallet notice or
+read-only hold. The older hold-review results above describe their original releases.
+
+Fork mode requires explicit localhost RPC URLs, excludes public fallback RPCs and disables the
+public indexer API. This prevents a cold fork read from falling back to unrelated public balances
+or allowances. Its wallet RPC timeout is 60 seconds to accommodate archive reads.

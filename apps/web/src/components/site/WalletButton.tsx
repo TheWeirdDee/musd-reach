@@ -12,6 +12,7 @@ import { useWalletChainId } from "@/lib/walletChain";
 import Link from "next/link";
 import {
   WALLETS,
+  legacyProvider,
   isCatalogued,
   matchesWallet,
   metamaskAdvisory,
@@ -41,7 +42,15 @@ type Ethereumish = {
  */
 type InjectedState = { flags: Record<string, boolean>; unidentified: boolean };
 const NO_INJECTED: InjectedState = { flags: {}, unidentified: false };
-const subscribeNoop = () => () => {};
+const subscribeInjected = (notify: () => void) => {
+  const refresh = () => { injectedCache = null; notify(); };
+  window.addEventListener("ethereum#initialized", refresh);
+  window.addEventListener("eip6963:announceProvider", refresh);
+  return () => {
+    window.removeEventListener("ethereum#initialized", refresh);
+    window.removeEventListener("eip6963:announceProvider", refresh);
+  };
+};
 let injectedCache: InjectedState | null = null;
 function readInjected(): InjectedState {
   if (injectedCache) return injectedCache;
@@ -51,7 +60,7 @@ function readInjected(): InjectedState {
   if (eth) {
     const providers: Record<string, unknown>[] =
       Array.isArray(eth.providers) && eth.providers.length ? eth.providers : [eth];
-    for (const w of WALLETS) flags[w.key] = providers.some((p) => w.flags.some((f) => p[f] === true));
+    for (const w of WALLETS) flags[w.key] = !!legacyProvider(w);
     unidentified = providers.some((p) => p && !WALLETS.some((w) => w.flags.some((f) => p[f] === true)));
   }
   injectedCache = { flags, unidentified };
@@ -94,8 +103,44 @@ export function WalletButton({ compact }: { compact?: boolean }) {
   const lastFocused = useRef<HTMLElement | null>(null);
   const [pendingKey, setPendingKey] = useState<string | null>(null);
   const [copied, setCopied] = useState(false);
+  const [pairing, setPairing] = useState<{ uri: string; qr: string } | null>(null);
+  const [connectionError, setConnectionError] = useState<string | null>(null);
+  const attempt = useRef(0);
+  const pendingConnector = useRef<(typeof connectors)[number] | null>(null);
+
+  // A local QR image avoids third-party modal styles that violate the production CSP.
+  useEffect(() => {
+    const target = connectors.find((c) => c.type === "walletConnect");
+    if (!target) return;
+    const message = (event: { type: string; data?: unknown }) => {
+      if (event.type !== "display_uri" || typeof event.data !== "string") return;
+      const uri = event.data;
+      if (!uri.startsWith("wc:")) return;
+      const current = attempt.current;
+      import("qrcode").then((qr) => qr.toDataURL(uri, { width: 280, margin: 2 }))
+        .then((qr) => { if (attempt.current === current) setPairing({ uri, qr }); })
+        .catch(() => setConnectionError("Could not create the pairing code. Cancel and try again."));
+    };
+    target.emitter.on("message", message);
+    return () => { target.emitter.off("message", message); };
+  }, [connectors]);
+
+  const cancelConnection = () => {
+    attempt.current++;
+    const target = pendingConnector.current;
+    pendingConnector.current = null;
+    setPairing(null);
+    setPendingKey(null);
+    reset();
+    if (target?.type === "walletConnect") {
+      target.getProvider().then((provider) => {
+        const pairingProvider = provider as { signer?: { abortPairingAttempt?: () => void } };
+        pairingProvider.signer?.abortPairingAttempt?.();
+      }).catch(() => {});
+    }
+  };
   const [restoreSlow, setRestoreSlow] = useState(false);
-  const injected = useSyncExternalStore(subscribeNoop, readInjected, () => NO_INJECTED);
+  const injected = useSyncExternalStore(subscribeInjected, readInjected, () => NO_INJECTED);
   const titleId = useId();
   const descId = useId();
 
@@ -120,6 +165,13 @@ export function WalletButton({ compact }: { compact?: boolean }) {
     const onKey = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
         e.preventDefault();
+        attempt.current++;
+        const target = pendingConnector.current;
+        pendingConnector.current = null;
+        if (target?.type === "walletConnect") target.getProvider().then((provider) => (provider as { signer?: { abortPairingAttempt?: () => void } }).signer?.abortPairingAttempt?.()).catch(() => {});
+        setPairing(null);
+        setPendingKey(null);
+        reset();
         setView(null);
         return;
       }
@@ -144,18 +196,18 @@ export function WalletButton({ compact }: { compact?: boolean }) {
     return () => {
       document.removeEventListener("keydown", onKey, true);
       document.body.style.overflow = previousOverflow;
-      lastFocused.current?.focus?.();
+      if (lastFocused.current?.isConnected) lastFocused.current.focus();
     };
-  }, [view]);
+  }, [view, reset]);
 
   const catalogue = WALLETS.filter((w) => w.key !== "walletconnect" || walletConnectEnabled);
   const generic = connectors.find((c) => c.type === "injected" && c.id === "injected");
-  const announced = connectors.filter((c) => c.type === "injected" && c.id !== "injected");
+  const announced = connectors.filter((c) => c.type === "injected" && c.id !== "injected" && !c.id.startsWith("reach."));
 
   /** The connector that can actually serve this catalogue entry, or undefined when it is missing. */
   const connectorFor = (w: WalletSpec) =>
-    connectors.find((c) => matchesWallet(c, w)) ??
-    (injected.flags[w.key] ? generic : undefined) ??
+    announced.find((c) => matchesWallet(c, w)) ??
+    (injected.flags[w.key] ? connectors.find((c) => c.id === `reach.${w.key}`) : undefined) ??
     (w.key === "walletconnect" ? connectors.find((c) => c.type === "walletConnect") : undefined);
 
   const detected = (w: WalletSpec) => (w.key === "walletconnect" ? walletConnectEnabled : !!connectorFor(w));
@@ -164,12 +216,27 @@ export function WalletButton({ compact }: { compact?: boolean }) {
   const connectWith = (target: (typeof connectors)[number], key: string) => {
     if (isPending) return;
     reset();
+    setConnectionError(null);
+    setPairing(null);
+    const current = ++attempt.current;
+    pendingConnector.current = target;
     setPendingKey(key);
     const done = () => {
+      if (attempt.current !== current) {
+        disconnectAsync({ connector: target }).catch(() => {});
+        return;
+      }
+      pendingConnector.current = null;
+      setPairing(null);
       setPendingKey(null);
       setView(null);
     };
-    const failed = () => setPendingKey(null);
+    const failed = () => {
+      if (attempt.current !== current) return;
+      pendingConnector.current = null;
+      setPairing(null);
+      setPendingKey(null);
+    };
     // Switching wallets: drop the current session first so the app never silently stays on the
     // previously chosen wallet when the user picked a different one.
     if (status === "connected" && connector && connector.uid !== target.uid) {
@@ -182,7 +249,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
     connect({ connector: target }, { onSuccess: done, onError: failed });
   };
 
-  const close = () => setView(null);
+  const close = () => { if (pendingConnector.current) cancelConnection(); setView(null); };
 
   if (!mounted || status === "reconnecting") {
     return (
@@ -196,7 +263,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
   const supported = chainId === MEZO_ID || chainId === BASE_ID;
   const connected = status === "connected" && !!address;
   const walletName = connector?.name === "Injected" ? "Browser wallet" : connector?.name;
-  const others = announced.filter((c) => !isCatalogued(c));
+  const others = connectors.filter((c) => (announced.some((a) => a.uid === c.uid) && !isCatalogued(c)) || c.type === "mock");
 
   const trigger = (
     <Button
@@ -264,6 +331,19 @@ export function WalletButton({ compact }: { compact?: boolean }) {
 
             {chooser ? (
               <div className="mt-5">
+                {pendingKey === "walletconnect" && (
+                  <div className="mb-4 space-y-3 rounded-sm border border-ink-600 p-3" aria-live="polite">
+                    <p className="text-sm text-bone-100">{pairing ? "Scan with your wallet" : "Opening WalletConnect"}</p>
+                    {pairing ? <>
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img src={pairing.qr} width={280} height={280} alt="WalletConnect pairing QR code" className="mx-auto h-auto max-w-full rounded-sm" />
+                      <p className="text-xs leading-relaxed text-ink-300">Scan from a WalletConnect-compatible mobile wallet. It must support Mezo testnet and Base Sepolia. Pairing is not a transaction approval.</p>
+                      <a href={pairing.uri} className="block text-sm text-ember-400 underline underline-offset-4">Open a compatible wallet</a>
+                      <Button intent="secondary" onClick={() => navigator.clipboard?.writeText(pairing.uri).catch(() => setConnectionError("Clipboard unavailable. Scan the QR code instead."))}>Copy pairing link</Button>
+                    </> : <p className="text-xs text-ink-300">Waiting for the relay. You can cancel and choose an installed wallet.</p>}
+                    <Button intent="ghost" onClick={cancelConnection}>Cancel connection</Button>
+                  </div>
+                )}
                 <ul className="space-y-2.5">
                   {catalogue.map((w) => {
                     const target = connectorFor(w);
@@ -374,6 +454,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
                   )}
                 </ul>
 
+                {connectionError && <p role="alert" className="mt-3 text-xs text-rust-300">{connectionError}</p>}
                 {error && (
                   <p role="alert" className="mt-3 text-xs leading-relaxed text-rust-300">
                     {/rejected|denied/i.test(error.message)
@@ -398,7 +479,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
                 <div className="flex flex-wrap items-center gap-2">
                   <Chip tone={supported ? "verified" : "failed"}>{networkName(chainId)}</Chip>
                 </div>
-                {!supported && chainId !== undefined && (
+                {chainId !== undefined && (
                   <div className="space-y-2">
                     <p className="text-xs leading-relaxed text-ink-300">
                       Reach runs on Mezo testnet and Base Sepolia. Each action also asks to switch to the network it needs.
@@ -413,6 +494,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
                           intent="secondary"
                           className="w-full"
                           busy={switcher.isPending && switcher.variables?.chainId === n.id}
+                          disabled={switcher.isPending || chainId === n.id}
                           onClick={() => {
                             switcher.reset();
                             switcher.switchChain({ chainId: n.id as never });
@@ -457,7 +539,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
                   </Button>
                 </div>
                 <p className="text-xs leading-relaxed text-ink-400">
-                  This wallet is the only one this page will use until you switch. Refreshing restores it, not another wallet.
+                  {connector?.id === "injected" ? "This browser provider does not identify itself. Choose it again after refreshing." : "This wallet is the only one this page will use until you switch. Refreshing restores it, not another wallet."}
                 </p>
               </div>
             )}
@@ -475,4 +557,4 @@ export function WalletButton({ compact }: { compact?: boolean }) {
       )}
     </div>
   );
-}
+}

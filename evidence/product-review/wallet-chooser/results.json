@@ -1,0 +1,526 @@
+{
+  "base": "http://localhost:3003",
+  "scope": "Keyless fixtures only. No real wallet or signing clearance.",
+  "results": [
+    {
+      "name": "EIP-6963 Rabby Wallet: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: selected provider only",
+      "ok": true,
+      "detail": "io.rabby"
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: actual unsupported chain",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: selected provider only",
+      "ok": true,
+      "detail": "io.metamask"
+    },
+    {
+      "name": "EIP-6963 MetaMask: actual unsupported chain",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: selected provider only",
+      "ok": true,
+      "detail": "com.coinbase.wallet"
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: actual unsupported chain",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet",
+      "ok": false,
+      "detail": "locator.waitFor: Timeout 20000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('header').getByRole('button', { name: 'Connect wallet', exact: true }) to be visible\u001b[22m | "
+    },
+    {
+      "name": "legacy Rabby Wallet: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: selected provider only",
+      "ok": true,
+      "detail": "io.metamask"
+    },
+    {
+      "name": "legacy MetaMask: actual unsupported chain",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: selected provider only",
+      "ok": true,
+      "detail": "com.coinbase.wallet"
+    },
+    {
+      "name": "legacy Coinbase Wallet: actual unsupported chain",
+      "ok": false,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet rejection",
+      "ok": false,
+      "detail": "locator.waitFor: Timeout 20000ms exceeded. | Call log: | \u001b[2m  - waiting for locator('header').getByRole('button', { name: 'Connect wallet', exact: true }) to be visible\u001b[22m | "
+    },
+    {
+      "name": "removed extension",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "switch wallets",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "layout 320",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "layout 360",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "layout 375",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "layout 390",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "layout 430",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "layout 768",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "layout 1024",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "layout 1440",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "layout 1920",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    },
+    {
+      "name": "missing wallets",
+      "ok": false,
+      "detail": "page.goto: net::ERR_CONNECTION_REFUSED at http://localhost:3003/ | Call log: | \u001b[2m  - navigating to \"http://localhost:3003/\", waiting until \"domcontentloaded\"\u001b[22m | "
+    }
+  ]
+}

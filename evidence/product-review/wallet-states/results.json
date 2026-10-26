@@ -162,6 +162,11 @@
   {
     "name": "EIP-6963 wallet is listed once without generic duplicate",
     "ok": true,
+    "detail": " | Test WalletAnnounced by this browser (EIP-6963)Connect →"
+  },
+  {
+    "name": "Chooser never makes a wallet request before a row is chosen",
+    "ok": true,
     "detail": ""
   },
   {

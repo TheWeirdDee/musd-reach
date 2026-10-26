@@ -9,6 +9,8 @@ if (process.env.NODE_ENV === "production") {
 }
 
 const nextConfig: NextConfig = {
+  // Keep review artifacts separate from a developer's running .next server.
+  distDir: process.env.REACH_BUILD_DIR ?? ".next",
   transpilePackages: ["@musd-reach/sdk", "@musd-reach/protocol-registry"],
   poweredByHeader: false,
   reactStrictMode: true,

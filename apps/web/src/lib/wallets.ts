@@ -19,6 +19,7 @@
  *   https://github.com/WalletConnect/walletconnect-assets (Icon / Blue)
  */
 
+import type { EIP1193Provider } from "viem";
 import { SITE_URL } from "./metadata";
 
 export type WalletKey = "rabby" | "metamask" | "coinbase" | "walletconnect";
@@ -88,11 +89,19 @@ export const WALLETS: WalletSpec[] = [
  * embedded in every browser bundle of a WalletConnect-enabled site and is not a secret. It can be
  * replaced at build time without touching the source.
  */
-const projectId = (process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "").trim() || "fdac6ad6f8f23aec6517085c2e94c3ad";
+const projectId = (process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID ?? "").trim();
 
 export const walletConnectProjectId = projectId;
 /** WalletConnect is listed only when the build can actually open a session. */
 export const walletConnectEnabled = projectId.length > 0;
+
+/**
+ * Ids of the config-level injected connectors that resolve a *legacy* provider (one that has not
+ * announced itself over EIP-6963) out of `window.ethereum.providers` by the vendor's own flag.
+ * The chooser uses one only when the matching flag is actually present, so a missing wallet is
+ * never offered a connection that cannot succeed, and never borrows another wallet's provider.
+ */
+export const LEGACY_TARGET_IDS: ReadonlySet<string> = new Set(["rabby", "metaMask", "coinbaseWallet"]);
 
 export const walletConnectMetadata = {
   name: "MUSD Reach",
@@ -121,6 +130,7 @@ export function matchesWallet(
 ): boolean {
   if (!connector) return false;
   if (wallet.key === "walletconnect") return connector.type === "walletConnect";
+  if (connector.type !== "injected") return false;
   const id = (connector.id ?? "").toLowerCase();
   const name = (connector.name ?? "").toLowerCase();
   if (id === "injected" || name === "injected") return false;
@@ -130,4 +140,18 @@ export function matchesWallet(
 /** Announced providers (EIP-6963) that no catalogue entry claims, listed individually. */
 export function isCatalogued(connector: { id?: string; name?: string; type?: string }): boolean {
   return WALLETS.some((w) => matchesWallet(connector, w));
+}
+/** Legacy wallets must resolve their own provider, never the first window.ethereum entry.
+ * Rabby/Coinbase may also advertise isMetaMask for compatibility; their own flag wins.
+ */
+export function legacyProvider(wallet: WalletSpec): EIP1193Provider | undefined {
+  if (typeof window === "undefined") return;
+  const root = (window as unknown as { ethereum?: EIP1193Provider & { providers?: EIP1193Provider[] } }).ethereum;
+  if (!root) return;
+  const providers = root.providers?.length ? root.providers : [root];
+  return providers.find((provider) => {
+    const flags = provider as unknown as Record<string, unknown>;
+    const key = flags.isRabby ? "rabby" : flags.isCoinbaseWallet ? "coinbase" : flags.isMetaMask ? "metamask" : null;
+    return key === wallet.key && typeof provider.request === "function";
+  });
 }

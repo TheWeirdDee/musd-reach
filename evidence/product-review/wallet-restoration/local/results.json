@@ -1,0 +1,866 @@
+{
+  "base": "http://localhost:3004",
+  "scope": "Keyless fixtures only. No real wallet or signing clearance.",
+  "results": [
+    {
+      "name": "EIP-6963 Rabby Wallet: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: selected provider only",
+      "ok": true,
+      "detail": "io.rabby"
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: actual unsupported chain",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Rabby Wallet rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: selected provider only",
+      "ok": true,
+      "detail": "io.metamask"
+    },
+    {
+      "name": "EIP-6963 MetaMask: actual unsupported chain",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 MetaMask rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: selected provider only",
+      "ok": true,
+      "detail": "com.coinbase.wallet"
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: actual unsupported chain",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "EIP-6963 Coinbase Wallet rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: selected provider only",
+      "ok": true,
+      "detail": "io.rabby"
+    },
+    {
+      "name": "legacy Rabby Wallet: actual unsupported chain",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Rabby Wallet rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: selected provider only",
+      "ok": true,
+      "detail": "io.metamask"
+    },
+    {
+      "name": "legacy MetaMask: actual unsupported chain",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy MetaMask rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: one Rabby Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: one MetaMask row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: one Coinbase Wallet row",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: no generic duplicate",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: selected provider only",
+      "ok": true,
+      "detail": "com.coinbase.wallet"
+    },
+    {
+      "name": "legacy Coinbase Wallet: actual unsupported chain",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: rejected switch explained",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: add/switch Mezo",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: switch Base",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: account event",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: restore selected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: identity",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: stays disconnected after refresh",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: explicit reconnect",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: no signing on connection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet: connection rejection",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "legacy Coinbase Wallet rejection no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "removed extension never falls through to MetaMask",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "removed extension no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "explicit switch replaces session",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "switch wallets no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "logos 320",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fits 320",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus enters 320",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus trapped 320",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape/focus return 320",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout 320 no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "logos 360",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fits 360",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus enters 360",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus trapped 360",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape/focus return 360",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout 360 no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "logos 375",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fits 375",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus enters 375",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus trapped 375",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape/focus return 375",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout 375 no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "logos 390",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fits 390",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus enters 390",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus trapped 390",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape/focus return 390",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout 390 no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "logos 430",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fits 430",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus enters 430",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus trapped 430",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape/focus return 430",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout 430 no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "logos 768",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fits 768",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus enters 768",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus trapped 768",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape/focus return 768",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout 768 no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "logos 1024",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fits 1024",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus enters 1024",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus trapped 1024",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape/focus return 1024",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout 1024 no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "logos 1440",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fits 1440",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus enters 1440",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus trapped 1440",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape/focus return 1440",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout 1440 no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "logos 1920",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "fits 1920",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus enters 1920",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "focus trapped 1920",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Escape/focus return 1920",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "layout 1920 no page errors",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "missing Rabby Wallet install guidance",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "missing MetaMask install guidance",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "missing Coinbase Wallet install guidance",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "contextual MetaMask notice",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "chooser axe",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "name": "missing wallets no page errors",
+      "ok": true,
+      "detail": ""
+    }
+  ]
+}
