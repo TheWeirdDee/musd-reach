@@ -5,7 +5,17 @@ import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
-const read = (p) => JSON.parse(readFileSync(p, "utf8"));
+const read = (p) => {
+  const bytes = readFileSync(p);
+  // PowerShell redirects may produce UTF-16 evidence. Preserve those records on disk.
+  const encoding = bytes[0] === 0xff && bytes[1] === 0xfe ? "utf-16le"
+    : bytes[0] === 0xfe && bytes[1] === 0xff ? "utf-16be" : "utf-8";
+  try {
+    return JSON.parse(new TextDecoder(encoding, { fatal: true }).decode(bytes).replace(/^\uFEFF/, ""));
+  } catch (error) {
+    throw new Error(`Cannot read JSON from ${p}: ${error.message}`, { cause: error });
+  }
+};
 const runs = (dir) => {
   const p = join(root, dir);
   if (!existsSync(p)) return [];
