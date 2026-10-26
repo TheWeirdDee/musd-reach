@@ -18,7 +18,7 @@ for (let i = 0; i < 40; i++) {
   });
   seen.push(info);
 }
-ck("Tab reaches the wallet safety review", seen.some((s) => /Wallet safety review/.test(s.label)));
+ck("Tab reaches the read-only app", seen.some((s) => /Read-only app/.test(s.label)));
 ck("Tab reaches disconnected guidance", seen.some((s) => /guide|documentation|docs/i.test(s.label)));
 ck("Safety hold presents no live amount input", await p.locator("#wrap-amount").count() === 0);
 const noOutline = seen.filter((s) => !s.outline && s.tag !== "BODY" && s.tag !== "NEXTJS-PORTAL");
