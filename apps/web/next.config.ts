@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 // Test-only switches must never reach a hosted build: they replace the contract addresses, relabel
 // the chain as a fork, or add a keyless mock wallet. src/lib/reach.ts also ignores them in production.
-const TEST_ONLY_ENV = ["NEXT_PUBLIC_E2E_ACCOUNT", "NEXT_PUBLIC_REACH_DEPLOYMENT", "NEXT_PUBLIC_NETWORK_MODE"];
+const TEST_ONLY_ENV = ["NEXT_PUBLIC_E2E_ACCOUNT", "NEXT_PUBLIC_REACH_DEPLOYMENT", "NEXT_PUBLIC_NETWORK_MODE", "NEXT_PUBLIC_E2E_WALLET_TESTS"];
 if (process.env.NODE_ENV === "production") {
   const set = TEST_ONLY_ENV.filter((k) => process.env[k]);
   if (set.length) throw new Error(`Refusing a production build with test-only variables set: ${set.join(", ")}. Unset them; they work only with \`next dev\`.`);
