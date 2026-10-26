@@ -1,10 +1,14 @@
 # MUSD Reach
 
-MUSD Reach makes Mezo savings positions portable. Keep the savings position on Mezo while holding or transferring a backed claim on Base Sepolia, then burn the claim to redeem.
+**Save on Mezo. Reach further.**
+
+MUSD Reach makes Mezo savings positions portable across chains. It is built for Mezo savers and developers building applications that can recognize a Mezo-backed savings claim. Keep the underlying savings position on Mezo, lock wrapper shares, and hold or transfer a backed receipt on Base Sepolia. Burn that receipt to return to the source position.
+
+The goal is cross-chain utility without automatically unwinding the original savings position. This release demonstrates the protocol on public testnets; receiving-application integrations remain future work.
 
 **Deployment: Mezo testnet + Base Sepolia**
 
-[Live app / read-only preview](https://musd-reach.vercel.app/app) | [Public proof](https://musd-reach.vercel.app/proof) | [Docs](https://musd-reach.vercel.app/docs) | [Contract registry](https://musd-reach.vercel.app/contracts) | [API health](https://musd-reach-api.onrender.com/health)
+[Live app](https://musd-reach.vercel.app/app) | [Public proof](https://musd-reach.vercel.app/proof) | [Docs](https://musd-reach.vercel.app/docs) | [Contract registry](https://musd-reach.vercel.app/contracts) | [API health](https://musd-reach-api.onrender.com/health)
 
 ## The problem
 
@@ -24,10 +28,11 @@ Current scope: a portable savings-backed receipt on Mezo testnet and Base Sepoli
 4. **Use.** rwSMUSD is an ordinary ERC-20 with permit. Transfer it or hold it. The v2 run transferred it to a second holder.
 5. **Redeem.** Burn rwSMUSD on Base. Choose wSMUSD shares or MUSD, with a minimum amount for MUSD. A REDEEM message is published.
 6. **Release.** After Base finality, anyone delivers the REDEEM VAA on Mezo. The source gateway releases the exact shares, or redeems them through the wrapper and pays MUSD if at least your minimum is available.
+7. **Recover if needed.** A MUSD payout that cannot meet its terms remains pending. Anyone can retry the original terms; only the recipient can lower the minimum or claim shares instead. Delivery of the message alone does not prove the payout completed. See [Redemption and recovery](#redemption-and-recovery).
 
 ## Why the wrapper is necessary
 
-Native sMUSD tracks yield per address, so moving sMUSD itself would separate the principal from its yield. The wrapper owns the sMUSD and turns principal plus yield into a single share price. A wSMUSD (and therefore an rwSMUSD) is worth `convertToAssets(1)` MUSD at the moment you read it. That value rises with harvested yield and falls only if the native vault is impaired.
+Native sMUSD tracks yield per address, so moving sMUSD itself would separate the principal from its yield. The wrapper owns the sMUSD and turns principal plus yield into a single share price. For one whole wSMUSD, read `convertToAssets(10**18)` on the wrapper: the result is in MUSD base units (18 decimals). rwSMUSD represents the same number of locked wrapper-share units, rather than a fixed MUSD amount. Share pricing includes pending native yield as well as principal and claimed yield. The native vault reports principal at 1:1, so this accounting does not proactively mark down an impaired vault; a loss or liquidity problem can instead appear as a failed withdrawal. See the economic model for that limitation.
 
 | Token | Chain | What it is |
 |---|---|---|
@@ -62,29 +67,84 @@ The v2 public run passed 18 steps, including transfer to a second holder, return
 | **Fork only** | Full lifecycle against the live Mezo vault and the real Wormhole Cores; Morpho Blue market acceptance, borrow and liquidation on a Base mainnet fork |
 | **Local only** | Fuzz and invariant tests, yield-bearing scenarios, vault impairment, 10-year liveness |
 | **Historical real-wallet checks (MetaMask 13.53.0)** | Connect and reject, session persistence, unsupported-network detection, network switch (approved and rejected), account switching, behind the production CSP |
-| **Not verified** | Any independent integrator; Morpho on a public network; signing or rejecting a transaction inside a real wallet (what the app asks to sign is checked by a keyless test wallet); Rabby; WalletConnect; screen readers |
+| **Scripted wallet coverage** | EIP-1193/EIP-6963 fixtures exercise the Rabby and MetaMask chooser paths, connection rejection and switching; these are keyless simulations, not tests of the actual wallet extensions |
+| **Not verified** | Any independent integrator; Morpho on a public network; signing or rejecting a transaction inside a real wallet (what the app asks to sign is checked by a keyless test wallet); real Rabby or Coinbase Wallet sessions; an end-to-end WalletConnect session; screen readers |
 
 ## Architecture
 
 ```mermaid
 flowchart LR
   subgraph Mezo["Mezo testnet (31611)"]
-    U1[User MUSD or sMUSD] -->|deposit| W[ReachSavingsWrapper<br/>wSMUSD]
-    W -->|owns principal| V[MUSDSavingsRate<br/>native vault]
-    W -->|shares locked| S[ReachSourceGateway]
-    S -->|publish| CM[Wormhole Core]
+    U["User: MUSD or sMUSD"] -->|deposit| W["ReachSavingsWrapper / wSMUSD"]
+    W -->|holds savings principal| V["Native sMUSD vault"]
+    W -->|lock shares| S["ReachSourceGateway"]
+    S -->|publish ISSUE| CM["Mezo Wormhole Core"]
+    S -->|verify REDEEM VAA| CM
+    S -->|release or redeem| U
   end
   subgraph Base["Base Sepolia (84532)"]
-    CB[Wormhole Core] -->|verify VAA| D[ReachDestinationGateway]
-    D -->|mint / burn| R[RemoteWrapperReceipt<br/>rwSMUSD]
+    D["ReachDestinationGateway"] -->|verify ISSUE VAA| CB["Base Wormhole Core"]
+    D -->|mint| R["rwSMUSD / transferable receipt"]
+    R -->|burn through gateway| D
+    D -->|publish REDEEM| CB
   end
-  CM -. "ISSUE VAA (guardian-signed)" .-> CB
-  CB -. "REDEEM VAA (guardian-signed)" .-> CM
-  Relayer["Any relayer<br/>(ours, yours, anyone's)"] -. delivers .-> D
-  Relayer -. delivers .-> S
+  CM -.->|guardians sign ISSUE| I["ISSUE VAA"]
+  I -.->|anyone delivers| D
+  CB -.->|guardians sign REDEEM| B["REDEEM VAA"]
+  B -.->|anyone delivers| S
 ```
 
 Off-chain parts are optional conveniences: `apps/api` indexes events and can run a permissionless relayer, and `apps/web` is the interface. Neither has authority to choose who receives locked funds; delivery executes authenticated messages. A configured relayer key pays its own network gas.
+
+## Features
+
+- MUSD wrapping, existing-sMUSD entry and optional wrap-and-lock in one transaction.
+- A transferable ERC-20 receipt with permit, backed by locked wrapper shares.
+- Share or MUSD redemption, recipient-controlled pending-settlement recovery and in-kind wrapper exits.
+- Portfolio, quotes, transfer tracking, paginated history, public proof and a contract registry.
+- A permissionless delivery path and a verifier that reads chains without trusting the Reach API.
+
+## Challenges encountered
+
+| Challenge | Implementation and evidence |
+|---|---|
+| Native yield and share pricing | Native sMUSD yield belongs to addresses. The wrapper prices tracked principal, idle MUSD and pending yield, harvests before pricing, and ignores donations. [Economic model](docs/ECONOMIC_MODEL.md), wrapper unit/fuzz/invariant tests |
+| Backing across asynchronous chains | Lock/issue and burn/release are separate transactions. The SDK and verifier reconcile locked shares, receipt supply and both in-flight directions instead of equating custody with supply. [SDK](packages/sdk/src), [verifier](packages/verifier/src) |
+| Authentication and replay rejection | Gateways verify Wormhole signatures, peer emitters, chain/gateway/token domains and direction; both transfer IDs and VAA digests are consumed once. [Gateway base](packages/contracts/src/shared/ReachGatewayBase.sol), public negative checks |
+| Relayer gas starvation | v1 could turn a MUSD exit into a share payout. v2 separates pending settlement from payout and uses gas guards so insufficient gas reverts without changing the outcome. [F-01 to F-03](docs/SECURITY_FINDINGS.md) |
+| Failed MUSD settlement | The original minimum stays binding; retries are permissionless, while only the recipient can change the minimum or take shares. The tracker requires a successful pending-state read before declaring payout complete. [Recovery](#redemption-and-recovery), [review](docs/REVIEW_2026-10-25.md) |
+| Reorgs and reinclusion | Indexing atomically rewinds its cursor with orphan-event deletion, removes orphan-derived transfers, refreshes replacement origins and invalidates stale signatures. [Indexer](apps/api/src/indexer.ts), API regression tests |
+| History boundaries | A timestamp-plus-transfer-ID cursor orders origins across chains without skipping transfers within one block; the UI loads and deduplicates older pages. [Routes](apps/api/src/routes.ts), [history](apps/web/src/app/app/history/page.tsx) |
+| Backend cold starts | Readiness reports indexing state, adaptive log windows speed catch-up, and the interface exposes delayed API availability. Free hosting can still take about a minute to wake. [Deployment runbook](docs/DEPLOYMENT.md) |
+| Wallets and understandable transactions | Named EIP-6963 providers avoid an ambiguous injected-wallet choice. Writes switch networks, simulate, check gas funds, request signing and inspect the receipt. The MetaMask classification remains unresolved. [Wallet status](#wallet-functionality) |
+| Accessibility | Responsive layouts, visible focus, reduced-motion handling and a focus-trapped wallet chooser are implemented. Playwright/axe and keyboard checks provide automated coverage; screen-reader and independent usability reviews remain unverified. [Testing](docs/TESTING.md) |
+
+## How we built it
+
+We started with the native vault's verified ABI, proxy implementation and actual yield semantics rather than treating sMUSD as a conventional appreciating share. That investigation shaped the wrapper's tracked-asset model and the conservation invariants used by contracts, SDK reads and the verifier. Foundry tests exercise rounding, yield, failure recovery, gas griefing and long-delayed delivery; live-vault forks check assumptions against the deployed dependencies.
+
+The gateways then made issuance and redemption explicit authenticated messages, with one-time peer binding, domain checks and replay protection. The v1 gas-starvation finding led to the v2 pending-settlement model. v1 remains disclosed; the current registry points to v2. A separate public-testnet lifecycle recorded transactions and guardian-signed VAAs, including second-holder transfers and recovery, and the read-only verifier checks those records against chain state.
+
+The TypeScript SDK supplies common message codecs, reads, gas policy and reconciliation. The Fastify API adds event indexing, reorg recovery, history and optional permissionless relay delivery; PostgreSQL or embedded PGlite stores its state. The Next.js interface uses the same SDK for quotes and on-chain reads, while separating transaction confirmation, message delivery and final payout. Later review corrected settlement-read errors, reorg derivation and history pagination. QA combines contract/SDK/API checks, localhost-fork browser transactions, hosted keyless transaction-intent tests, CSP, accessibility and responsive checks. These evidence layers establish different facts; none substitutes for real-extension signing or an external security audit.
+
+## Technology stack
+
+Versions below are the checked-in pins or dependency ranges, not promises that every environment resolves the same transitive versions.
+
+| Layer | Verified implementation | Source |
+|---|---|---|
+| Networks | Mezo testnet and Base Sepolia | [Deployment registry](deployments/testnet.json) |
+| Messaging | Wormhole Core; guardian-signed VAAs, permissionless delivery | [Gateway base](packages/contracts/src/shared/ReachGatewayBase.sol) |
+| Contracts | Solidity 0.8.28; vendored native-vault source 0.8.33; OpenZeppelin; Foundry/forge-std; London EVM target | [Foundry config](packages/contracts/foundry.toml) |
+| Web | Next.js 16.4.2, React 19.3.0, TypeScript 5, Tailwind CSS 4; GSAP and Motion | [Web manifest](apps/web/package.json) |
+| Wallets and chain reads | Wagmi 2, Viem 2, TanStack Query 5; EIP-6963 injected providers and WalletConnect connector | [Web manifest](apps/web/package.json), [wallet configuration](apps/web/src/lib/wagmi.ts) |
+| SDK and verifier | TypeScript, Viem, tsx; workspace SDK and independent CLI | [SDK manifest](packages/sdk/package.json), [verifier manifest](packages/verifier/package.json) |
+| Backend | Node.js (root requirement >=20; container Node 22), TypeScript, Fastify 5, Zod | [Root manifest](package.json), [API manifest](apps/api/package.json), [Dockerfile](apps/api/Dockerfile) |
+| Database and indexer | PostgreSQL via pg, or embedded PGlite; custom finality/reorg-aware Viem event indexer | [Database](apps/api/src/db.ts), [indexer](apps/api/src/indexer.ts) |
+| Testing | Foundry unit/fuzz/invariant/fork tests; Vitest 3; Playwright 1.56.1; axe-core 4.10.3; ESLint 9 and TypeScript checks | [Testing guide](docs/TESTING.md), workspace manifests |
+| Workspace and hosting | pnpm 11.5.0/Corepack; Vercel web; Render API with Docker | [Root manifest](package.json), [Vercel config](apps/web/vercel.json), [deployment guide](docs/DEPLOYMENT.md) |
+
+**Technology tags (10):** `Solidity, TypeScript, React, Next.js, Wormhole, Mezo, Base, Viem, Node.js, Foundry`
 
 ## Supported networks and contracts
 
@@ -130,7 +190,7 @@ pnpm --filter @musd-reach/web dev    # http://localhost:3000, reads the v2 deplo
 pnpm --filter @musd-reach/api dev    # http://localhost:8787, indexer + relayer; embedded PGlite if DATABASE_URL is unset
 ```
 
-No keys are needed to browse, read balances or verify. Copy [`apps/web/.env.example`](apps/web/.env.example) to `apps/web/.env.local` for local web configuration. The root [`.env.example`](.env.example) covers all services. The optional API relayer uses `RELAYER_KEY_FILE`; leave it unset for read-only indexing. Wallet interactions remain paused while the reported classification is unresolved.
+No keys are needed to browse, read balances or verify. Copy [`apps/web/.env.example`](apps/web/.env.example) to `apps/web/.env.local` for local web configuration. The root [`.env.example`](.env.example) covers all services. The optional API relayer uses `RELAYER_KEY_FILE`; leave it unset for read-only indexing. Wallet connections and the transaction submission path are enabled in the current release; the unresolved MetaMask notice and limits of real-wallet verification are described below. Browsing requires no connection.
 
 ### Repository
 
@@ -169,6 +229,8 @@ pnpm verify all evidence/real-chain/testnet-2026-10-21T11-23-33-084Z.json   # ev
 
 ## Testing
 
+The counts below describe the recorded suites, not a new execution during this documentation update.
+
 ```bash
 cd packages/contracts
 forge test                                                                       # 75 tests: unit, fuzz, invariants, gas griefing, liveness
@@ -194,12 +256,22 @@ Browser suites are in `apps/web/e2e` and described in [`docs/TESTING.md`](docs/T
 Protocol authentication and exits do not depend on relayers, the Reach API, indexer or website. Users must still verify the chain, target, amount and recipient before signing: a compromised interface could propose a harmful transaction. The deployer cannot arbitrarily mint or release custody after the one-time `bindSourceGateway`; the pause role is described above. Balances and backing are read from chain.
 
 Further reading:
+
 - [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md): 33-row attack matrix, each row mapped to a test, plus the Slither triage.
-- [`docs/SECURITY_FINDINGS.md`](docs/SECURITY_FINDINGS.md): contract findings, disclosures and current investigations. F-33 (MetaMask classification) is an open release blocker; F-34 records dependency remediation. F-04 (Low) and F-05 (Info) remain disclosed.
+- [`docs/SECURITY_FINDINGS.md`](docs/SECURITY_FINDINGS.md): contract findings, disclosures and current investigations. F-33 (MetaMask classification) remains open and prevents claiming MetaMask clearance; F-34 records dependency remediation. F-04 (Low) and F-05 (Info) remain disclosed.
 
 There has been no external professional audit.
 
-**Wallet access:** a malicious-site warning was reported during MetaMask connection. [Provider review #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) remains unresolved. The app provides read-only access while wallet connections and financial writes are paused. Do not bypass a wallet warning. See the [security status page](https://musd-reach.vercel.app/security). Historical connection tests are not current clearance.
+### Wallet functionality
+
+The hosted wallet chooser is deployed (revision `2228f9d`, checked 26 October 2026). The global wallet hold has been removed: source code enables connections and the simulate/sign/submit path. This is availability of the code path, **not verification of successful signing in a real extension**.
+
+| Wallet path | Implemented | Verification boundary |
+|---|---|---|
+| Rabby, MetaMask and Coinbase Wallet | Named injected-provider discovery, with vendor install links when absent; other announced EIP-6963 wallets can also appear | Scripted Rabby/MetaMask chooser fixtures exist. Historical real MetaMask 13.53.0 connection/network tests predate this chooser. Real Rabby/Coinbase sessions and real-extension transaction signing are unverified |
+| WalletConnect | Connector and chooser entry are enabled by the configured public project ID | Entry observed on the hosted site; authenticated pairing and transaction signing are unverified |
+
+A malicious-site warning was reported during MetaMask connection. [Provider review #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) remains unresolved; the chooser carries a MetaMask-specific advisory. Re-enabling other wallet paths does not establish the cause of the warning or provider clearance. Do not bypass a wallet warning. See the [security status page](https://musd-reach.vercel.app/security).
 
 ## Deployment
 
@@ -207,9 +279,42 @@ There has been no external professional audit.
 - **Web app and API:** hosted on Vercel ([web app](https://musd-reach.vercel.app)) and Render ([API health](https://musd-reach-api.onrender.com/health)) since 23 October 2026. The free API may take about a minute to wake. [`docs/DEPLOYMENT.md`](docs/DEPLOYMENT.md) has the runbook and the post-deploy checks.
 - **Testnet loan:** the deployment was funded with a Mezo testnet loan that is still open. It is documented in [`docs/LOAN_AUDIT.md`](docs/LOAN_AUDIT.md) and is not protocol funds.
 
+## What we learned
+
+- **Economic correctness starts with the underlying asset.** Address-indexed yield required a wrapper and explicit accounting; an ERC-20 interface alone did not describe the economics.
+- **Cross-chain success has several stages.** A mined burn or consumed message does not prove MUSD was paid. Pending settlement needs its own state, minimum and recovery actions.
+- **Evidence should be independently reproducible.** A separate read-only verifier and recorded VAAs make backing and authenticated execution checkable without trusting the API or screenshots.
+- **Clarity is part of transaction safety.** Exact approvals, target networks, gas requirements and unknown read states matter as much as a polished success screen.
+- **Wallet availability and provider clearance are separate facts.** Named-provider discovery avoids forcing one extension, while fixture tests and historical connections still cannot establish live signing or resolve a provider warning.
+
+## What's next
+
+Planned work, not completed functionality:
+
+- Add destination networks only after verifying their Wormhole support, finality, deployment wiring and backing reconciliation.
+- Build a real receiving-application integration. Explore lending/collateral use after oracle, risk, liquidity and liquidation review; current Morpho evidence is fork-only.
+- Test actual Rabby, Coinbase Wallet and WalletConnect sessions and real-extension signing; pursue resolution of the MetaMask classification.
+- Improve SDK packaging, integration examples and reproducible deployment/verification tooling for external developers.
+- Add cross-chain delivery/settlement observability, relayer alerts and durable production hosting.
+- Obtain independent economic and security review, address remaining findings/dependency advisories, and plan production governance, operations and incident response before any mainnet release.
+
 ## Hackathon
 
 Built for the Mezo hackathon.
+
+| Project profile | Details |
+|---|---|
+| Name | MUSD Reach |
+| Tagline | Save on Mezo. Reach further. |
+| Short description | Keep a savings position on Mezo while holding or transferring a backed receipt on Base Sepolia, then burn it to redeem |
+| Infrastructure | Mezo native MUSD savings, ERC-4626 wrapper, Wormhole messaging, Base Sepolia receipt, SDK and independent verifier |
+| Descriptive categories | DeFi; Cross-Chain Infrastructure; Savings & Yield (not claims of official tracks) |
+| Technology tags | Solidity, TypeScript, React, Next.js, Wormhole, Mezo, Base, Viem, Node.js, Foundry |
+| Networks | Mezo testnet (31611) and Base Sepolia (84532) |
+| Links | [Live website](https://musd-reach.vercel.app/), [public repository](https://github.com/TheWeirdDee/musd-reach), [public proof](https://musd-reach.vercel.app/proof) |
+| Demonstration | Public-testnet wrap, lock, issue, second-holder transfer, burn, share/MUSD return and pending-settlement recovery; recorded evidence above |
+
+Reach explores how Mezo's native savings can support transferable claims outside Mezo while retaining the source savings position. It demonstrates a Mezo-backed primitive, rather than claiming a live lending market, third-party adoption or production readiness.
 
 ## License
 
