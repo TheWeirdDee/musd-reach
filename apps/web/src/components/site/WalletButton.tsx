@@ -8,6 +8,8 @@ import { MEZO_ID, BASE_ID } from "@/lib/reach";
 import { cn } from "@/lib/cn";
 import { useIsClient } from "@/lib/useIsClient";
 import { useWalletChainId } from "@/lib/walletChain";
+import Link from "next/link";
+import { walletSafetyHold } from "@/lib/walletSafety";
 
 function networkName(id: number | undefined) {
   if (id === undefined) return "Checking network";
@@ -25,6 +27,12 @@ export function WalletButton({ compact }: { compact?: boolean }) {
   const [open, setOpen] = useState(false);
   const mounted = useIsClient();
   const ref = useRef<HTMLDivElement>(null);
+  const [restoreSlow, setRestoreSlow] = useState(false);
+  useEffect(() => {
+    if (status !== "reconnecting") return;
+    const timer = setTimeout(() => setRestoreSlow(true), 10_000);
+    return () => clearTimeout(timer);
+  }, [status]);
 
   useEffect(() => {
     if (!open) return;
@@ -38,13 +46,17 @@ export function WalletButton({ compact }: { compact?: boolean }) {
     };
   }, [open]);
 
+  if (walletSafetyHold) {
+    return <Link href="/security" className="inline-flex h-10 items-center gap-2 rounded-sm border border-sand-500/40 px-3 text-xs text-sand-300"><span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />Wallet safety review</Link>;
+  }
+
   // Before hydration and while wagmi restores a session, render a stable placeholder so a
   // refresh never flashes "disconnected" for a connected user.
   if (!mounted || status === "reconnecting") {
     return (
-      <Button intent="secondary" disabled className={cn(compact ? "h-10 px-3" : "")} aria-live="polite">
+      <Button intent="secondary" disabled={!restoreSlow} onClick={() => disconnect()} className={cn(compact ? "h-10 px-3" : "")} aria-live="polite">
         <span className="h-2 w-2 animate-pulse-dot rounded-full bg-ink-400" aria-hidden />
-        <span className="text-ink-300">Restoring wallet</span>
+        <span className="text-ink-300">{restoreSlow ? "Reset wallet session" : "Restoring wallet"}</span>
       </Button>
     );
   }
@@ -155,7 +167,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
                       : error.message.split("\n")[0]}
                 </p>
               )}
-              <p className="text-xs leading-relaxed text-ink-400">Read-only browsing works without a wallet. Connecting never grants spending rights; every approval is a separate, exact-amount signature.</p>
+              <p className="text-xs leading-relaxed text-ink-400">Read-only browsing works without a wallet. Connecting never grants spending rights; every approval is a separate, exact-amount transaction. WalletConnect is not offered in this build.</p>
             </div>
           )}
         </div>
