@@ -35,7 +35,7 @@ const cols = [
 
 export function SiteFooter() {
   return (
-    <footer className="border-t border-ink-700 bg-ink-950">
+    <footer data-marketing-footer className="border-t border-ink-700 bg-ink-950">
       <div className="shell grid gap-12 py-14 md:grid-cols-[1.3fr_repeat(3,1fr)]">
         <div className="max-w-sm space-y-4">
           <Logo />
