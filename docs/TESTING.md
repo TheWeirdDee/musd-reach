@@ -127,3 +127,15 @@ this rebuild by the production safety-hold and wallet-state suites. The older li
 transaction-intent suite may now correctly block accounts without enough native gas;
 its previous result must not be promoted to a passing current run. The corrected live-read suite now asserts a no-signing gas block when the observed account cannot afford its next transaction. Exact lock and burn
 arguments are checked by the new rejecting-wallet fixture suite.
+
+
+## Product-copy and FAQ follow-up
+
+The existing production acceptance suite checks that wallet notices appear on app routes
+only, the hero describes portable savings, the CTA is labelled read-only, and FAQ keyboard
+interaction, desktop sticky positioning and mobile stacking work. Wallet hold enforcement
+remains part of every production route assertion. `SETTLEMENT_ONLY=1` runs the four tracker
+read regressions against a hosted production build without attempting a wallet connection;
+the connected-history fixture remains a separate keyless development test. Actual hosted
+API history is checked using its public timestamp/ID cursor. Reorg injection and restart
+regressions are local API tests, not live-chain manipulations.
