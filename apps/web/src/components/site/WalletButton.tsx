@@ -47,7 +47,7 @@ export function WalletButton({ compact }: { compact?: boolean }) {
   }, [open]);
 
   if (walletSafetyHold) {
-    return <Link href="/security" className="inline-flex h-10 items-center gap-2 rounded-sm border border-sand-500/40 px-3 text-xs text-sand-300"><span className="h-1.5 w-1.5 rounded-full bg-current" aria-hidden />Wallet safety review</Link>;
+    return <Link href="/app" className="inline-flex h-10 items-center gap-2 rounded-sm border border-ink-600 px-3 text-xs text-ink-200">Read-only app</Link>;
   }
 
   // Before hydration and while wagmi restores a session, render a stable placeholder so a
