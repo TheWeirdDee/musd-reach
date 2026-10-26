@@ -1,6 +1,6 @@
 # Product and wallet-safety review - 26 October 2026
 
-Release status: **local review; not deployed; wallet classification unresolved**.
+Historical review snapshot. The reviewed build is now hosted (`e67559f` checked 26 October); wallet classification remains unresolved. Current follow-up and deployment status: [STATUS.md](STATUS.md). The local-only statements below describe the original review checkpoint.
 This is an engineering self-review using seven user perspectives, not an independent
 professional audit or a study with external human participants.
 
