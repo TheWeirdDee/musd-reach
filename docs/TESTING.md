@@ -125,5 +125,5 @@ node e2e/settlement-history.mjs http://localhost:3003
 The older `wallet-ui.mjs` assumes disconnected transaction forms and is superseded for
 this rebuild by the production safety-hold and wallet-state suites. The older live-read
 transaction-intent suite may now correctly block accounts without enough native gas;
-its previous result must not be promoted to a passing current run. Exact lock and burn
+its previous result must not be promoted to a passing current run. The corrected live-read suite now asserts a no-signing gas block when the observed account cannot afford its next transaction. Exact lock and burn
 arguments are checked by the new rejecting-wallet fixture suite.
