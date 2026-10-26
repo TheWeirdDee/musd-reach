@@ -32,7 +32,7 @@ export async function trackAndRelay(
     `SELECT transfer_id, direction, wormhole_sequence, status FROM transfers
      WHERE status IN ('SOURCE_LOCKED', 'REMOTE_BURN_FINALIZED', 'VAA_SIGNED')
        AND (vaa_checked_at IS NULL OR vaa_checked_at < now() - interval '20 seconds')
-     ORDER BY origin_block LIMIT 25`,
+     ORDER BY origin_time NULLS LAST, transfer_id LIMIT 25`,
   );
   const account = relayerKeyFile ? privateKeyToAccount(readFileSync(relayerKeyFile, "utf8").trim() as Hex) : null;
   let relayed = 0;
