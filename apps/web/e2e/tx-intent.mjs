@@ -139,6 +139,13 @@ await withWallet("wrap-only", { account: PRIMARY, startChain: 31611, path: "/app
 // 3. Make portable from existing wSMUSD: the wrapper share token is approved to the source gateway.
 await withWallet("lock", { account: SECONDARY, startChain: 31611, path: "/app/portable/new" }, async (page) => {
   await page.fill("#lock-amount", "0.75");
+  await page.waitForFunction(() => [...document.querySelectorAll("button")].some((b) =>
+    (b.textContent === "Insufficient network gas" && b.disabled) || (/Approve, then lock/.test(b.textContent) && !b.disabled)), null, { timeout: 60_000 });
+  const noGas = page.getByRole("button", { name: "Insufficient network gas", exact: true });
+  if (await noGas.isVisible()) {
+    check("lock: live account without enough native gas is blocked before signing", await noGas.isDisabled() && await page.evaluate(() => window.__sent.length) === 0);
+    return; // Exact lock/approval calldata with sufficient gas is covered by wallet-states.mjs.
+  }
   const tx = await firstRequest(page, /Approve, then lock/);
   checkApproval("lock", tx, { from: SECONDARY, token: dep.wrapper, spender: dep.sourceGateway, amount: parseUnits("0.75", 18) });
 });
