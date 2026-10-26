@@ -1,5 +1,6 @@
 import { buildConfig, type ReachConfig } from "@musd-reach/sdk";
 import siteData from "@/generated/site-data.json";
+import { PUBLIC_API_URL } from "./publicEndpoints";
 
 /**
  * Test-only switches (local fork rehearsals and E2E): a deployment override, fork mode and the
@@ -42,7 +43,7 @@ export const settlementModel: "fallback-v1" | "pending-v2" =
 export const knownIssues: string[] = (deploymentSource()?.knownIssues as unknown as string[] | undefined) ?? [];
 
 export const isForkMode = testHooksEnabled && process.env.NEXT_PUBLIC_NETWORK_MODE === "fork";
-export const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "";
+export const apiUrl = PUBLIC_API_URL;
 export const deployment = reachConfig.deployment;
 export const MEZO_ID = reachConfig.mezo.evmChainId;
 export const BASE_ID = reachConfig.base.evmChainId;
