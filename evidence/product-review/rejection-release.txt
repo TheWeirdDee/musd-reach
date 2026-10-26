@@ -1,0 +1,15 @@
+PASS reject-signature: injected wallet connected
+PASS reject-signature: UI states the rejection and that nothing was sent
+PASS reject-signature: step shows 'Rejected in wallet', not success
+PASS reject-signature: no navigation to a tracker
+PASS reject-signature: action can be retried
+PASS reject-signature: exactly one signing request reached the wallet
+PASS reject-signature: no uncaught page errors
+PASS reject-switch: injected wallet connected
+PASS reject-switch: wrong network + rejected switch is reported, nothing signed
+PASS reject-switch: no uncaught page errors
+PASS unsupported-chain: injected wallet connected
+PASS unsupported-chain: badge reports the wallet's real chain
+PASS unsupported-chain: a rejected switch from the menu is reported and the badge is unchanged
+PASS unsupported-chain: action asks to switch and reports the rejected switch, nothing signed
+PASS unsupported-chain: no uncaught page errors

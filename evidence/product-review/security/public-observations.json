@@ -163,5 +163,249 @@
       ],
       "deploymentIds": []
     }
-  ]
+  ],
+  "releaseCheck": {
+    "checkedAt": "2026-10-26T08:31:52.525Z",
+    "responses": {
+      "/health": {
+        "status": 200,
+        "body": {
+          "ok": true,
+          "startedAt": "2026-10-26T08:25:20.111Z"
+        }
+      },
+      "/v1/version": {
+        "status": 200,
+        "body": {
+          "revision": "e67559f7a78728dbcf35a8f2f20419191af61fc5",
+          "version": "0.1.0"
+        }
+      },
+      "/ready": {
+        "status": 200,
+        "body": {
+          "ready": true,
+          "deployed": true,
+          "failing": [],
+          "notIndexedRecently": [],
+          "jobs": [
+            {
+              "job": "reconcile",
+              "last_ok_at": "2026-10-26T08:30:14.491Z",
+              "last_error_at": null,
+              "last_error": null,
+              "consecutive_errors": 0
+            },
+            {
+              "job": "observe:wrapper",
+              "last_ok_at": "2026-10-26T08:31:05.282Z",
+              "last_error_at": null,
+              "last_error": null,
+              "consecutive_errors": 0
+            },
+            {
+              "job": "relay",
+              "last_ok_at": "2026-10-26T08:31:40.218Z",
+              "last_error_at": null,
+              "last_error": null,
+              "consecutive_errors": 0
+            },
+            {
+              "job": "index:base",
+              "last_ok_at": "2026-10-26T08:31:44.702Z",
+              "last_error_at": null,
+              "last_error": null,
+              "consecutive_errors": 0
+            },
+            {
+              "job": "index:mezo",
+              "last_ok_at": "2026-10-26T08:31:56.806Z",
+              "last_error_at": null,
+              "last_error": null,
+              "consecutive_errors": 0
+            }
+          ],
+          "cursors": [
+            {
+              "chain": "base",
+              "next_block": 50408178,
+              "finalized_block": 50402326,
+              "updated_at": "2026-10-26T08:31:44.608Z"
+            },
+            {
+              "chain": "mezo",
+              "next_block": 16377546,
+              "finalized_block": 16377545,
+              "updated_at": "2026-10-26T08:31:56.791Z"
+            }
+          ]
+        }
+      },
+      "/v1/backing/reconciliation": {
+        "status": 200,
+        "body": {
+          "status": "BALANCED",
+          "mezoBlock": "16377545",
+          "baseBlock": "50408243",
+          "baseBlockTag": "latest",
+          "totalLocked": "0",
+          "custodyBalance": "0",
+          "remoteSupply": "0",
+          "pendingIssues": [],
+          "pendingIssueShares": "0",
+          "pendingRedemptions": [],
+          "pendingRedemptionShares": "0",
+          "pendingSettlement": "0",
+          "discrepancy": "0",
+          "checks": [
+            {
+              "name": "locked == remote supply + in-flight issues + in-flight redemptions",
+              "ok": true,
+              "detail": "discrepancy 0"
+            },
+            {
+              "name": "custody wSMUSD balance >= totalLocked + pending MUSD settlements",
+              "ok": true,
+              "detail": "0 >= 0 + 0"
+            },
+            {
+              "name": "totalLocked == totalIssued - totalReleased",
+              "ok": true,
+              "detail": "0 == 6000000000000000000 - 6000000000000000000"
+            },
+            {
+              "name": "remote supply == totalMinted - totalBurned",
+              "ok": true,
+              "detail": "0 == 6000000000000000000 - 6000000000000000000"
+            },
+            {
+              "name": "sum(lock events) == totalIssued",
+              "ok": true,
+              "detail": "1 lock events"
+            }
+          ],
+          "cacheAgeMs": 0,
+          "method": "Base latest read first, then Mezo latest (instant finality); events + transferConsumed for in-flight sets. See F-13."
+        }
+      }
+    },
+    "pages": [
+      {
+        "status": 200,
+        "transfers": [
+          {
+            "transfer_id": "0xb54c56b6c01c13da52f26779a9601113acda5346e039c6f2ab41ca71da84b5fb",
+            "direction": "REDEEM",
+            "status": "NATIVE_REDEEMED",
+            "shares": "1500000000000000000",
+            "sender": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+            "recipient": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+            "redeem_mode": 2,
+            "wormhole_sequence": "2",
+            "origin_tx": "0xda2d5d75328b4a78f7bde4c0a08ce120fa6fc55e83619b600b0b97755cc7cd6c",
+            "origin_block": 48406812,
+            "origin_finalized": true,
+            "target_tx": "0x5165900940b2fc9de436c1802e504f93c768bafaefb0041d3cdc050255562be9",
+            "target_block": 16279637,
+            "target_finalized": true,
+            "vaa_digest": "0xa964b2580974d02a34e18aef034af6877d3e1133ca1769dda5d26a01f591e2f4",
+            "vaa_checked_at": null,
+            "musd_out": "1500000000000000000",
+            "fell_back": true,
+            "created_at": "2026-10-26T08:26:06.707Z",
+            "updated_at": "2026-10-26T08:31:57.091Z",
+            "origin_time": "2026-10-21T11:25:12.000Z"
+          },
+          {
+            "transfer_id": "0x2ef401e8c2d328719f18444baba6175300cb7e62730cc2b9d6d376b7e7d45909",
+            "direction": "REDEEM",
+            "status": "NATIVE_REDEEMED",
+            "shares": "1500000000000000000",
+            "sender": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+            "recipient": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+            "redeem_mode": 2,
+            "wormhole_sequence": "1",
+            "origin_tx": "0x480b9adf783eb270b3d7877633a2b1823a7d6175d936f430983751c6f2808b97",
+            "origin_block": 48406807,
+            "origin_finalized": true,
+            "target_tx": "0x3fadf55034dfe4a21d5015fa6cfeec92c426e96be401cb6c144677db47e86ae0",
+            "target_block": 16279632,
+            "target_finalized": true,
+            "vaa_digest": "0x2b839fe5832d0168b1cc01345301b9b79475f3e025f0f86dcf8c8f473bebed8a",
+            "vaa_checked_at": null,
+            "musd_out": "1500000000000000000",
+            "fell_back": false,
+            "created_at": "2026-10-26T08:26:06.706Z",
+            "updated_at": "2026-10-26T08:31:57.088Z",
+            "origin_time": "2026-10-21T11:25:02.000Z"
+          }
+        ],
+        "nextCursor": "1792581902000:0x2ef401e8c2d328719f18444baba6175300cb7e62730cc2b9d6d376b7e7d45909"
+      },
+      {
+        "status": 200,
+        "transfers": [
+          {
+            "transfer_id": "0xa7f58ebb60ca49610b0bf1eb12de5880d3056ea08a60e0a64207d4af43aae447",
+            "direction": "REDEEM",
+            "status": "SHARES_RELEASED",
+            "shares": "3000000000000000000",
+            "sender": "0x3a71111bb6578Beb61E39af9C09223c02b41D701",
+            "recipient": "0x3a71111bb6578Beb61E39af9C09223c02b41D701",
+            "redeem_mode": 1,
+            "wormhole_sequence": "0",
+            "origin_tx": "0x5e6bc5d38a293abc07fafd92e6f723f08668bb3aee4ece21b8166b3aed2b5337",
+            "origin_block": 48406802,
+            "origin_finalized": true,
+            "target_tx": "0xb65a46b289882719fbc9729075dbf1b88098d6c0e4b81eadfab64207ba06af11",
+            "target_block": 16279630,
+            "target_finalized": true,
+            "vaa_digest": "0xc6ed5c28a01504cd2575ca5d8ef0e464c1a3626fd07df23a95994f3b8b91b11a",
+            "vaa_checked_at": null,
+            "musd_out": null,
+            "fell_back": false,
+            "created_at": "2026-10-26T08:26:06.705Z",
+            "updated_at": "2026-10-26T08:31:57.087Z",
+            "origin_time": "2026-10-21T11:24:52.000Z"
+          },
+          {
+            "transfer_id": "0x9fbde66ef230e7f12a6a4a3f86accf95ec3aca19e974b68f0ac9ae11246fc404",
+            "direction": "ISSUE",
+            "status": "BACKED_REMOTE",
+            "shares": "6000000000000000000",
+            "sender": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+            "recipient": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
+            "redeem_mode": null,
+            "wormhole_sequence": "0",
+            "origin_tx": "0x1fdfc665716297805f5af60961df8808ddfbe9466a8d8b6d2ea10809266099d7",
+            "origin_block": 16279430,
+            "origin_finalized": true,
+            "target_tx": "0x77f19efa4666a4f0e1f2962ed62c4fbb3f398c16116351d10e83792053a81455",
+            "target_block": 48406788,
+            "target_finalized": true,
+            "vaa_digest": "0x8e4a6b6dcdb84e818496122d5d3de3df1e007f56a107ff3e4bcd6bc807657750",
+            "vaa_checked_at": null,
+            "musd_out": null,
+            "fell_back": false,
+            "created_at": "2026-10-26T08:26:06.702Z",
+            "updated_at": "2026-10-26T08:31:57.086Z",
+            "origin_time": "2026-10-21T11:23:52.000Z"
+          }
+        ],
+        "nextCursor": "1792581832000:0x9fbde66ef230e7f12a6a4a3f86accf95ec3aca19e974b68f0ac9ae11246fc404"
+      },
+      {
+        "status": 200,
+        "transfers": [],
+        "nextCursor": null
+      }
+    ],
+    "errors": [],
+    "history": {
+      "uniqueTransfers": 4,
+      "duplicates": 0,
+      "missingTimes": 0,
+      "terminated": true
+    }
+  }
 }

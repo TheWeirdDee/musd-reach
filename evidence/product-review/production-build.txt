@@ -1,16 +1,24 @@
+node.exe : $ node ../../scripts/sync-doc-examples.mjs
+At C:\Users\DELL\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ node ../../sc...oc-examples.mjs:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+$ next build
 ▲ Next.js 16.4.2 (Turbopack)
-✓ Running next.config.ts took 129ms
+✓ Running next.config.ts took 337ms
 
   Creating an optimized production build ...
-✓ Compiled successfully in 6.1s
+✓ Compiled successfully in 15.7s
   Running TypeScript ...
-  Finished TypeScript in 26.0s ...
+  Finished TypeScript in 37.2s ...
   Collecting page data using 7 workers ...
   Generating static pages using 7 workers (0/55) ...
   Generating static pages using 7 workers (13/55)
   Generating static pages using 7 workers (27/55)
   Generating static pages using 7 workers (41/55)
-✓ Generating static pages using 7 workers (55/55) in 3.0s
+✓ Generating static pages using 7 workers (55/55) in 1898ms
   Finalizing page optimization ...
 
 Route (app)

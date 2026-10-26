@@ -2,75 +2,97 @@ PASS /: real page with one main heading
 PASS /: title, description, canonical and social image
 PASS /: footer matches its shell
 PASS /: safety hold makes no wallet requests or connection invitation
+PASS /: wallet notice is contextual
 PASS /app: real page with one main heading
 PASS /app: title, description, canonical and social image
 PASS /app: footer matches its shell
 PASS /app: safety hold makes no wallet requests or connection invitation
+PASS /app: wallet notice is contextual
 PASS /app: private state excluded from indexing
 PASS /app/wrap: real page with one main heading
 PASS /app/wrap: title, description, canonical and social image
 PASS /app/wrap: footer matches its shell
 PASS /app/wrap: safety hold makes no wallet requests or connection invitation
+PASS /app/wrap: wallet notice is contextual
 PASS /app/wrap: private state excluded from indexing
 PASS /app/portable/new: real page with one main heading
 PASS /app/portable/new: title, description, canonical and social image
 PASS /app/portable/new: footer matches its shell
 PASS /app/portable/new: safety hold makes no wallet requests or connection invitation
+PASS /app/portable/new: wallet notice is contextual
 PASS /app/portable/new: private state excluded from indexing
 PASS /app/redeem: real page with one main heading
 PASS /app/redeem: title, description, canonical and social image
 PASS /app/redeem: footer matches its shell
 PASS /app/redeem: safety hold makes no wallet requests or connection invitation
+PASS /app/redeem: wallet notice is contextual
 PASS /app/redeem: private state excluded from indexing
 PASS /app/history: real page with one main heading
 PASS /app/history: title, description, canonical and social image
 PASS /app/history: footer matches its shell
 PASS /app/history: safety hold makes no wallet requests or connection invitation
+PASS /app/history: wallet notice is contextual
 PASS /app/history: private state excluded from indexing
 PASS /proof: real page with one main heading
 PASS /proof: title, description, canonical and social image
 PASS /proof: footer matches its shell
 PASS /proof: safety hold makes no wallet requests or connection invitation
+PASS /proof: wallet notice is contextual
 PASS /contracts: real page with one main heading
 PASS /contracts: title, description, canonical and social image
 PASS /contracts: footer matches its shell
 PASS /contracts: safety hold makes no wallet requests or connection invitation
+PASS /contracts: wallet notice is contextual
 PASS /developers: real page with one main heading
 PASS /developers: title, description, canonical and social image
 PASS /developers: footer matches its shell
 PASS /developers: safety hold makes no wallet requests or connection invitation
+PASS /developers: wallet notice is contextual
 PASS /integrations: real page with one main heading
 PASS /integrations: title, description, canonical and social image
 PASS /integrations: footer matches its shell
 PASS /integrations: safety hold makes no wallet requests or connection invitation
+PASS /integrations: wallet notice is contextual
 PASS /status: real page with one main heading
 PASS /status: title, description, canonical and social image
 PASS /status: footer matches its shell
 PASS /status: safety hold makes no wallet requests or connection invitation
+PASS /status: wallet notice is contextual
 PASS /risks: real page with one main heading
 PASS /risks: title, description, canonical and social image
 PASS /risks: footer matches its shell
 PASS /risks: safety hold makes no wallet requests or connection invitation
+PASS /risks: wallet notice is contextual
 PASS /security: real page with one main heading
 PASS /security: title, description, canonical and social image
 PASS /security: footer matches its shell
 PASS /security: safety hold makes no wallet requests or connection invitation
+PASS /security: wallet notice is contextual
 PASS /docs: real page with one main heading
 PASS /docs: title, description, canonical and social image
 PASS /docs: footer matches its shell
 PASS /docs: safety hold makes no wallet requests or connection invitation
+PASS /docs: wallet notice is contextual
 PASS /docs/getting-started: real page with one main heading
 PASS /docs/getting-started: title, description, canonical and social image
 PASS /docs/getting-started: footer matches its shell
 PASS /docs/getting-started: safety hold makes no wallet requests or connection invitation
+PASS /docs/getting-started: wallet notice is contextual
 PASS /docs/recovery: real page with one main heading
 PASS /docs/recovery: title, description, canonical and social image
 PASS /docs/recovery: footer matches its shell
 PASS /docs/recovery: safety hold makes no wallet requests or connection invitation
+PASS /docs/recovery: wallet notice is contextual
 PASS /docs/sdk: real page with one main heading
 PASS /docs/sdk: title, description, canonical and social image
 PASS /docs/sdk: footer matches its shell
 PASS /docs/sdk: safety hold makes no wallet requests or connection invitation
+PASS /docs/sdk: wallet notice is contextual
+PASS Hero explains the portable savings position
+PASS Primary CTA clearly identifies the read-only app
+PASS FAQ heading sticks on desktop within the section
+PASS FAQ is keyboard operable with associated answer panels
+PASS FAQ removes sticky positioning on mobile without overflow
 PASS Docs filtering finds the recovery guide
 PASS Docs next navigation has a stable article URL
 PASS Docs copy uses the typechecked example verbatim
@@ -89,4 +111,4 @@ PASS /proof/not-a-run: actual 404
 PASS RPC failure shows unknown for each chain independently
 PASS Service failure does not claim protocol custody failed
 PASS No uncaught page errors
-91/91 passed
+113/113 passed

@@ -409,5 +409,103 @@
   ],
   "sourceRevision": "47995c16cb0297192cc87ff0d0caf2a664eb78af",
   "branch": "review/security-rebuild-2026-10-26",
-  "published": false
+  "published": false,
+  "productCopyFollowUp": {
+    "base": "e67559f7a78728dbcf35a8f2f20419191af61fc5",
+    "sourceCommits": [
+      {
+        "file": "README.md",
+        "sha": "9d81939652714ba96697f0ce9620921b430d3eae"
+      },
+      {
+        "file": "apps/web/e2e/keyboard.mjs",
+        "sha": "e7efebbb7fad905cc64837120bebc1db70da0c82"
+      },
+      {
+        "file": "apps/web/e2e/product-acceptance.mjs",
+        "sha": "69bea9e998c96492e98a2dce640c37168e3b4065"
+      },
+      {
+        "file": "apps/web/e2e/settlement-history.mjs",
+        "sha": "f07f16c4446054c34247f1bdbfddf2f5180ebbcd"
+      },
+      {
+        "file": "apps/web/src/app/app/layout.tsx",
+        "sha": "ef318941fe169cac14275636aac9a682c37bd8d2"
+      },
+      {
+        "file": "apps/web/src/app/layout.tsx",
+        "sha": "69750d85e65010485898a5ec4b2f5dd7dfab0d6d"
+      },
+      {
+        "file": "apps/web/src/app/security/page.tsx",
+        "sha": "dc12d986f99fca134ff53312ff48e765d4875cc4"
+      },
+      {
+        "file": "apps/web/src/components/app/AppKit.tsx",
+        "sha": "898ab166ec8fadf75873642eed85aa6d2458ec2f"
+      },
+      {
+        "file": "apps/web/src/components/app/Workspace.tsx",
+        "sha": "b4ca2baac2dd6c8e5e9fe215634b3e42753f1ee0"
+      },
+      {
+        "file": "apps/web/src/components/landing/Closing.tsx",
+        "sha": "be14f87179ed5064421f313b0690130ef49481ec"
+      },
+      {
+        "file": "apps/web/src/components/landing/Hero.tsx",
+        "sha": "edcde6b259bd48adf7d51dc4ae7e7da5cacaf42d"
+      },
+      {
+        "file": "apps/web/src/components/site/CompactFooter.tsx",
+        "sha": "aee77688154feb81eb20c493e100f4248484a064"
+      },
+      {
+        "file": "apps/web/src/components/site/SiteFooter.tsx",
+        "sha": "7f5ccd8badfa7e78425b98ba1d0e37427446bebb"
+      },
+      {
+        "file": "apps/web/src/components/site/WalletButton.tsx",
+        "sha": "d124b388cbd7464309fc2c414fd9ddfe15a41633"
+      },
+      {
+        "file": "apps/web/src/components/site/WalletSafetyNotice.tsx",
+        "sha": "cc862ca44a7d5d34acafb02dde3e8040ec2edf86"
+      },
+      {
+        "file": "docs/PRODUCT_REVIEW_2026-10-26.md",
+        "sha": "087eb5cdd41d80b3f73e0be26525862e27028099"
+      },
+      {
+        "file": "docs/PROTOCOL_VERIFICATION.md",
+        "sha": "ff07efdc03d2143cab0d0d2ca062148783274261"
+      },
+      {
+        "file": "docs/REVIEW_2026-10-25.md",
+        "sha": "6492907fc3f9bca2c370dd0d06bd2cf50ff65e5d"
+      },
+      {
+        "file": "docs/SECURITY_FINDINGS.md",
+        "sha": "ad68fe724521094f0067ef70db764b3730f4e2f9"
+      },
+      {
+        "file": "docs/STATUS.md",
+        "sha": "5dd874617e6b9e33222977672b67ddb10a986ebb"
+      },
+      {
+        "file": "docs/TESTING.md",
+        "sha": "eb3b7f5d0827d57ce92a8e2b2ad0faa6bf68e821"
+      },
+      {
+        "file": "docs/planning/MUSD_Reach_PRD.md",
+        "sha": "a325a70de0342d67293a4906cf060941d2e3bf0c"
+      },
+      {
+        "file": "docs/planning/MUSD_Reach_Verification_Report.md",
+        "sha": "ea74ac02153284bcaecadd49cecf59b4c3da9bdb"
+      }
+    ],
+    "newSourceFiles": []
+  }
 }

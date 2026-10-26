@@ -10,9 +10,9 @@ packages/sdk typecheck$ tsc --noEmit
 packages/sdk typecheck: Done
 apps/api typecheck$ tsc --noEmit
 packages/verifier typecheck$ tsc --noEmit
-scripts typecheck$ tsc --noEmit
 apps/web typecheck$ tsc --noEmit
-scripts typecheck: Done
+scripts typecheck$ tsc --noEmit
 packages/verifier typecheck: Done
 apps/api typecheck: Done
+scripts typecheck: Done
 apps/web typecheck: Done

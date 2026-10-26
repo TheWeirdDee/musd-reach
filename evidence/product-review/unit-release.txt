@@ -1,0 +1,90 @@
+node.exe : $ pnpm -r run test
+At C:\Users\DELL\AppData\Roaming\npm\pnpm.ps1:24 char:5
++     & "node$exe"  "$basedir/node_modules/pnpm/bin/pnpm.mjs" $args
++     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : NotSpecified: ($ pnpm -r run test:String) [], RemoteException
+    + FullyQualifiedErrorId : NativeCommandError
+
+Scope: 6 of 7 workspace projects
+packages/sdk test$ vitest run
+packages/sdk test:  RUN  v3.2.7 C:/Users/DELL/Desktop/musd-reach/packages/sdk
+packages/sdk test:  ✓ test/messages.test.ts (6 tests) 18ms
+packages/sdk test:  ✓ test/gas.test.ts (3 tests) 7ms
+packages/sdk test:  ✓ test/reconcile.test.ts (1 test) 10ms
+packages/sdk test:  ✓ test/scan.test.ts (3 tests) 10ms
+packages/sdk test:  Test Files  4 passed (4)
+packages/sdk test:       Tests  13 passed (13)
+packages/sdk test:    Start at  09:26:05
+packages/sdk test:    Duration  49.61s (transform 7.81s, setup 0ms, collect 148.44s, tests 44ms, environment 1ms, prepare 11.86s)
+packages/sdk test: Done
+apps/api test$ vitest run
+apps/api test:  RUN  v3.2.7 C:/Users/DELL/Desktop/musd-reach/apps/api
+apps/api test: {"level":30,"time":1793003231802,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"203.0.113.7"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231835,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"203.0.113.7"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231848,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231863,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231875,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231885,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231905,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231914,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","req":{"method":"GET","url":"/zod?n=abc","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231926,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","req":{"method":"GET","url":"/boom","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231816,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","res":{"statusCode":200},"responseTime":10.413099999999758,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231817,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"203.0.113.7"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231818,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","res":{"statusCode":200},"responseTime":1.199800000000323,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231818,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"203.0.113.7"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231820,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","res":{"statusCode":429},"responseTime":1.631600000000617,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231821,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-4","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"203.0.113.7"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231822,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-4","res":{"statusCode":429},"responseTime":0.6483000000007451,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231836,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","res":{"statusCode":200},"responseTime":0.7256999999990512,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231837,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"203.0.113.7"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231837,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","res":{"statusCode":200},"responseTime":0.5887000000002445,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231838,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"198.51.100.4"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231838,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","res":{"statusCode":200},"responseTime":0.3973999999998341,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231849,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","res":{"statusCode":200},"responseTime":0.5686999999998079,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231849,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231850,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","res":{"statusCode":200},"responseTime":0.5608000000011089,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231851,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231855,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","res":{"statusCode":429},"responseTime":4.0692999999992026,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231864,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","res":{"statusCode":200},"responseTime":0.7942999999995664,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231864,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231866,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","res":{"statusCode":200},"responseTime":0.6653999999998632,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231866,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231867,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","res":{"statusCode":429},"responseTime":0.40270000000055006,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231876,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","res":{"statusCode":200},"responseTime":1.030399999999645,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231877,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231877,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","res":{"statusCode":200},"responseTime":0.5215000000007421,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231878,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231878,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","res":{"statusCode":429},"responseTime":0.3334999999988213,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231878,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-4","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231879,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-4","res":{"statusCode":200},"responseTime":0.2635000000009313,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231894,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","res":{"statusCode":200},"responseTime":8.184699999999793,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231894,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231899,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","res":{"statusCode":200},"responseTime":4.525200000000041,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231899,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231900,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-3","res":{"statusCode":429},"responseTime":0.4356999999999971,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231906,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","res":{"statusCode":200},"responseTime":0.582300000000032,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231907,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","req":{"method":"GET","url":"/ok","host":"localhost:80","remoteAddress":"127.0.0.1"},"msg":"incoming request"}
+apps/api test: {"level":30,"time":1793003231907,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-2","res":{"statusCode":200},"responseTime":0.20999999999912689,"msg":"request completed"}
+apps/api test: {"level":30,"time":1793003231920,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","res":{"statusCode":400},"responseTime":5.951900000000023,"msg":"request completed"}
+apps/api test: {"level":50,"time":1793003231927,"pid":16360,"hostname":"DESKTOP-LCE10V9","err":"relation \"secret_table\" does not exist at https://rpc.example/key/abc123","msg":"request failed"}
+apps/api test: {"level":30,"time":1793003231928,"pid":16360,"hostname":"DESKTOP-LCE10V9","reqId":"req-1","res":{"statusCode":502},"responseTime":0.9172999999991589,"msg":"request completed"}
+apps/api test:  ✓ test/http.test.ts (12 tests) 7755ms
+apps/api test:    ✓ rate limiting behind a proxy (F-18) > does not let a client reset its bucket by rotating X-Forwarded-For (proxy trusted)  7639ms
+apps/api test:  ✓ test/ready.test.ts (3 tests) 10495ms
+apps/api test:    ✓ /ready > is 503 until both indexers have succeeded, then 200  7703ms
+apps/api test:    ✓ /ready > is 503 when the last indexer success is stale  1465ms
+apps/api test:    ✓ amount validation > rejects amounts above uint256 as 400 before any chain read  1323ms
+apps/api test:  ✓ test/indexer.test.ts (8 tests) 13588ms
+apps/api test:    ✓ indexer reorg recovery > backfills block times when upgrading an existing indexed database  4606ms
+apps/api test:    ✓ indexer reorg recovery > removes a transfer whose origin event was reorged away  1901ms
+apps/api test:    ✓ indexer reorg recovery > re-points a re-included transfer id at its new origin transaction and drops the stale digest  1725ms
+apps/api test:    ✓ indexer reorg recovery > preserves the rewind when replacement log fetching fails before a restart  1266ms
+apps/api test:    ✓ indexer reorg recovery > catches up a long gap in one tick instead of 1,500 blocks at a time  1248ms
+apps/api test:    ✓ transfer pagination > walks every transfer exactly once, even when a page ends inside a block  1112ms
+apps/api test:    ✓ transfer pagination > orders transfers from both chains by when they happened, not by raw block number  886ms
+apps/api test:    ✓ transfer pagination > validates filters and applies direction and status before pagination  841ms
+apps/api test:  Test Files  3 passed (3)
+apps/api test:       Tests  23 passed (23)
+apps/api test:    Start at  09:26:56
+apps/api test:    Duration  21.06s (transform 714ms, setup 0ms, collect 19.52s, tests 31.84s, environment 1ms, prepare 968ms)
+apps/api test: Done

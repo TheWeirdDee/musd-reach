@@ -1,0 +1,151 @@
+Compiling 82 files with Solc 0.8.28
+Compiling 20 files with Solc 0.8.33
+Solc 0.8.33 finished in 963.92ms
+Solc 0.8.28 finished in 12.28s
+Compiler run successful!
+
+Ran 7 tests for test/ReachNav.t.sol:ReachNavTest
+[PASS] test_issueCarriesNavSnapshot() (gas: 1673088)
+[PASS] test_navOnlyMessage_movesNoValue_andUpdates() (gas: 1995518)
+[PASS] test_navReplay_rejected() (gas: 1612508)
+[PASS] test_navVaaCannotMint() (gas: 1022488)
+[PASS] test_oracle_rejectsInvalidConfig() (gas: 6935)
+[PASS] test_oracle_revertsWhenStaleOrMissing() (gas: 1208607)
+[PASS] test_oracle_scalingForSixDecimalLoanToken() (gas: 1406767)
+Suite result: ok. 7 passed; 0 failed; 0 skipped; finished in 83.07ms (75.71ms CPU time)
+
+Ran 1 test for test/GasGriefing.t.sol:GasGriefingTest
+[PASS] test_relayerGas_cannotChangePayoutAsset() (gas: 85045636)
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 2.23s (2.22s CPU time)
+
+Ran 24 tests for test/ReachSavingsWrapper.t.sol:ReachSavingsWrapperTest
+[PASS] testFuzz_depositYieldRedeem_noValueCreated(uint96,uint96,uint96,uint96) (runs: 512, μ: 1480557, ~: 1497802)
+[PASS] test_depositAfterUnclaimedYield_cannotCaptureIt() (gas: 1365026)
+[PASS] test_depositSavings_priorYieldStaysWithUser() (gas: 1014810)
+[PASS] test_depositSavings_slippageBound() (gas: 1091668)
+[PASS] test_directDonations_doNotMoveSharePrice() (gas: 885769)
+[PASS] test_firstDepositMintsAtOneToOne() (gas: 472317)
+[PASS] test_guardianHandoverIsTwoStep() (gas: 137926)
+[PASS] test_guardianPause_blocksEntryNotExit() (gas: 818090)
+[PASS] test_impairedVault_musdExitFails_inKindExitWorks() (gas: 1519277)
+[PASS] test_inflationAttack_isUnprofitable() (gas: 1275456)
+[PASS] test_interfaceAssetIsMusd() (gas: 19022)
+[PASS] test_native_depositIsOneToOne_andYieldIsPerAccount() (gas: 616420)
+[PASS] test_native_transferLeavesPriorYieldWithSender() (gas: 629654)
+[PASS] test_onlyGuardianCanPause() (gas: 31837)
+[PASS] test_partialRedemptions_conserveValue() (gas: 1647774)
+[PASS] test_previewsMatchExecution_whenPcvUnset() (gas: 1222602)
+[PASS] test_redeemInKind_isProRata() (gas: 1199762)
+[PASS] test_redeemInKind_requiresAllowanceForThirdParty() (gas: 495695)
+[PASS] test_redeemToMusd_paysIdleFirstThenPrincipal() (gas: 987854)
+[PASS] test_tinyDeposit_roundingToZeroReverts() (gas: 890487)
+[PASS] test_withdrawByThirdParty_requiresAllowance() (gas: 508220)
+[PASS] test_yieldAccruesToExistingHoldersOnly() (gas: 1327607)
+[PASS] test_zeroRedemption_reverts() (gas: 533687)
+[PASS] test_zeroYield_priceStaysExactlyOne_noDivisionIssues() (gas: 1068938)
+Suite result: ok. 24 passed; 0 failed; 0 skipped; finished in 2.89s (2.95s CPU time)
+
+Ran 1 test for test/GasGriefing.t.sol:GasGriefingHeavyStrategyTest
+[PASS] test_relayerGas_heavyStrategy_cannotChangePayoutAsset() (gas: 736303785)
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 3.40s (3.39s CPU time)
+
+Ran 33 tests for test/ReachGateways.t.sol:ReachGatewaysTest
+[PASS] test_alteredPayload_rejected() (gas: 1245815)
+[PASS] test_bindSourceGateway_isOneTimeAndBinderOnly() (gas: 66225)
+[PASS] test_cannotBurnMoreThanHeld() (gas: 1521357)
+[PASS] test_constructorRejectsCoreOnWrongChain() (gas: 9179)
+[PASS] test_delayedDelivery_outOfOrder_stillExactlyOnce() (gas: 2307754)
+[PASS] test_depositAndIssue_singleTransaction() (gas: 1366443)
+[PASS] test_depositSavingsAndIssue_keepsPriorYieldWithUser() (gas: 1774269)
+[PASS] test_fakeEmitter_sameChain_rejected() (gas: 1233833)
+[PASS] test_forgedSignature_rejected() (gas: 1244036)
+[PASS] test_fullRoundTrip_musdMode_redeemsThroughWrapperAndVault() (gas: 2650564)
+[PASS] test_fullRoundTrip_sharesMode() (gas: 2483587)
+[PASS] test_guardianPause_blocksNewLocks_butRedemptionsStillRelease() (gas: 2381027)
+[PASS] test_incorrectMessageFee_rejected() (gas: 992418)
+[PASS] test_issueReplay_rejected_noSupplyChange() (gas: 1911925)
+[PASS] test_issueVaaCannotBeUsedAsRedeem() (gas: 1229747)
+[PASS] test_messageFieldsAreFullyBound() (gas: 791399)
+[PASS] test_messageForAnotherDestination_rejected() (gas: 1958542)
+[PASS] test_musdMode_belowMinAssets_becomesPending_recipientDecides() (gas: 3038753)
+[PASS] test_musdMode_vaultOutage_becomesPending_notShares() (gas: 3366644)
+[PASS] test_noRefundPathExists_lockedUntilAuthenticatedBurn() (gas: 799944)
+[PASS] test_nonGuardianCannotPause() (gas: 32367)
+[PASS] test_pendingSettlement_cannotBeReplayedIntoSecondPayout() (gas: 3603196)
+[PASS] test_pendingSettlement_recipientMayChooseShares() (gas: 3000575)
+[PASS] test_receiptMint_onlyGateway() (gas: 56002)
+[PASS] test_redeemForRecipient_onlySelf() (gas: 32931)
+[PASS] test_redeemReplay_rejected_noDoubleRelease() (gas: 2724646)
+[PASS] test_relayerIsUntrusted_anyoneCanDeliver() (gas: 1458882)
+[PASS] test_resignedSameMessage_newDigest_stillRejectedByTransferId() (gas: 1918797)
+[PASS] test_staleGuardianSet_rejected() (gas: 1323912)
+[PASS] test_unboundDestination_rejectsAndCannotBurnToNowhere() (gas: 1235641)
+[PASS] test_wrongEmitterChain_rejected() (gas: 1234385)
+[PASS] test_wrongLocalChain_rejected() (gas: 1238952)
+[PASS] test_zeroAmountAndZeroRecipient_rejected() (gas: 676093)
+Suite result: ok. 33 passed; 0 failed; 0 skipped; finished in 8.08s (350.78ms CPU time)
+
+Ran 5 tests for test/GasGriefing.t.sol:SettlementAdversarialTest
+[PASS] testFuzz_relayerGas_neverSwitchesAsset(uint256) (runs: 512, μ: 5452137, ~: 5856681)
+[PASS] testFuzz_starvedRetry_leavesPendingIntact(uint256) (runs: 512, μ: 8566425, ~: 9243681)
+[PASS] test_multiplePendingSettlements_independent() (gas: 4785408)
+[PASS] test_pcvDistribution_cannotBeSkippedByLowGas() (gas: 29483891)
+[PASS] test_pcvDistribution_cannotBeSkipped_viaDepositSavings() (gas: 29665370)
+Suite result: ok. 5 passed; 0 failed; 0 skipped; finished in 8.08s (15.93s CPU time)
+
+Ran 3 tests for test/GasGriefing.t.sol:PendingSettlementLivenessTest
+[PASS] testFuzz_retriesNeverMutatePendingUntilSuccess(uint8,uint32) (runs: 512, μ: 5005434, ~: 4541512)
+[PASS] test_indefiniteDelay_manyFailedRetries_thenAnyoneSettles() (gas: 10110453)
+[PASS] test_recipientCanExitInKindDuringIndefiniteOutage() (gas: 2992236)
+Suite result: ok. 3 passed; 0 failed; 0 skipped; finished in 8.08s (8.15s CPU time)
+
+Ran 1 test for test/ReachInvariants.t.sol:ReachInvariantTest
+[PASS]
+ReachInvariantTest invariants:
+[PASS] invariant_backingConservation
+[PASS] invariant_custodyHoldsLockedShares
+[PASS] invariant_noReplaySucceeds
+[PASS] invariant_noValueCreated
+[PASS] invariant_pendingSettlementsFullyBacked
+[PASS] invariant_remoteSupplyMatchesMintMinusBurn
+[PASS] invariant_sharesNeverClaimMoreThanAssets
+[PASS] invariant_wrapperAssetsReconstruct
+ ReachInvariantTest invariants (runs: 128, calls: 8192, reverts: 60)
+
+╭--------------+--------------------+-------+---------+----------╮
+| Contract     | Selector           | Calls | Reverts | Discards |
++================================================================+
+| ReachHandler | burn               | 530   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | claimPendingShares | 554   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | deliverIssue       | 530   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | deliverRedeem      | 539   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | donate             | 577   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | harvest            | 550   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | lock               | 563   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | replay             | 552   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | retryPending       | 578   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | toggleOutage       | 529   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | transferReceipt    | 575   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | unwrap             | 524   | 60      | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | unwrapInKind       | 487   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | wrap               | 534   | 0       | 0        |
+|--------------+--------------------+-------+---------+----------|
+| ReachHandler | yield_             | 570   | 0       | 0        |
+╰--------------+--------------------+-------+---------+----------╯
+
+Suite result: ok. 1 passed; 0 failed; 0 skipped; finished in 14.11s (14.09s CPU time)
+
+Ran 8 test suites in 14.12s (46.96s CPU time): 75 tests passed, 0 failed, 0 skipped (75 total tests)

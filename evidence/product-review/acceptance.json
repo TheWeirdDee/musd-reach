@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-26T05:36:24.717Z",
+  "checkedAt": "2026-10-26T08:29:15.424Z",
   "base": "http://localhost:3002",
   "results": [
     {
@@ -23,6 +23,11 @@
       "detail": ""
     },
     {
+      "name": "/: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "/app: real page with one main heading",
       "ok": true,
       "detail": ""
@@ -39,6 +44,11 @@
     },
     {
       "name": "/app: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app: wallet notice is contextual",
       "ok": true,
       "detail": ""
     },
@@ -68,6 +78,11 @@
       "detail": ""
     },
     {
+      "name": "/app/wrap: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "/app/wrap: private state excluded from indexing",
       "ok": true,
       "detail": ""
@@ -89,6 +104,11 @@
     },
     {
       "name": "/app/portable/new: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/portable/new: wallet notice is contextual",
       "ok": true,
       "detail": ""
     },
@@ -118,6 +138,11 @@
       "detail": ""
     },
     {
+      "name": "/app/redeem: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "/app/redeem: private state excluded from indexing",
       "ok": true,
       "detail": ""
@@ -139,6 +164,11 @@
     },
     {
       "name": "/app/history: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/app/history: wallet notice is contextual",
       "ok": true,
       "detail": ""
     },
@@ -168,6 +198,11 @@
       "detail": ""
     },
     {
+      "name": "/proof: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "/contracts: real page with one main heading",
       "ok": true,
       "detail": ""
@@ -184,6 +219,11 @@
     },
     {
       "name": "/contracts: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/contracts: wallet notice is contextual",
       "ok": true,
       "detail": ""
     },
@@ -208,6 +248,11 @@
       "detail": ""
     },
     {
+      "name": "/developers: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "/integrations: real page with one main heading",
       "ok": true,
       "detail": ""
@@ -224,6 +269,11 @@
     },
     {
       "name": "/integrations: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/integrations: wallet notice is contextual",
       "ok": true,
       "detail": ""
     },
@@ -248,6 +298,11 @@
       "detail": ""
     },
     {
+      "name": "/status: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "/risks: real page with one main heading",
       "ok": true,
       "detail": ""
@@ -264,6 +319,11 @@
     },
     {
       "name": "/risks: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/risks: wallet notice is contextual",
       "ok": true,
       "detail": ""
     },
@@ -288,6 +348,11 @@
       "detail": ""
     },
     {
+      "name": "/security: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "/docs: real page with one main heading",
       "ok": true,
       "detail": ""
@@ -304,6 +369,11 @@
     },
     {
       "name": "/docs: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs: wallet notice is contextual",
       "ok": true,
       "detail": ""
     },
@@ -328,6 +398,11 @@
       "detail": ""
     },
     {
+      "name": "/docs/getting-started: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "/docs/recovery: real page with one main heading",
       "ok": true,
       "detail": ""
@@ -348,6 +423,11 @@
       "detail": ""
     },
     {
+      "name": "/docs/recovery: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
       "name": "/docs/sdk: real page with one main heading",
       "ok": true,
       "detail": ""
@@ -364,6 +444,36 @@
     },
     {
       "name": "/docs/sdk: safety hold makes no wallet requests or connection invitation",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "/docs/sdk: wallet notice is contextual",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Hero explains the portable savings position",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "Primary CTA clearly identifies the read-only app",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "FAQ heading sticks on desktop within the section",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "FAQ is keyboard operable with associated answer panels",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "name": "FAQ removes sticky positioning on mobile without overflow",
       "ok": true,
       "detail": ""
     },
