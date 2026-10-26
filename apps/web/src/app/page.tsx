@@ -6,6 +6,7 @@ import { Architecture } from "@/components/landing/Architecture";
 import { Backing } from "@/components/landing/Backing";
 import { Security } from "@/components/landing/Security";
 import { IntegrationStatus, ProofTeaser, DeveloperSection, Faq, FinalCta } from "@/components/landing/Closing";
+import { SiteFooter } from "@/components/site/SiteFooter";
 
 export default function Home() {
   return (
@@ -22,6 +23,7 @@ export default function Home() {
       <DeveloperSection />
       <Faq />
       <FinalCta />
+      <SiteFooter />
     </>
   );
 }
