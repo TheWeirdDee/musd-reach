@@ -23,4 +23,13 @@ ck("Tab reaches disconnected guidance", seen.some((s) => /guide|documentation|do
 ck("Safety hold presents no live amount input", await p.locator("#wrap-amount").count() === 0);
 const noOutline = seen.filter((s) => !s.outline && s.tag !== "BODY" && s.tag !== "NEXTJS-PORTAL");
 ck("every focused element shows a focus outline", noOutline.length === 0, JSON.stringify(noOutline));
+await p.setViewportSize({ width: 390, height: 844 });
+await p.goto((process.argv[2] ?? "http://localhost:3000") + "/integrations", { waitUntil: "networkidle" });
+const matrix = p.getByRole("region", { name: "Capability and adoption matrix", exact: true });
+await matrix.focus();
+ck("mobile capability matrix accepts keyboard focus", await matrix.evaluate((el) => el === document.activeElement && el.tabIndex === 0));
+await p.keyboard.press("ArrowRight");
+await p.waitForFunction(() => document.querySelector('[aria-label="Capability and adoption matrix"]').scrollLeft > 0);
+ck("arrow keys scroll the capability matrix", await matrix.evaluate((el) => el.scrollLeft > 0));
+await p.screenshot({ path: "../../evidence/product-review/integrations-keyboard-390.png", fullPage: true });
 await b.close(); process.exitCode = res.every(Boolean) ? 0 : 1;
