@@ -63,6 +63,6 @@ Semantics confirmed from source and reproduced on a fork of the live vault (`tes
 
 No official Base Sepolia Morpho deployment was used. Compatibility was exercised only on a **local fork of Base mainnet** (`test/fork/MorphoCompatibilityFork.t.sol`). No Reach market, lender, curator or borrower exists.
 
-## Buildathon
+## Hackathon
 
-The previously recovered announcement says Wave 1 ends 26 October 2026, Wave 2 runs 2–15 November, and winners are announced 23 November. Its timezone was not re-verified in this session.
+Built for the Mezo hackathon.
