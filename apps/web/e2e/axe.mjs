@@ -4,7 +4,7 @@ import { createRequire } from "node:module";
 const axeSrc = readFileSync(createRequire(import.meta.url).resolve("axe-core/axe.min.js"), "utf8");
 // node e2e/axe.mjs [baseUrl]
 const BASE = process.argv[2] ?? "http://localhost:3000";
-const routes = ["/", "/app", "/app/wrap", "/app/portable/new", "/app/redeem", "/app/history", "/proof", "/proof/testnet-2026-10-20T15-05-14-568Z", "/proof/testnet-2026-10-21T11-23-33-084Z", "/status", "/integrations", "/developers", "/risks", "/app/transfers/0x69691ea22cce36294b74bb9538fd2b62ec953f00029580846571fb55ad89aa32?tx=0x680490b824bf9cc28c2ce11fac8389bb7a8916598767288a55f60ef6b1704c45&dir=ISSUE"];
+const routes = ["/docs", "/docs/getting-started", "/docs/recovery", "/contracts", "/security","/", "/app", "/app/wrap", "/app/portable/new", "/app/redeem", "/app/history", "/proof", "/proof/testnet-2026-10-20T15-05-14-568Z", "/proof/testnet-2026-10-21T11-23-33-084Z", "/status", "/integrations", "/developers", "/risks", "/app/transfers/0x69691ea22cce36294b74bb9538fd2b62ec953f00029580846571fb55ad89aa32?tx=0x680490b824bf9cc28c2ce11fac8389bb7a8916598767288a55f60ef6b1704c45&dir=ISSUE"];
 const b = await chromium.launch();
 const summary = {};
 for (const w of [1280, 390]) {
@@ -32,3 +32,5 @@ const order = { critical: 0, serious: 1, moderate: 2, minor: 3 };
 for (const [k, v] of Object.entries(summary).sort((a, b) => order[a[0].split(" ")[0]] - order[b[0].split(" ")[0]]))
   console.log(`${k} | ${v.help} | nodes ${v.nodes} | e.g. ${v.sample} | ${[...v.routes].slice(0, 4).join(", ")}${v.routes.size > 4 ? ` +${v.routes.size - 4}` : ""}`);
 console.log(Object.keys(summary).length ? "" : "NO VIOLATIONS");
+
+process.exitCode = Object.keys(summary).length ? 1 : 0;
