@@ -6,19 +6,22 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { isAddress, type Address } from "viem";
 import { reachDestinationGatewayAbi, reachSavingsWrapperAbi, RedeemMode, formatAmount } from "@musd-reach/sdk";
 import { Amount, Button, Hash, Notice, Panel, Row } from "@/components/ui/primitives";
-import { PageTitle, NotDeployedNotice, ConnectPrompt, useGate, AmountField, useAmount, StepList, NetworkHint } from "@/components/app/AppKit";
+import { PageTitle, NotDeployedNotice, useGate, AmountField, useAmount, StepList, NetworkHint } from "@/components/app/AppKit";
 import { useClients, usePosition } from "@/lib/hooks";
 import { useContractTx } from "@/lib/tx";
 import { parseBurn } from "@/lib/events";
 import { saveLocalTransfer } from "@/lib/pending";
 import { reachConfig, explorer, BASE_ID } from "@/lib/reach";
 import { cn } from "@/lib/cn";
+import { TransactionWorkspace, FlowIntro } from "@/components/app/Workspace";
+import { useTransactionCost } from "@/lib/transactionCost";
+import { TransactionReadiness, readinessLabel } from "@/components/app/TransactionReadiness";
 import { settlementCopy } from "@/lib/settlement";
 
 const SLIPPAGE_BPS = 50n;
 
 export default function RedeemPage() {
-  const { address, connected, deployed } = useGate();
+  const { address, chainId, connected, deployed } = useGate();
   const d = reachConfig.deployment;
   const clients = useClients();
   const qc = useQueryClient();
@@ -46,8 +49,9 @@ export default function RedeemPage() {
   });
   const balance = pos.data ? pos.data.rwsmusd : null;
   const over = balance !== null && !!amount.parsed && amount.parsed > balance;
-  const recipientOk = isAddress(recipient);
+  const recipientOk = isAddress(recipient) && !/^0x0{40}$/i.test(recipient);
   const busy = ["switching", "simulating", "signing", "pending"].includes(burn.state.phase);
+  const cost = useTransactionCost(q.data && amount.parsed && address && recipientOk ? { chainId: BASE_ID, address: d!.destinationGateway, abi: reachDestinationGatewayAbi, functionName: "burnAndRedeem", args: [amount.parsed, recipient as Address, mode, mode === RedeemMode.MUSD ? q.data.minAssets : 0n], value: q.data.fee } : null);
 
   async function submit() {
     if (!d || !amount.parsed || !q.data) return;
@@ -62,16 +66,18 @@ export default function RedeemPage() {
     }
   }
 
+  if (!connected) return <FlowIntro title="Bring your claim back to Mezo" description="Burn rwSMUSD on Base to receive wrapper shares or request MUSD on Mezo. Delivery is asynchronous." requirements={["rwSMUSD on Base Sepolia", "Sepolia ETH for the burn; testnet BTC if you deliver on Mezo", "A Mezo recipient that can authorize recovery"]} steps={["Choose wrapper shares or MUSD and review your minimum.", "Burn receipts on Base; wait for finality and signing.", "Deliver the return message on Mezo.", "If MUSD cannot settle, retry or use recipient recovery."]} docs="/docs/first-redemption" />;
+
   return (
     <>
-      <PageTitle kicker="Redeem" title="Burn the receipt, bring the shares home">
+      <PageTitle kicker="Redeem" title="Bring your savings home">
         Burning rwSMUSD on Base publishes a return message. Once Base finalizes and guardians sign it (typically tens of minutes on testnet), it can be delivered on Mezo to release exactly the burned amount of wSMUSD.
       </PageTitle>
-      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <TransactionWorkspace>
         <div className="space-y-6">
           {!deployed && <NotDeployedNotice />}
-          <Panel className="space-y-6 p-6">
-            <AmountField id="burn-amount" label="rwSMUSD to burn" unit="rwSMUSD" value={amount.value} onChange={amount.setValue} max={connected ? balance : undefined} disabled={!deployed} />
+          <Panel plain className="space-y-6">
+            <AmountField id="burn-amount" label="rwSMUSD to burn" unit="rwSMUSD" value={amount.value} onChange={amount.setValue} max={connected ? balance : undefined} disabled={!deployed || busy} />
             <fieldset>
               <legend className="kicker mb-3 text-ink-300">Receive on Mezo</legend>
               <div className="grid gap-2 sm:grid-cols-2" role="radiogroup">
@@ -79,7 +85,7 @@ export default function RedeemPage() {
                   { v: RedeemMode.SHARES, t: "wSMUSD shares", s: "Simplest exit. Exact shares, no dependency on vault liquidity." },
                   { v: RedeemMode.MUSD, t: "MUSD", s: settlementCopy.modeHint },
                 ].map((o) => (
-                  <button key={o.v} type="button" role="radio" aria-checked={mode === o.v} onClick={() => setMode(o.v)} className={cn("rounded-sm border px-4 py-3 text-left transition-colors", mode === o.v ? "border-ember-500 bg-ember-500/[0.06]" : "border-ink-600 hover:border-ink-400")}>
+                  <button key={o.v} type="button" disabled={busy} role="radio" aria-checked={mode === o.v} onClick={() => setMode(o.v)} className={cn("rounded-sm border px-4 py-3 text-left transition-colors", mode === o.v ? "border-ember-500 bg-ember-500/[0.06]" : "border-ink-600 hover:border-ink-400")}>
                     <span className="block font-medium text-bone-50">{o.t}</span>
                     <span className="mt-0.5 block text-xs leading-relaxed text-ink-300">{o.s}</span>
                   </button>
@@ -90,13 +96,21 @@ export default function RedeemPage() {
               <label htmlFor="mezo-recipient" className="text-sm text-ink-300">
                 Recipient on Mezo testnet
               </label>
-              <input id="mezo-recipient" value={recipient} onChange={(e) => setRecipient(e.target.value.trim())} spellCheck={false} placeholder="0x…" aria-invalid={!recipientOk && recipient !== ""} className={cn("num mt-2 h-11 w-full rounded-sm border bg-ink-950 px-3 text-sm text-bone-100 outline-none focus:border-ember-500", recipientOk || !recipient ? "border-ink-600" : "border-rust-500")} />
+              <input disabled={busy} id="mezo-recipient" value={recipient} onChange={(e) => setRecipient(e.target.value.trim())} spellCheck={false} placeholder="0x…" aria-invalid={!recipientOk && recipient !== ""} className={cn("num mt-2 h-11 w-full rounded-sm border bg-ink-950 px-3 text-sm text-bone-100 outline-none focus:border-ember-500", recipientOk || !recipient ? "border-ink-600" : "border-rust-500")} />
             </div>
           </Panel>
-          {!connected && <ConnectPrompt what="redeem receipts" />}
+          <Panel plain className="space-y-4">
+            <StepList steps={[{ key: "burn", title: "Burn rwSMUSD and publish REDEEM", chain: "Base Sepolia", state: burn.state, done: burn.state.phase === "confirmed" }]} />
+            <TransactionReadiness chainId={BASE_ID} cost={cost} />
+            <Button className="w-full" size="lg" busy={busy} disabled={!deployed || !connected || !amount.parsed || over || !recipientOk || !q.data || chainId !== BASE_ID || !pos.isSuccess || q.isError || !cost.isSuccess || !cost.data.sufficient} onClick={submit}>
+              {!deployed ? "Unavailable until deployment" : !connected ? "Connect a wallet" : !amount.parsed ? "Enter an amount" : over ? "Insufficient rwSMUSD" : !recipientOk ? "Check recipient address" : readinessLabel(pos, cost) ?? "Burn and redeem"}
+            </Button>
+            <NetworkHint chainId={BASE_ID} />
+            {q.isError && <Notice tone="failed">Could not quote: {(q.error as Error).message.split("\n")[0]}</Notice>}
+          </Panel>
         </div>
         <div className="space-y-6">
-          <Panel className="p-6">
+          <Panel plain>
             <h2 className="text-lg font-semibold tracking-[-0.02em] text-bone-50">Review before signing</h2>
             <dl className="mt-4">
               <Row label="Burn on">Base Sepolia (84532)</Row>
@@ -113,19 +127,12 @@ export default function RedeemPage() {
               <Row label="Contract">{d ? <Hash value={d.destinationGateway} href={explorer.baseAddress(d.destinationGateway)} /> : "—"}</Row>
             </dl>
             <p className="mt-5 border-t border-ink-700 pt-5 text-xs leading-relaxed text-ink-300">
-              The burn is final on Base immediately. Your shares stay reserved on Mezo until the return message is delivered; delivery can happen any time later, by you or anyone. MUSD redemption depends on live vault liquidity; the amount is computed at delivery, not now.
+              Once included, the burn still needs Base finality before the return message can be delivered. Your shares stay reserved on Mezo until the return message is delivered; delivery can happen any time later, by you or anyone. MUSD redemption depends on live vault liquidity; the amount is computed at delivery, not now.
             </p>
           </Panel>
-          <Panel className="space-y-4 p-6">
-            <StepList steps={[{ key: "burn", title: "Burn rwSMUSD and publish REDEEM", chain: "Base Sepolia", state: burn.state, done: burn.state.phase === "confirmed" }]} />
-            <Button className="w-full" size="lg" busy={busy} disabled={!deployed || !connected || !amount.parsed || over || !recipientOk || !q.data} onClick={submit}>
-              {!deployed ? "Unavailable until deployment" : !connected ? "Connect a wallet" : !amount.parsed ? "Enter an amount" : over ? "Insufficient rwSMUSD" : "Burn and redeem"}
-            </Button>
-            <NetworkHint chainId={BASE_ID} />
-            {q.isError && <Notice tone="failed">Could not quote: {(q.error as Error).message.split("\n")[0]}</Notice>}
-          </Panel>
+
         </div>
-      </div>
+      </TransactionWorkspace>
     </>
   );
 }
