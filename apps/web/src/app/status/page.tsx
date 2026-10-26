@@ -1,91 +1,36 @@
 "use client";
-
+import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
 import { formatAmount } from "@musd-reach/sdk";
 import { ContentPage, H2 } from "@/components/site/Page";
-import { Chip, Hash, Notice, Panel, Row, Skeleton, type Tone } from "@/components/ui/primitives";
-import { useApi, useClients, useNativeVault, useReconciliation, useWrapper, apiConfigured, useSlowLoad } from "@/lib/hooks";
+import { Chip, Hash, Notice, Panel, Row } from "@/components/ui/primitives";
+import { useApi, useClients, useReconciliation, useWrapper, apiConfigured, useSlowLoad } from "@/lib/hooks";
 import { ApiWakingNotice } from "@/components/app/ApiWaking";
-import { reachConfig, deployment, explorer } from "@/lib/reach";
+import { apiUrl, reachConfig, deployment, explorer } from "@/lib/reach";
 import { useNow } from "@/lib/useIsClient";
 
-function Line({ label, tone, value, hint }: { label: string; tone: Tone; value: React.ReactNode; hint?: React.ReactNode }) {
-  return (
-    <Row label={label} hint={hint}>
-      <span className="inline-flex flex-wrap items-center justify-end gap-2">
-        {value}
-        <Chip tone={tone}>{tone === "verified" ? "ok" : tone === "failed" ? "fail" : tone === "pending" ? "attention" : "info"}</Chip>
-      </span>
-    </Row>
-  );
-}
-
+type Ready = { ready: boolean; deployed: boolean; cursors: { chain: string; next_block: string; finalized_block: string; updated_at: string }[]; jobs: { job: string; last_ok_at: string | null; consecutive_errors: number }[] };
+const observed = (at: number) => at ? new Date(at).toUTCString() : "No successful observation yet";
 export default function StatusPage() {
   const clients = useClients();
-  const vault = useNativeVault();
   const wrapper = useWrapper();
   const rec = useReconciliation();
-  const health = useApi<{ wormholescan: { ok: boolean }; pending: { status: string; n: number }[] }>("/v1/messaging/health", { refetchInterval: 30_000 });
-  const healthWaking = useSlowLoad(apiConfigured && health.isPending);
-  const heads = useQuery({
-    queryKey: ["heads"],
-    enabled: !!clients,
-    refetchInterval: 15_000,
-    queryFn: async () => {
-      const [m, b, bf] = await Promise.all([clients!.mezo.getBlock(), clients!.base.getBlock(), clients!.base.getBlock({ blockTag: "finalized" })]);
-      return { m, b, bf };
-    },
-  });
   const now = useNow(5000);
-  const age = (ts?: bigint) => (ts ? `${Math.max(0, now - Number(ts))}s ago` : "—");
-
-  return (
-    <ContentPage kicker="Protocol status" title="Live health, read in your browser" lede={<p>Unknown and stale states are shown as such. A failing check here means you should not act on Reach until it clears.</p>}>
-      <div className="grid gap-6 lg:grid-cols-2">
-        <Panel className="p-6">
-          <H2>Chains</H2>
-          <dl className="mt-4">
-            <Line label="Mezo testnet head" tone={heads.data ? (now - Number(heads.data.m.timestamp) < 120 ? "verified" : "pending") : heads.isError ? "failed" : "info"} value={heads.data ? <span className="num text-xs">#{heads.data.m.number.toString()} · {age(heads.data.m.timestamp)}</span> : <Skeleton className="h-4 w-24" />} hint={reachConfig.mezo.rpcUrls[0]} />
-            <Line label="Base Sepolia head" tone={heads.data ? (now - Number(heads.data.b.timestamp) < 120 ? "verified" : "pending") : heads.isError ? "failed" : "info"} value={heads.data ? <span className="num text-xs">#{heads.data.b.number.toString()} · {age(heads.data.b.timestamp)}</span> : <Skeleton className="h-4 w-24" />} hint={reachConfig.base.rpcUrls[0]} />
-            <Line label="Base finalized lag" tone="info" value={heads.data ? <span className="num text-xs">{(heads.data.b.number - heads.data.bf.number).toString()} blocks</span> : <Skeleton className="h-4 w-16" />} hint="Return messages wait for this" />
-          </dl>
-        </Panel>
-        <Panel className="p-6">
-          <H2>Native savings vault</H2>
-          <dl className="mt-4">
-            <Line label="Implementation" tone={vault.data ? (vault.data.implementationMatchesRegistry ? "verified" : "failed") : vault.isError ? "failed" : "info"} value={vault.data ? <Hash value={vault.data.implementation} href={explorer.mezoAddress(vault.data.implementation)} /> : <Skeleton className="h-4 w-24" />} hint="Must equal the pinned, explorer-verified implementation" />
-            <Line label="PCV fee source" tone="info" value={vault.data ? <span className="num text-xs">{vault.data.pcv === "0x0000000000000000000000000000000000000000" ? "not configured" : vault.data.pcv}</span> : <Skeleton className="h-4 w-16" />} hint="Zero on testnet: yield only arrives if someone distributes it" />
-            <Line label="Total sMUSD" tone="info" value={vault.data ? <span className="num text-xs">{formatAmount(vault.data.totalSupply, 18, 2)}</span> : <Skeleton className="h-4 w-16" />} />
-          </dl>
-        </Panel>
-        <Panel className="p-6">
-          <H2>Reach contracts</H2>
-          {!deployment ? (
-            <Notice tone="pending" className="mt-4">Not deployed on public testnets yet.</Notice>
-          ) : (
-            <dl className="mt-4">
-              <Line label="Wrapper deposits" tone={wrapper.data ? (wrapper.data.depositsPaused ? "pending" : "verified") : "info"} value={wrapper.data ? (wrapper.data.depositsPaused ? "paused" : "open") : <Skeleton className="h-4 w-12" />} />
-              <Line label="Wrapper NAV" tone="info" value={wrapper.data ? <span className="num text-xs">{formatAmount(wrapper.data.assetsPerShare, 18, 8)} MUSD</span> : <Skeleton className="h-4 w-16" />} hint={wrapper.data ? `block ${wrapper.data.blockNumber}` : undefined} />
-              <Line label="Backing reconciliation" tone={rec.data ? (rec.data.status === "BALANCED" ? "verified" : "failed") : rec.isError ? "failed" : "info"} value={rec.data ? rec.data.status.toLowerCase() : rec.isError ? "unavailable" : <Skeleton className="h-4 w-16" />} />
-            </dl>
-          )}
-        </Panel>
-        <Panel className="p-6">
-          <H2>Messaging and indexer</H2>
-          {!apiConfigured ? (
-            <Notice tone="info" className="mt-4">No indexer API configured for this build. Messaging health is visible per transfer on its tracker.</Notice>
-          ) : health.isError ? (
-            <Notice tone="pending" className="mt-4">Indexer API did not respond: {(health.error as Error).message}. It retries automatically.</Notice>
-          ) : healthWaking ? (
-            <ApiWakingNotice className="mt-4" />
-          ) : (
-            <dl className="mt-4">
-              <Line label="Wormholescan API" tone={health.data ? (health.data.wormholescan.ok ? "verified" : "failed") : "info"} value={health.data ? (health.data.wormholescan.ok ? "reachable" : "unreachable") : <Skeleton className="h-4 w-16" />} />
-              <Line label="In-flight transfers" tone="info" value={health.data ? <span className="num text-xs">{health.data.pending.reduce((s, p) => s + p.n, 0)}</span> : <Skeleton className="h-4 w-8" />} />
-            </dl>
-          )}
-        </Panel>
-      </div>
-    </ContentPage>
-  );
+  const mezo = useQuery({ queryKey: ["status-mezo"], enabled: !!clients, refetchInterval: 20_000, queryFn: async () => { const [block, chainId] = await Promise.all([clients!.mezo.getBlock(), clients!.mezo.getChainId()]); if (chainId !== 31611) throw new Error("Unexpected chain ID"); return block; } });
+  const base = useQuery({ queryKey: ["status-base"], enabled: !!clients, refetchInterval: 20_000, queryFn: async () => { const [block, chainId] = await Promise.all([clients!.base.getBlock(), clients!.base.getChainId()]); if (chainId !== 84532) throw new Error("Unexpected chain ID"); return block; } });
+  const finalized = useQuery({ queryKey: ["status-base-finalized"], enabled: !!clients, refetchInterval: 30_000, queryFn: () => clients!.base.getBlock({ blockTag: "finalized" }) });
+  const ready = useQuery({ queryKey: ["status-api-ready"], enabled: apiConfigured, refetchInterval: 30_000, retry: 1, queryFn: async (): Promise<Ready> => { const r = await fetch(`${apiUrl}/ready`, { signal: AbortSignal.timeout(90_000) }); if (!r.ok && r.status !== 503) throw new Error(`API responded ${r.status}`); const body = await r.json(); if (typeof body.ready !== "boolean" || !Array.isArray(body.cursors)) throw new Error("Unexpected readiness response"); return body; } });
+  const health = useApi<{ wormholescan: { ok: boolean; status?: number }; pending: { status: string; n: number; oldest?: string }[] }>("/v1/messaging/health", { refetchInterval: 30_000 });
+  const waking = useSlowLoad(apiConfigured && ready.isPending);
+  const heads = { mezo: mezo.isSuccess ? mezo.data?.number : undefined, base: base.isSuccess ? base.data?.number : undefined };
+  return <ContentPage kicker="Protocol status / Live observations" title="Services and savings. Separately." lede={<p>These checks describe what your browser can observe now. An unavailable API is a service problem, not proof that the savings or contracts have failed. Unknown never means healthy.</p>}>
+    <div className="mb-7 flex flex-wrap gap-3"><Chip tone="neutral">Recorded deployment: v2</Chip><Chip tone="pending">Wallet safety review open</Chip><Link href="/security" className="self-center text-sm text-ink-300 underline underline-offset-4">Read the investigation</Link></div>
+    <div className="grid gap-5 lg:grid-cols-2">
+      {[{ label: "Mezo RPC", chain: "Mezo testnet / 31611", q: mezo, url: reachConfig.mezo.rpcUrls[0] }, { label: "Base Sepolia RPC", chain: "Base Sepolia / 84532", q: base, url: reachConfig.base.rpcUrls[0] }].map(({ label, chain, q, url }) => <Panel className="p-6" key={label}><div className="flex flex-wrap items-center justify-between gap-3"><H2>{label}</H2><Chip tone={q.isError ? "pending" : q.isSuccess && now - Number(q.data.timestamp) < 120 ? "verified" : "neutral"}>{q.isError ? "UNKNOWN · read failed" : q.isSuccess ? now - Number(q.data.timestamp) < 120 ? "Responding" : "Stale head" : "Checking"}</Chip></div><dl className="mt-5"><Row label="Network">{chain}</Row><Row label="Head block">{q.isSuccess ? q.data.number.toString() : "Unknown"}</Row><Row label="Block timestamp">{q.isSuccess ? new Date(Number(q.data.timestamp) * 1000).toUTCString() : "Unknown"}</Row><Row label="Endpoint"><span className="break-all text-xs">{url}</span></Row></dl><p className="mt-4 text-xs text-ink-400">Last successful check: {observed(q.dataUpdatedAt)}</p></Panel>)}
+      <Panel className="p-6"><div className="flex flex-wrap items-center justify-between gap-3"><H2>History API & indexer</H2><Chip tone={ready.isSuccess && ready.data.ready ? "verified" : "pending"}>{!apiConfigured ? "Not configured" : ready.isError ? "UNKNOWN · unavailable" : ready.isPending ? "Waiting / waking" : ready.data.ready ? "Ready" : "Catching up / attention"}</Chip></div>{waking && <ApiWakingNotice className="mt-4" />}<p className="mt-4 text-xs leading-6 text-ink-300">Render Free may sleep. Readiness is a recent-job check; progress below shows how far the indexed cursor has reached.</p><dl className="mt-3">{["mezo", "base"].map((name) => { const c = ready.data?.cursors.find((c) => c.chain === name); const head = heads[name as keyof typeof heads]; const remaining = c && head !== undefined ? (head >= BigInt(c.next_block) ? head - BigInt(c.next_block) + 1n : 0n) : null; return <Row label={`${name === "mezo" ? "Mezo" : "Base"} indexing`} key={name}>{ready.isSuccess && c ? <span className="num text-xs">next {c.next_block}{remaining !== null ? ` / ${remaining} blocks to observed head` : " / head unknown"}</span> : "Unknown"}</Row>; })}</dl>{ready.isSuccess && <ul className="mt-4 space-y-2 text-xs text-ink-300">{ready.data.jobs.map((j) => <li key={j.job} className="flex flex-wrap justify-between gap-2"><span>{j.job}</span><span>{j.consecutive_errors ? `${j.consecutive_errors} consecutive errors` : j.last_ok_at ? `last OK ${new Date(j.last_ok_at).toUTCString()}` : "No successful observation"}</span></li>)}</ul>}<p className="mt-4 text-xs text-ink-400">Last successful response: {observed(ready.dataUpdatedAt)}</p></Panel>
+      <Panel className="p-6"><div className="flex flex-wrap items-center justify-between gap-3"><H2>Backing reconciliation</H2><Chip tone={rec.isSuccess ? rec.data.status === "BALANCED" ? "verified" : "failed" : "pending"}>{rec.isSuccess ? rec.data.status : "UNKNOWN"}</Chip></div>{rec.isSuccess ? <dl className="mt-5"><Row label="Locked shares">{formatAmount(rec.data.totalLocked, 18, 6)} wSMUSD</Row><Row label="Remote supply">{formatAmount(rec.data.remoteSupply, 18, 6)} rwSMUSD</Row><Row label="Issues / returns in flight">{formatAmount(rec.data.pendingIssueShares, 18, 6)} / {formatAmount(rec.data.pendingRedemptionShares, 18, 6)}</Row><Row label="Observed blocks">Mezo {rec.data.mezoBlock.toString()} / Base {rec.data.baseBlock.toString()}</Row></dl> : <p className="mt-5 text-sm leading-7 text-ink-300">{rec.isError ? "Both chains could not be reconciled. No balanced result is assumed." : "Reading both chains and the in-flight message sets..."}</p>}<p className="mt-4 text-xs text-ink-400">Last successful check: {observed(rec.dataUpdatedAt)}</p><Link className="mt-4 inline-block text-sm underline underline-offset-4" href="/proof#live">Inspect the backing equations</Link></Panel>
+      <Panel className="p-6"><H2>Finality & observation</H2><dl className="mt-5"><Row label="Base finalized head">{finalized.isSuccess ? finalized.data.number.toString() : "Unknown"}</Row><Row label="Finality lag">{base.isSuccess && finalized.isSuccess ? `${base.data.number >= finalized.data.number ? base.data.number - finalized.data.number : 0n} blocks` : "Unknown"}</Row><Row label="Wormholescan endpoint">{health.isSuccess ? health.data.wormholescan.ok ? "Reachable (not a guardian uptime guarantee)" : "Observer endpoint unavailable" : "Unknown"}</Row><Row label="Indexed pending messages">{health.isSuccess ? health.data.pending.reduce((n, p) => n + p.n, 0) : "Unknown"}</Row></dl>{health.isSuccess && <ul className="mt-4 space-y-2 text-xs text-ink-300">{health.data.pending.map((p) => <li key={p.status}>{p.status.replaceAll("_", " ").toLowerCase()}: {p.n}{p.oldest ? ` ? first indexed ${new Date(p.oldest).toUTCString()}` : ""}</li>)}</ul>}<p className="mt-4 text-xs text-ink-400">Observer response: {observed(health.dataUpdatedAt)}</p></Panel>
+      <Panel className="p-6"><H2>Contract configuration</H2><dl className="mt-5"><Row label="Settlement model">Recorded v2 / pending settlements</Row><Row label="New wrapper deposits">{wrapper.isSuccess ? wrapper.data.depositsPaused ? "Paused / exits open" : "Open" : "Unknown"}</Row><Row label="NAV per share">{wrapper.isSuccess ? `${formatAmount(wrapper.data.assetsPerShare, 18, 8)} MUSD` : "Unknown"}</Row><Row label="Wrapper">{deployment ? <Hash value={deployment.wrapper} href={explorer.mezoAddress(deployment.wrapper)} /> : "Not recorded"}</Row></dl><p className="mt-4 text-xs text-ink-400">Wrapper observation: {observed(wrapper.dataUpdatedAt)}. Full peer and bytecode verification is performed by the independent CLI.</p><Link href="/contracts" className="mt-4 inline-block text-sm underline underline-offset-4">Full contract registry</Link></Panel>
+    </div><Notice className="mt-6" tone="info" title="If history is unavailable">Public chain reads and the permissionless recovery contracts do not depend on the Reach API. Use a saved tracker URL and the documented direct recovery methods. The separate wallet safety hold remains in effect.</Notice>
+  </ContentPage>;
 }
