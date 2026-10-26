@@ -9,6 +9,7 @@ import { statusLabel, statusTone } from "@/lib/status";
 import { settlementCopy } from "@/lib/settlement";
 import { publicRuns, rehearsals, deployment } from "@/lib/reach";
 import { cn } from "@/lib/cn";
+import { walletSafetyHold } from "@/lib/walletSafety";
 
 export function IntegrationStatus() {
   return (
@@ -153,19 +154,21 @@ const faqs = [
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <Reveal as="section" className="surface-light py-24 sm:py-32">
-      <div className="shell grid gap-12 lg:grid-cols-[0.8fr_1.2fr]">
-        <div data-reveal>
+    <section className="surface-light py-16 sm:py-24" aria-labelledby="faq-title">
+      <div className="shell grid items-start gap-8 lg:grid-cols-[minmax(0,0.65fr)_minmax(0,1.35fr)] lg:gap-16">
+        <div className="lg:sticky lg:top-24">
           <p className="kicker flex items-center gap-3 text-ink-500">
             <span className="text-ember-600">10</span>
             <span aria-hidden className="h-px w-6 bg-ink-950/20" />
             Questions
           </p>
-          <h2 className="mt-5 text-[length:var(--text-headline)] font-semibold leading-[var(--text-headline--line-height)] tracking-[var(--text-headline--letter-spacing)] text-ink-950">
+          <h2 id="faq-title" className="mt-5 text-4xl font-semibold leading-tight tracking-tight text-ink-950 sm:text-5xl">
             Straight <span className="font-serif font-normal italic">answers.</span>
           </h2>
+          <p className="mt-5 max-w-sm text-base leading-7 text-ink-700">What stays on Mezo, what moves to Base, and how to bring your position home.</p>
+          <Link href="/docs/how-it-works" className="mt-6 inline-flex min-h-11 items-center gap-2 text-sm font-medium text-ink-950 underline underline-offset-4">Walk through the route <Arrow /></Link>
         </div>
-        <div data-reveal className="border-t border-ink-950/15">
+        <div className="min-w-0 border-t border-ink-950/15">
           {faqs.map(([q, a], i) => (
             <div key={q} className="border-b border-ink-950/15">
               <h3>
@@ -185,7 +188,7 @@ export function Faq() {
           ))}
         </div>
       </div>
-    </Reveal>
+    </section>
   );
 }
 
@@ -195,13 +198,13 @@ export function FinalCta() {
       <div className="shell">
         <div className="relative overflow-hidden rounded-lg border border-ink-700 bg-ink-900 px-6 py-16 sm:px-14 sm:py-20">
           <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-ember-500/10 blur-3xl" aria-hidden />
-          <p className="kicker text-ink-300">Testnet · experimental</p>
+          <p className="kicker text-ink-300">Mezo testnet + Base Sepolia</p>
           <h2 className="mt-5 max-w-3xl text-[length:var(--text-headline)] font-semibold leading-[var(--text-headline--line-height)] tracking-[var(--text-headline--letter-spacing)] text-bone-50">
             Keep saving on Mezo. <span className="font-serif font-normal italic text-ember-400">Take the claim with you.</span>
           </h2>
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
             <ButtonLink href="/app" className="h-12 px-6">
-              Open the app <Arrow />
+              {walletSafetyHold ? "Explore the read-only app" : "Open the app"} <Arrow />
             </ButtonLink>
             <Link href="/risks" className="inline-flex items-center gap-2 border-b border-ink-500 pb-0.5 text-[0.9375rem] text-bone-100 hover:border-ember-500">
               Read the risks first <Arrow />
