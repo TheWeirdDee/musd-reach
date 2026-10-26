@@ -1,48 +1,47 @@
-▲ Next.js 16.4.2 (Turbopack)
-✓ Running next.config.ts took 129ms
-
-  Creating an optimized production build ...
-✓ Compiled successfully in 6.1s
-  Running TypeScript ...
-  Finished TypeScript in 26.0s ...
-  Collecting page data using 7 workers ...
-  Generating static pages using 7 workers (0/55) ...
-  Generating static pages using 7 workers (13/55) 
-  Generating static pages using 7 workers (27/55) 
-  Generating static pages using 7 workers (41/55) 
-✓ Generating static pages using 7 workers (55/55) in 3.0s
-  Finalizing page optimization ...
-
-Route (app)
-┌ ƒ /
-├ ƒ /_not-found
-├ ƒ /api/version
-├ ƒ /app
-├ ƒ /app/history
-├ ƒ /app/portable/new
-├ ƒ /app/redeem
-├ ƒ /app/transfers/[id]
-├ ƒ /app/wrap
-├ ○ /apple-icon.png
-├ ƒ /contracts
-├ ƒ /developers
-├ ƒ /docs
-├ ƒ /docs/[slug]
-├ ○ /icon.svg
-├ ƒ /integrations
-├ ○ /manifest.webmanifest
-├ ○ /opengraph-image
-├ ƒ /proof
-├ ƒ /proof/[runId]
-├ ƒ /risks
-├ ○ /robots.txt
-├ ƒ /security
-├ ○ /sitemap.xml
-└ ƒ /status
-
-
-ƒ Proxy (Middleware)
-
-○  (Static)   prerendered as static content
-ƒ  (Dynamic)  server-rendered on demand
-
+▲ Next.js 16.4.2 (Turbopack)
+✓ Running next.config.ts took 129ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 6.1s
+  Running TypeScript ...
+  Finished TypeScript in 26.0s ...
+  Collecting page data using 7 workers ...
+  Generating static pages using 7 workers (0/55) ...
+  Generating static pages using 7 workers (13/55)
+  Generating static pages using 7 workers (27/55)
+  Generating static pages using 7 workers (41/55)
+✓ Generating static pages using 7 workers (55/55) in 3.0s
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /api/version
+├ ƒ /app
+├ ƒ /app/history
+├ ƒ /app/portable/new
+├ ƒ /app/redeem
+├ ƒ /app/transfers/[id]
+├ ƒ /app/wrap
+├ ○ /apple-icon.png
+├ ƒ /contracts
+├ ƒ /developers
+├ ƒ /docs
+├ ƒ /docs/[slug]
+├ ○ /icon.svg
+├ ƒ /integrations
+├ ○ /manifest.webmanifest
+├ ○ /opengraph-image
+├ ƒ /proof
+├ ƒ /proof/[runId]
+├ ƒ /risks
+├ ○ /robots.txt
+├ ƒ /security
+├ ○ /sitemap.xml
+└ ƒ /status
+
+
+ƒ Proxy (Middleware)
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand

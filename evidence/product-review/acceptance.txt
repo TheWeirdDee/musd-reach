@@ -1,92 +1,92 @@
-PASS /: real page with one main heading
-PASS /: title, description, canonical and social image
-PASS /: footer matches its shell
-PASS /: safety hold makes no wallet requests or connection invitation
-PASS /app: real page with one main heading
-PASS /app: title, description, canonical and social image
-PASS /app: footer matches its shell
-PASS /app: safety hold makes no wallet requests or connection invitation
-PASS /app: private state excluded from indexing
-PASS /app/wrap: real page with one main heading
-PASS /app/wrap: title, description, canonical and social image
-PASS /app/wrap: footer matches its shell
-PASS /app/wrap: safety hold makes no wallet requests or connection invitation
-PASS /app/wrap: private state excluded from indexing
-PASS /app/portable/new: real page with one main heading
-PASS /app/portable/new: title, description, canonical and social image
-PASS /app/portable/new: footer matches its shell
-PASS /app/portable/new: safety hold makes no wallet requests or connection invitation
-PASS /app/portable/new: private state excluded from indexing
-PASS /app/redeem: real page with one main heading
-PASS /app/redeem: title, description, canonical and social image
-PASS /app/redeem: footer matches its shell
-PASS /app/redeem: safety hold makes no wallet requests or connection invitation
-PASS /app/redeem: private state excluded from indexing
-PASS /app/history: real page with one main heading
-PASS /app/history: title, description, canonical and social image
-PASS /app/history: footer matches its shell
-PASS /app/history: safety hold makes no wallet requests or connection invitation
-PASS /app/history: private state excluded from indexing
-PASS /proof: real page with one main heading
-PASS /proof: title, description, canonical and social image
-PASS /proof: footer matches its shell
-PASS /proof: safety hold makes no wallet requests or connection invitation
-PASS /contracts: real page with one main heading
-PASS /contracts: title, description, canonical and social image
-PASS /contracts: footer matches its shell
-PASS /contracts: safety hold makes no wallet requests or connection invitation
-PASS /developers: real page with one main heading
-PASS /developers: title, description, canonical and social image
-PASS /developers: footer matches its shell
-PASS /developers: safety hold makes no wallet requests or connection invitation
-PASS /integrations: real page with one main heading
-PASS /integrations: title, description, canonical and social image
-PASS /integrations: footer matches its shell
-PASS /integrations: safety hold makes no wallet requests or connection invitation
-PASS /status: real page with one main heading
-PASS /status: title, description, canonical and social image
-PASS /status: footer matches its shell
-PASS /status: safety hold makes no wallet requests or connection invitation
-PASS /risks: real page with one main heading
-PASS /risks: title, description, canonical and social image
-PASS /risks: footer matches its shell
-PASS /risks: safety hold makes no wallet requests or connection invitation
-PASS /security: real page with one main heading
-PASS /security: title, description, canonical and social image
-PASS /security: footer matches its shell
-PASS /security: safety hold makes no wallet requests or connection invitation
-PASS /docs: real page with one main heading
-PASS /docs: title, description, canonical and social image
-PASS /docs: footer matches its shell
-PASS /docs: safety hold makes no wallet requests or connection invitation
-PASS /docs/getting-started: real page with one main heading
-PASS /docs/getting-started: title, description, canonical and social image
-PASS /docs/getting-started: footer matches its shell
-PASS /docs/getting-started: safety hold makes no wallet requests or connection invitation
-PASS /docs/recovery: real page with one main heading
-PASS /docs/recovery: title, description, canonical and social image
-PASS /docs/recovery: footer matches its shell
-PASS /docs/recovery: safety hold makes no wallet requests or connection invitation
-PASS /docs/sdk: real page with one main heading
-PASS /docs/sdk: title, description, canonical and social image
-PASS /docs/sdk: footer matches its shell
-PASS /docs/sdk: safety hold makes no wallet requests or connection invitation
-PASS Docs filtering finds the recovery guide
-PASS Docs next navigation has a stable article URL
-PASS Docs copy uses the typechecked example verbatim
-PASS Sitemap includes docs and excludes wallet-state pages
-PASS Robots excludes private app routes
-PASS Manifest uses Reach branding and PNG icons
-PASS /favicon.ico: served branded asset
-PASS /icon.svg: served branded asset
-PASS /apple-icon.png: served branded asset
-PASS /icons/reach-192.png: served branded asset
-PASS /icons/reach-512.png: served branded asset
-PASS /opengraph-image: served branded asset
-PASS Version response reports unresolved safety status honestly
-PASS /docs/not-a-guide: actual 404
-PASS /proof/not-a-run: actual 404
-PASS RPC failure shows unknown for each chain independently
-PASS Service failure does not claim protocol custody failed
-PASS No uncaught page errors
-91/91 passed
+PASS /: real page with one main heading
+PASS /: title, description, canonical and social image
+PASS /: footer matches its shell
+PASS /: safety hold makes no wallet requests or connection invitation
+PASS /app: real page with one main heading
+PASS /app: title, description, canonical and social image
+PASS /app: footer matches its shell
+PASS /app: safety hold makes no wallet requests or connection invitation
+PASS /app: private state excluded from indexing
+PASS /app/wrap: real page with one main heading
+PASS /app/wrap: title, description, canonical and social image
+PASS /app/wrap: footer matches its shell
+PASS /app/wrap: safety hold makes no wallet requests or connection invitation
+PASS /app/wrap: private state excluded from indexing
+PASS /app/portable/new: real page with one main heading
+PASS /app/portable/new: title, description, canonical and social image
+PASS /app/portable/new: footer matches its shell
+PASS /app/portable/new: safety hold makes no wallet requests or connection invitation
+PASS /app/portable/new: private state excluded from indexing
+PASS /app/redeem: real page with one main heading
+PASS /app/redeem: title, description, canonical and social image
+PASS /app/redeem: footer matches its shell
+PASS /app/redeem: safety hold makes no wallet requests or connection invitation
+PASS /app/redeem: private state excluded from indexing
+PASS /app/history: real page with one main heading
+PASS /app/history: title, description, canonical and social image
+PASS /app/history: footer matches its shell
+PASS /app/history: safety hold makes no wallet requests or connection invitation
+PASS /app/history: private state excluded from indexing
+PASS /proof: real page with one main heading
+PASS /proof: title, description, canonical and social image
+PASS /proof: footer matches its shell
+PASS /proof: safety hold makes no wallet requests or connection invitation
+PASS /contracts: real page with one main heading
+PASS /contracts: title, description, canonical and social image
+PASS /contracts: footer matches its shell
+PASS /contracts: safety hold makes no wallet requests or connection invitation
+PASS /developers: real page with one main heading
+PASS /developers: title, description, canonical and social image
+PASS /developers: footer matches its shell
+PASS /developers: safety hold makes no wallet requests or connection invitation
+PASS /integrations: real page with one main heading
+PASS /integrations: title, description, canonical and social image
+PASS /integrations: footer matches its shell
+PASS /integrations: safety hold makes no wallet requests or connection invitation
+PASS /status: real page with one main heading
+PASS /status: title, description, canonical and social image
+PASS /status: footer matches its shell
+PASS /status: safety hold makes no wallet requests or connection invitation
+PASS /risks: real page with one main heading
+PASS /risks: title, description, canonical and social image
+PASS /risks: footer matches its shell
+PASS /risks: safety hold makes no wallet requests or connection invitation
+PASS /security: real page with one main heading
+PASS /security: title, description, canonical and social image
+PASS /security: footer matches its shell
+PASS /security: safety hold makes no wallet requests or connection invitation
+PASS /docs: real page with one main heading
+PASS /docs: title, description, canonical and social image
+PASS /docs: footer matches its shell
+PASS /docs: safety hold makes no wallet requests or connection invitation
+PASS /docs/getting-started: real page with one main heading
+PASS /docs/getting-started: title, description, canonical and social image
+PASS /docs/getting-started: footer matches its shell
+PASS /docs/getting-started: safety hold makes no wallet requests or connection invitation
+PASS /docs/recovery: real page with one main heading
+PASS /docs/recovery: title, description, canonical and social image
+PASS /docs/recovery: footer matches its shell
+PASS /docs/recovery: safety hold makes no wallet requests or connection invitation
+PASS /docs/sdk: real page with one main heading
+PASS /docs/sdk: title, description, canonical and social image
+PASS /docs/sdk: footer matches its shell
+PASS /docs/sdk: safety hold makes no wallet requests or connection invitation
+PASS Docs filtering finds the recovery guide
+PASS Docs next navigation has a stable article URL
+PASS Docs copy uses the typechecked example verbatim
+PASS Sitemap includes docs and excludes wallet-state pages
+PASS Robots excludes private app routes
+PASS Manifest uses Reach branding and PNG icons
+PASS /favicon.ico: served branded asset
+PASS /icon.svg: served branded asset
+PASS /apple-icon.png: served branded asset
+PASS /icons/reach-192.png: served branded asset
+PASS /icons/reach-512.png: served branded asset
+PASS /opengraph-image: served branded asset
+PASS Version response reports unresolved safety status honestly
+PASS /docs/not-a-guide: actual 404
+PASS /proof/not-a-run: actual 404
+PASS RPC failure shows unknown for each chain independently
+PASS Service failure does not claim protocol custody failed
+PASS No uncaught page errors
+91/91 passed

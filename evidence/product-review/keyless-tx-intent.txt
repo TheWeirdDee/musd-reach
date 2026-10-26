@@ -1,37 +1,37 @@
-PASS wrap-portable: wallet on Mezo testnet (31611) when asked to sign — wallet chain 31611
-PASS wrap-portable: sender is the connected account
-PASS wrap-portable: target is the token being approved — 0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503
-PASS wrap-portable: function is approve
-PASS wrap-portable: spender is 0xA5c70F8D… — 0xA5c70F8D6B329ED6c2d15D604B66FafC3A6C96d3
-PASS wrap-portable: approval is exactly the entered amount (not unlimited) — 1250000000000000000
-PASS wrap-portable: no native value attached
-PASS wrap-portable: explicit gas at or above the Mezo floor (F-20) — 1500000
-PASS wrap-portable: review shows the same spender — Approval scope Exact amount, to one contract 0xA5c70F…96d3
-PASS wrap-portable: no uncaught page errors
-PASS wrap-only: wallet on Mezo testnet (31611) when asked to sign — wallet chain 31611
-PASS wrap-only: sender is the connected account
-PASS wrap-only: target is the token being approved — 0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503
-PASS wrap-only: function is approve
-PASS wrap-only: spender is 0xf8cF6fCC… — 0xf8cF6fCCC7bcF2860BfAD1Ea4A6018D446eb4306
-PASS wrap-only: approval is exactly the entered amount (not unlimited) — 500000000000000000
-PASS wrap-only: no native value attached
-PASS wrap-only: explicit gas at or above the Mezo floor (F-20) — 1500000
-PASS wrap-only: review shows the same spender — Approval scope Exact amount, to one contract 0xf8cF6f…4306
-PASS wrap-only: no uncaught page errors
-FAIL lock: completed — page.waitForFunction: Timeout 60000ms exceeded.
-PASS lock: no uncaught page errors
-PASS wrong-chain: asked the wallet to switch to 31611 first — [31611]
-PASS wrong-chain: transaction prepared for Mezo testnet
-PASS wrong-chain: no uncaught page errors
-PASS redeem: with no rwSMUSD the burn is disabled as 'Insufficient rwSMUSD'
-PASS redeem: nothing was sent to the wallet
-PASS redeem: no uncaught page errors
-PASS session: header follows an account switch in the wallet
-PASS session: network badge follows a chain change in the wallet
-PASS session: switching the wallet to an unsupported chain is reported
-PASS session: menu 'Switch to Mezo testnet' asks the wallet for 31611 and the badge follows
-PASS session: no connect prompt needed after reload
-PASS session: connection persists across a reload
-PASS session: no uncaught page errors
-
-34/35 passed
+PASS wrap-portable: wallet on Mezo testnet (31611) when asked to sign — wallet chain 31611
+PASS wrap-portable: sender is the connected account
+PASS wrap-portable: target is the token being approved — 0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503
+PASS wrap-portable: function is approve
+PASS wrap-portable: spender is 0xA5c70F8D… — 0xA5c70F8D6B329ED6c2d15D604B66FafC3A6C96d3
+PASS wrap-portable: approval is exactly the entered amount (not unlimited) — 1250000000000000000
+PASS wrap-portable: no native value attached
+PASS wrap-portable: explicit gas at or above the Mezo floor (F-20) — 1500000
+PASS wrap-portable: review shows the same spender — Approval scope Exact amount, to one contract 0xA5c70F…96d3
+PASS wrap-portable: no uncaught page errors
+PASS wrap-only: wallet on Mezo testnet (31611) when asked to sign — wallet chain 31611
+PASS wrap-only: sender is the connected account
+PASS wrap-only: target is the token being approved — 0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503
+PASS wrap-only: function is approve
+PASS wrap-only: spender is 0xf8cF6fCC… — 0xf8cF6fCCC7bcF2860BfAD1Ea4A6018D446eb4306
+PASS wrap-only: approval is exactly the entered amount (not unlimited) — 500000000000000000
+PASS wrap-only: no native value attached
+PASS wrap-only: explicit gas at or above the Mezo floor (F-20) — 1500000
+PASS wrap-only: review shows the same spender — Approval scope Exact amount, to one contract 0xf8cF6f…4306
+PASS wrap-only: no uncaught page errors
+FAIL lock: completed — page.waitForFunction: Timeout 60000ms exceeded.
+PASS lock: no uncaught page errors
+PASS wrong-chain: asked the wallet to switch to 31611 first — [31611]
+PASS wrong-chain: transaction prepared for Mezo testnet
+PASS wrong-chain: no uncaught page errors
+PASS redeem: with no rwSMUSD the burn is disabled as 'Insufficient rwSMUSD'
+PASS redeem: nothing was sent to the wallet
+PASS redeem: no uncaught page errors
+PASS session: header follows an account switch in the wallet
+PASS session: network badge follows a chain change in the wallet
+PASS session: switching the wallet to an unsupported chain is reported
+PASS session: menu 'Switch to Mezo testnet' asks the wallet for 31611 and the badge follows
+PASS session: no connect prompt needed after reload
+PASS session: connection persists across a reload
+PASS session: no uncaught page errors
+
+34/35 passed
