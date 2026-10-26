@@ -18,9 +18,9 @@ for (let i = 0; i < 40; i++) {
   });
   seen.push(info);
 }
-ck("Tab reaches the wallet button", seen.some((s) => /Connect wallet/.test(s.label)));
-ck("Tab reaches the amount input", seen.some((s) => s.label === "wrap-amount"));
-ck("Tab reaches the asset radio buttons", seen.some((s) => /MUSD/.test(s.label) && s.tag === "BUTTON"));
+ck("Tab reaches the wallet safety review", seen.some((s) => /Wallet safety review/.test(s.label)));
+ck("Tab reaches disconnected guidance", seen.some((s) => /guide|documentation|docs/i.test(s.label)));
+ck("Safety hold presents no live amount input", await p.locator("#wrap-amount").count() === 0);
 const noOutline = seen.filter((s) => !s.outline && s.tag !== "BODY" && s.tag !== "NEXTJS-PORTAL");
 ck("every focused element shows a focus outline", noOutline.length === 0, JSON.stringify(noOutline));
 await b.close(); process.exitCode = res.every(Boolean) ? 0 : 1;
