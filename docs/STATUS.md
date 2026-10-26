@@ -13,10 +13,10 @@ Last updated 26 October 2026. Vocabulary: **PASS** means verified with the evide
 | R-007 | Authenticated return | **PASS (v2)** | REDEEM VAAs after Base finality; exact wSMUSD to the second holder and MUSD to the primary, recorded tx `0x3fad…6ae0` (Mezo block 16279632); step 11 |
 | R-008 | Replay/forgery rejection | **PASS (public, v2)** | Altered ISSUE, replayed ISSUE, wrong-chain REDEEM, replayed REDEEM rejected by the live v2 contracts (read-only simulations); steps 04, 06, 10, 12. Non-recipient settlement changes refused: 12b, 12c |
 | R-009 | Independent reconciliation | **PASS (public, v2)** | `reach-verify all` 62/62 on the v2 evidence, rerun 21 Oct (`evidence/real-chain/verify-testnet-2026-10-21T11-23-33-084Z.txt`); live backing BALANCED (issued 6 = released 6, minted 6 = burned 6, pending 0, discrepancy 0) |
-| R-010 | Honest UI | **PASS (local review)** | Not-deployed states, no APY, no fabricated values; v1 labelled historical; responsive sweep 320–1440px; axe no violations |
+| R-010 | Honest UI | **PASS (hosted read-only)** | 47 routes at desktop/tablet/mobile widths; 113 acceptance checks; wallet actions held; current results below |
 | R-011 | Partial redemptions | **PASS (local + fork)** | `test_partialRedemptions_conserveValue`; lifecycle step 08 |
 | R-012 | Failure recovery | **PASS (public, v2)** for pending settlement; local + fork for the rest | Public steps 12a–12d; liveness tests for a 10-year delay, 50 failed retries and an absent relayer; vault-outage fallback, pause semantics; reorg handling in the indexer (not reorg-tested on a live chain) |
-| R-013 | External developer SDK | **PASS (implemented, tested)** | `packages/sdk` with 10 tests, including TS↔Solidity encoding parity; not yet used by a third party |
+| R-013 | External developer SDK | **PASS (implemented, tested)** | `packages/sdk` with 13 tests, including TS↔Solidity encoding parity; not yet used by a third party |
 | R-014 | Real receiving application | **NOT TESTED / BLOCKED** | No independent application uses rwSMUSD |
 | R-015 | Morpho compatibility | **PASS (labelled local Base-mainnet fork only)** | `MorphoCompatibilityFork.t.sol`: 3 tests |
 | R-016 | Borrowing readiness | **BLOCKED** | No market, liquidity, curator, oracle review or liquidator; borrowing is not offered |
@@ -36,7 +36,24 @@ The detailed hackathon schedule has been replaced with "Built for the Mezo hacka
 - The six review fixes and migration 002 are preserved. No contract, registry, loan or historical public transaction evidence was changed. No new blockchain transactions were sent, including on forks.
 - Provider issue [305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) is OPEN with no provider decision. Read-only presentation is available; normal wallet interaction remains blocked. Historical MetaMask connection tests are not current clearance. Three dependency advisories remain (one high, two moderate); see F-34.
 
-This is an engineering self-review and a separate read-only chain verifier, not an independent professional or human usability audit. Current hosted follow-up results are recorded here after deployment; earlier platform rows below are historical observations.
+The product follow-up was pushed directly to `main` as `884f84a2dd29be1649554ae4e1eabced10ea403f`. Both production web and API report that exact revision. API readiness is 200 after indexing catches up. Later report/evidence commits do not change app or API code.
+
+Hosted verification of that release:
+
+| Check | Result | Evidence |
+|---|---|---|
+| Every route, desktop/tablet/mobile | 141 captures across 47 routes; all 200, no page errors or horizontal overflow; correct headings/descriptions/canonicals | `evidence/product-review/hosted/audit.json` |
+| Product, metadata and wallet-hold acceptance | 113/113 | `evidence/product-review/hosted-acceptance.txt` |
+| Keyboard, including matrix scrolling | 8/8 | `evidence/product-review/hosted-keyboard.txt` |
+| CSP, hydration and injection refusal | 29/29 | `evidence/product-review/hosted-csp.txt` |
+| Accessibility | No axe violations on primary desktop/mobile routes | `evidence/product-review/hosted-accessibility.txt` |
+| Tracker read-state regressions | 4/4 on the hosted bundle with explicit RPC fixtures | `evidence/product-review/hosted-settlement.txt` |
+| Actual hosted history API | Four transfers, valid timestamps, no cursor duplicates; indexing ready and backing BALANCED | `evidence/product-review/security/public-observations.json` |
+| Independent read-only chain verifier | 62/62, rerun after deployment | `evidence/product-review/live-verifier-2026-10-26.json` |
+
+Connected history fixtures are intentionally not run against production because connecting is blocked; they pass in the separate local keyless suite. No live-chain reorg or failed settlement was manufactured. The private migration ledger was not directly inspected. Updated source and documentation are existing files; new files in this pass are required test transcripts and screenshots, not another dated report. See `evidence/product-review/change-inventory.json` for the per-file source commits.
+
+This is an engineering self-review and a separate read-only chain verifier, not an independent professional or human usability audit. The read-only submission and public proof are available; a normal-wallet transaction demo remains blocked pending classification review. Earlier platform rows below are historical observations.
 
 ## Platform - historical checks from 21-23 October
 
@@ -71,4 +88,4 @@ The v2 run needed no reused transactions.
 
 ## Security findings
 
-See `docs/SECURITY_FINDINGS.md`. F-01 still affects archived v1 and is fixed in deployed v2. F-33 is an open release blocker: a MetaMask malicious-site warning was reported during connection; [provider review #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) is open, not cleared. F-34 tracks partially remediated dependency advisories. The hosted build at `e67559f` holds wallet connections and writes; the product-copy/FAQ follow-up is checked separately before publication. F-04, F-05 and D-01 remain disclosed.
+See `docs/SECURITY_FINDINGS.md`. F-01 still affects archived v1 and is fixed in deployed v2. F-33 is an open release blocker: a MetaMask malicious-site warning was reported during connection; [provider review #305589](https://github.com/MetaMask/eth-phishing-detect/issues/305589) is open, not cleared. F-34 tracks partially remediated dependency advisories. The hosted build at `884f84a` holds wallet connections and writes. The product-copy/FAQ follow-up is live and verified; details are in Current release checks. F-04, F-05 and D-01 remain disclosed.
