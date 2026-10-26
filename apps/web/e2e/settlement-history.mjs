@@ -60,6 +60,9 @@ try {
   check("successful zero-pending read confirms settlement", true);
   await ctx.close();
 
+  // The hosted production safety hold deliberately prevents connecting a fixture wallet.
+  // Tracker reads can still be checked without enabling connections or signing.
+  if (!process.env.SETTLEMENT_ONLY) {
   const historyCtx = await browser.newContext();
   await historyCtx.addInitScript((account) => {
     window.ethereum = {
@@ -94,6 +97,7 @@ try {
   check("history loads transfer 51 with the server cursor", cursorSeen && await history.locator("tbody tr").count() === 51);
   check("history hides load-more at the end", await history.getByRole("button", { name: "Load older transfers" }).count() === 0);
   await historyCtx.close();
+  } else console.log("Connected history fixture skipped: production wallet hold remains enforced.");
   console.log(`${passed}/${passed} passed`);
 } finally {
   await browser.close();
