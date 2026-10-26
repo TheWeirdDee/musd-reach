@@ -24,8 +24,22 @@ try {
     check(`${path}: title, description, canonical and social image`, !!data.title && !!data.description && data.canonical === `https://musd-reach.vercel.app${path === "/" ? "/" : path}` && !!data.og);
     check(`${path}: footer matches its shell`, data.marketingFooter === (path === "/"));
     check(`${path}: safety hold makes no wallet requests or connection invitation`, data.requests.length === 0 && data.connects === 0);
+    check(`${path}: wallet notice is contextual`, await page.getByRole("complementary", { name: "Wallet safety notice" }).count() === (path.startsWith("/app") ? 1 : 0));
     if (path.startsWith("/app")) check(`${path}: private state excluded from indexing`, /noindex/.test(data.robots ?? ""));
   }
+  await page.goto(BASE, { waitUntil: "networkidle" });
+  check("Hero explains the portable savings position", /Your Mezo savings\.\s*Free to move\./.test(await page.locator("h1").innerText()));
+  check("Primary CTA clearly identifies the read-only app", await page.getByRole("link", { name: "Explore the read-only app", exact: false }).count() === 2);
+  const faq = page.locator('section[aria-labelledby="faq-title"]');
+  const intro = faq.locator(":scope > .shell > div").first();
+  check("FAQ heading sticks on desktop within the section", await intro.evaluate((el) => getComputedStyle(el).position) === "sticky");
+  const question = faq.getByRole("button").nth(1);
+  await question.focus(); await page.keyboard.press("Enter");
+  await page.waitForFunction(() => document.querySelector("#faq-q-1").getAttribute("aria-expanded") === "true");
+  check("FAQ is keyboard operable with associated answer panels", await page.locator("#faq-1").isVisible() && !await page.locator("#faq-0").isVisible());
+  await page.setViewportSize({ width: 390, height: 844 });
+  check("FAQ removes sticky positioning on mobile without overflow", await intro.evaluate((el) => getComputedStyle(el).position) === "static" && await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth));
+  await page.setViewportSize({ width: 1280, height: 900 });
   await page.goto(`${BASE}/docs/getting-started`);
   await page.getByRole("searchbox").fill("settlement");
   check("Docs filtering finds the recovery guide", await page.getByRole("navigation", { name: "Documentation", exact: true }).getByRole("link", { name: "Pending settlement and recovery" }).count() === 1);
