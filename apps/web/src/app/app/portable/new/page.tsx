@@ -6,16 +6,19 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { erc20Abi, isAddress, type Address } from "viem";
 import { reachSourceGatewayAbi, reachSavingsWrapperAbi, formatAmount } from "@musd-reach/sdk";
 import { Amount, Button, Hash, Notice, Panel, Row } from "@/components/ui/primitives";
-import { PageTitle, NotDeployedNotice, ConnectPrompt, useGate, AmountField, useAmount, StepList, NetworkHint } from "@/components/app/AppKit";
+import { PageTitle, NotDeployedNotice, useGate, AmountField, useAmount, StepList, NetworkHint } from "@/components/app/AppKit";
 import { useClients, usePosition } from "@/lib/hooks";
 import { useContractTx } from "@/lib/tx";
 import { parseLock } from "@/lib/events";
 import { saveLocalTransfer } from "@/lib/pending";
 import { reachConfig, explorer, MEZO_ID } from "@/lib/reach";
 import { cn } from "@/lib/cn";
+import { TransactionWorkspace, FlowIntro } from "@/components/app/Workspace";
+import { useTransactionCost } from "@/lib/transactionCost";
+import { TransactionReadiness, readinessLabel } from "@/components/app/TransactionReadiness";
 
 export default function MakePortablePage() {
-  const { address, connected, deployed } = useGate();
+  const { address, chainId, connected, deployed } = useGate();
   const d = reachConfig.deployment;
   const clients = useClients();
   const qc = useQueryClient();
@@ -48,8 +51,9 @@ export default function MakePortablePage() {
   const needsApproval = !!i && !!amount.parsed && i.allowance < amount.parsed;
   const balance = pos.data ? pos.data.wsmusd : null;
   const over = balance !== null && !!amount.parsed && amount.parsed > balance;
-  const recipientOk = isAddress(recipient);
+  const recipientOk = isAddress(recipient) && !/^0x0{40}$/i.test(recipient);
   const busy = [approve.state.phase, lock.state.phase].some((p) => ["switching", "simulating", "signing", "pending"].includes(p));
+  const cost = useTransactionCost(i && amount.parsed && address && recipientOk ? needsApproval ? { chainId: MEZO_ID, address: d!.wrapper, abi: erc20Abi, functionName: "approve", args: [d!.sourceGateway, amount.parsed] } : { chainId: MEZO_ID, address: d!.sourceGateway, abi: reachSourceGatewayAbi, functionName: "lockAndIssue", args: [amount.parsed, recipient as Address], value: i.fee } : null);
 
   async function submit() {
     if (!d || !amount.parsed || !i) return;
@@ -67,27 +71,42 @@ export default function MakePortablePage() {
     }
   }
 
+  if (!connected) return <FlowIntro title="Take your savings claim to Base" description="Lock existing wSMUSD on Mezo. After the signed message is delivered, receive the same number of rwSMUSD receipts on Base." requirements={["wSMUSD shares on Mezo testnet", "Testnet BTC for the lock; Sepolia ETH if you deliver on Base", "A recipient address on Base Sepolia"]} steps={["Approve the exact share amount to the source gateway.", "Lock the shares and publish a Wormhole message.", "Guardian verification authorizes the Base mint.", "Track delivery; a lock is not yet a receipt."]} docs="/docs/first-transfer" />;
+
   return (
     <>
-      <PageTitle kicker="Make portable" title="Lock wSMUSD, receive rwSMUSD on Base">
+      <PageTitle kicker="Make portable" title="Make your claim portable">
         Exactly the shares you lock are minted on Base, once, after the guardian-signed message is verified there. The locked shares keep earning wrapper yield the whole time.
       </PageTitle>
-      <div className="grid grid-cols-[minmax(0,1fr)] gap-6 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)]">
+      <TransactionWorkspace>
         <div className="space-y-6">
           {!deployed && <NotDeployedNotice />}
-          <Panel className="space-y-6 p-6">
-            <AmountField id="lock-amount" label="wSMUSD to lock" unit="wSMUSD" value={amount.value} onChange={amount.setValue} max={connected ? balance : undefined} disabled={!deployed} />
+          <Panel plain className="space-y-6">
+            <AmountField id="lock-amount" label="wSMUSD to lock" unit="wSMUSD" value={amount.value} onChange={amount.setValue} max={connected ? balance : undefined} disabled={!deployed || busy} />
             <div>
               <label htmlFor="lock-recipient" className="text-sm text-ink-300">
                 Recipient on Base Sepolia
               </label>
-              <input id="lock-recipient" value={recipient} onChange={(e) => setRecipient(e.target.value.trim())} spellCheck={false} placeholder="0x…" aria-invalid={!recipientOk && recipient !== ""} className={cn("num mt-2 h-11 w-full rounded-sm border bg-ink-950 px-3 text-sm text-bone-100 outline-none focus:border-ember-500", recipientOk || !recipient ? "border-ink-600" : "border-rust-500")} />
+              <input disabled={busy} id="lock-recipient" value={recipient} onChange={(e) => setRecipient(e.target.value.trim())} spellCheck={false} placeholder="0x…" aria-invalid={!recipientOk && recipient !== ""} className={cn("num mt-2 h-11 w-full rounded-sm border bg-ink-950 px-3 text-sm text-bone-100 outline-none focus:border-ember-500", recipientOk || !recipient ? "border-ink-600" : "border-rust-500")} />
             </div>
           </Panel>
-          {!connected && <ConnectPrompt what="lock wrapper shares" />}
+          <Panel plain className="space-y-4">
+            <StepList
+              steps={[
+                { key: "approve", title: "Approve exact wSMUSD amount", chain: "Mezo testnet", state: approve.state, done: approve.state.phase === "confirmed" || (!!i && !needsApproval && !!amount.parsed), skipped: !!i && !needsApproval && approve.state.phase === "idle" },
+                { key: "lock", title: "Lock shares and publish ISSUE", chain: "Mezo testnet", state: lock.state, done: lock.state.phase === "confirmed" },
+              ]}
+            />
+            {i?.paused && <Notice tone="pending">New locks are paused by the guardian. Redemptions still release.</Notice>}
+            <TransactionReadiness chainId={MEZO_ID} cost={cost} />
+            <Button className="w-full" size="lg" busy={busy} disabled={!deployed || !connected || !amount.parsed || over || !recipientOk || !i || i.paused || chainId !== MEZO_ID || !pos.isSuccess || info.isError || !cost.isSuccess || !cost.data.sufficient} onClick={submit}>
+              {!deployed ? "Unavailable until deployment" : !connected ? "Connect a wallet" : !amount.parsed ? "Enter an amount" : over ? "Insufficient wSMUSD" : !recipientOk ? "Check recipient address" : readinessLabel(pos, cost) ?? (needsApproval ? "Approve, then lock" : "Lock and make portable")}
+            </Button>
+            <NetworkHint chainId={MEZO_ID} />
+          </Panel>
         </div>
         <div className="space-y-6">
-          <Panel className="p-6">
+          <Panel plain>
             <h2 className="text-lg font-semibold tracking-[-0.02em] text-bone-50">Review before signing</h2>
             <dl className="mt-4">
               <Row label="From">Mezo testnet → custody in ReachSourceGateway</Row>
@@ -99,21 +118,9 @@ export default function MakePortablePage() {
               <Row label="Approval scope">{d ? <Hash value={d.sourceGateway} href={explorer.mezoAddress(d.sourceGateway)} /> : "—"}</Row>
             </dl>
           </Panel>
-          <Panel className="space-y-4 p-6">
-            <StepList
-              steps={[
-                { key: "approve", title: "Approve exact wSMUSD amount", chain: "Mezo testnet", state: approve.state, done: approve.state.phase === "confirmed" || (!!i && !needsApproval && !!amount.parsed), skipped: !!i && !needsApproval && approve.state.phase === "idle" },
-                { key: "lock", title: "Lock shares and publish ISSUE", chain: "Mezo testnet", state: lock.state, done: lock.state.phase === "confirmed" },
-              ]}
-            />
-            {i?.paused && <Notice tone="pending">New locks are paused by the guardian. Redemptions still release.</Notice>}
-            <Button className="w-full" size="lg" busy={busy} disabled={!deployed || !connected || !amount.parsed || over || !recipientOk || !i || i.paused} onClick={submit}>
-              {!deployed ? "Unavailable until deployment" : !connected ? "Connect a wallet" : !amount.parsed ? "Enter an amount" : over ? "Insufficient wSMUSD" : needsApproval ? "Approve, then lock" : "Lock and make portable"}
-            </Button>
-            <NetworkHint chainId={MEZO_ID} />
-          </Panel>
+
         </div>
-      </div>
+      </TransactionWorkspace>
     </>
   );
 }
