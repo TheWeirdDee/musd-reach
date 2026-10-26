@@ -1,6 +1,6 @@
 # MUSD Reach
 
-Reach lets a Mezo saver lock wrapper shares and receive a backed, transferable claim on Base Sepolia. The savings position stays on Mezo while its claim becomes portable. Hold or transfer the claim, then burn it to redeem the corresponding source position.
+MUSD Reach makes Mezo savings positions portable. Keep the savings position on Mezo while holding or transferring a backed claim on Base Sepolia, then burn the claim to redeem.
 
 **Deployment: Mezo testnet + Base Sepolia**
 
@@ -84,7 +84,7 @@ flowchart LR
   Relayer -. delivers .-> S
 ```
 
-Off-chain parts are optional conveniences: `apps/api` indexes events and runs a permissionless relayer, and `apps/web` is the interface. Neither holds funds or keys that can move funds, and neither is a trust assumption.
+Off-chain parts are optional conveniences: `apps/api` indexes events and can run a permissionless relayer, and `apps/web` is the interface. Neither has authority to choose who receives locked funds; delivery executes authenticated messages. A configured relayer key pays its own network gas.
 
 ## Supported networks and contracts
 
@@ -191,7 +191,7 @@ Browser suites are in `apps/web/e2e` and described in [`docs/TESTING.md`](docs/T
 | Chain finality | Messages are not reorged after signing | Mezo consistency level 202; REDEEM waits for Base finality |
 | Guardian role (currently the deployer EOA `0x0F57…Efe6`) | Pausing **new** deposits and locks | Cannot pause exits, release, seize or mint. A single EOA on testnet |
 
-You do **not** trust relayers, the Reach API or indexer, this website, or the deployer after the one-time `bindSourceGateway`. Every value the UI shows for balances and backing is read from chain.
+Protocol authentication and exits do not depend on relayers, the Reach API, indexer or website. Users must still verify the chain, target, amount and recipient before signing: a compromised interface could propose a harmful transaction. The deployer cannot arbitrarily mint or release custody after the one-time `bindSourceGateway`; the pause role is described above. Balances and backing are read from chain.
 
 Further reading:
 - [`docs/THREAT_MODEL.md`](docs/THREAT_MODEL.md): 33-row attack matrix, each row mapped to a test, plus the Slither triage.
