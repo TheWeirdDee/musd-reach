@@ -8,6 +8,7 @@ import { chromium } from "playwright";
 
 const BASE = process.argv[2] ?? "http://localhost:3000";
 const ROUTES = [
+  "/docs", "/docs/getting-started", "/docs/sdk", "/docs/recovery", "/contracts", "/security",
   "/",
   "/app",
   "/app/wrap",
@@ -24,7 +25,7 @@ const ROUTES = [
   "/risks",
   "/no-such-page",
 ];
-const WIDTHS = [320, 390, 768, 1280];
+const WIDTHS = [320, 360, 375, 390, 430, 768, 1024, 1280, 1440, 1920];
 // Both motion settings: with reduced motion no animation transform wraps content, which once let an
 // absolutely positioned sr-only header escape its scroll region and widen the page (F-29).
 const MOTION = ["reduce", "no-preference"];
@@ -32,12 +33,12 @@ const MOTION = ["reduce", "no-preference"];
 const browser = await chromium.launch();
 let failed = 0;
 for (const motion of MOTION) for (const w of WIDTHS) {
-  const ctx = await browser.newContext({ viewport: { width: w, height: 800 }, reducedMotion: motion });
+  const ctx = await browser.newContext({ viewport: { width: w, height: w === 768 ? 390 : w === 430 ? 932 : w === 320 ? 568 : 800 }, reducedMotion: motion });
   for (const r of ROUTES) {
     const page = await ctx.newPage();
     const errors = [];
     page.on("pageerror", (e) => errors.push(e.message));
-    await page.goto(BASE + r, { waitUntil: "networkidle", timeout: 120_000 });
+    await page.goto(BASE + r, { waitUntil: "domcontentloaded", timeout: 120_000 });
     await page.waitForTimeout(500);
     const o = await page.evaluate(() => {
       window.scrollTo(10_000, 0);
