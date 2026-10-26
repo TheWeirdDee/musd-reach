@@ -5,7 +5,6 @@ import { useAccount, useConfig } from "wagmi";
 import { getPublicClient, getWalletClient, switchChain } from "wagmi/actions";
 import { gasLimitFor } from "@musd-reach/sdk";
 import { readWalletChainId } from "./walletChain";
-import { walletSafetyHold } from "./walletSafety";
 import { BaseError, ContractFunctionRevertedError, UserRejectedRequestError, formatEther, type Abi, type Address, type Hex, type TransactionReceipt } from "viem";
 
 export type TxPhase = "idle" | "switching" | "simulating" | "signing" | "pending" | "confirmed" | "rejected" | "failed";
@@ -53,10 +52,6 @@ export function useContractTx() {
 
   const run = useCallback(
     async (req: { chainId: number; address: Address; abi: Abi; functionName: string; args?: readonly unknown[]; value?: bigint }): Promise<TransactionReceipt | null> => {
-      if (walletSafetyHold) {
-        setState({ phase: "failed", error: "Wallet actions are paused while the reported safety warning is investigated." });
-        return null;
-      }
       if (inFlight.current) return null;
       if (!address) {
         setState({ phase: "failed", error: "Connect a wallet first." });

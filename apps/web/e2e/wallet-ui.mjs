@@ -1,6 +1,7 @@
-// Recipient validation and wallet-chooser regressions (F-16).
+// Recipient validation and wallet-chooser regressions (F-16, multi-wallet chooser).
 //  - An empty recipient while disconnected is not an error; an invalid one is.
 //  - A wallet that announces itself over EIP-6963 is listed once, not also as "Browser wallet".
+//  - The chooser names every supported wallet, states its availability and carries the MetaMask notice.
 //
 //   node e2e/wallet-ui.mjs [baseUrl]
 import { chromium } from "playwright";
@@ -58,10 +59,16 @@ try {
   await page.addInitScript(announce);
   await page.goto(BASE + "/app/wrap", { waitUntil: "networkidle" });
   await page.locator("header").getByRole("button", { name: "Connect wallet" }).click();
-  const dialog = page.getByRole("dialog", { name: "Wallet" });
-  await dialog.getByRole("button", { name: "Test Wallet" }).waitFor({ timeout: 15000 });
+  const dialog = page.getByRole("dialog", { name: "Connect a wallet" });
+  await dialog.getByRole("button", { name: /Test Wallet/ }).waitFor({ timeout: 15000 });
   const names = await dialog.getByRole("button").allInnerTexts();
-  check("announced wallet is listed once, without a duplicate 'Browser wallet'", names.filter((n) => /Test Wallet/.test(n)).length === 1 && !names.some((n) => /Browser wallet/.test(n)), names.join(", "));
+  check("announced wallet is listed once, without a duplicate 'Browser wallet'", names.filter((n) => /Test Wallet/.test(n)).length === 1 && !names.some((n) => /Browser wallet/.test(n)), names.join(" | "));
+  const links = await dialog.getByRole("link").allInnerTexts();
+  check("chooser names Rabby, MetaMask, Coinbase and WalletConnect", ["Rabby Wallet", "MetaMask", "Coinbase Wallet", "WalletConnect"].every((n) => names.some((t) => t.includes(n))), names.join(" | "));
+  check("a missing wallet links to its own install page instead of a dead button", links.some((t) => /Get/.test(t)), links.join(" | "));
+  check("MetaMask notice is present and links to the investigation", (await dialog.getByRole("note").innerText()).includes("security warning for this website") && (await dialog.getByRole("note").getByRole("link").getAttribute("href")) === "/security");
+  await page.keyboard.press("Escape");
+  check("Escape closes the chooser", (await page.getByRole("dialog", { name: "Connect a wallet" }).count()) === 0);
   await page.close();
 } catch (e) {
   check("completed", false, e.message.split("\n")[0]);

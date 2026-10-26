@@ -9,7 +9,6 @@ import { statusLabel, statusTone } from "@/lib/status";
 import { settlementCopy } from "@/lib/settlement";
 import { publicRuns, rehearsals, deployment } from "@/lib/reach";
 import { cn } from "@/lib/cn";
-import { walletSafetyHold } from "@/lib/walletSafety";
 
 export function IntegrationStatus() {
   return (
@@ -204,7 +203,7 @@ export function FinalCta() {
           </h2>
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
             <ButtonLink href="/app" className="h-12 px-6">
-              {walletSafetyHold ? "Explore the read-only app" : "Open the app"} <Arrow />
+              Open the app <Arrow />
             </ButtonLink>
             <Link href="/risks" className="inline-flex items-center gap-2 border-b border-ink-500 pb-0.5 text-[0.9375rem] text-bone-100 hover:border-ember-500">
               Read the risks first <Arrow />

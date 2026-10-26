@@ -18,9 +18,9 @@ for (let i = 0; i < 40; i++) {
   });
   seen.push(info);
 }
-ck("Tab reaches the read-only app", seen.some((s) => /Read-only app/.test(s.label)));
+ck("Tab reaches the connect wallet control", seen.some((s) => /Connect wallet/.test(s.label)));
 ck("Tab reaches disconnected guidance", seen.some((s) => /guide|documentation|docs/i.test(s.label)));
-ck("Safety hold presents no live amount input", await p.locator("#wrap-amount").count() === 0);
+ck("Disconnected page presents no live amount input", await p.locator("#wrap-amount").count() === 0);
 const noOutline = seen.filter((s) => !s.outline && s.tag !== "BODY" && s.tag !== "NEXTJS-PORTAL");
 ck("every focused element shows a focus outline", noOutline.length === 0, JSON.stringify(noOutline));
 await p.setViewportSize({ width: 390, height: 844 });

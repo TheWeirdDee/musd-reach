@@ -1,4 +1,5 @@
 // Production acceptance: never connects a real wallet and never signs or sends a transaction.
+// The wallet chooser is exercised only for its presentation; no connection is approved.
 import assert from "node:assert/strict";
 import { chromium } from "playwright";
 import { readFileSync, mkdirSync, writeFileSync } from "node:fs";
@@ -9,7 +10,7 @@ const results = [];
 const check = (name, ok, detail = "") => { results.push({ name, ok, detail }); console.log(`${ok ? "PASS" : "FAIL"} ${name}${detail ? ` — ${detail}` : ""}`); };
 const browser = await chromium.launch();
 const context = await browser.newContext({ viewport: { width: 1280, height: 900 }, permissions: ["clipboard-read", "clipboard-write"] });
-await context.addInitScript(() => { window.__walletRequests = []; window.ethereum = { request: async ({ method }) => { window.__walletRequests.push(method); throw new Error("No wallet requests permitted in production safety hold test"); }, on() {}, removeListener() {} }; });
+await context.addInitScript(() => { window.__walletRequests = []; window.ethereum = { request: async ({ method }) => { window.__walletRequests.push(method); throw new Error("No wallet request should leave the page without user action"); }, on() {}, removeListener() {} }; });
 const page = await context.newPage();
 page.setDefaultNavigationTimeout(90_000);
 const errors = [];
@@ -23,13 +24,13 @@ try {
     check(`${path}: real page with one main heading`, response.status() === 200 && data.h1 === 1);
     check(`${path}: title, description, canonical and social image`, !!data.title && !!data.description && data.canonical === `https://musd-reach.vercel.app${path === "/" ? "/" : path}` && !!data.og);
     check(`${path}: footer matches its shell`, data.marketingFooter === (path === "/"));
-    check(`${path}: safety hold makes no wallet requests or connection invitation`, data.requests.length === 0 && data.connects === 0);
+    check(`${path}: browsing alone makes no wallet request and always offers a way to connect`, data.requests.length === 0 && data.connects >= 1, `${data.connects} connect buttons`);
     check(`${path}: wallet notice is contextual`, await page.getByRole("complementary", { name: "Wallet safety notice" }).count() === (path.startsWith("/app") ? 1 : 0));
     if (path.startsWith("/app")) check(`${path}: private state excluded from indexing`, /noindex/.test(data.robots ?? ""));
   }
   await page.goto(BASE, { waitUntil: "networkidle" });
   check("Hero explains the portable savings position", /Your Mezo savings\.\s*Free to move\./.test(await page.locator("h1").innerText()));
-  check("Primary CTA clearly identifies the read-only app", await page.getByRole("link", { name: "Explore the read-only app", exact: false }).count() === 2);
+  check("Primary CTA clearly opens the app", await page.getByRole("link", { name: "Open the app", exact: false }).count() === 2);
   const faq = page.locator('section[aria-labelledby="faq-title"]');
   const intro = faq.locator(":scope > .shell > div").first();
   check("FAQ heading sticks on desktop within the section", await intro.evaluate((el) => getComputedStyle(el).position) === "sticky");

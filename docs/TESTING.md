@@ -111,19 +111,19 @@ $env:AUDIT_ALL_DOCS='1'
 node e2e/product-audit.mjs http://localhost:3002
 ```
 
-For scripted wallet states only, use a separate **development** server on port 3003 with
-`NEXT_PUBLIC_E2E_WALLET_TESTS=keyless`. Leave all fork/account/deployment overrides unset.
-`wallet-states.mjs` uses explicit RPC fixtures and rejects every write in its provider;
-it does not use an extension, private key or public signing account. Production builds
-refuse the keyless switch. Do not interpret these tests as MetaMask clearance.
+For scripted wallet states, use a separate **development** server on port 3003. Leave all
+fork/account/deployment overrides unset: the chooser needs no test-only switch, because wallet
+access is enabled in every build. `wallet-states.mjs` uses explicit RPC fixtures and rejects
+every write in its provider; it does not use an extension, private key or public signing
+account. Do not interpret these tests as MetaMask clearance.
 
 ```powershell
 node e2e/wallet-states.mjs http://localhost:3003
 node e2e/settlement-history.mjs http://localhost:3003
 ```
 
-The older `wallet-ui.mjs` assumes disconnected transaction forms and is superseded for
-this rebuild by the production safety-hold and wallet-state suites. The older live-read
+`wallet-ui.mjs` checks recipient validation and that a wallet announcing itself over EIP-6963 is
+listed once in the chooser, without a duplicate generic entry. The live-read
 transaction-intent suite may now correctly block accounts without enough native gas;
 its previous result must not be promoted to a passing current run. The corrected live-read suite now asserts a no-signing gas block when the observed account cannot afford its next transaction. Exact lock and burn
 arguments are checked by the new rejecting-wallet fixture suite.

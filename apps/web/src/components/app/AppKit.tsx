@@ -10,7 +10,6 @@ import { WalletButton } from "@/components/site/WalletButton";
 import { deployment, explorer, MEZO_ID } from "@/lib/reach";
 import { phaseLabel, type TxState } from "@/lib/tx";
 import { cn } from "@/lib/cn";
-import { walletSafetyHold } from "@/lib/walletSafety";
 import { useWalletChainId } from "@/lib/walletChain";
 
 const tabs = [
@@ -64,7 +63,7 @@ export function NotDeployedNotice() {
 export function ConnectPrompt({ what }: { what: string }) {
   return (
     <div className="flex flex-col items-start gap-4 rounded-md border border-dashed border-ink-600 p-6 sm:flex-row sm:items-center sm:justify-between">
-      <p className="text-sm leading-relaxed text-ink-300">{walletSafetyHold ? "Personal balances and history become available with wallet access. You can explore public proof or inspect an address from Portfolio." : `Connect a wallet to ${what}. Connecting requests your account address, not a token approval or signature.`}</p>
+      <p className="text-sm leading-relaxed text-ink-300">{`Connect a wallet to ${what}. Connecting requests your account address, not a token approval or signature.`}</p>
       <WalletButton />
     </div>
   );

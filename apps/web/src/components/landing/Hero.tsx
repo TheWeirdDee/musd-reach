@@ -6,7 +6,6 @@ import { useGSAP } from "@gsap/react";
 import { formatAmount, shortHex } from "@musd-reach/sdk";
 import { ButtonLink, Arrow, Chip } from "@/components/ui/primitives";
 import { canonicalRun, deployment } from "@/lib/reach";
-import { walletSafetyHold } from "@/lib/walletSafety";
 
 gsap.registerPlugin(useGSAP);
 
@@ -86,7 +85,7 @@ export function Hero() {
           </p>
           <div data-hero-fade className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
             <ButtonLink href="/app" className="h-12 px-6">
-              {walletSafetyHold ? "Explore the read-only app" : "Open the app"} <Arrow />
+              Open the app <Arrow />
             </ButtonLink>
             <a href="#how" className="group inline-flex items-center gap-2 text-[0.9375rem] text-bone-100">
               <span className="border-b border-ink-500 pb-0.5 transition-colors group-hover:border-ember-500">See how backing works</span>

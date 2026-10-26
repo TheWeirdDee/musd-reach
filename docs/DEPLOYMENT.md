@@ -71,9 +71,10 @@ Settings: Root Directory is `apps/web`. `apps/web/vercel.json` installs and buil
 |---|---|---|
 | `ENABLE_EXPERIMENTAL_COREPACK` | `1` | Lets Vercel use the pnpm version in `package.json` (`pnpm@11.5.0`). Vercel documents Corepack as experimental; confirm the first build log says pnpm 11 |
 | `NEXT_PUBLIC_API_URL` | `https://musd-reach-api.onrender.com` | Public Render API; added to CSP automatically. Use your own API URL if hosted elsewhere |
-| `NEXT_PUBLIC_SITE_URL`, `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | unset | Not used by the current build; WalletConnect is not offered |
+| `NEXT_PUBLIC_SITE_URL` | unset | Not read by the build; the canonical origin comes from `src/lib/metadata.ts` |
+| `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | built-in | Optional override for the Reown / WalletConnect Cloud project id the WalletConnect row uses (a public client identifier, not a secret). Its relay origins are added to the CSP whenever a project id is present |
 | `NEXT_PUBLIC_MEZO_RPC`, `NEXT_PUBLIC_BASE_RPC` | unset | Optional dedicated RPCs. They are added to the CSP automatically |
-| `NEXT_PUBLIC_E2E_ACCOUNT`, `NEXT_PUBLIC_REACH_DEPLOYMENT`, `NEXT_PUBLIC_NETWORK_MODE`, `NEXT_PUBLIC_E2E_WALLET_TESTS` | **never** | Test-only. `next build` refuses to run with any of them set, and production bundles ignore them |
+| `NEXT_PUBLIC_E2E_ACCOUNT`, `NEXT_PUBLIC_REACH_DEPLOYMENT`, `NEXT_PUBLIC_NETWORK_MODE` | **never** | Test-only. `next build` refuses to run with any of them set, and production bundles ignore them |
 
 The root `.env.example` covers all services; `apps/web/.env.example` covers only the frontend.
 For local Next.js development, copy the latter to `apps/web/.env.local`. Actual env files are

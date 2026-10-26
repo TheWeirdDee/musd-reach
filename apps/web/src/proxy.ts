@@ -1,6 +1,7 @@
 import { NextResponse, type NextRequest } from "next/server";
 import { buildCsp } from "@/lib/csp";
 import { apiUrl, reachConfig } from "@/lib/reach";
+import { walletConnectEnabled } from "@/lib/wallets";
 
 const policyFor = (nonce: string) =>
   buildCsp({
@@ -8,7 +9,8 @@ const policyFor = (nonce: string) =>
     dev: process.env.NODE_ENV === "development",
     rpcUrls: [...reachConfig.mezo.rpcUrls, ...reachConfig.base.rpcUrls],
     apiUrl,
-    walletConnect: false,
+    // WalletConnect relay origins are allowed only when the build actually offers the connector.
+    walletConnect: walletConnectEnabled,
   });
 
 /**
