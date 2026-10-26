@@ -5,7 +5,7 @@
 **Version:** 2.0 · **Revised:** 20 October 2026  
 **Product:** MUSD Reach  
 **Tagline:** Your Mezo savings position. Available to the rest of DeFi.  
-**Competition:** Mezo Buildathon, Wave 1 deadline 26 October 2026 (exact cutoff timezone unverified); Wave 2, 2–15 November; winners/demo 23 November.  
+**Competition:** Built for the Mezo hackathon.
 **Primary track:** DeFi; distribution is a secondary benefit.  
 **Status:** **CONDITIONAL PRODUCT LOCK — implementation NOT yet verified.** Native savings vault and existing Wormhole NTT transport were checked read-only on public networks. The Reach wrapper, custody, receipt, messaging, complete lifecycle, and lending integration have **not** been deployed or proven.  
 **Evidence basis:** Original MUSD Reach PRD v1.0 and *MUSD Reach — protocol and product verification* (20 October 2026). All reported chain facts below are historical observations at specified checkpoints, **not fresh checks by this revision**.
@@ -497,9 +497,9 @@ Possible revenue: transparently disclosed issue/redemption service fees or B2B i
 - Every statement in the website, video, README and submission maps to an evidence artifact.
 - **Do not substitute a slide/video simulation for a missing financial transaction.**
 
-### Timing
+### Submission scope
 
-Wave 1 closes **26 October 2026** according to the recovered announcement; the exact deadline timezone was not established. Wave 2 is **2–15 November 2026**. Scope does **not** justify cutting accounting/security requirements; if a gate is unpassed, submit a narrower **truthfully labelled** proof or target a later wave rather than claim full functionality.
+Do not cut accounting or security requirements for submission. If a gate is unpassed, present the narrower verified scope truthfully.
 
 ---
 
@@ -578,7 +578,7 @@ musd-reach/
 
 ## 17. Source links and evidence provenance
 
-**Recovered official Buildathon announcement:** https://mezo.org/blog/mezo-buildathon-is-underway/  
+**Hackathon:** Built for the Mezo hackathon.
 **Mezo savings documentation:** https://mezo.org/docs/users/mezo-earn/vaults/musd-savings-vault/  
 **Mezo contract registry:** https://mezo.org/docs/users/resources/contracts-reference  
 **Mainnet vault proxy:** https://explorer.mezo.org/address/0xb4D498029af77680cD1eF828b967f010d06C51CC  
