@@ -1,11 +1,12 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useAccount, useConfig } from "wagmi";
 import { getPublicClient, getWalletClient, switchChain } from "wagmi/actions";
 import { gasLimitFor } from "@musd-reach/sdk";
 import { readWalletChainId } from "./walletChain";
-import { BaseError, ContractFunctionRevertedError, UserRejectedRequestError, type Abi, type Address, type Hex, type TransactionReceipt } from "viem";
+import { walletSafetyHold } from "./walletSafety";
+import { BaseError, ContractFunctionRevertedError, UserRejectedRequestError, formatEther, type Abi, type Address, type Hex, type TransactionReceipt } from "viem";
 
 export type TxPhase = "idle" | "switching" | "simulating" | "signing" | "pending" | "confirmed" | "rejected" | "failed";
 
@@ -48,14 +49,21 @@ export function useContractTx() {
   const config = useConfig();
   const { address } = useAccount();
   const [state, setState] = useState<TxState>({ phase: "idle" });
+  const inFlight = useRef(false);
 
   const run = useCallback(
     async (req: { chainId: number; address: Address; abi: Abi; functionName: string; args?: readonly unknown[]; value?: bigint }): Promise<TransactionReceipt | null> => {
+      if (walletSafetyHold) {
+        setState({ phase: "failed", error: "Wallet actions are paused while the reported safety warning is investigated." });
+        return null;
+      }
+      if (inFlight.current) return null;
       if (!address) {
         setState({ phase: "failed", error: "Connect a wallet first." });
         return null;
       }
       try {
+        inFlight.current = true;
         // Ask the connector, not wagmi's stored chain, which ignores unconfigured networks (F-17).
         if ((await readWalletChainId(config)) !== req.chainId) {
           setState({ phase: "switching" });
@@ -68,8 +76,12 @@ export function useContractTx() {
         // an under-gassed settlement reverts by design, so send an explicit limit (F-20).
         const request = (sim as unknown as { request: Record<string, unknown> }).request;
         const gas = gasLimitFor(req.chainId, await pc.estimateContractGas({ ...req, account: address } as never));
+        const [balance, gasPrice] = await Promise.all([pc.getBalance({ address }), pc.getGasPrice()]);
+        const required = gas * gasPrice + (req.value ?? 0n);
+        if (balance < required) throw new Error(`Insufficient network gas. This call needs approximately ${formatEther(required)} ${req.chainId === 31611 ? "BTC" : "ETH"}; your balance is ${formatEther(balance)}. Refresh the quote after funding this network.`);
         setState({ phase: "signing" });
         const wallet = await getWalletClient(config, { chainId: req.chainId as never });
+        if (wallet.account?.address.toLowerCase() !== address.toLowerCase()) throw new Error("The authorized wallet account changed. Review the new account and start again.");
         const hash = await wallet.writeContract({ ...request, gas } as never);
         setState({ phase: "pending", hash });
         const receipt = await pc.waitForTransactionReceipt({ hash, timeout: 10 * 60_000 });
@@ -83,6 +95,8 @@ export function useContractTx() {
         const { rejected, message } = explainError(e);
         setState((s) => ({ phase: rejected ? "rejected" : "failed", hash: s.hash, error: message }));
         return null;
+      } finally {
+        inFlight.current = false;
       }
     },
     [address, config],
