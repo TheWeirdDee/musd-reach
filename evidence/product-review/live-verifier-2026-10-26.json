@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-26T08:30:45.525Z",
+  "checkedAt": "2026-10-26T08:46:42.808Z",
   "checks": [
     {
       "group": "registry",
@@ -17,7 +17,7 @@
       "group": "registry",
       "name": "native vault implementation == pinned",
       "ok": true,
-      "detail": "0x92D12f0a60906b39d81acD9bf8977b6c824cD98C @ block 16377520"
+      "detail": "0x92D12f0a60906b39d81acD9bf8977b6c824cD98C @ block 16377747"
     },
     {
       "group": "registry",
@@ -233,7 +233,7 @@
       "group": "reconcile",
       "name": "snapshot",
       "ok": true,
-      "detail": "mezo block 16377522, base block 50407775, locked 0, remote 0, in-flight issue 0, in-flight redeem 0"
+      "detail": "mezo block 16377750, base block 50412506, locked 0, remote 0, in-flight issue 0, in-flight redeem 0"
     },
     {
       "group": "evidence",

@@ -1,0 +1,6 @@
+PASS loading settlement never reports settled
+PASS failed settlement read never reports settled
+PASS pending shares are shown as pending
+PASS successful zero-pending read confirms settlement
+Connected history fixture skipped: production wallet hold remains enforced.
+4/4 passed
