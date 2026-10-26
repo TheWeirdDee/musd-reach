@@ -65,7 +65,7 @@ export function SiteFooter() {
         ))}
       </div>
       <div className="shell flex flex-col gap-2 border-t border-ink-800 py-6 text-xs text-ink-400 sm:flex-row sm:justify-between">
-        <p>Built for the Mezo Buildathon. Uses Mezo&apos;s native MUSD savings vault and Wormhole guardian messaging.</p>
+        <p>Built for the Mezo hackathon.</p>
         <p className="num">Mezo testnet 31611 · Base Sepolia 84532</p>
       </div>
     </footer>
