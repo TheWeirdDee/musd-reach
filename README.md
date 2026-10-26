@@ -144,8 +144,6 @@ Versions below are the checked-in pins or dependency ranges, not promises that e
 | Testing | Foundry unit/fuzz/invariant/fork tests; Vitest 3; Playwright 1.56.1; axe-core 4.10.3; ESLint 9 and TypeScript checks | [Testing guide](docs/TESTING.md), workspace manifests |
 | Workspace and hosting | pnpm 11.5.0/Corepack; Vercel web; Render API with Docker | [Root manifest](package.json), [Vercel config](apps/web/vercel.json), [deployment guide](docs/DEPLOYMENT.md) |
 
-**Technology tags (10):** `Solidity, TypeScript, React, Next.js, Wormhole, Mezo, Base, Viem, Node.js, Foundry`
-
 ## Supported networks and contracts
 
 | | Chain | EVM id | Wormhole id |
@@ -298,9 +296,11 @@ Planned work, not completed functionality:
 - Add cross-chain delivery/settlement observability, relayer alerts and durable production hosting.
 - Obtain independent economic and security review, address remaining findings/dependency advisories, and plan production governance, operations and incident response before any mainnet release.
 
-## Hackathon
+## Mezo Buildathon
 
-Built for the Mezo hackathon.
+Built for the [Mezo Buildathon](https://mezo.org/blog/mezo-buildathon-is-underway).
+
+Reach addresses the Buildathon's DeFi theme by making a native MUSD savings claim transferable across chains. MUSD is the underlying asset: it enters the Mezo savings vault through the wrapper, backs locked wSMUSD shares and can be recovered after burning the remote receipt. The deployed scope is Mezo testnet and Base Sepolia; the public round-trip evidence demonstrates this integration.
 
 | Project profile | Details |
 |---|---|
@@ -308,13 +308,13 @@ Built for the Mezo hackathon.
 | Tagline | Save on Mezo. Reach further. |
 | Short description | Keep a savings position on Mezo while holding or transferring a backed receipt on Base Sepolia, then burn it to redeem |
 | Infrastructure | Mezo native MUSD savings, ERC-4626 wrapper, Wormhole messaging, Base Sepolia receipt, SDK and independent verifier |
-| Descriptive categories | DeFi; Cross-Chain Infrastructure; Savings & Yield (not claims of official tracks) |
-| Technology tags | Solidity, TypeScript, React, Next.js, Wormhole, Mezo, Base, Viem, Node.js, Foundry |
+| Product category | Cross-chain savings infrastructure |
+| Track relevance | DeFi: portability of MUSD savings-backed capital; receiving applications and public lending integrations remain planned |
 | Networks | Mezo testnet (31611) and Base Sepolia (84532) |
 | Links | [Live website](https://musd-reach.vercel.app/), [public repository](https://github.com/TheWeirdDee/musd-reach), [public proof](https://musd-reach.vercel.app/proof) |
 | Demonstration | Public-testnet wrap, lock, issue, second-holder transfer, burn, share/MUSD return and pending-settlement recovery; recorded evidence above |
 
-Reach explores how Mezo's native savings can support transferable claims outside Mezo while retaining the source savings position. It demonstrates a Mezo-backed primitive, rather than claiming a live lending market, third-party adoption or production readiness.
+The [published Buildathon requirements](https://app.akindo.io/wave-hacks/OVOO0gdrVU8379D10/) call for MUSD and/or MEZO integration, a working deployment, and work developed during the event or a new extension to an existing product. Mezo testnet is accepted. Required submission materials include a live project link, public GitHub repository, project/product deck and a two-minute pitch video, plus the project, audience, stack, track, readiness, milestones and team details requested by the event form. The links and evidence here document the implementation; they do not establish that all submission materials have been prepared or submitted.
 
 ## License
 
