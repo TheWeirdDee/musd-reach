@@ -6,6 +6,7 @@ import { useGSAP } from "@gsap/react";
 import { formatAmount, shortHex } from "@musd-reach/sdk";
 import { ButtonLink, Arrow, Chip } from "@/components/ui/primitives";
 import { canonicalRun, deployment } from "@/lib/reach";
+import { walletSafetyHold } from "@/lib/walletSafety";
 
 gsap.registerPlugin(useGSAP);
 
@@ -76,16 +77,16 @@ export function Hero() {
             </span>
             <span data-hero-line className="block overflow-hidden pb-[0.08em]">
               <span className="block">
-                <span className="font-serif font-normal italic tracking-[-0.02em] text-ember-400">Beyond</span> Mezo.
+                Free to <span className="font-serif font-normal italic tracking-[-0.02em] text-ember-400">move.</span>
               </span>
             </span>
           </h1>
           <p data-hero-fade className="mt-7 max-w-[34rem] text-lg leading-relaxed text-ink-200 sm:text-[1.1875rem]">
-            Reach keeps your MUSD principal working inside Mezo&apos;s native savings vault and hands you a backed, transferable claim on it on Base. Burn the claim and the exact locked shares come home.
+            Keep your savings position on Mezo while holding a backed, transferable claim on Base Sepolia. For Mezo savers who want their position to reach another chain: move the claim, not the savings.
           </p>
           <div data-hero-fade className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
             <ButtonLink href="/app" className="h-12 px-6">
-              Open the app <Arrow />
+              {walletSafetyHold ? "Explore the read-only app" : "Open the app"} <Arrow />
             </ButtonLink>
             <a href="#how" className="group inline-flex items-center gap-2 text-[0.9375rem] text-bone-100">
               <span className="border-b border-ink-500 pb-0.5 transition-colors group-hover:border-ember-500">See how backing works</span>
