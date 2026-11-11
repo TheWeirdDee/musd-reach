@@ -93,7 +93,7 @@ export function Architecture() {
             ["Mezo testnet", `EVM ${reachConfig.mezo.evmChainId} · Wormhole ${reachConfig.mezo.wormholeChainId}`, "Instant finality (CometBFT). Gas paid in testnet BTC."],
             ["Base Sepolia", `EVM ${reachConfig.base.evmChainId} · Wormhole ${reachConfig.base.wormholeChainId}`, "Guardians sign after L2 finality; expect tens of minutes on the return leg."],
             ["Messaging", "Wormhole Core, consistency 202", "Testnet guardian set 0 has a single guardian. Mainnet uses 19 with a 13 quorum."],
-            ["Mainnet", "Not deployed", "No mainnet contracts exist. A mainnet launch would need an independent audit first."],
+            ["Mainnet path", "Mezo mainnet ↔ Base", "Same contracts and guardian set 19/13. External audit, then a capped launch borrowing native MUSD on Base."],
           ].map(([a, b, c]) => (
             <div key={a} className="bg-ink-900 p-5">
               <p className="kicker text-ink-400">{a}</p>

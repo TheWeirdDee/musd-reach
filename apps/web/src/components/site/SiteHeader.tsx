@@ -9,6 +9,7 @@ import { deployment } from "@/lib/reach";
 
 const nav = [
   { href: "/app", label: "App" },
+  { href: "/start", label: "Try it" },
   { href: "/proof", label: "Proof" },
   { href: "/integrations", label: "Integrations" },
   { href: "/developers", label: "Developers" },

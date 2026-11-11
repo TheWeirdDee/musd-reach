@@ -1,0 +1,3 @@
+# Solidity metadata hashes cover exact source bytes; CRLF checkouts break bytecode
+# reproducibility and explorer verification. Keep contract sources LF everywhere.
+*.sol text eol=lf

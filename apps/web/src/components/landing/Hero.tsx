@@ -1,11 +1,13 @@
 "use client";
 
+import Link from "next/link";
 import { useRef } from "react";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
 import { formatAmount, shortHex } from "@musd-reach/sdk";
 import { ButtonLink, Arrow, Chip } from "@/components/ui/primitives";
-import { canonicalRun, deployment } from "@/lib/reach";
+import { canonicalRun } from "@/lib/reach";
+import { markets } from "@/lib/markets";
 
 gsap.registerPlugin(useGSAP);
 
@@ -68,39 +70,42 @@ export function Hero() {
           <p data-hero-fade className="kicker mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-ink-300">
             <span className="text-ember-400">MUSD savings</span>
             <span aria-hidden className="h-px w-6 bg-ink-600" />
-            <span>Mezo → Base</span>
+            <span>Earn on Mezo · Borrow on Base</span>
           </p>
           <h1 id="hero-title" className="text-[length:var(--text-display)] font-semibold leading-[var(--text-display--line-height)] tracking-[var(--text-display--letter-spacing)] text-bone-50">
             <span data-hero-line className="block overflow-hidden pb-[0.06em]">
-              <span className="block">Your Mezo savings.</span>
+              <span className="block">Earn on Mezo.</span>
             </span>
             <span data-hero-line className="block overflow-hidden pb-[0.08em]">
               <span className="block">
-                Free to <span className="font-serif font-normal italic tracking-[-0.02em] text-ember-400">move.</span>
+                Borrow on <span className="font-serif font-normal italic tracking-[-0.02em] text-ember-400">Base.</span>
               </span>
             </span>
           </h1>
           <p data-hero-fade className="mt-7 max-w-[34rem] text-lg leading-relaxed text-ink-200 sm:text-[1.1875rem]">
-            Keep your savings position on Mezo while holding a backed, transferable claim on Base Sepolia. For Mezo savers who want their position to reach another chain: move the claim, not the savings.
+            Your MUSD keeps earning in Mezo’s Savings Vault while a backed claim on it, rwSMUSD, works as collateral in a Morpho market on Base. Borrow USDC without unwinding your savings. The deposit never leaves Mezo.
           </p>
           <div data-hero-fade className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
-            <ButtonLink href="/app" className="h-12 px-6">
-              Open the app <Arrow />
+            <ButtonLink href="/app/borrow" className="h-12 px-6">
+              Borrow against savings <Arrow />
             </ButtonLink>
-            <a href="#how" className="group inline-flex items-center gap-2 text-[0.9375rem] text-bone-100">
-              <span className="border-b border-ink-500 pb-0.5 transition-colors group-hover:border-ember-500">See how backing works</span>
+            <ButtonLink href="/app/lend" intent="secondary" className="h-12 px-6">
+              Lend USDC
+            </ButtonLink>
+            <Link href="/proof" className="group inline-flex items-center gap-2 text-[0.9375rem] text-bone-100">
+              <span className="border-b border-ink-500 pb-0.5 transition-colors group-hover:border-ember-500">See it on-chain</span>
               <Arrow className="transition-transform group-hover:translate-x-0.5" />
-            </a>
+            </Link>
           </div>
           <ul data-hero-fade className="mt-10 flex flex-wrap gap-2" aria-label="Current status">
             <li>
-              <Chip tone="verified">Native vault verified live</Chip>
+              <Chip tone="verified">Live on Mezo testnet + Base Sepolia</Chip>
             </li>
             <li>
-              <Chip tone={deployment ? "verified" : "pending"}>{deployment ? "Reach deployed on testnet" : "Reach contracts not yet deployed"}</Chip>
+              <Chip tone={markets ? "verified" : "pending"}>{markets ? "Morpho Blue market live" : "Morpho market opening"}</Chip>
             </li>
             <li>
-              <Chip tone="neutral">No independent audit</Chip>
+              <Chip tone="verified">Contracts source-verified</Chip>
             </li>
           </ul>
         </div>

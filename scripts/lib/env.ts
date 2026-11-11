@@ -23,6 +23,11 @@ import { buildConfig, waitForSignedVaa, addressToBytes32, type ReachConfig } fro
 
 export const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), "../..");
 
+// Local secrets live in the git-ignored project .env (REACH_PRIVATE_KEY, REACH_KEEPER_KEY, RPCs).
+// Variables already set in the environment (CI secrets) take precedence.
+const envFile = join(ROOT, ".env");
+if (existsSync(envFile)) process.loadEnvFile(envFile);
+
 export type Mode = "fork" | "testnet";
 
 export const logMessagePublished = parseAbiItem(

@@ -9,6 +9,7 @@ import { useReconciliation } from "@/lib/hooks";
 import { publicRuns, rehearsals, deployment, type EvidenceRun } from "@/lib/reach";
 import verification from "@/generated/verification-summary.json";
 import { repoFile } from "@/lib/links";
+import { MarketProof } from "@/components/app/MarketProof";
 
 function RunList({ runs, kind }: { runs: EvidenceRun[]; kind: "public" | "fork" }) {
   return (
@@ -49,7 +50,7 @@ export default function ProofPage() {
   return (
     <ContentPage
       kicker="Proof explorer"
-      title="Recorded lifecycles and live backing"
+      title="Every claim, on-chain"
       lede={
         <p>
           A recorded run proves one complete Reach lifecycle step by step, each with a transaction or a read-only negative test. Live backing below is read from both chains in your browser. Nothing on this page comes from a Reach server.
@@ -57,6 +58,7 @@ export default function ProofPage() {
       }
     >
       <div className="space-y-14">
+        <MarketProof />
         <section className="grid gap-5 lg:grid-cols-2"><Panel className="p-6"><Chip tone="neutral">Recorded self-review</Chip><h2 className="mt-5 text-2xl font-semibold">{verification.passed} of {verification.total} checks passed</h2><p className="mt-3 text-sm leading-7 text-ink-200">Observed {new Date(verification.checkedAt).toUTCString()}. This is a recorded CLI run; the live backing observation below is separate.</p><p className="mt-3 text-xs leading-6 text-ink-300">Checks: registry, gateway wiring, runtime bytecode, cross-chain conservation, recorded receipts and guardian signatures. No guarantee of future liquidity or undiscovered-bug absence.</p><a className="mt-5 inline-block text-sm text-ember-300 underline underline-offset-4" href={repoFile(verification.source)}>Inspect the recorded verifier output ↗</a></Panel><Panel className="p-6"><H2>Follow the actual lifecycle</H2><ol className="mt-5 space-y-4 text-sm text-ink-200">{["MUSD → native savings → wrapper shares", "Mezo custody → signed ISSUE → Base receipt", "Transfer to another holder → burn receipt", "Signed REDEEM → release or pending settlement", "Recipient recovery and negative-message checks"].map((s, i) => <li className="flex gap-3" key={s}><span className="num text-ember-400">0{i + 1}</span>{s}</li>)}</ol><div className="mt-5 flex flex-wrap gap-4 text-sm underline underline-offset-4"><Link href="/contracts">v2 contract identities</Link><Link href="/docs/verifier">Verifier scope</Link></div></Panel></section>
         <section className="space-y-5" aria-labelledby="live">
           <H2 id="live">Live backing</H2>

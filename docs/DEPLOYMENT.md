@@ -280,3 +280,36 @@ node scripts/sync-web-data.mjs
 - No mainnet deployment.
 - No changes to the v1 contracts; they have no admin.
 - No testnet loan repayment without separate approval (`docs/LOAN_AUDIT.md`).
+
+## Market layer on Base Sepolia (Wave 2)
+
+The destination venue runs on Morpho's existing, permissionless Base Sepolia deployment. No Reach admin key is involved in the v2 core; the operator below only owns the curated vault.
+
+| Piece | Contract |
+|---|---|
+| Price | `ReachNavOracle`: guardian-attested wrapper NAV held by the v2 destination gateway, 10% haircut, 72 h freshness |
+| Market | Morpho Blue `0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb`: loan USDC (Circle), collateral rwSMUSD, Adaptive Curve IRM, 77% LLTV |
+| Liquidity | Reach USDC Vault: Morpho Vault V2 from factory `0xE3a2…2ea0`, adapter from `0xa246…a3D5`, deposits routed to the market, 10% performance fee to the treasury |
+
+```bash
+cd packages/contracts
+# 1. Rehearse against a live Base Sepolia fork (no funds needed)
+FOUNDRY_PROFILE=markets RUN_FORK_BASE_SEPOLIA=true forge test --match-contract ReachMarketsForkTest
+# 2. Deploy (writes deployments/testnet-markets.json)
+FOUNDRY_PROFILE=markets forge script script/DeployReachMarkets.s.sol --rpc-url https://sepolia.base.org \
+  --broadcast --private-key "$REACH_PRIVATE_KEY"   # after: set -a; . ../../.env; set +a
+# 3. Verify the oracle
+FOUNDRY_PROFILE=markets forge verify-contract <oracle> src/base/ReachNavOracle.sol:ReachNavOracle \
+  --verifier blockscout --verifier-url https://base-sepolia.blockscout.com/api/ --guess-constructor-args --rpc-url https://sepolia.base.org
+cd ../..
+# 4. Fresh NAV, then the public market run (issue -> lend -> collateral -> borrow -> repay)
+pnpm --filter @musd-reach/scripts exec tsx nav-keeper.ts --force
+pnpm --filter @musd-reach/scripts exec tsx markets-proof.ts --musd=200 --usdc=30
+node scripts/sync-web-data.mjs
+```
+
+**Keeper.** `.github/workflows/keeper.yml` pings the API every 10 minutes (Render's free plan never sleeps) and refreshes NAV every 12 hours. Keys live in the git-ignored project `.env` (`REACH_PRIVATE_KEY`, `REACH_KEEPER_KEY`), which the scripts load automatically. GitHub Actions cannot read that file, so also add the `REACH_KEEPER_KEY` value as a repository secret; the key needs only a little testnet BTC on Mezo and Sepolia ETH on Base.
+
+### Contract verification
+
+All v2 contracts are source-verified: `ReachSavingsWrapper` and `ReachSourceGateway` on the Mezo testnet explorer, `ReachDestinationGateway` and `RemoteWrapperReceipt` on Base Sepolia Blockscout. Solidity sources are pinned to LF in `.gitattributes`, because CRLF checkouts change the metadata hash.

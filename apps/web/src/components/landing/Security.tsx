@@ -39,7 +39,7 @@ export function Security() {
           }
           lede={
             <p>
-              Reach is testnet software that has not had an independent audit. Automated tests and static analysis reduce risk; they do not replace a professional review. Here is the honest boundary.
+              Reach has no admin key over your funds, no upgradeable proxy and no pause on exits. Every message is guardian-signed, bound to its chains and consumed once. Here is exactly what you rely on, and what you never have to.
             </p>
           }
         />

@@ -4,6 +4,19 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { WagmiProvider, useConnectors, useReconnect } from "wagmi";
 import { useEffect, useRef, useState, type ReactNode } from "react";
 import { wagmiConfig } from "@/lib/wagmi";
+import { apiUrl } from "@/lib/reach";
+
+/** Free hosting sleeps the history API when idle. Wake it on first page load, in the
+ * background, so it is ready by the time a visitor opens history or a transfer tracker. */
+function WakeApi() {
+  useEffect(() => {
+    if (!apiUrl) return;
+    const ctl = new AbortController();
+    fetch(`${apiUrl}/health`, { cache: "no-store", signal: ctl.signal }).catch(() => {});
+    return () => ctl.abort();
+  }, []);
+  return null;
+}
 
 /** Restore only the wallet the user selected. Wagmi's default reconnect scans every
  * authorized connector and can otherwise fall through to a different installed wallet.
@@ -47,6 +60,7 @@ export function Providers({ children }: { children: ReactNode }) {
     <WagmiProvider config={wagmiConfig} reconnectOnMount={false}>
       <QueryClientProvider client={queryClient}>
         <RestoreSelectedWallet />
+        <WakeApi />
         {children}
       </QueryClientProvider>
     </WagmiProvider>

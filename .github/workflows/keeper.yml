@@ -1,0 +1,54 @@
+name: keeper
+
+# Free operations for a free-tier deployment:
+#  - keep-warm: Render's free plan sleeps the API after 15 idle minutes (first request then
+#    takes ~75 s). A ping every 10 minutes keeps it awake within the free 750 h/month.
+#  - nav: refreshes the authenticated rwSMUSD NAV on Base so the Morpho market's oracle stays
+#    inside its 72 h freshness window. Permissionless calls; the keeper key holds only gas.
+on:
+  schedule:
+    - cron: "*/10 * * * *"
+    - cron: "17 */12 * * *"
+  workflow_dispatch:
+    inputs:
+      force_nav:
+        description: "Publish and deliver a NAV snapshot even if the current one is fresh"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: keeper-${{ github.event.schedule || 'manual' }}
+  cancel-in-progress: false
+
+jobs:
+  keep-warm:
+    if: github.event.schedule == '*/10 * * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Ping API
+        run: curl -sS --max-time 150 --retry 2 -o /dev/null -w "api %{http_code} in %{time_total}s\n" https://musd-reach-api.onrender.com/health
+      - name: Ping web
+        run: curl -sS --max-time 60 -o /dev/null -w "web %{http_code} in %{time_total}s\n" https://musd-reach.vercel.app/
+
+  nav:
+    if: github.event.schedule == '17 */12 * * *' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile --filter "@musd-reach/scripts..."
+      - name: Refresh NAV if stale
+        env:
+          REACH_KEEPER_KEY: ${{ secrets.REACH_KEEPER_KEY }}
+          MEZO_TESTNET_RPC: https://rpc.test.mezo.org
+          BASE_SEPOLIA_RPC: https://sepolia.base.org
+        run: pnpm --filter @musd-reach/scripts exec tsx nav-keeper.ts ${{ inputs.force_nav && '--force' || '' }}

@@ -16,6 +16,8 @@ const tabs = [
   { href: "/app", label: "Portfolio" },
   { href: "/app/wrap", label: "Wrap" },
   { href: "/app/portable/new", label: "Make portable" },
+  { href: "/app/borrow", label: "Borrow" },
+  { href: "/app/lend", label: "Lend" },
   { href: "/app/redeem", label: "Redeem" },
   { href: "/app/history", label: "History" },
 ];
@@ -79,12 +81,12 @@ export function useGate() {
 // Amount input with exact parsing (no floats) and max button
 // ---------------------------------------------------------------------------
 
-export function AmountField({ label, unit, value, onChange, max, disabled, id }: { label: string; unit: string; value: string; onChange: (v: string) => void; max?: bigint | null; disabled?: boolean; id: string }) {
+export function AmountField({ label, unit, value, onChange, max, disabled, id, decimals = 18 }: { label: string; unit: string; value: string; onChange: (v: string) => void; max?: bigint | null; disabled?: boolean; id: string; decimals?: number }) {
   let error: string | null = null;
   let parsed: bigint | null = null;
   if (value.trim()) {
     try {
-      parsed = parseAmount(value);
+      parsed = parseAmount(value, decimals);
       if (parsed === 0n) error = "Enter an amount above zero.";
       else if (max !== undefined && max !== null && parsed > max) error = "More than your available balance.";
     } catch (e) {
@@ -99,7 +101,7 @@ export function AmountField({ label, unit, value, onChange, max, disabled, id }:
         </label>
         {max !== undefined && (
           <span className="text-xs text-ink-400">
-            Available <span className="num text-ink-200">{max === null ? "—" : formatAmount(max, 18, 6)}</span>
+            Available <span className="num text-ink-200">{max === null ? "—" : formatAmount(max, decimals, 6)}</span>
           </span>
         )}
       </div>
@@ -118,7 +120,7 @@ export function AmountField({ label, unit, value, onChange, max, disabled, id }:
         />
         <span className="mr-2 text-sm text-ink-300">{unit}</span>
         {max !== undefined && max !== null && max > 0n && (
-          <button type="button" disabled={disabled} onClick={() => onChange(formatAmount(max, 18, 18).replace(/,/g, ""))} className="rounded-xs border border-ink-600 px-2 py-1 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ink-200 hover:border-ember-500 hover:text-ember-300">
+          <button type="button" disabled={disabled} onClick={() => onChange(formatAmount(max, decimals, decimals).replace(/,/g, ""))} className="rounded-xs border border-ink-600 px-2 py-1 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ink-200 hover:border-ember-500 hover:text-ember-300">
             Max
           </button>
         )}
@@ -132,11 +134,11 @@ export function AmountField({ label, unit, value, onChange, max, disabled, id }:
   );
 }
 
-export function useAmount() {
+export function useAmount(decimals = 18) {
   const [value, setValue] = useState("");
   let parsed: bigint | null = null;
   try {
-    parsed = value.trim() ? parseAmount(value) : null;
+    parsed = value.trim() ? parseAmount(value, decimals) : null;
   } catch {
     parsed = null;
   }

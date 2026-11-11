@@ -19,6 +19,14 @@ remappings = [
   "test/vendor/mezo-savings/:@openzeppelin/=test/vendor/mezo-savings/@openzeppelin/",
 ]
 
+# Base Sepolia market layer (oracle + Morpho market + Vault V2). Morpho's deployed contracts use
+# Cancun opcodes, so simulations against them need a Cancun EVM. Separate output keeps the
+# london artifacts that the v2 bytecode verifier compares against untouched.
+[profile.markets]
+evm_version = "cancun"
+out = "out-markets"
+cache_path = "cache-markets"
+
 [profile.default.fuzz]
 runs = 512
 

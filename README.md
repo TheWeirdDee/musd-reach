@@ -8,7 +8,15 @@ The goal is cross-chain utility without automatically unwinding the original sav
 
 **Deployment: Mezo testnet + Base Sepolia**
 
-[Live app](https://musd-reach.vercel.app/app) | [Public proof](https://musd-reach.vercel.app/proof) | [Docs](https://musd-reach.vercel.app/docs) | [Contract registry](https://musd-reach.vercel.app/contracts) | [API health](https://musd-reach-api.onrender.com/health)
+[Live app](https://musd-reach.vercel.app/app) | [Try it in 5 minutes](https://musd-reach.vercel.app/start) | [Public proof](https://musd-reach.vercel.app/proof) | [Docs](https://musd-reach.vercel.app/docs) | [Contract registry](https://musd-reach.vercel.app/contracts) | [API health](https://musd-reach-api.onrender.com/health)
+
+## Test it yourself
+
+Free testnet tokens only. Full step-by-step guide, including where to get every token: **[docs/USER_TESTING.md](docs/USER_TESTING.md)**.
+
+1. **Get tokens.** Base Sepolia ETH from the [Coinbase faucet](https://portal.cdp.coinbase.com/products/faucet), Base Sepolia USDC from [faucet.circle.com](https://faucet.circle.com), and, for the full loop, Mezo testnet BTC from [faucet.test.mezo.org](https://faucet.test.mezo.org) plus MUSD from a loan at [testnet.mezo.org/borrow](https://testnet.mezo.org/borrow) (minimum 1,800 MUSD).
+2. **Lend (5 minutes).** Deposit USDC at [/app/lend](https://musd-reach.vercel.app/app/lend). It funds borrowers whose collateral is Mezo savings.
+3. **Full loop (about 45 minutes).** [Make savings portable](https://musd-reach.vercel.app/app/portable/new) on Mezo, [borrow USDC](https://musd-reach.vercel.app/app/borrow) on Base against your rwSMUSD, repay, then [redeem](https://musd-reach.vercel.app/app/redeem) back to Mezo.
 
 ## The problem
 

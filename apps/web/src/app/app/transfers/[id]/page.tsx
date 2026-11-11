@@ -320,6 +320,13 @@ function Tracker() {
             , read independently from chain. {issue ? "" : settlementModel === "pending-v2" ? "If a MUSD settlement is pending, it is shown above." : "In this deployment, if MUSD was requested and the vault could not pay your minimum, wSMUSD was delivered instead."}
           </Notice>
         )}
+        {delivered && issue && (
+          <Panel className="space-y-3 p-5">
+            <p className="font-medium text-bone-50">Put it to work</p>
+            <p className="text-sm leading-6 text-ink-300">Your rwSMUSD is live on Base and your savings keep earning on Mezo. Post it as collateral and borrow USDC.</p>
+            <Link href="/app/borrow" className="inline-flex h-11 items-center gap-2 rounded-sm bg-ember-500 px-5 text-[0.9375rem] font-medium text-ink-950 hover:bg-ember-400">Borrow against it <Arrow /></Link>
+          </Panel>
+        )}
         <Link href="/app/history" className="inline-flex items-center gap-2 text-sm text-ink-300 hover:text-bone-100">
           All transfers <Arrow />
         </Link>

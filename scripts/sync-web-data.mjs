@@ -36,8 +36,13 @@ const data = {
     .map((p) => read(p)),
   publicRuns: runs("evidence/real-chain").filter((r) => r.kind === "PUBLIC_TESTNET_RUN"),
   rehearsals: runs("evidence/fork-rehearsal").filter((r) => r.kind === "LOCAL_FORK_REHEARSAL"),
+  // Base Sepolia market layer: NAV oracle, Morpho Blue rwSMUSD/USDC market, Reach USDC Vault.
+  markets: existsSync(join(root, "deployments", "testnet-markets.json"))
+    ? read(join(root, "deployments", "testnet-markets.json"))
+    : null,
+  marketRuns: runs("evidence/markets").filter((r) => r.kind === "PUBLIC_TESTNET_MARKETS_RUN"),
 };
 const out = join(root, "apps/web/src/generated/site-data.json");
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, JSON.stringify(data, null, 2) + "\n");
-console.log(`site data: deployment=${data.deployment ? "yes" : "none"} public=${data.publicRuns.length} rehearsals=${data.rehearsals.length}`);
+console.log(`site data: deployment=${data.deployment ? "yes" : "none"} markets=${data.markets ? "yes" : "none"} public=${data.publicRuns.length} marketRuns=${data.marketRuns.length} rehearsals=${data.rehearsals.length}`);

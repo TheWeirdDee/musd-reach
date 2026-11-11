@@ -246,6 +246,22 @@ export function registerRoutes(
 
   app.get("/v1/integrations", async () => toJson({ integrations }));
 
+  // Adoption counters derived from indexed chain events (cross-chain transfers only; market
+  // activity on Base is counted by the web app straight from Morpho and vault logs).
+  app.get("/v1/stats", async (_req, reply) => {
+    if (!d) return notDeployed(reply);
+    const r = await db.query(
+      `SELECT
+         COUNT(*)::int AS transfers,
+         COUNT(*) FILTER (WHERE direction = 'ISSUE')::int AS issues,
+         COUNT(*) FILTER (WHERE direction = 'REDEEM')::int AS redemptions,
+         COALESCE(SUM(shares) FILTER (WHERE direction = 'ISSUE'), 0)::text AS issued_shares,
+         (SELECT COUNT(DISTINCT w)::int FROM (SELECT lower(sender) AS w FROM transfers UNION SELECT lower(recipient) FROM transfers) a) AS wallets
+       FROM transfers`,
+    );
+    return toJson(r.rows[0]);
+  });
+
   const evidenceDirs = ["evidence/real-chain", "evidence/fork-rehearsal"];
   app.get("/v1/proof", async () => {
     const runs = evidenceDirs.flatMap((dir) => {

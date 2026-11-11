@@ -5,6 +5,8 @@ import { ContentPage, H2, Prose } from "@/components/site/Page";
 import { Chip, Notice } from "@/components/ui/primitives";
 import { statusLabel, statusTone } from "@/lib/status";
 import { repoFile } from "@/lib/links";
+import { markets } from "@/lib/markets";
+import { explorer } from "@/lib/reach";
 
 export const metadata: Metadata = { title: "Integrations" };
 
@@ -12,14 +14,20 @@ export default function IntegrationsPage() {
   return (
     <ContentPage
       kicker="Integrations"
-      title="What actually accepts rwSMUSD today"
-      lede={<p>Statuses only move when there is evidence. Permissionless compatibility is not adoption, and a team-run harness is not a partner.</p>}
+      title="Where rwSMUSD works today"
+      lede={<p>rwSMUSD is a plain ERC-20 with permit, priced by a Wormhole-attested savings NAV. Every status below links to on-chain evidence.</p>}
     >
       <div className="space-y-6">
         <section className="grid gap-5 lg:grid-cols-2"><div className="rounded-md border border-ink-700 bg-ink-900 p-6"><H2>A transferable savings claim</H2><p className="mt-4 text-sm leading-7 text-ink-200">One rwSMUSD unit represents one wSMUSD unit locked on Mezo. An application may hold or transfer the ERC-20 receipt on Base Sepolia, then burn it to request a return. The savings principal stays in the native Mezo vault.</p><Link href="/docs/tokens" className="mt-4 inline-block text-sm text-ember-300 underline underline-offset-4">Understand the four tokens →</Link></div><div className="rounded-md border border-ink-700 bg-ink-900 p-6"><H2>Compatibility needs a policy</H2><p className="mt-4 text-sm leading-7 text-ink-200">NAV is an indicative asset value, not a market price or a peg. Check the exact token, gateway wiring, backing and observation freshness. Budget for an asynchronous redemption; do not assume instant Base liquidity.</p><Link href="/developers" className="mt-4 inline-block text-sm text-ember-300 underline underline-offset-4">Developer integration portal →</Link></div></section>
-        <Notice tone="pending" title="Borrowing is not available">
-          No lending market accepting rwSMUSD exists on any public network. We will not show a borrow action until a funded market, a reviewed oracle and a demonstrated liquidation path exist.
-        </Notice>
+        {markets ? (
+          <Notice tone="verified" title="Live: borrow USDC against rwSMUSD on Morpho Blue (Base Sepolia)">
+            Market <a className="underline underline-offset-4" href={`https://app.morpho.org/base-sepolia/market/${markets.marketId}`} target="_blank" rel="noreferrer">{markets.marketId.slice(0, 10)}…</a> at {Number(markets.lltv) / 1e16}% LLTV, priced by <a className="underline underline-offset-4" href={explorer.baseAddress(markets.oracle)} target="_blank" rel="noreferrer">ReachNavOracle</a>, funded by the <a className="underline underline-offset-4" href={explorer.baseAddress(markets.vault)} target="_blank" rel="noreferrer">Reach USDC Vault</a> (Morpho Vault V2). <Link className="underline underline-offset-4" href="/app/borrow">Borrow</Link> · <Link className="underline underline-offset-4" href="/app/lend">Lend</Link>
+          </Notice>
+        ) : (
+          <Notice tone="pending" title="Morpho market opening">
+            The Base Sepolia market (Morpho Blue, Reach USDC Vault, ReachNavOracle) passes against a live Base Sepolia fork and is being deployed.
+          </Notice>
+        )}
         <ul className="space-y-4">
           {integrations.map((i) => (
             <li key={i.id} className="rounded-md border border-ink-700 bg-ink-900 p-6">
@@ -57,7 +65,7 @@ export default function IntegrationsPage() {
             </li>
           ))}
         </ul>
-        <section className="space-y-5 pt-5"><H2>Capability and adoption matrix</H2><div role="region" aria-label="Capability and adoption matrix" tabIndex={0} className="overflow-x-auto rounded-md border border-ink-700"><table className="w-full min-w-[38rem] text-left text-sm"><thead><tr>{["Capability", "Evidence level", "What that means"].map((h) => <th className="border-b border-ink-700 p-4 font-medium" scope="col" key={h}>{h}</th>)}</tr></thead><tbody className="divide-y divide-ink-700">{[["Receipt hold, transfer and redemption", "Public-testnet verified", "Recorded v2 lifecycle; inspect each transaction in Proof."], ["Morpho Blue market path", "Fork-tested", "Acceptance, borrow and liquidation on a local Base mainnet fork only."], ["Ordinary ERC-20 interfaces", "Technically compatible", "18-decimal transfers and permit at contract level; no blanket application endorsement."], ["Independent receiving application", "Not integrated", "No independent application has been demonstrated to accept the receipt."], ["Public borrowing market", "Blocked", "No funded market, reviewed oracle, curator or public liquidation setup."], ["Additional remote chains", "Proposed / out of scope", "No deployment or public evidence beyond Base Sepolia."]].map(([capability, status, detail]) => <tr key={capability}><th scope="row" className="p-4 font-medium">{capability}</th><td className="p-4 text-sand-300">{status}</td><td className="p-4 leading-7 text-ink-200">{detail}</td></tr>)}</tbody></table></div></section>
+        <section className="space-y-5 pt-5"><H2>Capability and adoption matrix</H2><div role="region" aria-label="Capability and adoption matrix" tabIndex={0} className="overflow-x-auto rounded-md border border-ink-700"><table className="w-full min-w-[38rem] text-left text-sm"><thead><tr>{["Capability", "Evidence level", "What that means"].map((h) => <th className="border-b border-ink-700 p-4 font-medium" scope="col" key={h}>{h}</th>)}</tr></thead><tbody className="divide-y divide-ink-700">{[["Receipt hold, transfer and redemption", "Public-testnet verified", "Recorded v2 lifecycle; inspect each transaction in Proof."], ["Morpho Blue market", markets ? "Live on Base Sepolia" : "Fork-tested", markets ? "rwSMUSD/USDC market at 77% LLTV with ReachNavOracle; borrow and repay from the app." : "Acceptance, borrow and liquidation tested against live Morpho on a fork."], ["Ordinary ERC-20 interfaces", "Technically compatible", "18-decimal transfers and permit at contract level; no blanket application endorsement."], ["Reach USDC Vault (Morpho Vault V2)", markets ? "Live on Base Sepolia" : "Fork-tested", "Curated lending into the rwSMUSD market; 10% performance fee to the Reach treasury."], ["Other Base protocols", "Open to integrate", "Plain ERC-20 with permit plus a public NAV oracle; any Morpho curator or Base lender can list it."], ["Mainnet", "Next milestone", "Mezo mainnet to Base after an external audit, borrowing native MUSD on Base."]].map(([capability, status, detail]) => <tr key={capability}><th scope="row" className="p-4 font-medium">{capability}</th><td className="p-4 text-sand-300">{status}</td><td className="p-4 leading-7 text-ink-200">{detail}</td></tr>)}</tbody></table></div></section>
         <section className="space-y-5 pt-5"><H2>Before an application accepts rwSMUSD</H2><Prose><ol className="list-decimal space-y-3 pl-5"><li>Pin the current v2 receipt and verify receipt.gateway, sourceGateway, peer chains and wrapper.</li><li>Reconcile custody against receipt supply, in-flight messages and pending MUSD settlements.</li><li>Enforce a NAV freshness and decimal-scaling policy; stop on missing or stale oracle data.</li><li>Price redemption delay, native-vault impairment, guardian trust and available liquidity.</li><li>Ensure the recipient can initiate pending-settlement recovery. Contracts unable to do so face the F-04 limitation.</li><li>Exercise failures and liquidation on a labelled test environment before making any public availability claim.</li></ol></Prose><div className="flex flex-wrap gap-5 text-sm underline underline-offset-4"><Link href="/docs/integration-example">Integration walkthrough</Link><Link href="/docs/nav">NAV and oracle policy</Link><Link href="/docs/recovery">Recovery model</Link><Link href="/docs/risks">Trust assumptions</Link></div></section>
       </div>
     </ContentPage>

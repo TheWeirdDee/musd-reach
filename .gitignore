@@ -15,6 +15,8 @@ keystore/
 # Foundry
 packages/contracts/out/
 packages/contracts/cache/
+packages/contracts/out-markets/
+packages/contracts/cache-markets/
 # Script broadcast logs are not evidence; evidence/ holds curated, verified records.
 packages/contracts/broadcast/
 
