@@ -93,7 +93,7 @@
     "status": "NOT_DEPLOYED"
   },
   "morpho": {
-    "$comment": "Base MAINNET facts used for labelled local-fork compatibility tests only. No Reach market exists.",
+    "$comment": "Base MAINNET facts used for labelled local-fork compatibility tests. The live testnet market is in deployments/testnet-markets.json.",
     "morphoBlue": "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
     "adaptiveCurveIrm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
     "usdc": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",

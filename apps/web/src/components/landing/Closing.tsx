@@ -152,7 +152,7 @@ const faqs = [
   ["Can a message get stuck?", "A signed message can always be delivered later; there is no expiry. Anyone, including you in this app, can deliver it. Funds are never refunded on a timeout, because the remote receipt could still be minted."],
   ["What if Mezo's vault can't pay out MUSD?", settlementCopy.faq],
   ["Can I borrow against rwSMUSD?", "Yes. On Base Sepolia, rwSMUSD is collateral in a Morpho Blue market priced by a Wormhole-attested savings NAV (77% LLTV after a 10% haircut). Borrow USDC from the Borrow tab while the savings keep accruing on Mezo; repay any time and redeem back to Mezo."],
-  ["How is it secured?", "95 Foundry unit, fuzz, invariant and fork tests (including the full market on a live Base Sepolia fork), a Slither pass, an internal review with every finding fixed, source-verified contracts and a chain-only verifier anyone can run. An external audit is the gate before mainnet."],
+  ["How is it secured?", "92 Foundry unit, fuzz, invariant and fork tests (including the full market on a live Base Sepolia fork), a Slither pass, an internal review with every finding fixed, source-verified contracts and a chain-only verifier anyone can run. An external audit is the gate before mainnet."],
   ["How does Reach make money?", "Making savings portable and redeeming them is free: you pay only network gas. Reach earns a 10% performance fee on the interest the Reach USDC Vault earns from borrowers, so it earns only when Mezo savings are put to work."],
 ];
 

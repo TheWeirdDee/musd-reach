@@ -26,7 +26,7 @@ Use any browser wallet that supports custom networks (Rabby, MetaMask, Coinbase 
 
 | You need | Where | How |
 |---|---|---|
-| **Base Sepolia ETH** (gas on Base) | https://portal.cdp.coinbase.com/products/faucet | Sign in, choose **Base Sepolia** and **ETH**, paste your address, click **Claim**. Backups: https://www.alchemy.com/faucets/base-sepolia and https://console.optimism.io/faucet |
+| **Base Sepolia ETH** (gas on Base) | https://console.optimism.io/faucet | Sign in with GitHub, pick **Base Sepolia**, paste your address, click **Claim** (once every 24 hours). 0.01 ETH covers far more than this guide needs. Backups: https://portal.cdp.coinbase.com/products/faucet (Coinbase account) and https://www.alchemy.com/faucets/base-sepolia (needs a small mainnet ETH balance). |
 | **Base Sepolia USDC** (to lend or repay) | https://faucet.circle.com | Choose **USDC**, network **Base Sepolia**, paste your address, click **Send**. Repeat after the cooldown if you need more. |
 | **Mezo testnet BTC** (gas and collateral on Mezo; Path B only) | https://faucet.test.mezo.org | Paste your address and request BTC. |
 | **Mezo testnet MUSD** (Path B only) | https://testnet.mezo.org/borrow | Connect on Mezo testnet and open a loan. The **minimum loan is 1,800 MUSD**. With BTC at about $74,000 on testnet, post **at least 0.04 BTC** as collateral to stay above the 150% collateral ratio. |

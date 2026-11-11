@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-11-11T10:30:37.541Z",
+  "generatedAt": "2026-11-11T16:29:51.936Z",
   "deployment": {
     "baseChainId": 84532,
     "deployer": "0x0F579957D94D1D12Fbb0dE3A495180629098Efe6",
@@ -1542,6 +1542,177 @@
       ]
     }
   ],
-  "markets": null,
-  "marketRuns": []
+  "markets": {
+    "chainId": 84532,
+    "collateralToken": "0x02777A938e69f848d4413b9033D225f0D1444e89",
+    "curator": "0x90f08c7A949950AA11cF5D64948e9d59b798f1E0",
+    "deployBlock": 57457361,
+    "haircutBps": 1000,
+    "irm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
+    "lltv": 770000000000000000,
+    "loanToken": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+    "marketId": "0x040e75a07e0c03497bff9f3c407882919b371d37764bba822227b73f174b72c4",
+    "morpho": "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+    "navMaxAge": 259200,
+    "oracle": "0xB6f647122EABfa6f7f648E484e62f30d8D2A1817",
+    "performanceFee": 100000000000000000,
+    "treasury": "0x90f08c7A949950AA11cF5D64948e9d59b798f1E0",
+    "vault": "0x30f9Bd5721164d8864E58359c96BD058E55Faab8",
+    "vaultAdapter": "0xF4b5cB5B693B92CE18D1dF63131753940C9351d3",
+    "createMarketTx": "0x40acf08d8a8071766adc265a85d6bc6f4ef4ebd6d5cabad29496f1ed405f4e4d"
+  },
+  "marketRuns": [
+    {
+      "kind": "PUBLIC_TESTNET_MARKETS_RUN",
+      "runId": "markets-2026-11-11T16-25-38-477Z",
+      "startedAt": "2026-11-11T16:26:41.519Z",
+      "account": "0x90f08c7A949950AA11cF5D64948e9d59b798f1E0",
+      "markets": {
+        "chainId": 84532,
+        "collateralToken": "0x02777A938e69f848d4413b9033D225f0D1444e89",
+        "curator": "0x90f08c7A949950AA11cF5D64948e9d59b798f1E0",
+        "deployBlock": 57457361,
+        "haircutBps": 1000,
+        "irm": "0x46415998764C29aB2a25CbeA6254146D50D22687",
+        "lltv": 770000000000000000,
+        "loanToken": "0x036CbD53842c5426634e7929541eC2318f3dCF7e",
+        "marketId": "0x040e75a07e0c03497bff9f3c407882919b371d37764bba822227b73f174b72c4",
+        "morpho": "0xBBBBBbbBBb9cC5e90e3b3Af64bdAF62C37EEFFCb",
+        "navMaxAge": 259200,
+        "oracle": "0xB6f647122EABfa6f7f648E484e62f30d8D2A1817",
+        "performanceFee": 100000000000000000,
+        "treasury": "0x90f08c7A949950AA11cF5D64948e9d59b798f1E0",
+        "vault": "0x30f9Bd5721164d8864E58359c96BD058E55Faab8",
+        "vaultAdapter": "0xF4b5cB5B693B92CE18D1dF63131753940C9351d3"
+      },
+      "marketState": {
+        "totalSupplyAssets": "15000000",
+        "totalBorrowAssets": "3750000"
+      },
+      "steps": [
+        {
+          "id": "00",
+          "title": "Preflight: balances on both chains",
+          "chain": "offchain",
+          "status": "PASS",
+          "details": {
+            "account": "0x90f08c7A949950AA11cF5D64948e9d59b798f1E0",
+            "musd": "1800000000000000000000",
+            "usdc": "20000000",
+            "mezoGas": "3999999628868000",
+            "baseGas": "7844714192435831",
+            "musdAmount": "200000000000000000000",
+            "usdcAmount": "15000000"
+          }
+        },
+        {
+          "id": "01",
+          "title": "Approve exact MUSD to the source gateway",
+          "chain": "mezo",
+          "status": "PASS",
+          "txHash": "0xf8b7f54b0dacca9930059bd9827fbfae8c4dc1d42a0c74ce1fc4d674e0517876",
+          "explorer": "https://explorer.test.mezo.org/tx/0xf8b7f54b0dacca9930059bd9827fbfae8c4dc1d42a0c74ce1fc4d674e0517876",
+          "details": {
+            "amount": "200000000000000000000"
+          }
+        },
+        {
+          "id": "02",
+          "title": "Deposit MUSD into Mezo savings via the wrapper and lock wSMUSD (ISSUE)",
+          "chain": "mezo",
+          "status": "PASS",
+          "txHash": "0xe3e6bf3bd88768b350f2b3e6dad456a56dc63c6c73a202897b053fd8ef28c2ec",
+          "explorer": "https://explorer.test.mezo.org/tx/0xe3e6bf3bd88768b350f2b3e6dad456a56dc63c6c73a202897b053fd8ef28c2ec",
+          "details": {
+            "musd": "200000000000000000000",
+            "quotedShares": "170063364694177852191",
+            "wormholeSequence": "2"
+          }
+        },
+        {
+          "id": "03",
+          "title": "Deliver guardian-signed ISSUE on Base; rwSMUSD minted and NAV refreshed",
+          "chain": "base",
+          "status": "PASS",
+          "txHash": "0x50cbd523d2cc6c4f841426fbc8b10ffb48c8bccd7e2ba85c3029b4dee9887a95",
+          "explorer": "https://base-sepolia.blockscout.com/tx/0x50cbd523d2cc6c4f841426fbc8b10ffb48c8bccd7e2ba85c3029b4dee9887a95",
+          "details": {
+            "rwSMUSDMinted": "170063364694177852191"
+          }
+        },
+        {
+          "id": "04",
+          "title": "Approve exact USDC to the Reach USDC Vault",
+          "chain": "base",
+          "status": "PASS",
+          "txHash": "0xcc8b01748c4a2bae2721d1f13829a604191aff7ad37efc1d0496c5d0ad5b2176",
+          "explorer": "https://base-sepolia.blockscout.com/tx/0xcc8b01748c4a2bae2721d1f13829a604191aff7ad37efc1d0496c5d0ad5b2176",
+          "details": {
+            "amount": "15000000"
+          }
+        },
+        {
+          "id": "05",
+          "title": "Lend: deposit USDC into the Reach vault; routed into the rwSMUSD market",
+          "chain": "base",
+          "status": "PASS",
+          "txHash": "0x3a8393aa06c6e1ac13e4eeefc9ea4f484e7b084d13c60d6746cddf1f338dc1d1",
+          "explorer": "https://base-sepolia.blockscout.com/tx/0x3a8393aa06c6e1ac13e4eeefc9ea4f484e7b084d13c60d6746cddf1f338dc1d1",
+          "details": {
+            "deposited": "15000000",
+            "marketSupplyIncrease": "15000000",
+            "vaultShares": "15000000000000000000"
+          }
+        },
+        {
+          "id": "06",
+          "title": "Approve exact rwSMUSD to Morpho Blue",
+          "chain": "base",
+          "status": "PASS",
+          "txHash": "0x0d3f0fdf89d5c480c35a9149fd0c96353d94eff48c50768fd8438f26fc18de5f",
+          "explorer": "https://base-sepolia.blockscout.com/tx/0x0d3f0fdf89d5c480c35a9149fd0c96353d94eff48c50768fd8438f26fc18de5f",
+          "details": {
+            "amount": "170063364694177852191"
+          }
+        },
+        {
+          "id": "07",
+          "title": "Post rwSMUSD (Mezo savings claim) as Morpho collateral",
+          "chain": "base",
+          "status": "PASS",
+          "txHash": "0x11ce10ecc08798b934658520ae8728bfd24fc68bef5514dc0325280e68182b1c",
+          "explorer": "https://base-sepolia.blockscout.com/tx/0x11ce10ecc08798b934658520ae8728bfd24fc68bef5514dc0325280e68182b1c",
+          "details": {
+            "collateral": "170063364694177852191"
+          }
+        },
+        {
+          "id": "08",
+          "title": "Borrow USDC on Base against Mezo savings",
+          "chain": "base",
+          "status": "PASS",
+          "txHash": "0x7f74aaf3d37a355273f0d3f13872a881dbcd0444d06122dcf7ef6803c9d10df0",
+          "explorer": "https://base-sepolia.blockscout.com/tx/0x7f74aaf3d37a355273f0d3f13872a881dbcd0444d06122dcf7ef6803c9d10df0",
+          "details": {
+            "oraclePrice": "1058429017464702262150434",
+            "collateralValueUsdc": "179999999",
+            "maxBorrowUsdc": "138599999",
+            "borrowed": "7500000"
+          }
+        },
+        {
+          "id": "09",
+          "title": "Repay half; position stays open as a live borrower",
+          "chain": "base",
+          "status": "PASS",
+          "txHash": "0x2a1072cad7dbf2bc042ed590cc8060a63ef325916e8dac0ae273f46f94837c5e",
+          "explorer": "https://base-sepolia.blockscout.com/tx/0x2a1072cad7dbf2bc042ed590cc8060a63ef325916e8dac0ae273f46f94837c5e",
+          "details": {
+            "repaid": "3750000",
+            "borrowSharesAfter": "3750000000000"
+          }
+        }
+      ]
+    }
+  ]
 }

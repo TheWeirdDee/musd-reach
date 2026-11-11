@@ -25,6 +25,8 @@ export type MarketsDeployment = {
   treasury: Address;
   performanceFee: string | number;
   deployBlock: string | number;
+  /** Base Sepolia transaction that created the Morpho market (Morpho's app does not list testnets). */
+  createMarketTx?: Hex;
 };
 
 export type MarketRunStep = { id: string; title: string; chain: "mezo" | "base" | "offchain"; status: "PASS" | "FAIL"; txHash?: string; explorer?: string; details: Record<string, unknown> };

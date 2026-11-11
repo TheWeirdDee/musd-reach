@@ -61,7 +61,19 @@ Semantics confirmed from source and reproduced on a fork of the live vault (`tes
 | USDC | `0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913`, 6 dp |
 | Wormhole Core (Base) | `0xbebdb6C8ddC678FfA9f8748f85C815C556Dd8ac6`: chainId 30, evmChainId 8453, fee 0 |
 
-No official Base Sepolia Morpho deployment was used. Compatibility was exercised only on a **local fork of Base mainnet** (`test/fork/MorphoCompatibilityFork.t.sol`). No Reach market, lender, curator or borrower exists.
+These Base-mainnet facts back the liquidation and compatibility tests on a **local fork of Base mainnet** (`test/fork/MorphoCompatibilityFork.t.sol`).
+
+### Live market on Base Sepolia
+
+The Reach market runs on Morpho's official Base Sepolia deployment (same Morpho Blue address, Adaptive Curve IRM `0x46415998764C29aB2a25CbeA6254146D50D22687`, 77% LLTV enabled). Addresses are in `deployments/testnet-markets.json`:
+
+| Contract | Address |
+|---|---|
+| ReachNavOracle (verified) | [`0xB6f647122EABfa6f7f648E484e62f30d8D2A1817`](https://base-sepolia.blockscout.com/address/0xB6f647122EABfa6f7f648E484e62f30d8D2A1817) |
+| Morpho market (USDC loan, rwSMUSD collateral) | id `0x040e75a07e0c03497bff9f3c407882919b371d37764bba822227b73f174b72c4`, [created here](https://base-sepolia.blockscout.com/tx/0x40acf08d8a8071766adc265a85d6bc6f4ef4ebd6d5cabad29496f1ed405f4e4d) |
+| Reach USDC Vault (Morpho Vault V2, 10% performance fee) | [`0x30f9Bd5721164d8864E58359c96BD058E55Faab8`](https://base-sepolia.blockscout.com/address/0x30f9Bd5721164d8864E58359c96BD058E55Faab8) |
+
+The recorded end-to-end run (save on Mezo, deliver, lend, post collateral, borrow, repay) is `evidence/markets/markets-2026-11-11T16-25-38-477Z.json`.
 
 ## Hackathon
 

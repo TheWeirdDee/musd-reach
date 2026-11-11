@@ -72,7 +72,7 @@ export default function StartPage() {
           <p className="mt-2 text-sm text-ink-300">Base Sepolia only. Two faucets, two transactions.</p>
           <ol className="mt-5 space-y-3">
             <Step n="1" title="Get Base Sepolia ETH for gas" done={has(b.data?.eth)}>
-              Claim from the <a href="https://portal.cdp.coinbase.com/products/faucet" target="_blank" rel="noreferrer">Coinbase developer faucet</a> or the <a href="https://www.alchemy.com/faucets/base-sepolia" target="_blank" rel="noreferrer">Alchemy faucet</a>.
+              Sign in with GitHub at the <a href="https://console.optimism.io/faucet" target="_blank" rel="noreferrer">Superchain faucet</a>, pick <strong>Base Sepolia</strong> and claim. 0.01 ETH is plenty. Backup: the <a href="https://portal.cdp.coinbase.com/products/faucet" target="_blank" rel="noreferrer">Coinbase developer faucet</a>.
             </Step>
             <Step n="2" title="Get test USDC" done={has(b.data?.usdc)}>
               Choose <strong>Base Sepolia</strong> at <a href="https://faucet.circle.com" target="_blank" rel="noreferrer">faucet.circle.com</a> and paste your address.

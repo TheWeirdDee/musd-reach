@@ -129,7 +129,8 @@ async function main() {
   const maxBorrow = (collateralValue * params.lltv) / 10n ** 18n;
   const liquidity = marketAfterDep[0] - marketAfterDep[2];
   let borrowAmt = (maxBorrow * borrowBps) / 10_000n;
-  if (borrowAmt > liquidity) borrowAmt = liquidity;
+  // Leave half the market's liquidity free so lenders (and testers) can still withdraw.
+  if (borrowAmt > liquidity / 2n) borrowAmt = liquidity / 2n;
   const usdcBefore = await bal(base, params.loanToken, me.address);
   const brw = await send(base, bw, { address: m.morpho, abi: morphoAbi, functionName: "borrow", args: [params, borrowAmt, 0n, me.address, me.address] });
   const got = (await bal(base, params.loanToken, me.address)) - usdcBefore;

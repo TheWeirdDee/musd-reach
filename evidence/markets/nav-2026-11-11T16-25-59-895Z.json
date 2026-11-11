@@ -1,0 +1,13 @@
+{
+  "kind": "NAV_REFRESH",
+  "publishTx": "0x07a58c7889071048777980d37005b7e0d27eb8d8718003e2eb6187a9d73f5619",
+  "wormholeSequence": "1",
+  "deliverTx": "0xc9f95e91a8544ea7fa1c27cd69b77ded5db03413d3e1ad15d9a641345ee9619a",
+  "nav": {
+    "assets": "3528096724882340874",
+    "supply": "3000000000000000000",
+    "timestamp": "1794414342",
+    "mezoBlock": "16716937",
+    "sourceNonce": "1"
+  }
+}

@@ -180,7 +180,7 @@ export default function BorrowPage() {
               <h2 className="text-lg font-semibold tracking-[-0.02em] text-bone-50">Market</h2>
               <dl className="mt-4">
                 <Row label="Venue">Morpho Blue · Base Sepolia</Row>
-                <Row label="Market id"><Hash value={markets.marketId} href={`https://app.morpho.org/base-sepolia/market/${markets.marketId}`} /></Row>
+                <Row label="Market id"><Hash value={markets.marketId} href={markets.createMarketTx ? explorer.baseTx(markets.createMarketTx) : explorer.baseAddress(markets.morpho)} /></Row>
                 <Row label="Oracle" hint="ReachNavOracle: Wormhole-attested NAV">{<Hash value={markets.oracle} href={explorer.baseAddress(markets.oracle)} />}</Row>
                 <Row label="Collateral">{<Hash value={marketParams.collateralToken} href={explorer.baseAddress(marketParams.collateralToken)} />}</Row>
                 <Row label="Total supplied">{m ? <Amount value={m.totalSupply} unit="USDC" decimals={USDC_DECIMALS} places={2} /> : "—"}</Row>

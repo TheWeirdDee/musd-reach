@@ -20,16 +20,20 @@ export const integrations = [
   {
     id: "morpho-blue",
     name: "Morpho Blue (collateral market)",
-    network: "Base mainnet (local fork only)",
-    status: "FORK_COMPATIBILITY",
+    network: "Base Sepolia",
+    status: "PUBLIC_TESTNET_VERIFIED",
     detail:
-      "On a local Base-mainnet fork: the real Morpho Blue accepted a market with rwSMUSD collateral, USDC loan, the enabled Adaptive Curve IRM and 38.5% LLTV, priced by ReachNavOracle from authenticated NAV snapshots. Borrow limits, liquidation after an impaired NAV, the liquidator's asynchronous exit, and the stale-NAV failure mode were exercised. No Reach market exists on any public network; no lender, curator or borrower has adopted it; borrowing is not available.",
-    evidence: ["packages/contracts/test/fork/MorphoCompatibilityFork.t.sol"],
+      "Live on Base Sepolia: a Morpho Blue market (market id 0x040e75a0…72c4) lends Circle USDC against rwSMUSD collateral at 77% LLTV, priced by the verified ReachNavOracle (0xB6f6…1817) from guardian-attested Mezo savings NAV with a 10% haircut and a 72-hour freshness bound kept fresh by a scheduled keeper. Lenders deposit through the Reach USDC Vault (Morpho Vault V2, 0x30f9…Faab8), which routes every deposit into the market and pays a 10% performance fee to the Reach treasury. The recorded run made Mezo savings portable, lent USDC through the vault, posted rwSMUSD as collateral, borrowed USDC and repaid, with every step on public explorers. The same market design was also exercised on a Base-mainnet fork, including liquidation after an impaired NAV.",
+    evidence: [
+      "evidence/markets/markets-2026-11-11T16-25-38-477Z.json",
+      "evidence/markets/nav-2026-11-11T16-25-59-895Z.json",
+      "deployments/testnet-markets.json",
+      "packages/contracts/test/fork/ReachMarketsFork.t.sol",
+      "packages/contracts/test/fork/MorphoCompatibilityFork.t.sol",
+    ],
     blockers: [
-      "No MUSD/USD price feed in the oracle (MUSD valued at par).",
-      "Static haircut; no model of redemption latency or receipt liquidity.",
-      "Stale NAV blocks liquidations (Morpho oracle reverts).",
-      "No real USDC liquidity, curator or independent risk review.",
+      "Mainnet launch needs a MUSD/USD price feed in the oracle (MUSD is valued at par today).",
+      "Independent risk review of the haircut and LLTV before real liquidity.",
     ],
   },
   {
