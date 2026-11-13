@@ -1,0 +1,79 @@
+name: ci
+
+# Every push and pull request: contract tests (high fuzz/invariant runs), TypeScript typecheck and
+# tests, web lint and production build. Nightly and on demand: fork tests against live chain state
+# (Mezo mainnet, Mezo testnet, Base Sepolia, Base mainnet) over public RPCs.
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 5 * * *"
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  contracts:
+    name: Contracts (Foundry)
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/contracts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+      - run: forge --version
+      - name: Build
+        run: forge build
+      - name: Unit, fuzz and invariant tests (CI profile, 4,096 fuzz runs)
+        run: forge test -vv
+        env:
+          FOUNDRY_PROFILE: ci
+
+  forks:
+    name: Fork tests (live chain state)
+    if: github.event_name == 'schedule' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: packages/contracts
+    steps:
+      - uses: actions/checkout@v4
+      - uses: foundry-rs/foundry-toolchain@v1
+      - name: Mezo mainnet Savings Vault, Mezo testnet + Base Sepolia, Morpho on Base mainnet
+        run: forge test --match-path "test/fork/*" -vv
+        env:
+          RUN_FORK: "true"
+          RUN_FORK_MEZO_MAINNET: "true"
+          RUN_FORK_BASE_MAINNET: "true"
+      - name: Reach market lifecycle on a Base Sepolia fork (Cancun profile)
+        run: forge test --match-path test/fork/ReachMarketsFork.t.sol -vv
+        env:
+          FOUNDRY_PROFILE: markets
+          RUN_FORK_BASE_SEPOLIA: "true"
+
+  typescript:
+    name: SDK, API, verifier, scripts and web
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Typecheck every package
+        run: pnpm -r run typecheck
+      - name: SDK and API tests
+        run: pnpm -r run test
+      - name: Web lint
+        run: pnpm --filter @musd-reach/web run lint
+      - name: Web production build
+        run: node scripts/sync-web-data.mjs && pnpm --filter @musd-reach/web run build

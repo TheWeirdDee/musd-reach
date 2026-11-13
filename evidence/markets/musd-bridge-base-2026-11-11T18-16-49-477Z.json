@@ -1,0 +1,13 @@
+{
+  "kind": "PUBLIC_TESTNET_MUSD_BRIDGE",
+  "direction": "mezo->base",
+  "amount": "600000000000000000000",
+  "recipient": "0x90f08c7A949950AA11cF5D64948e9d59b798f1E0",
+  "approveTx": "0x0e42c0c5c0374fc86065a35a00784a575f2d17cb84ae2625df973966eb121437",
+  "transferTx": "0x9436d7910f0b6a71737067a192b094e830952f9ed62ba90350268ff7b83026bd",
+  "wormholeSequence": "87",
+  "deliverTx": "0xc76591278d567ff790dcf45d2b174e834a320ebad4ed17effedf75e95838a6b6",
+  "recipientBefore": "0",
+  "recipientAfter": "600000000000000000000",
+  "recordedAt": "2026-11-11T18:16:49.478Z"
+}

@@ -118,7 +118,7 @@ export default function WrapPage() {
 
   const busy = ["switching", "simulating", "signing", "pending"].includes(approve.state.phase) || ["switching", "simulating", "signing", "pending"].includes(exec.state.phase);
 
-  if (!connected) return <FlowIntro title="Wrap your Mezo savings" description="Turn MUSD or existing sMUSD into a transferable share of the Reach savings wrapper." requirements={["MUSD or sMUSD on Mezo testnet", "Testnet BTC for Mezo gas", "A supported browser wallet after the security review clears"]} steps={["Approve only the amount you enter.", "Deposit into the native vault and receive wSMUSD.", "Keep the shares on Mezo, or track their claim to Base."]} docs="/docs/first-wrap" />;
+  if (!connected) return <FlowIntro title="Save on Mezo only" description="Save MUSD (or move existing sMUSD) into Mezo's Savings Vault through Reach and keep it on Mezo as wSMUSD, a transferable savings share. Want to borrow on Base? Use Move savings to Base instead: it does this and sends the receipt in one step." requirements={["MUSD or sMUSD on Mezo testnet", "A little testnet BTC on Mezo for gas"]} steps={["Approve only the amount you enter.", "Save it in Mezo's Savings Vault and receive wSMUSD.", "Keep it on Mezo, or send it to Base later."]} docs="/docs/first-wrap" />;
 
   return (
     <>

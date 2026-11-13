@@ -13,10 +13,10 @@ import { markets } from "@/lib/markets";
 
 export function IntegrationStatus() {
   return (
-    <Reveal as="section" className="py-24 sm:py-32">
+    <Reveal as="section" className="py-16 sm:py-20">
       <div className="shell">
         <SectionHead
-          index="07"
+          index="09"
           kicker="Where rwSMUSD works"
           title={
             <>
@@ -25,13 +25,13 @@ export function IntegrationStatus() {
           }
           lede={
             <p>
-              rwSMUSD is collateral in a Morpho Blue market on Base, funded by the Reach USDC Vault. Lenders earn the interest Mezo savers pay to borrow; Reach keeps a 10% performance fee. Bridging and redeeming stay free, so Reach earns only when the savings are put to work.
+              rwSMUSD is collateral in two Morpho Blue markets on Base: borrow MUSD, Mezo&apos;s own stablecoin, or USDC. Reach-curated vaults fund both. Lenders earn the interest Mezo savers pay to borrow; Reach keeps a 10% performance fee. Bridging and redeeming stay free, so Reach earns only when the savings are put to work.
             </p>
           }
         />
         <div data-reveal className="mt-10 flex flex-wrap gap-3">
-          <ButtonLink href="/app/borrow">Borrow USDC <Arrow /></ButtonLink>
-          <ButtonLink href="/app/lend" intent="secondary">Lend USDC</ButtonLink>
+          <ButtonLink href="/app/borrow?asset=MUSD">Borrow MUSD <Arrow /></ButtonLink>
+          <ButtonLink href="/app/lend" intent="secondary">Lend MUSD or USDC</ButtonLink>
           {markets && <Chip tone="verified">Market live on Base Sepolia</Chip>}
         </div>
         <ul className="mt-14 divide-y divide-ink-700 border-y border-ink-700">
@@ -58,11 +58,11 @@ export function IntegrationStatus() {
 
 export function ProofTeaser() {
   return (
-    <Reveal as="section" className="relative overflow-hidden border-y border-ink-700 bg-ink-900 py-24 sm:py-32">
+    <Reveal as="section" className="relative overflow-hidden border-y border-ink-700 bg-ink-900 py-16 sm:py-20">
       <div className="shell grid gap-12 lg:grid-cols-[1fr_1.1fr] lg:items-center">
         <div data-reveal>
           <p className="kicker flex items-center gap-3 text-ink-300">
-            <span className="text-ember-400">08</span>
+            <span className="text-ember-400">10</span>
             <span aria-hidden className="h-px w-6 bg-ink-600" />
             Proof explorer
           </p>
@@ -108,11 +108,11 @@ if (backing.status !== "BALANCED") throw new Error("do not accept rwSMUSD");`;
 
 export function DeveloperSection() {
   return (
-    <Reveal as="section" className="py-24 sm:py-32">
+    <Reveal as="section" className="py-16 sm:py-20">
       <div className="shell grid gap-12 lg:grid-cols-[0.85fr_1.15fr] lg:items-start">
         <div data-reveal>
           <p className="kicker flex items-center gap-3 text-ink-300">
-            <span className="text-ember-400">09</span>
+            <span className="text-ember-400">11</span>
             <span aria-hidden className="h-px w-6 bg-ink-600" />
             Developer integration
           </p>
@@ -151,19 +151,19 @@ const faqs = [
   ["Who earns the savings yield?", "The wrapper, on behalf of all wSMUSD holders pro rata, including the shares locked behind every rwSMUSD. Yield you earned before wrapping existing sMUSD stays claimable in your own Mezo account."],
   ["Can a message get stuck?", "A signed message can always be delivered later; there is no expiry. Anyone, including you in this app, can deliver it. Funds are never refunded on a timeout, because the remote receipt could still be minted."],
   ["What if Mezo's vault can't pay out MUSD?", settlementCopy.faq],
-  ["Can I borrow against rwSMUSD?", "Yes. On Base Sepolia, rwSMUSD is collateral in a Morpho Blue market priced by a Wormhole-attested savings NAV (77% LLTV after a 10% haircut). Borrow USDC from the Borrow tab while the savings keep accruing on Mezo; repay any time and redeem back to Mezo."],
-  ["How is it secured?", "92 Foundry unit, fuzz, invariant and fork tests (including the full market on a live Base Sepolia fork), a Slither pass, an internal review with every finding fixed, source-verified contracts and a chain-only verifier anyone can run. An external audit is the gate before mainnet."],
-  ["How does Reach make money?", "Making savings portable and redeeming them is free: you pay only network gas. Reach earns a 10% performance fee on the interest the Reach USDC Vault earns from borrowers, so it earns only when Mezo savings are put to work."],
+  ["Can I borrow against rwSMUSD?", "Yes. On Base Sepolia, rwSMUSD is collateral in two Morpho Blue markets priced by a Wormhole-attested savings NAV (77% LLTV after a 10% haircut). Borrow MUSD or USDC from the Borrow tab while the savings keep accruing on Mezo; bring borrowed MUSD home on Mezo's own bridge, repay any time and redeem back to Mezo."],
+  ["How is it secured?", "128 Foundry unit, fuzz, invariant and fork tests (including a local fork of Mezo mainnet's Savings Vault and the full market on a Base Sepolia fork), a Slither pass, an internal review with every finding fixed, source-verified contracts and a chain-only verifier anyone can run. An external audit is the gate before mainnet."],
+  ["How does Reach make money?", "Making savings portable and redeeming them is free: you pay only network gas. Reach earns a 10% performance fee on the interest the Reach MUSD and USDC Vaults earn from borrowers, so it earns only when Mezo savings are put to work."],
 ];
 
 export function Faq() {
   const [open, setOpen] = useState<number | null>(0);
   return (
-    <section className="surface-light py-16 sm:py-24" aria-labelledby="faq-title">
+    <section className="surface-light py-14 sm:py-16" aria-labelledby="faq-title">
       <div className="shell grid items-start gap-8 lg:grid-cols-[minmax(0,0.65fr)_minmax(0,1.35fr)] lg:gap-16">
         <div className="lg:sticky lg:top-24">
           <p className="kicker flex items-center gap-3 text-ink-500">
-            <span className="text-ember-600">10</span>
+            <span className="text-ember-600">12</span>
             <span aria-hidden className="h-px w-6 bg-ink-950/20" />
             Questions
           </p>
@@ -191,30 +191,6 @@ export function Faq() {
               </div>
             </div>
           ))}
-        </div>
-      </div>
-    </section>
-  );
-}
-
-export function FinalCta() {
-  return (
-    <section className="relative overflow-hidden py-28 sm:py-36">
-      <div className="shell">
-        <div className="relative overflow-hidden rounded-lg border border-ink-700 bg-ink-900 px-6 py-16 sm:px-14 sm:py-20">
-          <div className="absolute -right-24 -top-24 h-72 w-72 rounded-full bg-ember-500/10 blur-3xl" aria-hidden />
-          <p className="kicker text-ink-300">Mezo testnet + Base Sepolia</p>
-          <h2 className="mt-5 max-w-3xl text-[length:var(--text-headline)] font-semibold leading-[var(--text-headline--line-height)] tracking-[var(--text-headline--letter-spacing)] text-bone-50">
-            Keep saving on Mezo. <span className="font-serif font-normal italic text-ember-400">Take the claim with you.</span>
-          </h2>
-          <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-4">
-            <ButtonLink href="/app" className="h-12 px-6">
-              Open the app <Arrow />
-            </ButtonLink>
-            <Link href="/risks" className="inline-flex items-center gap-2 border-b border-ink-500 pb-0.5 text-[0.9375rem] text-bone-100 hover:border-ember-500">
-              Read the risks first <Arrow />
-            </Link>
-          </div>
         </div>
       </div>
     </section>

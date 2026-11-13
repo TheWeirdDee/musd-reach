@@ -77,7 +77,7 @@ await scenario("reject-signature", { startChain: 31611, rejectSwitch: false }, a
   const btn = page.getByRole("button", { name: /Approve, then deposit|Deposit and make portable/ });
   await btn.waitFor({ timeout: 60000 });
   await btn.click();
-  await page.getByText("You rejected the request in your wallet. Nothing was sent.").first().waitFor({ timeout: 60000 });
+  await page.getByText("You cancelled in your wallet. Nothing was sent.").first().waitFor({ timeout: 60000 });
   check("reject-signature: UI states the rejection and that nothing was sent", true);
   check("reject-signature: step shows 'Rejected in wallet', not success", (await page.getByText("Rejected in wallet").count()) > 0 && (await page.getByText("Done").count()) === 0);
   check("reject-signature: no navigation to a tracker", !/\/app\/transfers\//.test(page.url()));

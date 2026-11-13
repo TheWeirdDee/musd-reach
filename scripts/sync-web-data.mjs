@@ -41,8 +41,26 @@ const data = {
     ? read(join(root, "deployments", "testnet-markets.json"))
     : null,
   marketRuns: runs("evidence/markets").filter((r) => r.kind === "PUBLIC_TESTNET_MARKETS_RUN"),
+  // Second market: borrow Mezo's canonical MUSD on Base (bridged by Mezo's Wormhole NTT).
+  marketsMusd: existsSync(join(root, "deployments", "testnet-markets-musd.json"))
+    ? read(join(root, "deployments", "testnet-markets-musd.json"))
+    : null,
+  // Mezo-testnet MUSD starter kit for testers.
+  starterKit: existsSync(join(root, "deployments", "testnet-starter-kit.json"))
+    ? read(join(root, "deployments", "testnet-starter-kit.json"))
+    : null,
+  musdBridgeRuns: runs("evidence/markets").filter((r) => r.kind === "PUBLIC_TESTNET_MUSD_BRIDGE"),
+  // Relayer-sent tester kits: MUSD + BTC gas on Mezo, ETH gas on Base (no tokens needed to start).
+  testerKits: {
+    mezo: existsSync(join(root, "deployments", "testnet-tester-kit-mezo.json")) ? read(join(root, "deployments", "testnet-tester-kit-mezo.json")) : null,
+    base: existsSync(join(root, "deployments", "testnet-tester-kit-base.json")) ? read(join(root, "deployments", "testnet-tester-kit-base.json")) : null,
+  },
+  // Mezo mainnet and Base market data behind the business model (node analysis/market-data.mjs).
+  marketSnapshot: existsSync(join(root, "analysis", "data", "market-snapshot.json"))
+    ? read(join(root, "analysis", "data", "market-snapshot.json"))
+    : null,
 };
 const out = join(root, "apps/web/src/generated/site-data.json");
 mkdirSync(dirname(out), { recursive: true });
 writeFileSync(out, JSON.stringify(data, null, 2) + "\n");
-console.log(`site data: deployment=${data.deployment ? "yes" : "none"} markets=${data.markets ? "yes" : "none"} public=${data.publicRuns.length} marketRuns=${data.marketRuns.length} rehearsals=${data.rehearsals.length}`);
+console.log(`site data: deployment=${data.deployment ? "yes" : "none"} markets=${data.markets ? "yes" : "none"} musdMarket=${data.marketsMusd ? "yes" : "none"} starterKit=${data.starterKit ? "yes" : "none"} public=${data.publicRuns.length} marketRuns=${data.marketRuns.length} rehearsals=${data.rehearsals.length}`);

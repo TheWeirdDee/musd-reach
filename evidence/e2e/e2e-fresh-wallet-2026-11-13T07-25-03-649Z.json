@@ -1,0 +1,59 @@
+{
+  "kind": "PUBLIC_TESTNET_E2E_FRESH_WALLET",
+  "runId": "e2e-fresh-wallet-2026-11-13T07-25-03-649Z",
+  "account": "0xC3307D97dFF3e322ADEE04c32449459AC5E24102",
+  "startedAt": "2026-11-13T07-25-03-649Z",
+  "steps": [
+    {
+      "id": "00",
+      "title": "Fresh wallet: nothing on either chain",
+      "chain": "offchain",
+      "status": "PASS",
+      "details": {
+        "account": "0xC3307D97dFF3e322ADEE04c32449459AC5E24102",
+        "musd": "0",
+        "mezoBtc": "0",
+        "baseEth": "0",
+        "fresh": true
+      }
+    },
+    {
+      "id": "01",
+      "title": "Route kit from /api/route-kit: MUSD + gas on Mezo, gas on Base, no signature",
+      "chain": "offchain",
+      "status": "PASS",
+      "txHash": "0x8b9a11863eaec56426a500c94dc30427d731f6431c92d39a687747da9805c89d",
+      "explorer": "https://explorer.test.mezo.org/tx/0x8b9a11863eaec56426a500c94dc30427d731f6431c92d39a687747da9805c89d",
+      "details": {
+        "response": {
+          "ok": true,
+          "mezo": {
+            "status": "sent",
+            "hash": "0x8b9a11863eaec56426a500c94dc30427d731f6431c92d39a687747da9805c89d"
+          },
+          "base": {
+            "status": "sent",
+            "hash": "0x8eac55981edc57db13ac4dded21668ed7ccf2770d6eb45953b6960e38cb3561d"
+          }
+        },
+        "musd": "25000000000000000000",
+        "mezoBtc": "20000000000000",
+        "baseEth": "100000000000000",
+        "baseTx": "https://base-sepolia.blockscout.com/tx/0x8eac55981edc57db13ac4dded21668ed7ccf2770d6eb45953b6960e38cb3561d"
+      }
+    },
+    {
+      "id": "02",
+      "title": "Mezo: save MUSD and send the receipt to Base (depositAndIssue)",
+      "chain": "mezo",
+      "status": "PASS",
+      "txHash": "0x871361fcacb9bbaa24333002c7c52d17478888d88b855dd4b87bdbd425d0b8cc",
+      "explorer": "https://explorer.test.mezo.org/tx/0x871361fcacb9bbaa24333002c7c52d17478888d88b855dd4b87bdbd425d0b8cc",
+      "details": {
+        "musd": "20000000000000000000",
+        "quotedShares": "16828226354699868621",
+        "wormholeSequence": "5"
+      }
+    }
+  ]
+}

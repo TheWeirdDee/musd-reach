@@ -5,7 +5,7 @@ import { ContentPage, H2, Prose } from "@/components/site/Page";
 import { Chip, Notice } from "@/components/ui/primitives";
 import { statusLabel, statusTone } from "@/lib/status";
 import { repoFile } from "@/lib/links";
-import { markets } from "@/lib/markets";
+import { markets, marketDefs } from "@/lib/marketData";
 import { explorer } from "@/lib/reach";
 
 export const metadata: Metadata = { title: "Integrations" };
@@ -20,8 +20,14 @@ export default function IntegrationsPage() {
       <div className="space-y-6">
         <section className="grid gap-5 lg:grid-cols-2"><div className="rounded-md border border-ink-700 bg-ink-900 p-6"><H2>A transferable savings claim</H2><p className="mt-4 text-sm leading-7 text-ink-200">One rwSMUSD unit represents one wSMUSD unit locked on Mezo. An application may hold or transfer the ERC-20 receipt on Base Sepolia, then burn it to request a return. The savings principal stays in the native Mezo vault.</p><Link href="/docs/tokens" className="mt-4 inline-block text-sm text-ember-300 underline underline-offset-4">Understand the four tokens →</Link></div><div className="rounded-md border border-ink-700 bg-ink-900 p-6"><H2>Compatibility needs a policy</H2><p className="mt-4 text-sm leading-7 text-ink-200">NAV is an indicative asset value, not a market price or a peg. Check the exact token, gateway wiring, backing and observation freshness. Budget for an asynchronous redemption; do not assume instant Base liquidity.</p><Link href="/developers" className="mt-4 inline-block text-sm text-ember-300 underline underline-offset-4">Developer integration portal →</Link></div></section>
         {markets ? (
-          <Notice tone="verified" title="Live: borrow USDC against rwSMUSD on Morpho Blue (Base Sepolia)">
-            Market <a className="underline underline-offset-4" href={markets.createMarketTx ? explorer.baseTx(markets.createMarketTx) : explorer.baseAddress(markets.morpho)} target="_blank" rel="noreferrer">{markets.marketId.slice(0, 10)}…</a> at {Number(markets.lltv) / 1e16}% LLTV, priced by <a className="underline underline-offset-4" href={explorer.baseAddress(markets.oracle)} target="_blank" rel="noreferrer">ReachNavOracle</a>, funded by the <a className="underline underline-offset-4" href={explorer.baseAddress(markets.vault)} target="_blank" rel="noreferrer">Reach USDC Vault</a> (Morpho Vault V2). <Link className="underline underline-offset-4" href="/app/borrow">Borrow</Link> · <Link className="underline underline-offset-4" href="/app/lend">Lend</Link>
+          <Notice tone="verified" title="Live: borrow MUSD or USDC against rwSMUSD on Morpho Blue (Base Sepolia)">
+            <ul className="space-y-2">
+              {marketDefs.map(({ asset, vaultName, cfg }) => (
+                <li key={asset}>
+                  <strong>{asset}</strong> market <a className="underline underline-offset-4" href={cfg.createMarketTx ? explorer.baseTx(cfg.createMarketTx) : explorer.baseAddress(cfg.morpho)} target="_blank" rel="noreferrer">{cfg.marketId.slice(0, 10)}…</a> at {Number(cfg.lltv) / 1e16}% LLTV, priced by <a className="underline underline-offset-4" href={explorer.baseAddress(cfg.oracle)} target="_blank" rel="noreferrer">ReachNavOracle</a>, funded by the <a className="underline underline-offset-4" href={explorer.baseAddress(cfg.vault)} target="_blank" rel="noreferrer">{vaultName}</a> (Morpho Vault V2). <Link className="underline underline-offset-4" href={`/app/borrow?asset=${asset}`}>Borrow</Link> · <Link className="underline underline-offset-4" href={`/app/lend?asset=${asset}`}>Lend</Link>
+                </li>
+              ))}
+            </ul>
           </Notice>
         ) : (
           <Notice tone="pending" title="Morpho market opening">

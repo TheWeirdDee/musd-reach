@@ -4,7 +4,7 @@ import Link from "next/link";
 import { Chip, EmptyState, Hash, Notice, Panel, Skeleton } from "@/components/ui/primitives";
 import { H2 } from "@/components/site/Page";
 import { explorer } from "@/lib/reach";
-import { markets, marketRuns, useMarketActivity } from "@/lib/markets";
+import { markets, marketDefs, marketRuns, useMarketActivity, type MarketRun } from "@/lib/markets";
 
 function Stat({ label, value }: { label: string; value: React.ReactNode }) {
   return (
@@ -19,13 +19,16 @@ function Stat({ label, value }: { label: string; value: React.ReactNode }) {
 export function MarketProof() {
   const act = useMarketActivity();
   if (!markets) return null;
-  const run = marketRuns[marketRuns.length - 1];
+  // Latest recorded run for each loan asset (runs before the MUSD market are USDC runs).
+  const latest = new Map<string, MarketRun>();
+  for (const r of marketRuns) latest.set(r.loanAsset ?? "USDC", r);
+  const runs = [...latest.entries()].sort(([a], [b]) => (a === "MUSD" ? -1 : b === "MUSD" ? 1 : 0));
   return (
     <section className="space-y-5" aria-labelledby="market">
-      <H2 id="market">Live market on Base Sepolia</H2>
+      <H2 id="market">Live markets on Base Sepolia</H2>
       <Panel className="p-6">
         <div className="flex flex-wrap items-center gap-3">
-          <Chip tone="verified">Morpho Blue · rwSMUSD / USDC</Chip>
+          {marketDefs.map((d) => <Chip key={d.asset} tone="verified">Morpho Blue · rwSMUSD / {d.asset}</Chip>)}
           <span className="text-xs text-ink-400">Counted from vault and Morpho logs since block {String(markets.deployBlock)}, in your browser.</span>
         </div>
         {act.isError ? (
@@ -61,10 +64,10 @@ export function MarketProof() {
           Want to be on this list? <Link className="text-bone-100 underline underline-offset-4" href="/start">Try it in ten minutes</Link>.
         </p>
       </Panel>
-      {run ? (
-        <Panel className="p-6">
+      {runs.length ? runs.map(([asset, run]) => (
+        <Panel key={asset} className="p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
-            <h3 className="text-lg font-semibold tracking-[-0.02em] text-bone-50">Recorded market run</h3>
+            <h3 className="text-lg font-semibold tracking-[-0.02em] text-bone-50">{asset === "MUSD" ? "Recorded MUSD loop: save, borrow MUSD, bring it home, save again" : "Recorded USDC market run"}</h3>
             <span className="num text-xs text-ink-400">{run.runId}</span>
           </div>
           <ol className="mt-4 divide-y divide-ink-750">
@@ -82,7 +85,7 @@ export function MarketProof() {
             ))}
           </ol>
         </Panel>
-      ) : (
+      )) : (
         <EmptyState title="Market run pending">The recorded run (save on Mezo → borrow on Base) appears here once executed.</EmptyState>
       )}
     </section>

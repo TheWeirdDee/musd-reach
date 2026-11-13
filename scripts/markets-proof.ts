@@ -3,20 +3,24 @@
  *
  *   Mezo:  MUSD → wSMUSD (native savings vault) → locked in the source gateway (ISSUE)
  *   Base:  rwSMUSD minted from the guardian-signed ISSUE
- *          USDC deposited into the Reach USDC Vault (Morpho Vault V2) → supplied to the market
- *          rwSMUSD posted as Morpho Blue collateral → USDC borrowed → partially repaid
+ *          USDC (or MUSD) deposited into the Reach vault (Morpho Vault V2) → supplied to the market
+ *          rwSMUSD posted as Morpho Blue collateral → borrowed → partially repaid
+ *   --loan=MUSD (the MUSD market) closes the loop instead of repaying:
+ *          borrowed MUSD → Mezo's canonical bridge (Wormhole NTT) → saved again on Mezo
  *
  * Every step is a real transaction checked against chain state, recorded to
  * evidence/markets/<run>.json for the website's proof pages.
  *
  *   pnpm --filter @musd-reach/scripts exec tsx markets-proof.ts \
  *     --musd=200 --usdc=30 --borrow-bps=5000
+ *   pnpm --filter @musd-reach/scripts exec tsx markets-proof.ts --loan=MUSD --musd=100 --lend=300
  */
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { encodeAbiParameters, keccak256, parseAbi, parseUnits, formatUnits, type Address, type Hex, type PublicClient, type TransactionReceipt, type WalletClient } from "viem";
 import { reachDestinationGatewayAbi, reachSavingsWrapperAbi, reachSourceGatewayAbi } from "@musd-reach/sdk";
 import { ROOT, loadAccount, makeEnv, obtainVaa, publishedFrom, writeEvidence } from "./lib/env";
+import { bridgeMusd } from "./lib/ntt";
 
 const flag = (name: string, fallback: string) => process.argv.find((a) => a.startsWith(`--${name}=`))?.split("=")[1] ?? fallback;
 
@@ -47,7 +51,11 @@ async function main() {
   const env = makeEnv("testnet");
   const { cfg, mezo, base } = env;
   const d = cfg.deployment!;
-  const m = JSON.parse(readFileSync(join(ROOT, "deployments", "testnet-markets.json"), "utf8")) as Record<string, string>;
+  const loan = flag("loan", "USDC").toUpperCase();
+  if (loan !== "USDC" && loan !== "MUSD") throw new Error("--loan must be USDC or MUSD");
+  const dec = loan === "MUSD" ? 18 : 6;
+  const sym = loan;
+  const m = JSON.parse(readFileSync(join(ROOT, "deployments", loan === "MUSD" ? "testnet-markets-musd.json" : "testnet-markets.json"), "utf8")) as Record<string, string>;
   const params = {
     loanToken: m.loanToken as Address,
     collateralToken: m.collateralToken as Address,
@@ -62,9 +70,9 @@ async function main() {
   const mw = env.mezoWallet(me);
   const bw = env.baseWallet(me);
   const musdAmount = parseUnits(flag("musd", "200"), 18);
-  const usdcAmount = parseUnits(flag("usdc", "30"), 6);
+  const usdcAmount = parseUnits(flag("lend", flag("usdc", "30")), dec);
   const borrowBps = BigInt(flag("borrow-bps", "5000"));
-  const runId = `markets-${new Date().toISOString().replace(/[:.]/g, "-")}`;
+  const runId = `markets-${loan === "MUSD" ? "musd-" : ""}${new Date().toISOString().replace(/[:.]/g, "-")}`;
   const steps: Step[] = [];
   const record = (s: Step) => {
     steps.push(s);
@@ -88,15 +96,23 @@ async function main() {
   const bal = (c: PublicClient, token: Address, who: Address) => c.readContract({ address: token, abi: erc20, functionName: "balanceOf", args: [who] });
 
   // 00 preflight
+  const resumeIssueFlag = !!flag("issue-tx", "");
   const [musd, usdc, mezoGas, baseGas] = await Promise.all([bal(mezo, cfg.mezo.musd, me.address), bal(base, params.loanToken, me.address), mezo.getBalance({ address: me.address }), base.getBalance({ address: me.address })]);
-  record({ id: "00", title: "Preflight: balances on both chains", chain: "offchain", status: musd >= musdAmount && usdc >= usdcAmount && mezoGas > 0n && baseGas > 0n ? "PASS" : "FAIL", details: { account: me.address, musd, usdc, mezoGas, baseGas, musdAmount, usdcAmount } });
+  record({ id: "00", title: "Preflight: balances on both chains", chain: "offchain", status: (resumeIssueFlag || musd >= musdAmount) && usdc >= usdcAmount && mezoGas > 0n && baseGas > 0n ? "PASS" : "FAIL", details: { account: me.address, musd, usdc, mezoGas, baseGas, musdAmount, usdcAmount } });
 
-  // 01-02 Mezo: approve + depositAndIssue
-  const approveM = await send(mezo, mw, { address: cfg.mezo.musd, abi: erc20, functionName: "approve", args: [d.sourceGateway, musdAmount] });
-  record({ id: "01", title: "Approve exact MUSD to the source gateway", chain: "mezo", status: "PASS", txHash: approveM.transactionHash, explorer: mezoTx(approveM.transactionHash), details: { amount: musdAmount } });
+  // 01-02 Mezo: approve + depositAndIssue. --issue-tx=0x… (and --approve-tx=0x…) resumes a run whose
+  // ISSUE was already sent, e.g. after a Wormhole testnet signing delay outlived the first attempt.
+  const resumeIssue = flag("issue-tx", "") as Hex | "";
+  const resumeApprove = flag("approve-tx", "") as Hex | "";
+  const approveM = resumeIssue
+    ? (resumeApprove ? await mezo.waitForTransactionReceipt({ hash: resumeApprove, timeout: 300_000, retryCount: 20 }) : null)
+    : await send(mezo, mw, { address: cfg.mezo.musd, abi: erc20, functionName: "approve", args: [d.sourceGateway, musdAmount] });
+  if (approveM) record({ id: "01", title: "Approve exact MUSD to the source gateway", chain: "mezo", status: "PASS", txHash: approveM.transactionHash, explorer: mezoTx(approveM.transactionHash), details: { amount: musdAmount } });
   const quote = await mezo.readContract({ address: d.wrapper, abi: reachSavingsWrapperAbi, functionName: "previewDeposit", args: [musdAmount] });
   const fee = await mezo.readContract({ address: d.sourceGateway, abi: reachSourceGatewayAbi, functionName: "messageFee" });
-  const issue = await send(mezo, mw, { address: d.sourceGateway, abi: reachSourceGatewayAbi, functionName: "depositAndIssue", args: [musdAmount, me.address, (quote * 995n) / 1000n], value: fee });
+  const issue = resumeIssue
+    ? await mezo.waitForTransactionReceipt({ hash: resumeIssue, timeout: 300_000, retryCount: 20 })
+    : await send(mezo, mw, { address: d.sourceGateway, abi: reachSourceGatewayAbi, functionName: "depositAndIssue", args: [musdAmount, me.address, (quote * 995n) / 1000n], value: fee });
   const published = await publishedFrom(mezo, issue, cfg.mezo.wormholeCore);
   record({ id: "02", title: "Deposit MUSD into Mezo savings via the wrapper and lock wSMUSD (ISSUE)", chain: "mezo", status: "PASS", txHash: issue.transactionHash, explorer: mezoTx(issue.transactionHash), details: { musd: musdAmount, quotedShares: quote, wormholeSequence: published.sequence } });
 
@@ -110,11 +126,11 @@ async function main() {
   // 04-05 Lend: USDC into the Reach vault
   const marketBefore = await base.readContract({ address: m.morpho as Address, abi: morphoAbi, functionName: "market", args: [marketId] });
   const approveU = await send(base, bw, { address: params.loanToken, abi: erc20, functionName: "approve", args: [m.vault, usdcAmount] });
-  record({ id: "04", title: "Approve exact USDC to the Reach USDC Vault", chain: "base", status: "PASS", txHash: approveU.transactionHash, explorer: baseTx(approveU.transactionHash), details: { amount: usdcAmount } });
+  record({ id: "04", title: `Approve exact ${sym} to the Reach ${sym} Vault`, chain: "base", status: "PASS", txHash: approveU.transactionHash, explorer: baseTx(approveU.transactionHash), details: { amount: usdcAmount } });
   const dep = await send(base, bw, { address: m.vault, abi: vaultAbi, functionName: "deposit", args: [usdcAmount, me.address] });
   const marketAfterDep = await base.readContract({ address: m.morpho as Address, abi: morphoAbi, functionName: "market", args: [marketId] });
   const routed = marketAfterDep[0] - marketBefore[0];
-  record({ id: "05", title: "Lend: deposit USDC into the Reach vault; routed into the rwSMUSD market", chain: "base", status: routed >= usdcAmount - 2n ? "PASS" : "FAIL", txHash: dep.transactionHash, explorer: baseTx(dep.transactionHash), details: { deposited: usdcAmount, marketSupplyIncrease: routed, vaultShares: await base.readContract({ address: m.vault as Address, abi: vaultAbi, functionName: "balanceOf", args: [me.address] }) } });
+  record({ id: "05", title: `Lend: deposit ${sym} into the Reach ${sym} Vault; routed into the rwSMUSD market`, chain: "base", status: routed >= usdcAmount - 2n ? "PASS" : "FAIL", txHash: dep.transactionHash, explorer: baseTx(dep.transactionHash), details: { deposited: usdcAmount, marketSupplyIncrease: routed, vaultShares: await base.readContract({ address: m.vault as Address, abi: vaultAbi, functionName: "balanceOf", args: [me.address] }) } });
 
   // 06-07 Collateral
   const approveR = await send(base, bw, { address: params.collateralToken, abi: erc20, functionName: "approve", args: [m.morpho, rw] });
@@ -134,18 +150,33 @@ async function main() {
   const usdcBefore = await bal(base, params.loanToken, me.address);
   const brw = await send(base, bw, { address: m.morpho, abi: morphoAbi, functionName: "borrow", args: [params, borrowAmt, 0n, me.address, me.address] });
   const got = (await bal(base, params.loanToken, me.address)) - usdcBefore;
-  record({ id: "08", title: "Borrow USDC on Base against Mezo savings", chain: "base", status: got === borrowAmt ? "PASS" : "FAIL", txHash: brw.transactionHash, explorer: baseTx(brw.transactionHash), details: { oraclePrice: price, collateralValueUsdc: collateralValue, maxBorrowUsdc: maxBorrow, borrowed: got } });
+  record({ id: "08", title: `Borrow ${sym} on Base against Mezo savings`, chain: "base", status: got === borrowAmt ? "PASS" : "FAIL", txHash: brw.transactionHash, explorer: baseTx(brw.transactionHash), details: { loanAsset: sym, oraclePrice: price, collateralValue, maxBorrow, borrowed: got } });
 
-  // 09 Partial repay (position stays open: a live borrower in the market)
-  const repayAmt = got / 2n;
-  await send(base, bw, { address: params.loanToken, abi: erc20, functionName: "approve", args: [m.morpho, repayAmt] });
-  const rep = await send(base, bw, { address: m.morpho, abi: morphoAbi, functionName: "repay", args: [params, repayAmt, 0n, me.address, "0x"] });
-  const posAfter = await base.readContract({ address: m.morpho as Address, abi: morphoAbi, functionName: "position", args: [marketId, me.address] });
-  record({ id: "09", title: "Repay half; position stays open as a live borrower", chain: "base", status: posAfter[1] < pos[1] || pos[1] === 0n ? "PASS" : "FAIL", txHash: rep.transactionHash, explorer: baseTx(rep.transactionHash), details: { repaid: repayAmt, borrowSharesAfter: posAfter[1] } });
+  if (loan === "MUSD") {
+    // 09-10 Close the loop: borrowed MUSD goes home over Mezo's own bridge and is saved again.
+    const sender = async (client: PublicClient, req: Record<string, unknown>) => send(client, client.chain!.id === 31611 ? mw : bw, req);
+    const mezoBefore = await bal(mezo, cfg.mezo.musd, me.address);
+    const t = await bridgeMusd(env, sender, "base", got, me.address, me.address);
+    const arrived = (await bal(mezo, cfg.mezo.musd, me.address)) - mezoBefore;
+    record({ id: "09", title: "Bring the borrowed MUSD home to Mezo over Mezo's canonical bridge (Wormhole NTT)", chain: "mezo", status: arrived === got ? "PASS" : "FAIL", txHash: t.deliver.transactionHash, explorer: mezoTx(t.deliver.transactionHash), details: { burnOnBaseTx: t.transfer.transactionHash, burnOnBaseExplorer: baseTx(t.transfer.transactionHash), wormholeSequence: t.sequence, arrived } });
+    await send(mezo, mw, { address: cfg.mezo.musd, abi: erc20, functionName: "approve", args: [d.wrapper, arrived] });
+    const sharesBefore = await bal(mezo, d.wrapper, me.address);
+    const save = await send(mezo, mw, { address: d.wrapper, abi: reachSavingsWrapperAbi, functionName: "deposit", args: [arrived, me.address] });
+    const shares = (await bal(mezo, d.wrapper, me.address)) - sharesBefore;
+    record({ id: "10", title: "Save it again: the borrowed MUSD goes back into Mezo's Savings Vault", chain: "mezo", status: shares > 0n ? "PASS" : "FAIL", txHash: save.transactionHash, explorer: mezoTx(save.transactionHash), details: { musd: arrived, wSMUSDShares: shares } });
+  } else {
+    // 09 Partial repay (position stays open: a live borrower in the market)
+    const repayAmt = got / 2n;
+    await send(base, bw, { address: params.loanToken, abi: erc20, functionName: "approve", args: [m.morpho, repayAmt] });
+    const rep = await send(base, bw, { address: m.morpho, abi: morphoAbi, functionName: "repay", args: [params, repayAmt, 0n, me.address, "0x"] });
+    const posAfter = await base.readContract({ address: m.morpho as Address, abi: morphoAbi, functionName: "position", args: [marketId, me.address] });
+    record({ id: "09", title: "Repay half; position stays open as a live borrower", chain: "base", status: posAfter[1] < pos[1] || pos[1] === 0n ? "PASS" : "FAIL", txHash: rep.transactionHash, explorer: baseTx(rep.transactionHash), details: { repaid: repayAmt, borrowSharesAfter: posAfter[1] } });
+  }
 
   const marketEnd = await base.readContract({ address: m.morpho as Address, abi: morphoAbi, functionName: "market", args: [marketId] });
   const out = writeEvidence(`evidence/markets/${runId}.json`, {
     kind: "PUBLIC_TESTNET_MARKETS_RUN",
+    loanAsset: sym,
     runId,
     startedAt: new Date().toISOString(),
     account: me.address,
@@ -153,7 +184,7 @@ async function main() {
     marketState: { totalSupplyAssets: marketEnd[0], totalBorrowAssets: marketEnd[2] },
     steps,
   });
-  console.log(`\nevidence: ${out}\nmarket supply ${formatUnits(marketEnd[0], 6)} USDC, borrowed ${formatUnits(marketEnd[2], 6)} USDC`);
+  console.log(`\nevidence: ${out}\nmarket supply ${formatUnits(marketEnd[0], dec)} ${sym}, borrowed ${formatUnits(marketEnd[2], dec)} ${sym}`);
 }
 
 main().catch((e) => {

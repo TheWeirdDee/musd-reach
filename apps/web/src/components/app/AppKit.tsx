@@ -12,13 +12,15 @@ import { phaseLabel, type TxState } from "@/lib/tx";
 import { cn } from "@/lib/cn";
 import { useWalletChainId } from "@/lib/walletChain";
 
+// In the order a saver uses them: move savings to Base, borrow, bring them home. Lenders go straight to Lend.
 const tabs = [
   { href: "/app", label: "Portfolio" },
-  { href: "/app/wrap", label: "Wrap" },
-  { href: "/app/portable/new", label: "Make portable" },
+  { href: "/app/portable/new", label: "Move savings to Base" },
   { href: "/app/borrow", label: "Borrow" },
   { href: "/app/lend", label: "Lend" },
-  { href: "/app/redeem", label: "Redeem" },
+  { href: "/app/bridge", label: "Bridge MUSD" },
+  { href: "/app/redeem", label: "Bring savings home" },
+  { href: "/app/wrap", label: "Save on Mezo only" },
   { href: "/app/history", label: "History" },
 ];
 

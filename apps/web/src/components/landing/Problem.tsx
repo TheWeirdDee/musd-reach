@@ -1,10 +1,10 @@
 import { Reveal, SectionHead } from "./Reveal";
 
-/** Public figures, DefiLlama API, read 11 Nov 2026. */
+/** Read on Mezo mainnet, 12 Nov 2026 (analysis/market-data.mjs). */
 const stats = [
-  { value: "$18.8M", label: "MUSD in circulation", note: "$16.2M on Mezo, $2.6M on Ethereum" },
-  { value: "$1.35M", label: "MUSD in the Savings Vault", note: "about 7% of supply earns the savings rate" },
-  { value: "$17.5M", label: "MUSD outside the vault", note: "the savings rate Reach can unlock for it" },
+  { value: "19.0M", label: "MUSD issued", note: "Mezo's Bitcoin-backed dollar, now bridged to Ethereum and Base" },
+  { value: "1.33M", label: "MUSD in the Savings Vault", note: "about 7% of supply; it held 7.4M until one large Mezo contract withdrew 5.25M on 5 Nov" },
+  { value: "17.7M", label: "MUSD outside the vault", note: "earning nothing from Mezo's savings fees" },
 ];
 
 const options = [
@@ -33,7 +33,7 @@ const options = [
     name: "Reach",
     principal: "Stays in Mezo's vault",
     yield: "Keeps accruing to your shares",
-    elsewhere: "rwSMUSD collateral: borrow USDC on Morpho",
+    elsewhere: "rwSMUSD collateral: borrow MUSD or USDC on Morpho",
     verdict: "Earns on Mezo, works on Base",
     reach: true,
   },
@@ -47,7 +47,7 @@ const flywheel = [
 
 export function Problem() {
   return (
-    <Reveal as="section" className="surface-light relative py-24 sm:py-32">
+    <Reveal as="section" className="surface-light relative py-16 sm:py-20">
       <div className="shell">
         <SectionHead
           light
@@ -115,7 +115,7 @@ export function Problem() {
           </ol>
         </div>
         <p data-reveal className="mt-10 max-w-3xl text-xs leading-relaxed text-ink-500">
-          Sources: DefiLlama protocol and stablecoin APIs (Mezo Vaults, Mezo USD), read 11 November 2026. Yield behaviour is read from the deployed <span className="num">MUSDSavingsRate</span> source (<span className="num">claimable = balance × (yieldIndex − userIndex)</span>) and reproduced against the live vault in fork tests.
+          Sources: Mezo mainnet, read 12 November 2026: MUSD <span className="num">totalSupply</span> 19.0M and Savings Vault <span className="num">totalSupply</span> 1.33M (7.0%), with the vault&apos;s supply at past blocks for its history; the 5.25M withdrawal is transaction <span className="num">0x700d…6605</span>, from Mezo&apos;s VaultGauge through its Enclave contract. Yield behaviour is read from the deployed <span className="num">MUSDSavingsRate</span> source (<span className="num">claimable = balance × (yieldIndex − userIndex)</span>) and reproduced against the live vault in fork tests.
         </p>
       </div>
     </Reveal>

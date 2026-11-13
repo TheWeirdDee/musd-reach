@@ -7,7 +7,8 @@ import { useGSAP } from "@gsap/react";
 import { formatAmount, shortHex } from "@musd-reach/sdk";
 import { ButtonLink, Arrow, Chip } from "@/components/ui/primitives";
 import { canonicalRun } from "@/lib/reach";
-import { markets } from "@/lib/markets";
+import { markets, musdMarket } from "@/lib/markets";
+import { LiveStats } from "./LiveStats";
 
 gsap.registerPlugin(useGSAP);
 
@@ -65,7 +66,7 @@ export function Hero() {
 
   return (
     <section ref={root} className="relative overflow-hidden" aria-labelledby="hero-title">
-      <div className="shell grid items-center gap-14 pb-20 pt-10 sm:pt-16 lg:grid-cols-[1.08fr_1fr] lg:gap-10 lg:pb-28 lg:pt-20">
+      <div className="shell grid items-center gap-14 pb-12 pt-10 sm:pt-16 lg:grid-cols-[1.08fr_1fr] lg:gap-10 lg:pb-16 lg:pt-20">
         <div>
           <p data-hero-fade className="kicker mb-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-ink-300">
             <span className="text-ember-400">MUSD savings</span>
@@ -83,14 +84,14 @@ export function Hero() {
             </span>
           </h1>
           <p data-hero-fade className="mt-7 max-w-[34rem] text-lg leading-relaxed text-ink-200 sm:text-[1.1875rem]">
-            Your MUSD keeps earning in Mezo’s Savings Vault while a backed claim on it, rwSMUSD, works as collateral in a Morpho market on Base. Borrow USDC without unwinding your savings. The deposit never leaves Mezo.
+            Your MUSD keeps earning in Mezo’s Savings Vault while a backed claim on it, rwSMUSD, works as collateral in a Morpho market on Base. Borrow MUSD or USDC without unwinding your savings. The deposit never leaves Mezo.
           </p>
           <div data-hero-fade className="mt-9 flex flex-wrap items-center gap-x-6 gap-y-4">
             <ButtonLink href="/app/borrow" className="h-12 px-6">
               Borrow against savings <Arrow />
             </ButtonLink>
             <ButtonLink href="/app/lend" intent="secondary" className="h-12 px-6">
-              Lend USDC
+              Lend to savers
             </ButtonLink>
             <Link href="/proof" className="group inline-flex items-center gap-2 text-[0.9375rem] text-bone-100">
               <span className="border-b border-ink-500 pb-0.5 transition-colors group-hover:border-ember-500">See it on-chain</span>
@@ -102,7 +103,7 @@ export function Hero() {
               <Chip tone="verified">Live on Mezo testnet + Base Sepolia</Chip>
             </li>
             <li>
-              <Chip tone={markets ? "verified" : "pending"}>{markets ? "Morpho Blue market live" : "Morpho market opening"}</Chip>
+              <Chip tone={markets ? "verified" : "pending"}>{musdMarket && markets ? "MUSD + USDC markets live" : markets ? "Morpho Blue market live" : "Morpho market opening"}</Chip>
             </li>
             <li>
               <Chip tone="verified">Contracts source-verified</Chip>
@@ -115,32 +116,32 @@ export function Hero() {
           <div className="relative grid grid-cols-1 gap-6 sm:grid-cols-2 sm:gap-4">
             <div data-card="src" className="relative z-10 rotate-[-2.5deg] rounded-md bg-bone-50 p-5 text-ink-950 shadow-lift">
               <div className="mb-3 flex items-center justify-between">
-                <span className="kicker text-ink-500">Mezo · custody record</span>
+                <span className="kicker text-ink-500">Mezo · your savings</span>
                 <span className="h-2 w-2 rounded-full bg-ember-500" aria-hidden />
               </div>
               <p className="text-[1.75rem] font-semibold leading-none tracking-[-0.03em]">{v ? v.shares : <span className="font-serif font-normal italic">n</span>} <span className="text-base font-medium text-ink-500">wSMUSD</span></p>
-              <p className="mt-1 text-xs text-ink-500">locked in ReachSourceGateway</p>
+              <p className="mt-1 text-xs text-ink-500">saved in Mezo&apos;s Savings Vault, still earning</p>
               <div className="mt-4">
-                <Field k="backing" v="native sMUSD + wrapper yield" mono={false} />
-                <Field k="transfer" v={v ? v.transferId : "0x…"} />
-                <Field k="wormhole seq" v={v ? v.sequence : "#"} />
-                <Field k="tx" v={v ? v.lockTx : "0x…"} />
+                <Field k="earning" v="Mezo savings rate" mono={false} />
+                <Field k="transfer id" v={v ? v.transferId : "0x…"} />
+                <Field k="message no." v={v ? v.sequence : "#"} />
+                <Field k="mezo tx" v={v ? v.lockTx : "0x…"} />
               </div>
             </div>
             <div data-card="dst" className="relative z-0 rotate-[2deg] rounded-md border border-ink-600 bg-ink-850 p-5 shadow-lift sm:mt-16">
               <div data-settle className="pointer-events-none absolute inset-0 rounded-md" aria-hidden />
               <div className="mb-3 flex items-center justify-between">
-                <span className="kicker text-ink-300">Base · receipt</span>
+                <span className="kicker text-ink-300">Base · your receipt</span>
                 <span className="h-2 w-2 rounded-full bg-sage-400" aria-hidden />
               </div>
               <p className="text-[1.75rem] font-semibold leading-none tracking-[-0.03em] text-bone-50">{v ? v.shares : <span className="font-serif font-normal italic">n</span>} <span className="text-base font-medium text-ink-300">rwSMUSD</span></p>
-              <p className="mt-1 text-xs text-ink-300">minted once, after guardian verification</p>
+              <p className="mt-1 text-xs text-ink-300">collateral you can borrow against</p>
               <dl className="mt-4 space-y-0 text-[0.8125rem]">
                 {[
-                  ["verified", "guardian signature"],
-                  ["emitter", "enrolled Mezo gateway"],
-                  ["replay", "transfer id consumed"],
-                  ["tx", v ? v.mintTx : "0x…"],
+                  ["borrow", "MUSD or USDC"],
+                  ["checked by", "Wormhole signature"],
+                  ["issued", "once per transfer"],
+                  ["base tx", v ? v.mintTx : "0x…"],
                 ].map(([k, val]) => (
                   <div key={k} className="flex items-baseline justify-between gap-4 border-b border-ink-700 py-2 last:border-b-0">
                     <dt className="font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ink-400">{k}</dt>
@@ -154,7 +155,7 @@ export function Hero() {
           <div className="relative mx-6 mt-6 hidden h-6 sm:block" aria-hidden>
             <div data-wire className="absolute inset-x-0 top-1/2 h-px bg-[repeating-linear-gradient(90deg,var(--color-ink-500)_0_6px,transparent_6px_12px)]" />
             <div data-packet className="absolute top-1/2 -translate-x-1/2 -translate-y-1/2 rounded-full border border-ember-500/60 bg-ink-950 px-2 py-0.5 font-mono text-[0.625rem] uppercase tracking-[0.12em] text-ember-300 opacity-0">
-              VAA
+              signed
             </div>
           </div>
           <figcaption className="mt-5 flex flex-wrap items-center gap-2 text-xs text-ink-400">
@@ -174,6 +175,7 @@ export function Hero() {
           </figcaption>
         </figure>
       </div>
+      <LiveStats />
     </section>
   );
 }

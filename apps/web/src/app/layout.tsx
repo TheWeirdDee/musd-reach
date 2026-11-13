@@ -3,6 +3,7 @@ import { connection } from "next/server";
 import { Inter_Tight, Instrument_Serif, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { Providers } from "./providers";
+import { Toaster } from "@/components/app/Toaster";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SITE_URL } from "@/lib/metadata";
 
@@ -14,13 +15,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: { default: "MUSD Reach — Your Mezo savings, beyond Mezo", template: "%s · MUSD Reach" },
   description:
-    "Keep MUSD principal in Mezo's native savings vault and carry a backed, transferable claim on it to Base. Authenticated by Wormhole guardians, redeemable by burning, verifiable on-chain.",
+    "For savers who need liquidity and lenders who want yield backed by Mezo savings. Save in MUSD on Mezo; lend and borrow MUSD or USDC on Base against those savings, verifiable on-chain.",
   applicationName: "MUSD Reach",
   alternates: { canonical: "/" },
   manifest: "/manifest.webmanifest",
   icons: { icon: [{ url: "/icon.svg", type: "image/svg+xml" }, { url: "/icons/reach-192.png", sizes: "192x192", type: "image/png" }], apple: [{ url: "/apple-icon.png", sizes: "180x180" }] },
-  openGraph: { type: "website", siteName: "MUSD Reach", title: "MUSD Reach — Mezo savings, beyond Mezo", description: "Keep your savings position on Mezo while holding a backed, transferable claim on Base Sepolia.", url: "/", images: [{ url: "/opengraph-image", width: 1200, height: 630 }] },
-  twitter: { card: "summary_large_image", title: "MUSD Reach", description: "Your Mezo savings. A verifiable claim on Base.", images: ["/opengraph-image"] },
+  openGraph: { type: "website", siteName: "MUSD Reach", title: "MUSD Reach — Mezo savings, beyond Mezo", description: "Savers who need liquidity. Lenders who want yield backed by Mezo savings. Save in MUSD; lend and borrow MUSD or USDC on Base.", url: "/", images: [{ url: "/opengraph-image", width: 1200, height: 630 }] },
+  twitter: { card: "summary_large_image", title: "MUSD Reach", description: "Earn on Mezo. Borrow MUSD or USDC on Base against your savings.", images: ["/opengraph-image"] },
 };
 
 export const viewport: Viewport = {
@@ -40,6 +41,7 @@ export default async function RootLayout({ children }: Readonly<{ children: Reac
         <Providers>
           <SiteHeader />
           <main id="main">{children}</main>
+          <Toaster />
         </Providers>
       </body>
     </html>

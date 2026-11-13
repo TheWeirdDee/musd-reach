@@ -46,11 +46,11 @@ export const integrations = [
   },
   {
     id: "musd-ntt",
-    name: "Canonical MUSD bridge (Wormhole NTT)",
+    name: "Mezo's canonical MUSD bridge (Wormhole NTT)",
     network: "Mezo testnet ↔ Base Sepolia",
-    status: "SEPARATE_PROTOCOL",
+    status: "PUBLIC_TESTNET_VERIFIED",
     detail:
-      "The canonical MUSD bridge is independent of Reach and has no authority over rwSMUSD. Users holding MUSD on Base can bridge it to Mezo themselves before using Reach.",
-    evidence: ["docs/planning/MUSD_Reach_Verification_Report.md"],
+      "Reach moves MUSD between Mezo and Base on Mezo's own bridge: the Mezo NttManager locks MUSD and the Base NttManager mints canonical MUSD on Base, the loan asset of the rwSMUSD/MUSD market. Reach sends with relaying skipped and delivers the guardian-signed message itself through the permissionless WormholeTransceiver.receiveMessage, in the app (Bridge MUSD) and in scripts. The bridge has no authority over rwSMUSD.",
+    evidence: ["evidence/markets/musd-bridge-base-2026-11-11T18-16-49-477Z.json", "scripts/bridge-musd.ts", "docs/MEZO_INTEGRATION.md"],
   },
 ] as const;

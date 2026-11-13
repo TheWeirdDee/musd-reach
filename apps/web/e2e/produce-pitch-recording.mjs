@@ -1,5 +1,5 @@
 import { chromium } from "playwright";
-import { mkdirSync, rmSync, existsSync } from "node:fs";
+import { mkdirSync } from "node:fs";
 
 const TARGET_DIR = "./live_recordings_" + Date.now();
 mkdirSync(TARGET_DIR, { recursive: true });
@@ -103,7 +103,7 @@ async function produceRecording() {
         await page.waitForTimeout(2000);
       }
     }
-  } catch (e) {
+  } catch {
     console.log("Connect action caught:", e.message);
   }
 
@@ -115,7 +115,7 @@ async function produceRecording() {
       await inputAmount.fill("6.0");
       await page.waitForTimeout(2500);
     }
-  } catch (e) {}
+  } catch {}
   await page.waitForTimeout(4000);
 
   // Show explorer transaction link/evidence
@@ -123,7 +123,7 @@ async function produceRecording() {
   try {
     await page.goto("https://explorer.test.mezo.org/tx/0x1fdfc665716297805f5af60961df8808ddfbe9466a8d8b6d2ea10809266099d7", { waitUntil: "domcontentloaded", timeout: 60000 });
     await page.waitForTimeout(7000);
-  } catch (e) {
+  } catch {
     console.log("Explorer navigation:", e.message);
   }
 
@@ -140,7 +140,7 @@ async function produceRecording() {
       await makePortableTab.click();
       await page.waitForTimeout(3000);
     }
-  } catch (e) {}
+  } catch {}
 
   // Show live transfer tracker
   console.log("Scene 3: Inspecting Wormhole Transfer Tracker...");
@@ -152,7 +152,7 @@ async function produceRecording() {
   try {
     await page.goto("https://sepolia.basescan.org/tx/0x77f19efa4666a4f0e1f2962ed62c4fbb3f398c16116351d10e83792053a81455", { waitUntil: "domcontentloaded", timeout: 60000 });
     await page.waitForTimeout(7500);
-  } catch (e) {
+  } catch {
     console.log("BaseScan navigation:", e.message);
   }
 
@@ -163,7 +163,7 @@ async function produceRecording() {
   try {
     await page.goto("https://sepolia.basescan.org/tx/0x52c1cdaa9ace5d1b73fdfd5d0b01f1035b52b019525d925c1b8bcb0fda2f7760", { waitUntil: "domcontentloaded", timeout: 60000 });
     await page.waitForTimeout(5500);
-  } catch (e) {}
+  } catch {}
 
   console.log("Scene 4: Navigating to Redeem tab...");
   await page.goto("https://musd-reach.vercel.app/app", { waitUntil: "domcontentloaded", timeout: 60000 });
@@ -175,14 +175,14 @@ async function produceRecording() {
       await redeemTab.click();
       await page.waitForTimeout(3500);
     }
-  } catch (e) {}
+  } catch {}
 
   // Show authenticated release on Mezo explorer
   console.log("Scene 4: Showing Mezo release transaction...");
   try {
     await page.goto("https://explorer.test.mezo.org/tx/0x3fadf55034dfe4a21d5015fa6cfeec92c426e96be401cb6c144677db47e86ae0", { waitUntil: "domcontentloaded", timeout: 60000 });
     await page.waitForTimeout(7000);
-  } catch (e) {}
+  } catch {}
 
   // ==========================================
   // SCENE 5: 1:12 - 1:32 (Proof and Verification)
@@ -203,7 +203,7 @@ async function produceRecording() {
       await testnetRunRow.click();
       await page.waitForTimeout(4000);
     }
-  } catch (e) {}
+  } catch {}
 
   // View contract registry
   console.log("Scene 5: Navigating to Contract Registry...");

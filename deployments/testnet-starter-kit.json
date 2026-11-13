@@ -1,0 +1,10 @@
+{
+  "chainId": 31611,
+  "dailyLimit": 20,
+  "deployBlock": 16718616,
+  "funded": "800000000000000000000",
+  "kitAmount": "50000000000000000000",
+  "musd": "0x118917a40FAF1CD7a13dB0Ef56C86De7973Ac503",
+  "owner": "0x90f08c7A949950AA11cF5D64948e9d59b798f1E0",
+  "starterKit": "0x45B1Cb64CB563534549dAE76b1d09aB388c9ED42"
+}

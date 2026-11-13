@@ -138,9 +138,9 @@
   .app-page-title { max-width: 860px; padding-block: 2.25rem 1.75rem; }
   .app-heading { font-size: clamp(1.75rem, 1.2rem + 2vw, 2.8rem); line-height: 1.08; }
   .app-page-title > div { font-size: 1rem; line-height: 1.7; }
-  .compact-footer { display: flex; flex-wrap: wrap; gap: 1rem 2rem; justify-content: space-between; padding-block: 1.5rem; border-top: 1px solid var(--color-ink-700); font-size: .75rem; color: var(--color-ink-300); }
-  .compact-footer nav { display: flex; gap: 1rem; flex-wrap: wrap; }
-  .compact-footer a:hover { color: var(--color-bone-100); }
+
+
+
   .flow-intro { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); overflow: hidden; border: 1px solid var(--color-ink-700); border-radius: var(--radius-lg); background: var(--color-ink-900); }
   .flow-intro-main, .flow-intro-route { padding: clamp(1.25rem, 3vw, 2.5rem); }
   .flow-intro-route { border-left: 1px solid var(--color-ink-700); background: var(--color-ink-850); }
@@ -207,5 +207,29 @@
     pointer-events: none;
     opacity: 0.035;
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+}
+
+/* Touch screens: standalone text links (link rows, doc contents, footers, flow intros) get a taller
+   tap area. Padding on these flex items and inline links grows the hit area; on desktop nothing
+   changes. Keeps every such target at or above the 24px WCAG 2.2 minimum. */
+@media (pointer: coarse) {
+  .flex > a:not([class*="h-"]):not([class*="py-"]):not([class*="p-"]),
+  .doc-article a[href^="#"],
+  .doc-article header a,
+  [data-compact-footer] a,
+  [data-marketing-footer] li a,
+  .flow-intro a:not([class*="h-"]) {
+    padding-block: 0.4rem;
+  }
+  /* Standalone links (not inside a sentence) get a 44px touch target; visuals stay the same. */
+  [data-compact-footer] nav > a:not([class*="h-"]):not([class*="py-"]):not([class*="p-"]) {
+    padding-block: 0.75rem;
+  }
+  a.inline-block:not([class*="h-"]):not([class*="py-"]),
+  a.inline-flex:not([class*="h-"]):not([class*="py-"]) {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
   }
 }

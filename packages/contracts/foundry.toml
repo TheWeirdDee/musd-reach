@@ -46,5 +46,10 @@ depth = 128
 mezo_testnet = "https://rpc.test.mezo.org"
 base_sepolia = "https://sepolia.base.org"
 
+# The built-in linter cannot resolve the vendored Mezo vault's own OpenZeppelin-upgradeable
+# remapping, so it would fail every `forge build`; tests and Slither cover the sources instead.
+[lint]
+lint_on_build = false
+
 [fmt]
 line_length = 100

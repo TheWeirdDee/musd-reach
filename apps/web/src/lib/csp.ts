@@ -30,6 +30,8 @@ const WALLETCONNECT = {
   img: ["https://explorer-api.walletconnect.com"],
 };
 
+export const WORMHOLESCAN_API = "https://api.testnet.wormholescan.io";
+
 export type CspInput = {
   nonce: string;
   dev: boolean;
@@ -51,7 +53,10 @@ export function originOf(url: string): string | null {
 }
 
 export function buildCsp({ nonce, dev, rpcUrls, apiUrl, walletConnect }: CspInput): string {
-  const connect = new Set<string>(["'self'"]);
+  // Wormholescan's public testnet API: the Status page and the Mezo → Base flows read whether
+  // Wormhole's guardian is signing Mezo messages (read-only, no keys, CORS-open).
+  // The Mezo and Base Sepolia explorer APIs: the route passport reads on-chain events from them.
+  const connect = new Set<string>(["'self'", WORMHOLESCAN_API, "https://api.explorer.test.mezo.org", "https://base-sepolia.blockscout.com"]);
   for (const u of [...rpcUrls, apiUrl]) {
     const o = originOf(u);
     if (o) connect.add(o);

@@ -26,10 +26,10 @@ export function Backing() {
   const pct = (x: bigint) => (total === 0n ? 0 : Number((x * 10_000n) / total) / 100);
 
   return (
-    <Reveal as="section" className="py-24 sm:py-32">
+    <Reveal as="section" className="py-16 sm:py-20">
       <div className="shell">
         <SectionHead
-          index="05"
+          index="07"
           kicker="Backing and conservation"
           title={
             <>

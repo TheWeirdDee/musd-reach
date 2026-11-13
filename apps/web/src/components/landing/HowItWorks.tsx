@@ -120,11 +120,11 @@ export function HowItWorks() {
   const s = steps[active]!;
 
   return (
-    <Reveal as="section" className="relative py-24 sm:py-32">
+    <Reveal as="section" className="relative py-16 sm:py-20">
       <span id="how" className="absolute -top-16" aria-hidden />
       <div className="shell">
         <SectionHead
-          index="02"
+          index="03"
           kicker="How Reach works"
           title={
             <>

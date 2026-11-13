@@ -32,11 +32,11 @@ const tokens = [
 
 export function Anatomy() {
   return (
-    <Reveal as="section" className="surface-light py-24 sm:py-32">
+    <Reveal as="section" className="surface-light py-16 sm:py-20">
       <div className="shell">
         <SectionHead
           light
-          index="03"
+          index="05"
           kicker="Native savings vs. portable receipt"
           title={
             <>

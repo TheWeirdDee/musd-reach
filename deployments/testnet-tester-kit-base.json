@@ -1,0 +1,13 @@
+{
+  "chainId": 84532,
+  "dailyLimit": 40,
+  "deployBlock": 57889434,
+  "nativeFunded": 4000000000000000,
+  "nativePerKit": 100000000000000,
+  "owner": "0x90f08c7A949950AA11cF5D64948e9d59b798f1E0",
+  "relayer": "0xd4A6960b2aE32CEfcAC26586029c4e19a85a6259",
+  "testerKit": "0x8fE4a79D03438aE48DED429FC10A7F391506CA66",
+  "token": "0x0000000000000000000000000000000000000000",
+  "tokenFunded": 0,
+  "tokenPerKit": 0
+}

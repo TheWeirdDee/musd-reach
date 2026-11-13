@@ -35,10 +35,10 @@ function Link({ label }: { label: string }) {
 export function Architecture() {
   const d = deployment;
   return (
-    <Reveal as="section" className="py-24 sm:py-32">
+    <Reveal as="section" className="py-16 sm:py-20">
       <div className="shell">
         <SectionHead
-          index="04"
+          index="06"
           kicker="Protocol architecture"
           title={
             <>

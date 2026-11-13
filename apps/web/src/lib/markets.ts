@@ -3,38 +3,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { encodeAbiParameters, keccak256, parseAbi, type Address, type Hex } from "viem";
 import { reachDestinationGatewayAbi } from "@musd-reach/sdk";
-import siteData from "@/generated/site-data.json";
 import { useClients } from "./hooks";
 import { reachConfig } from "./reach";
 
-/** Base Sepolia market layer recorded by DeployReachMarkets (deployments/testnet-markets.json). */
-export type MarketsDeployment = {
-  chainId: number;
-  morpho: Address;
-  irm: Address;
-  loanToken: Address;
-  collateralToken: Address;
-  oracle: Address;
-  lltv: string | number;
-  navMaxAge: string | number;
-  haircutBps: string | number;
-  marketId: Hex;
-  vault: Address;
-  vaultAdapter: Address;
-  curator: Address;
-  treasury: Address;
-  performanceFee: string | number;
-  deployBlock: string | number;
-  /** Base Sepolia transaction that created the Morpho market (Morpho's app does not list testnets). */
-  createMarketTx?: Hex;
-};
-
-export type MarketRunStep = { id: string; title: string; chain: "mezo" | "base" | "offchain"; status: "PASS" | "FAIL"; txHash?: string; explorer?: string; details: Record<string, unknown> };
-export type MarketRun = { kind: "PUBLIC_TESTNET_MARKETS_RUN"; runId: string; startedAt: string; account: string; steps: MarketRunStep[]; marketState: { totalSupplyAssets: string; totalBorrowAssets: string } };
-
-const data = siteData as unknown as { markets?: MarketsDeployment | null; marketRuns?: MarketRun[] };
-export const markets: MarketsDeployment | null = data.markets ?? null;
-export const marketRuns: MarketRun[] = data.marketRuns ?? [];
+/* Plain market data lives in ./marketData (importable from server components). */
+export { testerKits, markets, musdMarket, marketRuns, starterKit, musdBridgeRuns, marketDefs, marketDef } from "./marketData";
+export type { MarketsDeployment, MarketRunStep, MarketRun, StarterKitDeployment, MusdBridgeRun, TesterKitDeployment, LoanAsset, MarketParams, MarketDef } from "./marketData";
+import { markets, marketDefs, marketDef } from "./marketData";
+import type { LoanAsset } from "./marketData";
 
 export const USDC_DECIMALS = 6;
 export const WAD = 10n ** 18n;
@@ -106,7 +82,7 @@ export type MarketState = {
   vaultApr: number | null;
   performanceFee: number;
   vaultTotalAssets: bigint;
-  /** USDC per 1e18 rwSMUSD, after haircut, 1e36-scaled; null if NAV is stale or missing. */
+  /** Loan-asset units per 1e18 rwSMUSD, after haircut, 1e36-scaled; null if NAV is stale or missing. */
   price: bigint | null;
   navPerShare: bigint | null;
   navAgeSeconds: number | null;
@@ -118,29 +94,30 @@ export type MarketState = {
     collateral: bigint;
     borrowed: bigint;
     borrowShares: bigint;
-    usdc: bigint;
+    loan: bigint;
     rwsmusd: bigint;
     vaultShares: bigint;
     vaultAssets: bigint;
     maxBorrow: bigint | null;
     collateralValue: bigint | null;
     health: number | null;
-    usdcAllowanceVault: bigint;
-    usdcAllowanceMorpho: bigint;
+    loanAllowanceVault: bigint;
+    loanAllowanceMorpho: bigint;
     rwAllowanceMorpho: bigint;
   };
 };
 
-export function useMarket(account?: Address) {
+export function useMarket(account?: Address, asset: LoanAsset = "USDC") {
   const c = useClients();
   const d = reachConfig.deployment;
+  const def = marketDef(asset);
   return useQuery({
-    queryKey: ["reach-market", account],
-    enabled: !!c && !!markets && !!d,
+    queryKey: ["reach-market", asset, account],
+    enabled: !!c && !!def && !!d,
     refetchInterval: 15_000,
     queryFn: async (): Promise<MarketState> => {
-      const m = markets!;
-      const p = marketParams!;
+      const m = def!.cfg;
+      const p = def!.params;
       const base = c!.base;
       const id = m.marketId;
       const [mk, navRaw, hasNav, block, vaultTotal, perf] = await Promise.all([
@@ -185,7 +162,7 @@ export function useMarket(account?: Address) {
         haircutBps: Number(m.haircutBps),
       };
       if (account) {
-        const [pos, usdc, rw, vShares, aV, aM, aR] = await Promise.all([
+        const [pos, loanBal, rw, vShares, aV, aM, aR] = await Promise.all([
           base.readContract({ address: m.morpho, abi: morphoAbi, functionName: "position", args: [id, account] }),
           base.readContract({ address: p.loanToken, abi: erc20Abi, functionName: "balanceOf", args: [account] }),
           base.readContract({ address: p.collateralToken, abi: erc20Abi, functionName: "balanceOf", args: [account] }),
@@ -203,15 +180,15 @@ export function useMarket(account?: Address) {
           collateral,
           borrowed,
           borrowShares: BigInt(pos[1]),
-          usdc,
+          loan: loanBal,
           rwsmusd: rw,
           vaultShares: vShares,
           vaultAssets,
           maxBorrow,
           collateralValue,
           health: maxBorrow === null || borrowed === 0n ? null : Number((maxBorrow * 10_000n) / borrowed) / 10_000,
-          usdcAllowanceVault: aV,
-          usdcAllowanceMorpho: aM,
+          loanAllowanceVault: aV,
+          loanAllowanceMorpho: aM,
           rwAllowanceMorpho: aR,
         };
       }
@@ -237,18 +214,18 @@ export function useMarketActivity() {
   const c = useClients();
   return useQuery({
     queryKey: ["reach-market-activity"],
-    enabled: !!c && !!markets,
+    enabled: !!c && marketDefs.length > 0,
     refetchInterval: 60_000,
     staleTime: 30_000,
     queryFn: async (): Promise<MarketActivity> => {
-      const m = markets!;
       const base = c!.base;
       const head = await base.getBlockNumber();
-      const from = BigInt(m.deployBlock);
       const lenders = new Set<Address>();
       const borrowers = new Set<Address>();
       let deposits = 0, borrows = 0, repays = 0;
       const STEP = 9_000n;
+      for (const { cfg: m } of marketDefs) {
+      const from = BigInt(m.deployBlock);
       for (let start = from; start <= head; start += STEP + 1n) {
         const end = start + STEP > head ? head : start + STEP;
         const [vaultLogs, morphoLogs] = await Promise.all([
@@ -262,6 +239,7 @@ export function useMarketActivity() {
           if (l.eventName === "Borrow") { borrows++; if (a.onBehalf) borrowers.add(a.onBehalf); }
           if (l.eventName === "Repay") repays++;
         }
+      }
       }
       const wallets = [...new Set([...lenders, ...borrowers])];
       return { lenders: [...lenders], borrowers: [...borrowers], wallets, deposits, borrows, repays, scannedTo: head };

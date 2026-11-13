@@ -26,11 +26,11 @@ const tested = [
 
 export function Security() {
   return (
-    <Reveal as="section" className="surface-light py-24 sm:py-32">
+    <Reveal as="section" className="surface-light py-16 sm:py-20">
       <div className="shell">
         <SectionHead
           light
-          index="06"
+          index="08"
           kicker="Security and risk model"
           title={
             <>
@@ -80,8 +80,8 @@ export function Security() {
                 ))}
               </ul>
             </div>
-            <Link href="/risks" className="inline-flex shrink-0 items-center gap-2 border-b border-ink-500 pb-0.5 text-[0.9375rem] hover:border-ember-500">
-              Full risk disclosures <Arrow />
+            <Link href="/risks" className="group inline-flex shrink-0 items-center gap-2 text-[0.9375rem]">
+              <span className="border-b border-ink-500 pb-0.5 transition-colors group-hover:border-ember-500">Full risk disclosures</span> <Arrow />
             </Link>
           </div>
         </div>

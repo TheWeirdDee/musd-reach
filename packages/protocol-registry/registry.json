@@ -76,9 +76,12 @@
     }
   },
   "canonicalMusdNtt": {
-    "$comment": "Separate canonical MUSD bridge. Not used by Reach and has no rwSMUSD mint authority.",
+    "$comment": "Mezo's canonical MUSD bridge (Wormhole NTT): locks MUSD on Mezo, mints it on Base. Reach uses it to move MUSD (the Base market's loan asset) between chains; it has no rwSMUSD mint authority.",
     "mezoManager": "0x20888B20e2F5F405d44261dA96467a1b1acE15be",
-    "baseManager": "0x6590DFF6abEd7C077839E8227A4f12Ec90E6D85F"
+    "mezoTransceiver": "0x0E628A1C34c92F0aA85aF998814Ce4f03cAA5913",
+    "baseManager": "0x6590DFF6abEd7C077839E8227A4f12Ec90E6D85F",
+    "baseTransceiver": "0x2ada2d985Ce69b467d2D8372494Df021BEDfdbf2",
+    "baseMusd": "0x560985f804De8187E8FBA94F7127Bc4c0e54AEA5"
   },
   "reach": {
     "wrapper": null,

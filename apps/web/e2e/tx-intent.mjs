@@ -100,7 +100,7 @@ async function firstRequest(page, button) {
   await page.waitForFunction((b) => [...document.querySelectorAll("button")].some((x) => b.test(x.textContent) && !x.disabled), button, { timeout: 60_000 });
   await btn.click();
   await page.waitForFunction(() => window.__sent.length > 0, null, { timeout: 90_000 });
-  await page.getByText("You rejected the request in your wallet. Nothing was sent.").first().waitFor({ timeout: 30_000 });
+  await page.getByText("You cancelled in your wallet. Nothing was sent.").first().waitFor({ timeout: 30_000 });
   return (await page.evaluate(() => window.__sent))[0];
 }
 

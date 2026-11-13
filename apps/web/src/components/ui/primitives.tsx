@@ -175,7 +175,7 @@ export function Hash({ value, href, full, className }: { value: string; href?: s
   return (
     <span className={cn("inline-flex max-w-full items-center gap-1.5 align-middle", className)}>
       {href ? (
-        <a href={href} target="_blank" rel="noreferrer" className={cn("num text-[0.8125rem] text-bone-200 underline decoration-ink-500 underline-offset-4 hover:text-ember-400 hover:decoration-ember-500", full && "break-hash")} title={value}>
+        <a href={href} target="_blank" rel="noreferrer" className={cn("num pointer-coarse:py-3 text-[0.8125rem] text-bone-200 underline decoration-ink-500 underline-offset-4 hover:text-ember-400 hover:decoration-ember-500", full && "break-hash")} title={value}>
           {text}
         </a>
       ) : (
@@ -183,7 +183,7 @@ export function Hash({ value, href, full, className }: { value: string; href?: s
           {text}
         </span>
       )}
-      <button type="button" onClick={copy} className="grid h-7 w-7 shrink-0 place-items-center rounded-xs text-ink-400 hover:bg-ink-800 hover:text-bone-100" aria-label={copied ? "Copied" : `Copy ${value}`}>
+      <button type="button" onClick={copy} className="grid h-7 w-7 shrink-0 place-items-center pointer-coarse:h-10 pointer-coarse:w-10 rounded-xs text-ink-400 hover:bg-ink-800 hover:text-bone-100" aria-label={copied ? "Copied" : `Copy ${value}`}>
         {copied ? (
           <svg viewBox="0 0 16 16" className="h-3.5 w-3.5" fill="none" stroke="currentColor" strokeWidth="1.8" aria-hidden>
             <path d="M3 8.5 6.5 12 13 4.5" />

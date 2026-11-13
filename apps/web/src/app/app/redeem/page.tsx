@@ -66,7 +66,7 @@ export default function RedeemPage() {
     }
   }
 
-  if (!connected) return <FlowIntro title="Bring your claim back to Mezo" description="Burn rwSMUSD on Base to receive wrapper shares or request MUSD on Mezo. Delivery is asynchronous." requirements={["rwSMUSD on Base Sepolia", "Sepolia ETH for the burn; testnet BTC if you deliver on Mezo", "A Mezo recipient that can authorize recovery"]} steps={["Choose wrapper shares or MUSD and review your minimum.", "Burn receipts on Base; wait for finality and signing.", "Deliver the return message on Mezo.", "If MUSD cannot settle, retry or use recipient recovery."]} docs="/docs/first-redemption" />;
+  if (!connected) return <FlowIntro title="Bring your savings home to Mezo" description="Hand back your rwSMUSD receipt on Base and get your savings back on Mezo, with everything they earned: as MUSD, or kept saved. Repay any loan first." requirements={["rwSMUSD on Base Sepolia (not posted as collateral)", "Sepolia ETH on Base and a little testnet BTC on Mezo for gas"]} steps={["Choose MUSD or keep it saved, and check the minimum you will receive.", "Hand back rwSMUSD on Base; Wormhole confirms the message (usually tens of minutes on testnet).", "Collect on Mezo from the tracker.", "If MUSD cannot be paid at once, the tracker lets you retry or take the savings shares instead."]} docs="/docs/first-redemption" />;
 
   return (
     <>

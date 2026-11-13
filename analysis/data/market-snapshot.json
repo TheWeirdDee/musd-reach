@@ -1,0 +1,138 @@
+{
+  "asOf": "2026-11-12",
+  "mezoBlock": 13172578,
+  "sources": {
+    "mezoRpc": "https://mezo-mainnet.boar.network",
+    "savingsVault": "0xb4D498029af77680cD1eF828b967f010d06C51CC",
+    "gauge": "0x677817bF3e44b90E8F95222F75e2950b7904a401",
+    "mezoPrice": "coins.llama.fi coingecko:mezo",
+    "morpho": "blue-api.morpho.org (chainId 8453, listed)"
+  },
+  "savings": {
+    "saved": 1325391.4115274781,
+    "musdSupply": 18994149.92132144,
+    "rates": [
+      {
+        "days": 7,
+        "from": "2026-11-05",
+        "savedAtStart": 6480366.359417217,
+        "rate": 0.14557351311316485
+      },
+      {
+        "days": 29,
+        "from": "2026-10-13",
+        "savedAtStart": 7386924.779030724,
+        "rate": 0.05379546924173214
+      },
+      {
+        "days": 89,
+        "from": "2026-08-15",
+        "savedAtStart": 7507097.085354608,
+        "rate": 0.035384582116403475
+      },
+      {
+        "days": 175,
+        "from": "2026-05-20",
+        "savedAtStart": 7300667.626021455,
+        "rate": 0.028384142165425046
+      }
+    ],
+    "yieldPoolAnnualized30d": 336340.5655382373,
+    "history": [
+      {
+        "date": "2026-11-12",
+        "saved": 1325391
+      },
+      {
+        "date": "2026-11-05",
+        "saved": 6480366
+      },
+      {
+        "date": "2026-10-29",
+        "saved": 7381366
+      },
+      {
+        "date": "2026-10-13",
+        "saved": 7386925
+      },
+      {
+        "date": "2026-09-13",
+        "saved": 7407897
+      },
+      {
+        "date": "2026-08-15",
+        "saved": 7507097
+      },
+      {
+        "date": "2026-07-17",
+        "saved": 5633093
+      },
+      {
+        "date": "2026-06-18",
+        "saved": 6112269
+      },
+      {
+        "date": "2026-05-20",
+        "saved": 7300668
+      }
+    ]
+  },
+  "gauge": {
+    "mezoPerDay": 69605.64947751426,
+    "stakedSmusd": 153031.27867356126,
+    "periodFinish": "2026-11-19",
+    "mezoPrice": 0.0041594208,
+    "rewardRate": 0.6905418545246069
+  },
+  "morphoBase": {
+    "listedMarkets": 94,
+    "borrowedUsd": 2242715491.394283,
+    "usdcBorrowedUsd": 2218473395.2313776,
+    "usdcBorrowRate": 0.05290563768391746,
+    "usdcSupplyRate": 0.045041272835402886,
+    "musdMarkets": 0
+  },
+  "saverCases": [
+    {
+      "savingsWindowDays": 7,
+      "savingsRate": 0.14557351311316485,
+      "borrowRate": 0.05290563768391746,
+      "netMusd": 3.808268853256742
+    },
+    {
+      "savingsWindowDays": 29,
+      "savingsRate": 0.05379546924173214,
+      "borrowRate": 0.05290563768391746,
+      "netMusd": 0.03656842018416481
+    },
+    {
+      "savingsWindowDays": 89,
+      "savingsRate": 0.035384582116403475,
+      "borrowRate": 0.05290563768391746,
+      "netMusd": -0.7200433794868761
+    }
+  ],
+  "revenue": [
+    {
+      "share": 0.1,
+      "portable": 132539.14115274782,
+      "borrowed": 45924.81240942712,
+      "interest": 2429.681486035028,
+      "reach": 242.96814860350278
+    },
+    {
+      "share": 0.25,
+      "portable": 331347.85288186953,
+      "borrowed": 114812.03102356779,
+      "interest": 6074.2037150875685,
+      "reach": 607.4203715087568
+    },
+    {
+      "share": 0.5,
+      "portable": 662695.7057637391,
+      "borrowed": 229624.06204713558,
+      "interest": 12148.407430175137,
+      "reach": 1214.8407430175137
+    }
+  ]
+}
